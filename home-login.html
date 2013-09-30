@@ -1,55 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<title>Title</title>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 		
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 		
 		<meta charset="utf-8">
-
-		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
-		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-		<title>Title</title>
-		<meta name="description" content="">
-		<meta name="author" content="Ed">
-
-		<meta name="viewport" content="width=device-width; initial-scale=1.0">
-
-		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico">
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
 	</head>
 		
 	<body>
 		<div data-role="page" id="home">
 		<header data-role="header">
 			<h1>Logo</h1>
-			<a href="#" data-role="button" data-iconpos="left" data-icon="search" data-theme="c" data-inline="true">Search</a>
-			<a href="#" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" data-inline="true">Cart</a>
+			<label class="ui-hidden-accessible" for="textinput-hide">Search</label>
+			<input name="textinput-hide" id="textinput-hide" type="text" placeholder="Search" value="" data-theme="e">
+
+			<a href="#" data-role="button" data-iconpos="left" data-icon="search" data-theme="c">Search</a>
+			<a href="#" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b">Cart</a>
 		</header>
 
-		 <div>
+	<div data-role="navbar">
+    <ul>
+        <li><a href="#signin" data-iconpos="bottom" data-icon="check" data-theme="a" data-transition="slidefade">Sign In</a></li>
+        <li><a href="#register" data-iconpos="bottom" data-icon="edit" data-theme="a"data-transition="slidefade">Register</a></li>
+    </ul>
+	</div><!-- /navbar -->
 
-    		<a href="#" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" >Sign In</a>
-    		<a href="#" data-role="button" data-iconpos="bottom" data-icon="edit" data-theme="b">Register</a>
-    		<a href="#" data-role="button" data-iconpos="bottom" data-icon="bars" data-theme="b">Browse Categories</a>
-		</div>
+	<div>
+    	<a href="#categories" data-role="button" data-iconpos="top" data-icon="bars" data-theme="b">Browse Categories</a>
+	</div>
 
         
-			<footer data-role="footer" data-position="fixed">
-				<nav data-role="navbar">
-					<ul>
-						<li><a href="#home" data-icon="gear">Admin</a></li>
-						
-					</ul>
-				</nav>
-			</footer>
-		</div><!-- Page Home -->
-		</body>
+	<footer data-role="footer" data-position="fixed">
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#home" data-icon="gear">Admin</a></li>
+			</ul>
+		</nav>
+	</footer>
+</div><!-- Page Home -->
+			
+		
+<div data-role="page" id="signin">
+	<header data-role="header">
+		<h1>Sign in</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Home</a>
+		
+		<div data-role="navbar">
+    	<ul>
+       		<li><a href="#signin" class="ui-btn-active" data-iconpos="bottom" data-icon="check" data-theme="a" data-transition="slidefade">Sign In</a></li>
+        	<li><a href="#register" data-iconpos="bottom" data-icon="edit" data-theme="a" data-transition="slidefade">Register</a></li>
+    	</ul>
+	</div><!-- /navbar -->
+	</header>
 	
+	<label for="text-basic">User Name:</label>
+		<input name="text-basic" id="text-basic" type="text" value="">
+
+	<label for="password">Password:</label>
+		<input name="password" id="password" type="password" value="" autocomplete="off">
+
+	<form>
+    	<input type="submit" value="Sign in" data-inline="true">
+	</form>
+</div><!-- Page Sign in -->
+
+<div data-role="page" id="register">
+	<header data-role="header">
+		<h1>Register</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Home</a>
+		
+		<div data-role="navbar">
+    	<ul>
+       		<li><a href="#signin" data-iconpos="bottom" data-icon="check" data-theme="a" data-transition="slidefade">Sign In</a></li>
+        	<li><a href="#register" class="ui-btn-active" data-iconpos="bottom" data-icon="edit" data-theme="a" data-transition="slidefade">Register</a></li>
+    	</ul>
+	</div><!-- /navbar -->
+	</header>
+	
+	<label for="text-basic">Full Name:</label>
+		<input name="text-basic" id="text-basic" type="text" value="">
+		
+	<label for="text-basic">User Name:</label>
+		<input name="text-basic" id="text-basic" type="text" value="">
+
+	<label for="password">Password:</label>
+		<input name="password" id="password" type="password" value="" autocomplete="off">
+
+	<label for="text-basic">Shipping Address:</label>
+		<input name="text-basic" id="text-basic" type="text" value="">
+		
+	<label for="text-basic">Billing Address:</label>
+		<input name="text-basic" id="text-basic" type="text" value="">
+	
+	<label for="text-basic">Credit Card Number:</label>
+		<input name="text-basic" id="text-basic" type="text" value="">
+		
+	
+<form>
+    <input type="submit" value="Submit" data-inline="true">
+</form>
+
+</div><!-- Page Register -->
+	
+<div data-role="page" id="categories">
+	<header data-role="header">
+		<h1>Categories</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Home</a>
+		
+		
+	</header>
+	<style type="text/css">
+	    .nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+	    .nav-glyphish-example .ui-btn .ui-icon { width: 40px!important; height: 35px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: none !important; border-radius: none !important; }
+	    #book .ui-icon { background:  url(css/glyphish-icons/96-book.png) 50% 50% no-repeat; background-size: 24px 22px; }
+	    #electronic .ui-icon { background:  url(css/glyphish-icons/31-ipod.png) 50% 50% no-repeat; background-size: 20px 26px;  }
+	    #computer .ui-icon { background:  url(css/glyphish-icons/107-widescreen.png) 50% 50% no-repeat;  background-size: 36px 26px; }
+	    #clothing .ui-icon { background:  url(css/glyphish-icons/67-tshirt.png) 50% 50% no-repeat;  background-size: 30px 27px; }
+	    #shoes .ui-icon { background:  url(css/glyphish-icons/44-shoebox.png) 50% 50% no-repeat;  background-size: 30px 24px; }
+	    #sports .ui-icon { background:  url(css/glyphish-icons/129-golf.png) 50% 50% no-repeat;  background-size: 30px 24px; }
+	</style>
+	
+	<div data-role="footer" class="nav-glyphish-example">
+    <div data-role="navbar" class="nav-glyphish-example" data-grid="a">
+    <ul>
+	
+	 <li><a href="#" data-role="button" id="book" data-icon="custom" data-theme="e" data-iconpos="top">Books</a></li>
+	 <li><a href="#" data-role="button" id="electronic" data-icon="custom" data-theme="e" data-iconpos="top">Electronics</a></li>
+	 <li><a href="#" data-role="button" id="computer" data-icon="custom" data-theme="e" data-iconpos="top">Computers</a></li>
+	 <li><a href="#" data-role="button" id="clothing" data-icon="custom" data-theme="e" data-iconpos="top">Clothing</a></li>
+	 <li><a href="#" data-role="button" id="shoes" data-icon="custom" data-theme="e" data-iconpos="top">Shoes</a></li>
+	 <li><a href="#" data-role="button" id="sports" data-icon="custom" data-theme="e" data-iconpos="top">Sports</a></li>
+	
+	</ul>
+    </div>
+</div>
+
+	
+	
+</div><!-- Page Categories -->	
+</body>
+
 	
 </html>
