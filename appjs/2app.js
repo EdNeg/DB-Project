@@ -1,28 +1,29 @@
 
 
 $(document).on('pagebeforeshow', "#products", function( event, ui ) {
-
+	console.log("Jose");
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/products",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var prodList = data.products;
-			var len = prodList.length;
-			var list = $("#prod-list");
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#products-list");
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
-				product = prodList[i];
+				product = productList[i];
 				list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-					<img src= product.imgSrc " width="300" height="250"/> +
+					"<img src= product.imgSrc  width=\"300\" height=\"250\"/>" +
 					"<h2>" + product.brand + " " + product.name +  "</h2>" + 
 					"<p><strong> Model: " + product.model + "</strong></p>" + 
 					"<p><i> Dimensions: " + product.dimensions + "</i></p>" +
 					"<p>" + product.description + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-					"</a></li>";
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+
+					"</a></li>");
 			}
 			list.listview("refresh");	
 		},
@@ -43,8 +44,6 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	$("#upd-description").val(currentProduct.description);
 	$("#upd-dimensions").val(currentProduct.dimensions);
 	$("#upd-imgSrc").val(currentProduct.imgSrc);
-
-
 	
 });
 
@@ -100,7 +99,7 @@ function GetProduct(id){
 		success : function(data, textStatus, jqXHR){
 			currentProduct = data.product;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#products");
+			$.mobile.navigate("#product-view");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -163,7 +162,7 @@ function DeleteProduct(){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Product not found.");
+				alert("product not found.");
 			}
 			else {
 				alter("Internal Server Error.");

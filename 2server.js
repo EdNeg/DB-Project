@@ -22,20 +22,19 @@ app.configure(function () {
 
 app.use(express.bodyParser());
 
-var prod = require("./appjs/product.js");
-var Product = prod.Product;
+var product = require("./appjs/product.js");
+var Product = product.Product;
 
 var productList = new Array(
 	new Product("Ipad", "Apple", "APPL2455", "Red Cover, 32GB, Black", "10 X 4", "199", "300", "../DB-Project/css/img/ipad-normal.jpg"),
 	new Product("Air", "Nike", "NK31", "Green Laces, Blue, Size 10 1/2", "10 X 4", "75", "125", "../DB-Project/css/img/nike.jpg"),
 	new Product("Polo", "Nautica", "NAU421", "White with blue stripes, Medium", "10 X 4", "20", "50", "../DB-Project/css/img/naut.jpg"),
 	new Product("Ultrabook", "Samsung", "SMSG2775", "Gray, 128GB SSD, 13.6 Screen", "13.6 X 7", "399", "500", "../DB-Project/css/img/samsung.jpg")
-	
 );
- var prodNextId = 0;
+ var productNextId = 0;
  
 for (var i=0; i < productList.length;++i){
-	productList[i].id = prodNextId++;
+	productList[i].id = productNextId++;
 }
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -47,19 +46,22 @@ for (var i=0; i < productList.length;++i){
 // c) PUT - Update an individual object, or collection  (Database update operation)
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
-// REST Operation - HTTP GET to read all cars
+// REST Operation - HTTP GET to read all products
 app.get('/DB-Project/products', function(req, res) {
 	console.log("GET");
+	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
+	//var tom = new Product("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
+	//console.log("tom: " + JSON.stringify(tom));
 	var response = {"products" : productList};
   	res.json(response);
 });
 
-// REST Operation - HTTP GET to read a car based on its id
+// REST Operation - HTTP GET to read a product based on its id
 app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
 
-	if ((id < 0) || (id >= prodNextId)){
+	if ((id < 0) || (id >= productNextId)){
 		// not found
 		res.statusCode = 404;
 		res.send("Product not found.");
@@ -83,12 +85,12 @@ app.get('/DB-Project/products/:id', function(req, res) {
 	}
 });
 
-// REST Operation - HTTP PUT to updated a car based on its id
+// REST Operation - HTTP PUT to updated a product based on its id
 app.put('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("PUT product: " + id);
 
-	if ((id < 0) || (id >= prodNextId)){
+	if ((id < 0) || (id >= productNextId)){
 		// not found
 		res.statusCode = 404;
 		res.send("Product not found.");
@@ -113,26 +115,23 @@ app.put('/DB-Project/products/:id', function(req, res) {
 		}	
 		else {
 			var theProduct= productList[target];
-			theProduct.name = req.body.name;
+			theProduct.make = req.body.make;
 			theProduct.model = req.body.model;
-			theProduct.brand = req.body.brand;
-			theProduct.bidPrice = req.body.bidPrice;
+			theProduct.year = req.body.year;
+			theProduct.price = req.body.price;
 			theProduct.description = req.body.description;
-			theProduct.instPrice = req.body.instPrice;
-			theProduct.dimensions = req.body.dimensions;
-			theProduct.imgSrc = req.body.imgSrc;
 			var response = {"product" : theProduct};
   			res.json(response);		
   		}
 	}
 });
 
-// REST Operation - HTTP DELETE to delete a car based on its id
+// REST Operation - HTTP DELETE to delete a product based on its id
 app.del('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("DELETE product: " + id);
 
-	if ((id < 0) || (id >= prodNextId)){
+	if ((id < 0) || (id >= productNextId)){
 		// not found
 		res.statusCode = 404;
 		res.send("Product not found.");
@@ -156,7 +155,7 @@ app.del('/DB-Project/products/:id', function(req, res) {
 	}
 });
 
-// REST Operation - HTTP POST to add a new a car
+// REST Operation - HTTP POST to add a new a product
 app.post('/DB-Project/products', function(req, res) {
 	console.log("POST");
 
@@ -169,7 +168,7 @@ app.post('/DB-Project/products', function(req, res) {
 
   	var newProduct = new Product(req.body.name, req.body.brand, req.body.model, req.body.description, req.body.dimensions, req.body.bidPrice, req.body.instPrice, req.body.imgSrc);
   	console.log("New Product: " + JSON.stringify(newProduct));
-  	newProduct.id = prodNextId++;
+  	newProduct.id = productNextId++;
   	productList.push(newProduct);
   	res.json(true);
 });
