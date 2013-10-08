@@ -36,6 +36,10 @@ var productList = new Array(
 for (var i=0; i < productList.length;++i){
 	productList[i].id = productNextId++;
 }
+
+
+
+
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -49,11 +53,16 @@ for (var i=0; i < productList.length;++i){
 // REST Operation - HTTP GET to read all products
 app.get('/DB-Project/products', function(req, res) {
 	console.log("GET");
-	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
-	//var tom = new Product("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
-	//console.log("tom: " + JSON.stringify(tom));
 	var response = {"products" : productList};
   	res.json(response);
+});
+
+// REST Operation - HTTP GET sorted by name
+app.get('/DB-Project/products', function(req, res) {
+  req.collection.find({},{limit:10, sort: [['name',-1]]}).toArray(function(e, results){
+    if (e) return next(e);
+    res.send(results);
+  });
 });
 
 // REST Operation - HTTP GET to read a product based on its id
@@ -115,11 +124,14 @@ app.put('/DB-Project/products/:id', function(req, res) {
 		}	
 		else {
 			var theProduct= productList[target];
-			theProduct.make = req.body.make;
+			theProduct.name = req.body.name;
 			theProduct.model = req.body.model;
-			theProduct.year = req.body.year;
-			theProduct.price = req.body.price;
+			theProduct.brand = req.body.brand;
+			theProduct.bidPrice = req.body.bidPrice;
+			theProduct.instPrice = req.body.instPrice;
 			theProduct.description = req.body.description;
+			theProduct.dimensions = req.body.dimensions;
+			theProduct.imgSrc= req.body.imgSrc;
 			var response = {"product" : theProduct};
   			res.json(response);		
   		}
@@ -177,3 +189,314 @@ app.post('/DB-Project/products', function(req, res) {
 // Server starts running when listen is called.
 app.listen(process.env.PORT || 3412);
 console.log("server listening");
+
+
+
+
+//--------------------------------------Category---------------------------------------------------------------//
+	
+	
+var category = require("./appjs/category.js");
+var Category = category.Category;
+
+
+var categoryList = new Array(
+	new Category("Books", "../DB-Project/css/glyphish-icons/96-book.png"),
+	new Category("Computers", "../DB-Project/css/glyphish-icons/107-widescreen.png"),
+	new Category("Clothing", "../DB-Project/css/glyphish-icons/67-tshirt.png"),
+	new Category("Electronics" , "../DB-Project/css/glyphish-icons/31-ipod.png"),
+	new Category("Shoes", "../DB-Project/css/glyphish-icons/44-shoebox.png"),
+	new Category("Sports", "../DB-Project/css/glyphish-icons/129-golf.png")
+
+
+);
+ var categoryNextId = 0;
+ 
+for (var i=0; i < categoryList.length;++i){
+	categoryList[i].id = categoryNextId++;
+}
+
+
+
+
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all categories
+app.get('/DB-Project/categories', function(req, res) {
+	console.log("GET");
+	var response = {"categories" : categoryList};
+  	res.json(response);
+});
+
+
+// REST Operation - HTTP GET to read a category based on its id
+app.get('/DB-Project/categories/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET category: " + id);
+
+	if ((id < 0) || (id >= categoryNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Category not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < categoryList.length; ++i){
+			if (categoryList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Category not found.");
+		}
+		else {
+			var response = {"category" : categoryList[target]};
+  			res.json(response);	
+  		}	
+	}
+});
+
+// REST Operation - HTTP PUT to updated a category based on its id
+app.put('/DB-Project/categories/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT category: " + id);
+
+	if ((id < 0) || (id >= categoryNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Category not found.");
+	}
+	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('iconSrc')){			//<-----------------------------------------------------------------------!!!!!!!!
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for category.');
+  	}
+	else {
+		var target = -1;
+		for (var i=0; i < categoryList.length; ++i){
+			if (categoryList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Category not found.");			
+		}	
+		else {
+			var theCategory= categoryList[target];
+			theCategory.name = req.body.name;
+			theCategory.iconSrc = req.body.iconSrc;
+			theCategory.subCats = req.body.subCats;
+			var response = {"category" : theCategory};
+  			res.json(response);		
+  		}
+	}
+});
+
+// REST Operation - HTTP DELETE to delete a category based on its id
+app.del('/DB-Project/categories/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("DELETE category: " + id);
+
+	if ((id < 0) || (id >= categoryNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Category not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < categoryList.length; ++i){
+			if (categoryList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Category not found.");			
+		}	
+		else {
+			categoryList.splice(target, 1);
+  			res.json(true);
+  		}		
+	}
+});
+
+// REST Operation - HTTP POST to add a new a category
+app.post('/DB-Project/categories', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('iconSrc')) {			//<--------------------------------------------------------------------!!!!!!
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for category.');
+  	}
+
+  	var newCategory = new Category(req.body.name, req.body.imgSrc);
+  	console.log("New Category: " + JSON.stringify(newCategory));
+  	newCategory.id = categoryNextId++;
+  	categoryList.push(newCategory);
+  	res.json(true);
+});
+
+//--------------------------------------SubCategory---------------------------------------------------------------//
+	
+	
+var subCat = require("./appjs/subCat.js");
+var SubCat = subCat.SubCat;
+
+
+var subCatList = new Array(
+	new SubCat("Children", "../DB-Project/css/glyphish-icons/96-book.png"),
+	new SubCat("Fiction", "../DB-Project/css/glyphish-icons/107-widescreen.png"),
+	new SubCat("Technology", "../DB-Project/css/glyphish-icons/67-tshirt.png"),
+	new SubCat("Business" , "../DB-Project/css/glyphish-icons/31-ipod.png")
+
+
+);
+ var subCatNextId = 0;
+ 
+for (var i=0; i < subCatList.length;++i){
+	subCatList[i].id = subCatNextId++;
+}
+
+
+
+
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all subCats
+app.get('/DB-Project/subCats', function(req, res) {
+	console.log("GET");
+	var response = {"subCats" : subCatList};
+  	res.json(response);
+});
+
+
+// REST Operation - HTTP GET to read a subCat based on its id
+app.get('/DB-Project/subCats/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET subCat: " + id);
+
+	if ((id < 0) || (id >= subCatNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("SubCat not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < subCatList.length; ++i){
+			if (subCatList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("SubCat not found.");
+		}
+		else {
+			var response = {"subCat" : subCatList[target]};
+  			res.json(response);	
+  		}	
+	}
+});
+
+// REST Operation - HTTP PUT to updated a subCat based on its id
+app.put('/DB-Project/subCats/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT subCat: " + id);
+
+	if ((id < 0) || (id >= subCatNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("SubCat not found.");
+	}
+	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('iconSrc')){			//<-----------------------------------------------------------------------!!!!!!!!
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for subCat.');
+  	}
+	else {
+		var target = -1;
+		for (var i=0; i < subCatList.length; ++i){
+			if (subCatList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("SubCat not found.");			
+		}	
+		else {
+			var theSubCat= subCatList[target];
+			theSubCat.name = req.body.name;
+			theSubCat.iconSrc = req.body.iconSrc;
+			theSubCat.subCats = req.body.subCats;
+			var response = {"subCat" : theSubCat};
+  			res.json(response);		
+  		}
+	}
+});
+
+// REST Operation - HTTP DELETE to delete a subCat based on its id
+app.del('/DB-Project/subCats/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("DELETE subCat: " + id);
+
+	if ((id < 0) || (id >= subCatNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("SubCat not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < subCatList.length; ++i){
+			if (subCatList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("SubCat not found.");			
+		}	
+		else {
+			subCatList.splice(target, 1);
+  			res.json(true);
+  		}		
+	}
+});
+
+// REST Operation - HTTP POST to add a new a subCat
+app.post('/DB-Project/subCats', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('iconSrc')) {			//<--------------------------------------------------------------------!!!!!!
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for subCat.');
+  	}
+
+  	var newSubCat = new SubCat(req.body.name);
+  	console.log("New SubCat: " + JSON.stringify(newSubCat));
+  	newSubCat.id = subCatNextId++;
+  	subCatList.push(newSubCat);
+  	res.json(true);
+});

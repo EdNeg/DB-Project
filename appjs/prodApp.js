@@ -14,7 +14,7 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				product = productList[i];
 				list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-					"<img src= product.imgSrc  width=\"300\" height=\"250\"/>" +
+					"<img src= " +  product.imgSrc + "/>" +
 					"<h2>" + product.brand + " " + product.name +  "</h2>" + 
 					"<p><strong> Model: " + product.model + "</strong></p>" + 
 					"<p><i> Dimensions: " + product.dimensions + "</i></p>" +
@@ -22,10 +22,10 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-
 					"</a></li>");
 			}
-			list.listview("refresh");	
+			list.listview("refresh");
+				
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -34,8 +34,11 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 	});
 });
 
+
+
 $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	// currentProduct has been set at this point
+	$("#upd-id").val(currentProduct.id);
 	$("#upd-name").val(currentProduct.name);
 	$("#upd-brand").val(currentProduct.brand);
 	$("#upd-model").val(currentProduct.model);

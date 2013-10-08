@@ -9,7 +9,12 @@
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 		<script src="js/accounting.js"></script>
 		<script src="appjs/product.js"></script>
-		<script src="appjs/2app.js"></script>
+		<script src="appjs/prodApp.js"></script>
+		<script src="appjs/login.js"></script>
+		<script src="appjs/catApp.js"></script>
+		<script src="appjs/category.js"></script>
+		<script src="appjs/subCat.js"></script>
+		<script src="appjs/subCatApp.js"></script>
 
 		<meta charset="utf-8">
 		
@@ -19,7 +24,7 @@
 	<body class="ui-mobile-viewport">
   		<div data-role="page" id="home" class="ui-page ui-body-e ui-page-active">
 		<header data-role="header">
-			<h1>Logo</h1>
+			<h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1>
 			
 		    <a href="#products" data-role="button" data-iconpos="left" data-icon="search" data-theme="b">Search</a>
 			<a href="#" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
@@ -61,7 +66,7 @@
 
 	<form>
 		<label>
-		 	<input name="checkbox-0 " type="checkbox" data-theme="e">Check if administrator
+		 	<input name="checkbox-0" id = "adminCheck" type="checkbox" data-theme="e" data-target= '#adminProfile'>Check if administrator
     	 </label>
     	<input type="submit" value="Sign in" data-inline="true">
 	</form>
@@ -112,7 +117,7 @@
 		
 		
 	</header>
-	<style type="text/css">
+	<!--<style type="text/css">
 	    .nav-glyphish-example .ui-btn .ui-btn-inner { padding-top: 40px !important; }
 	    .nav-glyphish-example .ui-btn .ui-icon { width: 40px!important; height: 35px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: none !important; border-radius: none !important; }
 	    #book .ui-icon { background:  url(css/glyphish-icons/96-book.png) 50% 50% no-repeat; background-size: 24px 22px; }
@@ -125,17 +130,18 @@
 	
 	<div data-role="footer" class="nav-glyphish-example">
     <div data-role="navbar" class="nav-glyphish-example" data-grid="a">
-    <ul>
-	
-	 <li><a href="#" data-role="button" id="book" data-icon="custom" data-theme="e" data-iconpos="top">Books</a></li>
+    
+    <ul> -->
+	<ul id="categories-list" data-role="listview"  data-inset="true" data-theme = "e">
+	 <!--<li><a href="#" data-role="button" id="book" data-icon="custom" data-theme="e" data-iconpos="top">Books</a></li>
 	 <li><a href="#" data-role="button" id="electronic" data-icon="custom" data-theme="e" data-iconpos="top">Electronics</a></li>
 	 <li><a href="#" data-role="button" id="computer" data-icon="custom" data-theme="e" data-iconpos="top">Computers</a></li>
 	 <li><a href="#" data-role="button" id="clothing" data-icon="custom" data-theme="e" data-iconpos="top">Clothing</a></li>
 	 <li><a href="#" data-role="button" id="shoes" data-icon="custom" data-theme="e" data-iconpos="top">Shoes</a></li>
 	 <li><a href="#" data-role="button" id="sports" data-icon="custom" data-theme="e" data-iconpos="top">Sports</a></li>
-	
+	-->
 	</ul>
-    </div>
+    <!--</div>-->
 </div>
 
 	
@@ -149,8 +155,9 @@
 		
 		<div data-role="navbar">
     	<ul>
-       		<li><a href="#" data-iconpos="bottom" data-icon="check" data-theme="a" data-transition="slidefade">Edit Categories</a></li>
-        	<li><a href="#" class="ui-btn-active" data-iconpos="bottom" data-icon="edit" data-theme="a" data-transition="slidefade">Edit User Profile</a></li>
+       		<li><a href="#add-category" data-iconpos="bottom" data-icon="plus" data-theme="a" data-transition="slidefade">Add Category</a></li>
+       		<li><a href="#" data-iconpos="bottom" data-icon="minus" data-theme="a" data-transition="slidefade">Remove Categories</a></li>
+        	<li><a href="#" data-iconpos="bottom" data-icon="edit" data-theme="a" data-transition="slidefade">Edit User Profile</a></li>
     	</ul>
 	</div><!-- /navbar -->
 	</header>
@@ -172,7 +179,7 @@
 <footer data-role="footer" data-position="fixed">
 		<nav data-role="navbar">
 			<ul>
-				<li><a href="#" data-icon="gear">Reports</a></li>
+				<li><a href="#reports" data-icon="gear">Reports</a></li>
 			</ul>
 		</nav>
 	</footer>
@@ -181,7 +188,7 @@
 
 
 
-<div data-role="page" id="products">
+<div data-role="page" id="products" >
 		<header data-role="header">
 			<h1>Search Products</h1>
 			<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Home</a>
@@ -199,21 +206,66 @@
 		<h1>Product Detail</h1>
 		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
 	</header>
+	<div data-role="navbar">
+    <ul>
+        <li><a href="#" data-icon="check" data-iconpos="top" data-transition="slidefade" data-theme="e">Place Bid</a></li>
+        <li><a href="#" data-icon="check" data-iconpos="top" data-transition="slidefade" data-theme="e">Buy Now</a></li>
+    </ul>
+</div><!-- /navbar -->
+
 	<form id="product-view-form">
  				<fieldset data-role="controlgroup">
  					<ul>
+ 					<li><label for="upd-imgSrc"> <img src = "../DB-Project/css/img/ipad-normal.jpg"  width="250" height="250"/> </label></li>
+ 					<li><label for="upd-id"> Product id: <input id="upd-id" name="id" type="number"/></label></li>
   					<li><label for="upd-name"> Name: <input id="upd-name" name="name" type="text"/></label></li>
   					<li><label for="upd-model"> Model: <input id="upd-model" name="model" type="text"/></label></li>
-  					<li><label for="upd-brand"> Brand: <input id="upd-bradn" name="brand" type="text"/></label></li>
+  					<li><label for="upd-brand"> Brand: <input id="upd-brand" name="brand" type="text"/></label></li>
+  					<li><label for="upd-dimensions"> Dimensions: <input id="upd-dimensions" name="dimensions" type="text"/></label></li>
   					<li><label for="upd-bidPrice"> Bid Price $: <input id="upd-bidPrice" name="bidPrice" type="number"/></label></li>
   					<li><label for="upd-instPrice"> Instant Price $: <input id="upd-instPrice" name="instPrice" type="number"/></label></li>
   			  		<li><label for="upd-description"> Description: <input id="upd-description" name="description" type="text"/></label></li>
-  			  		<li><label for="upd-imgSrc"> Image: <img src= "upd-imgSrc" width="300" height="250"/> </label></li>
 
   			  	</ul>
 			 </fieldset>
 			</form>
+			<p id = "upd-name"></p>
 </div><!-- Page Product Details -->
+
+<div data-role="page" id="category-view">
+	<header data-role="header">
+		<h1>Category Results</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	<div data-role="content">
+		<ul id="Books" data-role="listview" data-inset="true">	<!----------------------------------------------------- STATIC FOR ALL-------------------------->
+			</ul>
+	</div>
+	<form id="category-view-form">
+ 				<fieldset data-role="controlgroup">
+ 				<ul>
+ 					<li><label for="upd-name2"><input id="upd-name2" name="name" type="text"/></label></li>
+  					  					  			  		
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!-- Page Category -->
+
+
+<div data-role="page" id="subCat-view">
+	<header data-role="header">
+		<h1>Category Results</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	<form id="category-view-form">
+ 				<fieldset data-role="controlgroup">
+ 					 					
+  					<li><label for="upd-name"><input id="upd-name3" name="name" type="text"/></label></li>
+  					  					  			  		
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!-- Page SubCategory -->
 
 
 
@@ -236,7 +288,86 @@
 	
 </div><!-- Page Edit Categories -->
 
+<div data-role="page" id= "reports">
+<header data-role="header">
+	<h1>Reports</h1>
+	<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <h4>Total Sales</h4>
+    <ul data-role="listview" data-inset="true">
+        <li>Day</li>
+        <li>Week</li>
+        <li>Month</li>
+    </ul>
+    </div>
+    <div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <h4>Total Sales by Product</h4>
+    <ul data-role="listview" data-inset="true">
+        <li>Day</li>
+        <li>Week</li>
+        <li>Month</li>
+    </ul>
+    
+</div>
+<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <h4>Total Revenue by Product</h4>
+    <ul data-role="listview" data-inset="true">
+        <li>Day</li>
+        <li>Week</li>
+        <li>Month</li>
+    </ul>
+    
+</div>
 
+	
+	
+</div><!-- Page Reports -->
+
+<div id="sell-product" data-role="page">
+			<div data-role="header" data-theme="b" data-position="fixed">
+				<a data-role="button" data-rel="back">Cancel</a>
+				<h1>New Product</h1>
+				<a data-role="button" data-rel="back" onclick="SaveProduct()">Sell</a>
+			</div>
+			<center>
+				<h2>Enter product information</h2>
+			</center>
+			<form id="product-form">
+ 				<fieldset data-role="controlgroup">
+ 					<ul>
+  					<li><label for="imgSrc"> <img src = "../DB-Project/css/img/ipad-normal.jpg"  width="250" height="250"/> </label></li>
+ 					<li><label for="id"> Product id: <input id="id" name="id" type="number"/></label></li>
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+  					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
+  					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
+  					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
+  					<li><label for="bidPrice"> Bid Price $: <input id="bidPrice" name="bidPrice" type="number"/></label></li>
+  					<li><label for="instPrice"> Instant Price $: <input id="instPrice" name="instPrice" type="number"/></label></li>
+  			  		<li><label for="description"> Description: <input id="description" name="description" type="text"/></label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!-- Page Sell Product -->
+
+
+<div id="add-category" data-role="page">
+			<div data-role="header" data-theme="b" data-position="fixed">
+				<a data-role="button" data-rel="back">Cancel</a>
+				<h1>Add Category</h1>
+				<a data-role="button" data-rel="back" onclick="SaveCategory()">Save</a>
+			</div>
+			<center>
+				<h2>Enter category information</h2>
+			</center>
+			<form id="category-form">
+ 				<fieldset data-role="controlgroup">
+ 					<ul>
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+  					<li><label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!-- Page Add Category -->
 
 
 </body>
