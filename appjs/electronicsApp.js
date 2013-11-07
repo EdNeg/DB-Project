@@ -3,18 +3,18 @@
 $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books",
+		url : "http://localhost:3412/DB-Project/Electronics",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var subCatList = data.Books;
-			var len = subCatList.length;
-			var list = $("#Books");
+			var electCatList = data.Electronics;
+			var len = electCatList.length;
+			var list = $("#Electronics");
 			list.empty();
-			var subCat;
+			var electCat;
 			for (var i=0; i < len; ++i){
-				subCat = subCatList[i];
-				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+				electCat = electCatList[i];
+				list.append("<li><a onclick=GetElectCat(" + electCat.id + ")>" + 
+					"<h1>" + electCat.name +  "</h1>" +
 					
 					"</a></li>");
 			}
@@ -25,13 +25,11 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 			alert("Data not found!");
 		}
 	});
-});// --------------------------------------------Books-List-------------------------------------
-
-
+});// --------------------------------------------Electronics-List-------------------------------------
 
 $(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentSubCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentSubCat.name;
+	// currentElectCat has been set at this point
+	document.getElementById("currSubCat-Name").innerHTML = currentElectCat.name;
 	
 });
 
@@ -56,14 +54,14 @@ function SaveSubCat(){
 	console.log("New SubCat: " + JSON.stringify(newSubCat));
 	var newSubCatJSON = JSON.stringify(newSubCat);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books",
+		url : "http://localhost:3412/DB-Project/Electronics",
 		method: 'post',
 		data : newSubCatJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Electronics");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -75,17 +73,17 @@ function SaveSubCat(){
 
 }
 
-var currentSubCat = {};
+var currentElectCat = {};
 
-function GetSubCat(id){
+function GetElectCat(id){
 	$.mobile.loading("show");
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + id,
+		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentElectCat = data.electCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#subCat-view");
 		},
@@ -108,18 +106,18 @@ function UpdateSubCat(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var updSubCat = ConverToJSON(formData);
-	updSubCat.id = currentSubCat.id;
+	updSubCat.id = currentElectCat.id;
 	console.log("Updated SubCat: " + JSON.stringify(updSubCat));
 	var updSubCatJSON = JSON.stringify(updSubCat);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + updSubCat.id,
+		url : "http://localhost:3412/DB-Project/Electronics/" + updSubCat.id,
 		method: 'put',
 		data : updSubCatJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Electronics");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -136,15 +134,15 @@ function UpdateSubCat(){
 
 function DeleteSubCat(){
 	$.mobile.loading("show");
-	var id = currentSubCat.id;
+	var id = currentElectCat.id;
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + id,
+		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'delete',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Electronics");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);

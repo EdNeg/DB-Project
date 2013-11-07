@@ -3,18 +3,18 @@
 $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books",
+		url : "http://localhost:3412/DB-Project/Sports",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var subCatList = data.Books;
-			var len = subCatList.length;
-			var list = $("#Books");
+			var sportCatList = data.Sports;
+			var len = sportCatList.length;
+			var list = $("#Sports");
 			list.empty();
-			var subCat;
+			var sportCat;
 			for (var i=0; i < len; ++i){
-				subCat = subCatList[i];
-				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+				sportCat = sportCatList[i];
+				list.append("<li><a onclick=GetSportCat(" + sportCat.id + ")>" + 
+					"<h1>" + sportCat.name +  "</h1>" +
 					
 					"</a></li>");
 			}
@@ -25,13 +25,11 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 			alert("Data not found!");
 		}
 	});
-});// --------------------------------------------Books-List-------------------------------------
-
-
+});// --------------------------------------------Sports-List-------------------------------------
 
 $(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentSubCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentSubCat.name;
+	// currentSportCat has been set at this point
+	document.getElementById("currSubCat-Name").innerHTML = currentSportCat.name;
 	
 });
 
@@ -56,14 +54,14 @@ function SaveSubCat(){
 	console.log("New SubCat: " + JSON.stringify(newSubCat));
 	var newSubCatJSON = JSON.stringify(newSubCat);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books",
+		url : "http://localhost:3412/DB-Project/Sports",
 		method: 'post',
 		data : newSubCatJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Sports");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -75,17 +73,17 @@ function SaveSubCat(){
 
 }
 
-var currentSubCat = {};
+var currentSportCat = {};
 
-function GetSubCat(id){
+function GetSportCat(id){
 	$.mobile.loading("show");
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + id,
+		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentSportCat = data.sportCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#subCat-view");
 		},
@@ -108,18 +106,18 @@ function UpdateSubCat(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var updSubCat = ConverToJSON(formData);
-	updSubCat.id = currentSubCat.id;
+	updSubCat.id = currentSportCat.id;
 	console.log("Updated SubCat: " + JSON.stringify(updSubCat));
 	var updSubCatJSON = JSON.stringify(updSubCat);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + updSubCat.id,
+		url : "http://localhost:3412/DB-Project/Sports/" + updSubCat.id,
 		method: 'put',
 		data : updSubCatJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Sports");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -136,15 +134,15 @@ function UpdateSubCat(){
 
 function DeleteSubCat(){
 	$.mobile.loading("show");
-	var id = currentSubCat.id;
+	var id = currentSportCat.id;
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + id,
+		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'delete',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Sports");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);

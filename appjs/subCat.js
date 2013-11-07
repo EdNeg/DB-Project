@@ -1,7 +1,6 @@
 module.exports =  { 
-	SubCat : function (name, iconSrc){
+	SubCat : function (name){
 		this.id = "";
 		this.name = name;
-		this.iconSrc = iconSrc;
 	}
 };

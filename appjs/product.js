@@ -1,5 +1,5 @@
 module.exports =  { 
-	Product : function (name, brand, model, description, dimensions, bidPrice, instPrice, imgSrc){
+	Product : function (name, brand, model, description, dimensions, bidPrice, instPrice, imgSrc, tag){
 		this.id = "";
 		this.name = name;
 		this.brand = brand;
@@ -9,5 +9,6 @@ module.exports =  {
 		this.bidPrice = bidPrice;
 		this.instPrice = instPrice;
 		this.imgSrc = imgSrc;
+		this.tag = tag;////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 };

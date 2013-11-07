@@ -3,18 +3,18 @@
 $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books",
+		url : "http://localhost:3412/DB-Project/Clothing",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var subCatList = data.Books;
-			var len = subCatList.length;
-			var list = $("#Books");
+			var clothCatList = data.Clothing;
+			var len = clothCatList.length;
+			var list = $("#Clothing");
 			list.empty();
-			var subCat;
+			var clothCat;
 			for (var i=0; i < len; ++i){
-				subCat = subCatList[i];
-				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+				clothCat = clothCatList[i];
+				list.append("<li><a onclick=GetClothCat(" + clothCat.id + ")>" + 
+					"<h1>" + clothCat.name +  "</h1>" +
 					
 					"</a></li>");
 			}
@@ -25,13 +25,11 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 			alert("Data not found!");
 		}
 	});
-});// --------------------------------------------Books-List-------------------------------------
-
-
+});// --------------------------------------------Clothings-List-------------------------------------
 
 $(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentSubCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentSubCat.name;
+	// currentclothCat has been set at this point
+	document.getElementById("currSubCat-Name").innerHTML = currentClothCat.name;
 	
 });
 
@@ -56,14 +54,14 @@ function SaveSubCat(){
 	console.log("New SubCat: " + JSON.stringify(newSubCat));
 	var newSubCatJSON = JSON.stringify(newSubCat);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books",
+		url : "http://localhost:3412/DB-Project/Clothing",
 		method: 'post',
 		data : newSubCatJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Clothing");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -75,17 +73,17 @@ function SaveSubCat(){
 
 }
 
-var currentSubCat = {};
+var currentClothCat = {};
 
-function GetSubCat(id){
+function GetClothCat(id){
 	$.mobile.loading("show");
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + id,
+		url : "http://localhost:3412/DB-Project/Clothing/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentClothCat = data.clothCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#subCat-view");
 		},
@@ -108,18 +106,18 @@ function UpdateSubCat(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var updSubCat = ConverToJSON(formData);
-	updSubCat.id = currentSubCat.id;
+	updSubCat.id = currentClothCat.id;
 	console.log("Updated SubCat: " + JSON.stringify(updSubCat));
 	var updSubCatJSON = JSON.stringify(updSubCat);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + updSubCat.id,
+		url : "http://localhost:3412/DB-Project/Clothing/" + updSubCat.id,
 		method: 'put',
 		data : updSubCatJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Clothing");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -136,15 +134,15 @@ function UpdateSubCat(){
 
 function DeleteSubCat(){
 	$.mobile.loading("show");
-	var id = currentSubCat.id;
+	var id = currentClothCat.id;
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/Books/" + id,
+		url : "http://localhost:3412/DB-Project/Clothing/" + id,
 		method: 'delete',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#Books");
+			$.mobile.navigate("#Clothing");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);

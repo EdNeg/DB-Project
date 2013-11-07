@@ -1,5 +1,4 @@
 
-
 $(document).on('pagebeforeshow', "#categories", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
@@ -13,9 +12,9 @@ $(document).on('pagebeforeshow', "#categories", function( event, ui ) {
 			var category;
 			for (var i=0; i < len; ++i){
 				category = categoryList[i];
-				list.append("<li><a onclick=GetCategory(" + category.id + ")>" + 
-					"<h1>" + category.name +  "</h1>" +
-					"<img src= " +  category.iconSrc + "/>" + 
+				list.append("<li><a onclick=GetCategory(" + category.id + ")>" + "<center>" +
+					"<img src= " +  category.iconSrc + "/>"+
+					"<h1>" + category.name +  "</h1>" + "</center>" +
 					"</a></li>");
 			}
 			list.listview("refresh");	
@@ -27,12 +26,38 @@ $(document).on('pagebeforeshow', "#categories", function( event, ui ) {
 	});
 });
 
+var algo = {};
 $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	// currentCategory has been set at this point
-	$("#upd-name2").val(currentCategory.name);
-	$("#upd-iconSrc").val(currentCategory.iconSrc);
+	var listy = $("#testy");
+	listy.empty();
+	document.getElementById("currCat-Name").innerHTML = currentCategory.name;
+	//document.getElementById("currCatName2").innerHTML = currentCategory.name;
+	//document.write(currentCategory.name);
+	algo = currentCategory.name;
+	if (algo == "Books"){
+		listy.append("<div data-role='content'><ul id='Books' data-role='listview' data-inset='true'></ul></div>");
+	}
+	else if (algo == "Computers"){
+		listy.append("<div data-role='content'><ul id='Computers' data-role='listview' data-inset='true'></ul></div>");
+	}
+	else if (algo == "Clothing"){
+		listy.append("<div data-role='content'><ul id='Clothing' data-role='listview' data-inset='true'></ul></div>");
+	}
+	else if (algo == "Electronics"){
+		listy.append("<div data-role='content'><ul id='Electronics' data-role='listview' data-inset='true'></ul></div>");
+	}
+	else if (algo == "Shoes"){
+		listy.append("<div data-role='content'><ul id='Shoes' data-role='listview' data-inset='true'></ul></div>");
+	}
+	else if (algo == "Sports"){
+		listy.append("<div data-role='content'><ul id='Sports' data-role='listview' data-inset='true'></ul></div>");
+	}
+	//document.getElementById("currIcoSrc").src = currentCategory.iconSrc;
+	
 
 });
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////

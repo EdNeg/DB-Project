@@ -3364,3 +3364,10 @@ div.ui-slider-switch.ui-mini {
 		display: none;
 	}	
 }
+
+.ui-block-a {
+    width: 50% !important;
+}
+.ui-block-b {
+    width: 50% !important;
+}

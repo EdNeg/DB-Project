@@ -15,9 +15,9 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 				product = productList[i];
 				list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
 					"<img src= " +  product.imgSrc + "/>" +
-					"<h2>" + product.brand + " " + product.name +  "</h2>" + 
-					"<p><strong> Model: " + product.model + "</strong></p>" + 
-					"<p><i> Dimensions: " + product.dimensions + "</i></p>" +
+					"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
 					"<p>" + product.description + "</p>" +
 					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
@@ -36,17 +36,30 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 
 
 
+
+
 $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	// currentProduct has been set at this point
-	$("#upd-id").val(currentProduct.id);
-	$("#upd-name").val(currentProduct.name);
-	$("#upd-brand").val(currentProduct.brand);
-	$("#upd-model").val(currentProduct.model);
-	$("#upd-bidPrice").val(currentProduct.bidPrice);
-	$("#upd-instPrice").val(currentProduct.instPrice);
-	$("#upd-description").val(currentProduct.description);
-	$("#upd-dimensions").val(currentProduct.dimensions);
-	$("#upd-imgSrc").val(currentProduct.imgSrc);
+
+	
+	//document.getElementById("currPid").innerHTML = currentProduct.id;
+	var brandName = currentProduct.brand + " " + currentProduct.name;
+	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidPrice);
+	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.instPrice);
+	var modelNo = "Model: " + currentProduct.model;
+	var dims = "Dimensions: " + currentProduct.dimensions;
+	var pid = "Product id: " + currentProduct.id;
+	document.getElementById("currBrand-Name").innerHTML = brandName;
+	document.getElementById("currImgSrc").src = currentProduct.imgSrc;
+	document.getElementById("currBidPrice").innerHTML = startPrice;
+	document.getElementById("currInstPrice").innerHTML = instPrice;
+	document.getElementById("currDescription").innerHTML = currentProduct.description;
+	document.getElementById("currModel").innerHTML = modelNo;
+	document.getElementById("currDimensions").innerHTML = dims;
+	document.getElementById("currId").innerHTML = pid;
+	
+		
+	
 	
 });
 
