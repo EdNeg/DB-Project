@@ -1,6 +1,6 @@
 
 
-$(document).on('pagebeforeshow', "#products", function( event, ui ) {
+$(document).on('pagebeforeshow', "#view-products", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/products",
@@ -91,7 +91,7 @@ function SaveProduct(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#products");
+			$.mobile.navigate("#view-products");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -136,6 +136,7 @@ function UpdateProduct(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var updProduct = ConverToJSON(formData);
+	currentProduct.id = 0;
 	updProduct.id = currentProduct.id;
 	console.log("Updated Product: " + JSON.stringify(updProduct));
 	var updProductJSON = JSON.stringify(updProduct);
@@ -147,7 +148,7 @@ function UpdateProduct(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#products");
+			$.mobile.navigate("#product-view");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -172,7 +173,7 @@ function DeleteProduct(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#products");
+			$.mobile.navigate("#product");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);

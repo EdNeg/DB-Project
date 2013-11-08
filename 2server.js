@@ -172,8 +172,8 @@ app.post('/DB-Project/products', function(req, res) {
 	console.log("POST");
 
   	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('brand')
-  	|| !req.body.hasOwnProperty('model') || !req.body.hasOwnProperty('bidPrice') || !req.body.hasOwnProperty('description') || !req.body.hasOwnProperty('insstPrice') 
-  	|| !req.body.hasOwnProperty('dimensions') || !req.body.hasOwnProperty('imgSrc')) {
+  	|| !req.body.hasOwnProperty('model') || !req.body.hasOwnProperty('description') || !req.body.hasOwnProperty('dimensions') || !req.body.hasOwnProperty('bidPrice') 
+  	|| !req.body.hasOwnProperty('instPrice') || !req.body.hasOwnProperty('imgSrc')) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for product.');
   	}
