@@ -77,15 +77,16 @@ var currentShoeCat = {};
 
 function GetShoeCat(id){
 	$.mobile.loading("show");
-	$.ajax({
+	if(id == 0){
+		$.ajax({
 		url : "http://localhost:3412/DB-Project/Shoes/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentShoeCat = data.shoeCat;
+			currentSubCat = data.subCat;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#subCat-view");
+			$.mobile.navigate("#childrenS");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -97,7 +98,56 @@ function GetShoeCat(id){
 				alter("Internal Server Error.");
 			}
 		}
-	});
+		});
+	}
+		
+	else if(id == 1){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Shoes/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#womenS");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 2){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Shoes/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#menS");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	
 }
 
 function UpdateSubCat(){

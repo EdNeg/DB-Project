@@ -26,10 +26,10 @@ var product = require("./appjs/product.js");
 var Product = product.Product;
 
 var productList = new Array(
-	new Product("Ipad", "Apple", "APPL2455", "Red Cover, 32GB, Black", "10 X 4", "199", "300", "../DB-Project/css/img/ipad-normal.jpg"),
-	new Product("Air", "Nike", "NK31", "Green Laces, Blue, Size 10 1/2", "10 X 4", "75", "125", "../DB-Project/css/img/nike.jpg"),
-	new Product("Polo", "Nautica", "NAU421", "White with blue stripes, Medium", "10 X 4", "20", "50", "../DB-Project/css/img/naut.jpg"),
-	new Product("Ultrabook", "Samsung", "SMSG2775", "Gray, 128GB SSD, 13.6 Screen", "13.6 X 7", "399", "500", "../DB-Project/css/img/samsung.jpg")
+	new Product("Ipad", "Apple", "APPL2455", "Red Cover, 32GB, Black", "10 X 4", "199", "300", "../DB-Project/css/img/ipad-normal.jpg", "Computers", "Tablets"), //REMEMBER TO CHANGE BACK TO COMPUTERS, TABLETS
+	new Product("Air", "Nike", "NK31", "Green Laces, Blue, Size 10 1/2", "10 X 4", "75", "125", "../DB-Project/css/img/nike.jpg", "Shoes", "Men"),		//REMEMBER TO CHANGE BACK TO SHOES, MEN
+	new Product("Polo", "Nautica", "NAU421", "White with blue stripes, Medium", "10 X 4", "20", "50", "../DB-Project/css/img/naut.jpg", "Clothing", "Men", "Shirt"),
+	new Product("Ultrabook", "Samsung", "SMSG2775", "Gray, 128GB SSD, 13.6 Screen", "13.6 X 7", "399", "500", "../DB-Project/css/img/samsung.jpg", "Computers", "Laptops")
 );
  var productNextId = 0;
  
@@ -201,12 +201,12 @@ var Category = category.Category;
 
 
 var categoryList = new Array(
-	new Category("Books", "../DB-Project/css/glyphish-icons/96-book.png"),
-	new Category("Computers", "../DB-Project/css/glyphish-icons/107-widescreen.png"),
-	new Category("Clothing", "../DB-Project/css/icons/tshirt.png"),
-	new Category("Electronics" , "../DB-Project/css/glyphish-icons/31-ipod.png"),
-	new Category("Shoes", "../DB-Project/css/glyphish-icons/44-shoebox.png"),
-	new Category("Sports", "../DB-Project/css/glyphish-icons/129-golf.png")
+	new Category("Books", "../DB-Project/css/glyphish-icons/book.png"),
+	new Category("Computers", "../DB-Project/css/glyphish-icons/widescreen.png"),
+	new Category("Clothing", "../DB-Project/css/glyphish-icons/tshirt.png"),
+	new Category("Electronics" , "../DB-Project/css/glyphish-icons/ipod.png"),
+	new Category("Shoes", "../DB-Project/css/glyphish-icons/shoebox.png"),
+	new Category("Sports", "../DB-Project/css/glyphish-icons/golf.png")
 
 
 );
@@ -502,125 +502,7 @@ app.post('/DB-Project/Books', function(req, res) {
   	res.json(true);
 });
 
-//-----------------------Regular User------------------------------------------------------
 
-var account = require("./appjs/account.js");
-var Account = account.Account;
-
-var accountList = new Array(
-	new Account("Lara Croft", "LC1", "ivc", "Grey House of Doom, Brazil", "Grey House of Doom, Brazil", "00000023445")
-);
- var accountNextId = 0;
- 
-for (var i=0; i < accountList.length;++i){
-	accountList[i].id = accountNextId++;
-}
-// REST Operations
-// Idea: Data is created, read, updated, or deleted through a URL that 
-// identifies the resource to be created, read, updated, or deleted.
-// The URL and any other input data is sent over standard HTTP requests.
-// Mapping of HTTP with REST 
-// a) POST - Created a new object. (Database create operation)
-// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
-// c) PUT - Update an individual object, or collection  (Database update operation)
-// d) DELETE - Remove an individual object, or collection (Database delete operation)
-
-// REST Operation - HTTP GET to read all cars
-app.get('/DB-Project/accounts', function(req, res) {
-	console.log("GET");
-	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
-	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
-	//console.log("tom: " + JSON.stringify(tom));
-	var response = {"accounts" : accountList};
-  	res.json(response);
-});
-
-// REST Operation - HTTP GET to read a car based on its id
-app.get('/DB-Project/accounts/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET account: " + id);
-
-	if ((id < 0) || (id >= accountNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("Account not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < accountList.length; ++i){
-			if (accountList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Account not found.");
-		}
-		else {
-			var response = {"account" : accountList[target]};
-  			res.json(response);	
-  		}	
-	}
-});
-
-// REST Operation - HTTP PUT to updated a car based on its id
-app.put('/DB-Project/accounts/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT account: " + id);
-
-	if ((id < 0) || (id >= accountNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("Account not found.");
-	}
-	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('mailingaddress')
-		  	|| !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
-		    	res.statusCode = 400;
-		    	return res.send('Error: Missing fields for account.');
-		  	}
-	else {
-		var target = -1;
-		for (var i=0; i < accountList.length; ++i){
-			if (accountList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Account not found.");			
-		}	
-		else {
-			var theAccount= accountList[target];
-			theAccount.name = req.body.name;
-			theAccount.username = req.body.username;
-			theAccount.password = req.body.password;
-			theAccount.mailingaddress = req.body.mailingaddress;
-			theAccount.billingaddress = req.body.billingaddress;
-			theAccount.creditcard = req.body.creditcard;
-			var response = {"account" : theAccount};
-  			res.json(response);		
-  		}
-	}
-});
-
-//REST Operation - HTTP POST to add a new a car
-app.post('/DB-Project/accounts', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('mailingaddress') || !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for account.');
-  	}
-
-  	var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
-  	console.log("New Account: " + JSON.stringify(newAccount));
-  	newAccount.id = accountNextId++;
-  	accountList.push(newAccount);
-  	res.json(true);
-});
 
 //--------------------------------------Computers---------------------------------------------------------------//
 	
@@ -1390,5 +1272,127 @@ app.post('/DB-Project/Sports', function(req, res) {
   	console.log("New SportCat: " + JSON.stringify(newSportCat));
   	newSportCat.id = sportCatNextId++;
   	sportCatList.push(newSportCat);
+  	res.json(true);
+});
+
+
+
+//-----------------------Regular User------------------------------------------------------
+
+var account = require("./appjs/account.js");
+var Account = account.Account;
+
+var accountList = new Array(
+	new Account("Lara Croft", "LC1", "ivc", "Grey House of Doom, Brazil", "Grey House of Doom, Brazil", "00000023445")
+);
+ var accountNextId = 0;
+ 
+for (var i=0; i < accountList.length;++i){
+	accountList[i].id = accountNextId++;
+}
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all cars
+app.get('/DB-Project/accounts', function(req, res) {
+	console.log("GET");
+	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
+	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
+	//console.log("tom: " + JSON.stringify(tom));
+	var response = {"accounts" : accountList};
+  	res.json(response);
+});
+
+// REST Operation - HTTP GET to read a car based on its id
+app.get('/DB-Project/accounts/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET account: " + id);
+
+	if ((id < 0) || (id >= accountNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < accountList.length; ++i){
+			if (accountList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Account not found.");
+		}
+		else {
+			var response = {"account" : accountList[target]};
+  			res.json(response);	
+  		}	
+	}
+});
+
+// REST Operation - HTTP PUT to updated a car based on its id
+app.put('/DB-Project/accounts/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT account: " + id);
+
+	if ((id < 0) || (id >= accountNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('mailingaddress')
+		  	|| !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+		    	res.statusCode = 400;
+		    	return res.send('Error: Missing fields for account.');
+		  	}
+	else {
+		var target = -1;
+		for (var i=0; i < accountList.length; ++i){
+			if (accountList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Account not found.");			
+		}	
+		else {
+			var theAccount= accountList[target];
+			theAccount.name = req.body.name;
+			theAccount.username = req.body.username;
+			theAccount.password = req.body.password;
+			theAccount.mailingaddress = req.body.mailingaddress;
+			theAccount.billingaddress = req.body.billingaddress;
+			theAccount.creditcard = req.body.creditcard;
+			var response = {"account" : theAccount};
+  			res.json(response);		
+  		}
+	}
+});
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/accounts', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')
+  	|| !req.body.hasOwnProperty('mailingaddress') || !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for account.');
+  	}
+
+  	var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	console.log("New Account: " + JSON.stringify(newAccount));
+  	newAccount.id = accountNextId++;
+  	accountList.push(newAccount);
   	res.json(true);
 });

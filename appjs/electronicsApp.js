@@ -77,15 +77,16 @@ var currentElectCat = {};
 
 function GetElectCat(id){
 	$.mobile.loading("show");
-	$.ajax({
+	if(id == 0){
+		$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentElectCat = data.electCat;
+			currentSubCat = data.subCat;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#subCat-view");
+			$.mobile.navigate("#tv");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -97,7 +98,101 @@ function GetElectCat(id){
 				alter("Internal Server Error.");
 			}
 		}
-	});
+		});
+	}
+		
+	else if(id == 1){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Electronics/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#audio");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 2){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Electronics/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#phones");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 3){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Electronics/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#cameras");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 4){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Electronics/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#video");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
 }
 
 function UpdateSubCat(){

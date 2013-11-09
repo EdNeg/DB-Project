@@ -35,24 +35,32 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	//document.getElementById("currCatName2").innerHTML = currentCategory.name;
 	//document.write(currentCategory.name);
 	algo = currentCategory.name;
-	if (algo == "Books"){
-		listy.append("<div data-role='content'><ul id='Books' data-role='listview' data-inset='true'></ul></div>");
+	switch(algo){
+		case "Books":
+			listy.append("<ol id='Books' data-role='list-divider' data-inset='true' data-theme='b'></ol>");
+			break;
+			
+		case "Computers":
+			listy.append("<ol id='Computers' data-role='listview' data-inset='true'></ol>");
+			break;
+		
+		case "Clothing":
+			listy.append("<ol id='Clothing' data-role='listview' data-inset='true'></ol>");
+			break;
+			
+		case "Electronics":
+			listy.append("<ol id='Electronics' data-role='listview' data-inset='true'></ol>");
+			break;
+			
+		case "Shoes":
+			listy.append("<ol id='Shoes' data-role='listview' data-inset='true'></ol>");
+			break;
+			
+		case "Sports":
+			listy.append("<ol id='Sports' data-role='listview' data-inset='true'></ol>");
+			break;
 	}
-	else if (algo == "Computers"){
-		listy.append("<div data-role='content'><ul id='Computers' data-role='listview' data-inset='true'></ul></div>");
-	}
-	else if (algo == "Clothing"){
-		listy.append("<div data-role='content'><ul id='Clothing' data-role='listview' data-inset='true'></ul></div>");
-	}
-	else if (algo == "Electronics"){
-		listy.append("<div data-role='content'><ul id='Electronics' data-role='listview' data-inset='true'></ul></div>");
-	}
-	else if (algo == "Shoes"){
-		listy.append("<div data-role='content'><ul id='Shoes' data-role='listview' data-inset='true'></ul></div>");
-	}
-	else if (algo == "Sports"){
-		listy.append("<div data-role='content'><ul id='Sports' data-role='listview' data-inset='true'></ul></div>");
-	}
+	
 	//document.getElementById("currIcoSrc").src = currentCategory.iconSrc;
 	
 

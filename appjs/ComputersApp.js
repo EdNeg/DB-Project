@@ -76,16 +76,16 @@ function SaveSubCat(){
 var currentCompCat = {};
 
 function GetCompCat(id){
-	$.mobile.loading("show");
-	$.ajax({
+	if(id == 0){
+		$.ajax({
 		url : "http://localhost:3412/DB-Project/Computers/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentCompCat = data.compCat;
+			currentSubCat = data.subCat;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#subCat-view");
+			$.mobile.navigate("#laptops");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -97,7 +97,79 @@ function GetCompCat(id){
 				alter("Internal Server Error.");
 			}
 		}
-	});
+		});
+	}
+		
+	else if(id == 1){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Computers/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#desktops");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 2){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Computers/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#tablets");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 3){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Computers/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#printers");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	
 }
 
 function UpdateSubCat(){
