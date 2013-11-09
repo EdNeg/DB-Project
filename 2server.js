@@ -508,7 +508,7 @@ var account = require("./appjs/account.js");
 var Account = account.Account;
 
 var accountList = new Array(
-	new Account("Lara Croft", "LC1", "ivc", "Grey House of Doom, Brazil", "Grey House of Doom, Brazil", "00000023445")
+	new Account("Frances", "Acevedo", "frenchie916", "ivc", "frances.acevedo2@upr.edu")
 );
  var accountNextId = 0;
  
@@ -527,7 +527,7 @@ for (var i=0; i < accountList.length;++i){
 
 // REST Operation - HTTP GET to read all cars
 app.get('/DB-Project/accounts', function(req, res) {
-	console.log("GET");
+	console.log("GET Account");
 	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
 	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
 	//console.log("tom: " + JSON.stringify(tom));
@@ -574,8 +574,8 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 		res.statusCode = 404;
 		res.send("Account not found.");
 	}
-	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('mailingaddress')
-		  	|| !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+	else if(!req.body.hasOwnProperty('firstname') || !req.body.hasOwnProperty('lastname') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') 
+			|| !req.body.hasOwnProperty('email')) {
 		    	res.statusCode = 400;
 		    	return res.send('Error: Missing fields for account.');
 		  	}
@@ -593,12 +593,11 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 		}	
 		else {
 			var theAccount= accountList[target];
-			theAccount.name = req.body.name;
+			theAccount.firstname = req.body.firstname;
+			theAccount.lastname = req.body.lastname;
 			theAccount.username = req.body.username;
 			theAccount.password = req.body.password;
-			theAccount.mailingaddress = req.body.mailingaddress;
-			theAccount.billingaddress = req.body.billingaddress;
-			theAccount.creditcard = req.body.creditcard;
+			theAccount.email = req.body.email;
 			var response = {"account" : theAccount};
   			res.json(response);		
   		}
@@ -609,16 +608,261 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 app.post('/DB-Project/accounts', function(req, res) {
 	console.log("POST");
 
-  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('mailingaddress') || !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+  	if(!req.body.hasOwnProperty('firstname') || !req.body.hasOwnProperty('lastname') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') 
+			|| !req.body.hasOwnProperty('email')) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for account.');
   	}
 
-  	var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	var newAccount = new Account(req.body.firstname, req.body.lastname, req.body.username, req.body.password, req.body.email);
   	console.log("New Account: " + JSON.stringify(newAccount));
   	newAccount.id = accountNextId++;
   	accountList.push(newAccount);
+  	res.json(true);
+});
+
+//--------------------------------------Address-----------------------------------------------------------------//
+
+var address = require("./appjs/addr.js");
+var Address = address.Address;
+
+var addressList = new Array(
+	new Address("Urb.Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
+			"Carolina", "Puerto Rico", "United States", "00979", "1"),
+			("Urb.Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
+			"Carolina", "Puerto Rico", "United States", "00979", "0")
+			
+);
+ var addressNextId = 0;
+ 
+for (var i=0; i < addressList.length;++i){
+	addressList[i].id = addressNextId++;
+}
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all cars
+app.get('/DB-Project/addrs', function(req, res) {
+	console.log("GET Address");
+	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
+	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
+	//console.log("tom: " + JSON.stringify(tom));
+	var response = {"addresss" : addressList};
+  	res.json(response);
+});
+
+// REST Operation - HTTP GET to read a car based on its id
+app.get('/DB-Project/addrs/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET address: " + id);
+
+	if ((id < 0) || (id >= addressNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Address not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < addressList.length; ++i){
+			if (addressList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Address not found.");
+		}
+		else {
+			var response = {"address" : addressList[target]};
+  			res.json(response);	
+  		}	
+	}
+});
+
+// REST Operation - HTTP PUT to updated a car based on its id
+app.put('/DB-Project/addrs/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT address: " + id);
+
+	if ((id < 0) || (id >= addressNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Address not found.");
+	}
+	else if(!req.body.hasOwnProperty('addressLine1') || !req.body.hasOwnProperty('addressLine2') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state')
+		  	|| !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')) {
+		    	res.statusCode = 400;
+		    	return res.send('Error: Missing fields for address.');
+		  	}
+	else {
+		var target = -1;
+		for (var i=0; i < addressList.length; ++i){
+			if (addressList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Address not found.");			
+		}	
+		else {
+			var theAddress = addressList[target];
+			theAddress.addressLine1 = req.body.addressLine1;
+			theAddress.addressLine2 = req.body.addressLine2;
+			theAddress.city = req.body.city;
+			theAddress.state = req.body.state;
+			theAddress.country = req.body.country;
+			theAddress.zipcode = req.body.zipcode;
+			var response = {"address" : theAddress};
+  			res.json(response);		
+  		}
+	}
+});
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/addrs', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('addressLine1') || !req.body.hasOwnProperty('addressLine2') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state')
+		  	|| !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')) {
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for address.');
+  	}
+
+  	var newAddress = new Address(req.body.addressLine1, req.body.addressLine2, req.body.city, req.body.state, req.body.country, req.body.zipcode);
+  	console.log("New Address: " + JSON.stringify(newAddress));
+  	newAddress.id = addressNextId++;
+  	addressList.push(newAddress);
+  	res.json(true);
+});
+
+//--------------------------------------Credit Card--------------------------------------------------------------------//
+
+var creditcard = require("./appjs/creditcard.js");
+var Creditcard = creditcard.Creditcard;
+
+var creditcardList = new Array(
+	new Creditcard("123456789", "Frances Acevedo", "0", "1234", "09/2018")
+			
+);
+
+ var creditcardNextId = 0;
+ 
+for (var i=0; i < creditcardList.length;++i){
+	creditcardList[i].id = creditcardNextId++;
+}
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all cars
+app.get('/DB-Project/creditcards', function(req, res) {
+	console.log("GET Creditcard");
+	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
+	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
+	//console.log("tom: " + JSON.stringify(tom));
+	var response = {"creditcard" : creditcardList};
+  	res.json(response);
+});
+
+// REST Operation - HTTP GET to read a car based on its id
+app.get('/DB-Project/creditcards/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET creditcard: " + id);
+
+	if ((id < 0) || (id >= creditcardNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Creditcard not found.");
+	}
+	else {
+		var target = -1;
+		for (var i=0; i < creditcardList.length; ++i){
+			if (creditcardList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Creditcard not found.");
+		}
+		else {
+			var response = {"creditcard" : creditcardList[target]};
+  			res.json(response);	
+  		}	
+	}
+});
+
+// REST Operation - HTTP PUT to updated a car based on its id
+app.put('/DB-Project/creditcards/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT creditcard: " + id);
+
+	if ((id < 0) || (id >= creditcardNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Creditcard not found.");
+	}
+	else if(!req.body.hasOwnProperty('number') || !req.body.hasOwnProperty('ownerName') || !req.body.hasOwnProperty('isShipping') || !req.body.hasOwnProperty('securityCode')
+		  	|| !req.body.hasOwnProperty('expDate')) {
+		    	res.statusCode = 400;
+		    	return res.send('Error: Missing fields for creditcard.');
+		  	}
+	else {
+		var target = -1;
+		for (var i=0; i < creditcardList.length; ++i){
+			if (creditcardList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Creditcard not found.");			
+		}	
+		else {
+			var theCreditcard = creditcardList[target];
+			theCreditcard.number = req.body.number;
+			theCreditcard.ownerName = req.body.ownerName;
+			theCreditcard.isShipping = req.body.isShipping;
+			theCreditcard.securityCode = req.body.securityCode;
+			theCreditcard.expDate = req.body.expDate;
+			var response = {"creditcard" : theCreditcard};
+  			res.json(response);		
+  		}
+	}
+});
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/creditcards', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('number') || !req.body.hasOwnProperty('ownerName') || !req.body.hasOwnProperty('isShipping') || !req.body.hasOwnProperty('securityCode')
+		  	|| !req.body.hasOwnProperty('expDate')) {
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for creditcard.');
+  	}
+
+  	var newCreditcard = new Creditcard(req.body.number, req.body.ownerName, req.body.isShipping, req.body.securityCode, req.body.expDate);
+  	console.log("New Creditcard: " + JSON.stringify(newCreditcard));
+  	newCreditcard.id = creditcardNextId++;
+  	creditcardList.push(newCreditcard);
   	res.json(true);
 });
 

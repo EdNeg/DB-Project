@@ -1,11 +1,10 @@
 module.exports =  { 
-	Account : function (name, username, password, mailingaddress, billingaddress, creditcard){
+	Account : function (firstname, lastname, username, password, email){
 		this.id = "";
-		this.name = name;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
-		this.mailingaddress = mailingaddress;
-		this.billingaddress = billingaddress;
-		this.creditcard = creditcard;
+		this.email = email;
 	}
 }

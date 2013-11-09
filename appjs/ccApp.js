@@ -1,20 +1,19 @@
 
 
-$(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
+$(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts",
+		url : "http://localhost:3412/DB-Project/creditcards",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var list = $("#accounts-list");
+			var list = $("#creditcards-list");
 			list.empty();
 			var account;
 				list.append("<li>" +
-				"<h2>" + "First Name: " + currentAccount.firstname + "</h2>" +
-				"<h2>" + "Last Name: " + currentAccount.lastname + "</h2>" +
-				"<h2>" + "Username: " + currentAccount.username + "</h2>" +
-				"<h2>" + "Password: " + currentAccount.password + "</h2>" +
-				"<h2>" + "Email: " + currentAccount.email + "</h2>"  + "</li>");
+				"<h2>" + "CreditCard Number: " + currentCreditcard.number + "</h2>" +
+				"<h2>" + "Last Name: " + currentCreditcard.ownerName + "</h2>" +
+				"<h2>" + "Security Code: " + currentCreditcard.securityCode + "</h2>" +
+				"<h2>" + "Expiration Date: " + currentCreditcard.expDate + "</h2>" + "</li>");
 			
 		list.listview("refresh");		
 	},
@@ -27,13 +26,12 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 
 
 
-$(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#creditcard-view", function( event, ui ) {
 	// currentCar has been set at this point
-	$("#upd-firstname").val(currentAccount.firstname);
-	$("#upd-lastname").val(currentAccount.lastname);
-	$("#upd-username").val(currentAccount.username);
-	$("#upd-password").val(currentAccount.password);
-	$("#upd-email").val(currentAccount.email);	
+	$("#upd-number").val(currentCreditcard.number);
+	$("#upd-ownerName").val(currentCreditcard.ownerName);
+	$("#upd-securityCode").val(currentCreditcard.securityCode);
+	$("#upd-expDate").val(currentCreditcard.expDate);	
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,32 +46,21 @@ function ConverToJSON(formData){
 	return result;
 }
 
-function VerifyUser(){
-	$.mobile.loading("show");
-	var form = $("#verify-form");
-	var formData = form.serializeArray();
-	console.log("form Data: " + formData);
-	var updAccount = ConverToJSON(formData);
-	console.log("Updated Account: " + JSON.stringify(updAccount));
-	var updAccountJSON = JSON.stringify(updAccount);
+function VerifyCreditcard(){
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts/",
+		url : "http://localhost:3412/DB-Project/creditcards/",
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			var verifyList = data.accounts;
+			var verifyList = data.creditcards;
 			var len = verifyList.length;
 			var verify;
 			for (var i=0; i < len; ++i){
 				verify = verifyList[i];
-				if(verify.username == updAccount.username && verify.password == updAccount.password){
-					currentAccount = verify;
+				currentCreditcard = verify;
 					$.mobile.loading("hide");
-					$.mobile.navigate("#accounts");
-				}
-				else{
-					alert("Username and Password Invalid");
+					$.mobile.navigate("#creditcards");
 				}
 			}
 			
@@ -92,24 +79,24 @@ function VerifyUser(){
 	
 }
 
-function SaveAccount(){
+function SaveCreditcard(){
 	$.mobile.loading("show");
-	var form = $("#account-form");
+	var form = $("#creditcard-form");
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
-	var newAccount = ConverToJSON(formData);
-	console.log("New Account: " + JSON.stringify(newAccount));
-	var newAccountJSON = JSON.stringify(newAccount);
+	var newCreditcard = ConverToJSON(formData);
+	console.log("New Creditcard: " + JSON.stringify(newCreditcard));
+	var newCreditcardJSON = JSON.stringify(newCreditcard);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts",
+		url : "http://localhost:3412/DB-Project/creditcards",
 		method: 'post',
-		data : newAccountJSON,
+		data : newCreditcardJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#accounts");
-			alert("You have created an account!");
+			$.mobile.navigate("#creditcards");
+			alert("You have created an creditcard!");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -121,25 +108,25 @@ function SaveAccount(){
 
 }
 
-var currentAccount = {};
+var currentCreditcard = {};
 
-function GetAccount(id){
+function GetCreditcard(id){
 	$.mobile.loading("show");
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts/" + id,
+		url : "http://localhost:3412/DB-Project/creditcards/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentAccount = data.account;
+			currentCreditcard = data.creditcard;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#accounts");
+			$.mobile.navigate("#creditcards");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Account not found.");
+				alert("Creditcard not found.");
 			}
 			else {
 				alter("Internal Server Error.");
@@ -148,25 +135,25 @@ function GetAccount(id){
 	});
 }
 
-function UpdateAccount(){
+function UpdateCreditcard(){
 	$.mobile.loading("show");
-	var form = $("#account-view-form");
+	var form = $("#creditcard-view-form");
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
-	var updAccount = ConverToJSON(formData);
-	updAccount.id = currentAccount.id;
-	console.log("Updated Account: " + JSON.stringify(updAccount));
-	var updAccountJSON = JSON.stringify(updAccount);
+	var updCreditcard = ConverToJSON(formData);
+	updCreditcard.id = currentCreditcard.id;
+	console.log("Updated Creditcard: " + JSON.stringify(updCreditcard));
+	var updCreditcardJSON = JSON.stringify(updCreditcard);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
+		url : "http://localhost:3412/DB-Project/creditcards/" + updCreditcard.id,
 		method: 'put',
-		data : updAccountJSON,
+		data : updCreditcardJSON,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentAccount = data.account;
+			currentCreditcard = data.creditcard;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#accounts");
+			$.mobile.navigate("#creditcards");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -181,23 +168,23 @@ function UpdateAccount(){
 	});
 }
 
-function DeleteAccount(){
+function DeleteCreditcard(){
 	$.mobile.loading("show");
-	var id = currentAccount.id;
+	var id = currentCreditcard.id;
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts/" + id,
+		url : "http://localhost:3412/DB-Project/creditcards/" + id,
 		method: 'delete',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#accounts");
+			$.mobile.navigate("#creditcards");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Account not found.");
+				alert("Creditcard not found.");
 			}
 			else {
 				alter("Internal Server Error.");

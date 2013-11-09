@@ -22,6 +22,10 @@
 		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
+		<script src="appjs/address.js"></script>
+		<script src="appjs/addressApp.js"></script>
+		<script src="appjs/creditCard.js"></script>
+		<script src="appjs/ccApp.js"></script>
 	
 		<meta charset="utf-8">
 		
@@ -81,7 +85,7 @@
 		<label>
 		 	<input name="checkbox-0" id = "adminCheck" type="checkbox" data-theme="e" data-target= '#adminProfile'>Check if administrator
     	 </label>
-    	<a data-role="button" onclick="VerifyUser()" href="../DB-Project/Regular_User.html">Sign in </a>
+    	<a data-role="button" onclick="VerifyUser(); VerifyCreditcard();" href="../DB-Project/Regular_User.html">Sign in </a>
 	</form>
 </div><!-- Page Sign in -->
 
@@ -99,20 +103,56 @@
 	</header>
 	<form id="account-form">
 		<fieldset data-role="controlgroup">
-			<ul>
-				<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">User Info</li>
+				<li><label for="firstname"> First Name: <input id="firstname" name="firstname" type="text"/></label></li>
+				<li><label for="lastname"> Last Name: <input id="lastname" name="lastname" type="text"/></label></li>
 				<li><label for="username"> Username: <input id="username" name="username" type="text"/></label></li>
 				<li><label for="password"> Password: <input id="password" name="password" type="password"/></label></li>
-				<li><label for="mailingaddress"> Mailing Address: <input id="mailingaddress" name="mailingaddress" type="text"/></label></li>
-				<li><label for="billingaddress"> Billing Address: <input id="billingaddress" name="billingaddress" type="text"/></label></li>
-				<li><label for="creditcard"> Credit Card: <input id="creditcard" name="creditcard" type="number"/></label></li>
+				<li><label for="email"> Email: <input id="email" name="email" type="email"/></label></li>
 				</ul>
 				</fieldset>
-				</form>
-		
+	</form>
+	<form id="address-mailing-form">
+		<fieldset data-role="controlgroup">
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">Mailing Address Info</li>
+				<li><label for="addressLine1"> Address Line1: <input id="addressLine1" name="addressLine1" type="text"/></label></li>
+				<li><label for="addressLine2"> Address Line2: <input id="addressLine2" name="addressLine2" type="text"/></label></li>
+				<li><label for="city"> City: <input id="city" name="city" type="text" /></label></li>
+				<li><label for="state"> State: <input id="state" name="state" type="text"/></label></li>
+				<li><label for="country"> Country: <input id="country" name="country" type="text"/></label></li>
+				<li><label for="zipcode"> ZipCode: <input id="zipcode" name="zipcode" type="text"/></label></li>
+				</ul>
+				</fieldset>
+	</form>	
+	<form id="creditCard-form">
+		<fieldset data-role="controlgroup">
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">CreditCard Info</li>
+				<li><label for="number"> CreditCard Number: <input id="number" name="number" type="text"/></label></li>
+				<li><label for="ownerName"> Owner Name: <input id="ownerName" name="ownerName" type="text"/></label></li>
+				<li><label for="securityCode"> Security Code: <input id="securityCode" name="securityCode" type="password" /></label></li>
+				<li><label for="expDate"> Expiration Date: <input id="expDate" name="expDate" type="month"/></label></li>
+				<li><label for="country"> Country: <input id="country" name="country" type="text"/></label></li>
+				</ul>
+				</fieldset>
+	</form>
+	<form id="address-billing-form">
+		<fieldset data-role="controlgroup">
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">Billing Address Info</li>
+				<li><label for="addressLine1"> Address Line1: <input id="addressLine1" name="addressLine1" type="text"/></label></li>
+				<li><label for="addressLine2"> Address Line2: <input id="addressLine2" name="addressLine2" type="text"/></label></li>
+				<li><label for="city"> City: <input id="city" name="city" type="text" /></label></li>
+				<li><label for="state"> State: <input id="state" name="state" type="text"/></label></li>
+				<li><label for="country"> Country: <input id="country" name="country" type="text"/></label></li>
+				<li><label for="zipcode"> ZipCode: <input id="zipcode" name="zipcode" type="text"/></label></li>
+				</ul>
+				</fieldset>
+	</form>	
 	
-
-    <a data-role="button" onclick="SaveAccount()">Submit </a>
+    <a data-role="button" onclick="SaveAccount(); SaveAddressBilling(); SaveAddressMailing(); SaveCreditCard()">Submit </a>
 
 
 </div><!-- Page Register -->
