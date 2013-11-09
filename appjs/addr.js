@@ -1,5 +1,5 @@
 module.exports =  { 
-	Address : function (addressLine1, addressLine2, city, state, country, zipcode, isShipping){
+	Addr : function (addressLine1, addressLine2, city, state, country, zipcode, isShipping){
 		this.id = "";
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;

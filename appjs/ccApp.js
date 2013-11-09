@@ -1,6 +1,6 @@
 
 
-$(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
+$(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/creditcards",
@@ -8,12 +8,12 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
 		success : function(data, textStatus, jqXHR){
 			var list = $("#creditcards-list");
 			list.empty();
-			var account;
 				list.append("<li>" +
 				"<h2>" + "CreditCard Number: " + currentCreditcard.number + "</h2>" +
 				"<h2>" + "Last Name: " + currentCreditcard.ownerName + "</h2>" +
 				"<h2>" + "Security Code: " + currentCreditcard.securityCode + "</h2>" +
 				"<h2>" + "Expiration Date: " + currentCreditcard.expDate + "</h2>" + "</li>");
+				
 			
 		list.listview("refresh");		
 	},
@@ -58,10 +58,9 @@ function VerifyCreditcard(){
 			var verify;
 			for (var i=0; i < len; ++i){
 				verify = verifyList[i];
-				currentCreditcard = verify;
+					currentCreditcard = verify;
 					$.mobile.loading("hide");
-					$.mobile.navigate("#creditcards");
-				}
+					$.mobile.navigate("#accounts");
 			}
 			
 		},

@@ -623,20 +623,20 @@ app.post('/DB-Project/accounts', function(req, res) {
 
 //--------------------------------------Address-----------------------------------------------------------------//
 
-var address = require("./appjs/addr.js");
-var Address = address.Address;
+var addr = require("./appjs/addr.js");
+var Addr = addr.Addr;
 
-var addressList = new Array(
-	new Address("Urb.Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
+var addrList = new Array(
+	new Addr("Urb.Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
 			"Carolina", "Puerto Rico", "United States", "00979", "1"),
 			("Urb.Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
 			"Carolina", "Puerto Rico", "United States", "00979", "0")
 			
 );
- var addressNextId = 0;
+ var addrNextId = 0;
  
-for (var i=0; i < addressList.length;++i){
-	addressList[i].id = addressNextId++;
+for (var i=0; i < addrList.length;++i){
+	addrList[i].id = addrNextId++;
 }
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -651,10 +651,8 @@ for (var i=0; i < addressList.length;++i){
 // REST Operation - HTTP GET to read all cars
 app.get('/DB-Project/addrs', function(req, res) {
 	console.log("GET Address");
-	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
-	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
-	//console.log("tom: " + JSON.stringify(tom));
-	var response = {"addresss" : addressList};
+	
+	var response = {"addrs" : addrList};
   	res.json(response);
 });
 
@@ -663,15 +661,15 @@ app.get('/DB-Project/addrs/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET address: " + id);
 
-	if ((id < 0) || (id >= addressNextId)){
+	if ((id < 0) || (id >= addrNextId)){
 		// not found
 		res.statusCode = 404;
 		res.send("Address not found.");
 	}
 	else {
 		var target = -1;
-		for (var i=0; i < addressList.length; ++i){
-			if (addressList[i].id == id){
+		for (var i=0; i < addrList.length; ++i){
+			if (addrList[i].id == id){
 				target = i;
 				break;	
 			}
@@ -681,7 +679,7 @@ app.get('/DB-Project/addrs/:id', function(req, res) {
 			res.send("Address not found.");
 		}
 		else {
-			var response = {"address" : addressList[target]};
+			var response = {"addrs" : addrList[target]};
   			res.json(response);	
   		}	
 	}
@@ -692,7 +690,7 @@ app.put('/DB-Project/addrs/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("PUT address: " + id);
 
-	if ((id < 0) || (id >= addressNextId)){
+	if ((id < 0) || (id >= addrNextId)){
 		// not found
 		res.statusCode = 404;
 		res.send("Address not found.");
@@ -704,8 +702,8 @@ app.put('/DB-Project/addrs/:id', function(req, res) {
 		  	}
 	else {
 		var target = -1;
-		for (var i=0; i < addressList.length; ++i){
-			if (addressList[i].id == id){
+		for (var i=0; i < addrList.length; ++i){
+			if (addrList[i].id == id){
 				target = i;
 				break;	
 			}
@@ -715,14 +713,14 @@ app.put('/DB-Project/addrs/:id', function(req, res) {
 			res.send("Address not found.");			
 		}	
 		else {
-			var theAddress = addressList[target];
+			var theAddress = addrList[target];
 			theAddress.addressLine1 = req.body.addressLine1;
 			theAddress.addressLine2 = req.body.addressLine2;
 			theAddress.city = req.body.city;
 			theAddress.state = req.body.state;
 			theAddress.country = req.body.country;
 			theAddress.zipcode = req.body.zipcode;
-			var response = {"address" : theAddress};
+			var response = {"addrs" : theAddress};
   			res.json(response);		
   		}
 	}
@@ -738,10 +736,10 @@ app.post('/DB-Project/addrs', function(req, res) {
     	return res.send('Error: Missing fields for address.');
   	}
 
-  	var newAddress = new Address(req.body.addressLine1, req.body.addressLine2, req.body.city, req.body.state, req.body.country, req.body.zipcode);
+  	var newAddress = new Addr(req.body.addressLine1, req.body.addressLine2, req.body.city, req.body.state, req.body.country, req.body.zipcode);
   	console.log("New Address: " + JSON.stringify(newAddress));
-  	newAddress.id = addressNextId++;
-  	addressList.push(newAddress);
+  	newAddress.id = addrNextId++;
+  	addrList.push(newAddress);
   	res.json(true);
 });
 
@@ -773,10 +771,8 @@ for (var i=0; i < creditcardList.length;++i){
 // REST Operation - HTTP GET to read all cars
 app.get('/DB-Project/creditcards', function(req, res) {
 	console.log("GET Creditcard");
-	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
-	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
-	//console.log("tom: " + JSON.stringify(tom));
-	var response = {"creditcard" : creditcardList};
+
+	var response = {"creditcards" : creditcardList};
   	res.json(response);
 });
 

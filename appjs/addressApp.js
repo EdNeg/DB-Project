@@ -1,37 +1,30 @@
 
 
-$(document).on('pagebeforeshow', "#addrs", function( event, ui ) {
+$(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/addrs",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var addressList = data.addrs;
-			var len = addressList.length;
 			var list = $("#addresses-list");
 			list.empty();
 			var address;
-			for(var i=0; i < len; ++i){
-				address = addressList[i];
-				if(address.isShipping == "1"){
+			
 				list.append("<li data-role="list-divider" role="heading">" + "Mailing Address Info" + "</li>" +	
-						"<li>" + "<h2>" + "Address Line 1: " + address.addressLine1 + "</h2>" + 
-						"<h2>" + "Address Line 2: " + address.addressLine2 + "</h2>" +
-						"<h2>" + "City: " + address.city + "</h2>" +
-						"<h2>" + "State: " + address.state + "</h2>" + 
-						"<h2>" + "Country: " + address.country + "</h2>" +
-						"<h2>" + "ZipCode: " + address.zipcode + "</h2>" + "</li>");
-				else{
-					list.append("<li data-role="list-divider" role="heading">" + "Billing Address Info" + "</li>" +	
-							"<li>" + "<h2>" + "Address Line 1: " + address.addressLine1 + "</h2>" + 
-							"<h2>" + "Address Line 2: " + address.addressLine2 + "</h2>" +
-							"<h2>" + "City: " + address.city + "</h2>" +
-							"<h2>" + "State: " + address.state + "</h2>" + 
-							"<h2>" + "Country: " + address.country + "</h2>" +
-							"<h2>" + "ZipCode: " + address.zipcode + "</h2>" + "</li>");
-				}
-		}
-			}
+						"<li>" + "<h2>" + "Address Line 1: " + currentAddress1.addressLine1 + "</h2>" + 
+						"<h2>" + "Address Line 2: " + currentAddress1.addressLine2 + "</h2>" +
+						"<h2>" + "City: " + currentAddress1.city + "</h2>" +
+						"<h2>" + "State: " + currentAddress1.state + "</h2>" + 
+						"<h2>" + "Country: " + currentAddress1.country + "</h2>" +
+						"<h2>" + "ZipCode: " + currentAddress1.zipcode + "</h2>" +
+						"<li data-role="list-divider" role="heading">" + "Billing Address Info" + "</li>" +	
+							"<li>" + "<h2>" + "Address Line 1: " + currentAddress.addressLine1 + "</h2>" + 
+							"<h2>" + "Address Line 2: " + currentAddress.addressLine2 + "</h2>" +
+							"<h2>" + "City: " + currentAddress.city + "</h2>" +
+							"<h2>" + "State: " + currentAddress.state + "</h2>" + 
+							"<h2>" + "Country: " + currentAddress.country + "</h2>" +
+							"<h2>" + "ZipCode: " + currentAddress.zipcode + "</h2>" + "</li>");
+			
 		list.listview("refresh");		
 	},
 		error: function(data, textStatus, jqXHR){
@@ -66,49 +59,45 @@ function ConverToJSON(formData){
 	return result;
 }
 
-//function VerifyUser(){
-	//$.mobile.loading("show");
-	//var form = $("#verify-form");
-	//var formData = form.serializeArray();
-	//console.log("form Data: " + formData);
-	//var updAddress = ConverToJSON(formData);
-	//console.log("Updated Address: " + JSON.stringify(updAddress));
-	//var updAddressJSON = JSON.stringify(updAddress);
-	//$.ajax({
-		//url : "http://localhost:3412/DB-Project/Addresss/",
-		//method: 'get',
-		//contentType: "application/json",
-		//dataType:"json",
-		//success : function(data, textStatus, jqXHR){
-			//var verifyList = data.Addresss;
-			//var len = verifyList.length;
-			//var verify;
-			//for (var i=0; i < len; ++i){
-				//verify = verifyList[i];
-				//if(verify.addressLine2 == updAddress.addressLine2 && verify.city == updAddress.city){
-					//currentAddress = verify;
-					//$.mobile.loading("hide");
-					//$.mobile.navigate("#Addresss");
-				//}
-				//else{
-					//alert("addressLine2 and city Invalid");
-				//}
-			//}
+function VerifyAddress(){
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/addrs/",
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			var verifyList = data.addrs;
+			var len = verifyList.length;
+			var verify;
+			for (var i=0; i < len; ++i){
+				verify = verifyList[i];
+				if(verify.isShipping == "1"){
+					currentAddress1 = verify;
+					$.mobile.loading("hide");
+					$.mobile.navigate("#accounts");
+				}
+				else if(verify.isShipping == "0"){
+					currentAddress = verify;
+					$.mobile.loading("hide");
+					$.mobile.navigate("#accounts");
+				}
+			}
 			
-		//},
-		//error: function(data, textStatus, jqXHR){
-			//console.log("textStatus: " + textStatus);
-			//$.mobile.loading("hide");
-			//if (data.status == 404){
-				//alert("Data could not be updated!");
-			//}
-			//else {
-				//alert("Internal Error.");		
-			//}
-		//}
-	//});
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("Data could not be updated!");
+			}
+			else {
+				alert("Internal Error.");		
+			}
+		}
+	});
 	
-//}
+}
+
 
 function SaveAddressMailing(){
 	$.mobile.loading("show");
@@ -171,6 +160,7 @@ function SaveAddressBilling(){
 }
 
 var currentAddress = {};
+var currentAddress1 = {};
 
 function GetAddress(id){
 	$.mobile.loading("show");
