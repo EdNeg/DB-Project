@@ -12,8 +12,9 @@
 		<script src="js/accounting.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
-		<script src="appjs/addr.js"></script>
+		<script src="appjs/addressinfo.js"></script>
 		<script src="appjs/addressApp.js"></script>
+		<script src="appjs/address2App.js"></script>
 		<script src="appjs/creditcard.js"></script>
 		<script src="appjs/ccApp.js"></script>
 
@@ -33,17 +34,26 @@
 			<li data-role="list-divider" role="heading">User Info</li>	
 				<li id="accounts-list" data-inset="true">
 				</li>
-			</div>
+				</ul>
+			</div> 
 		<div data-role="content">
 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
-				<li id="addresses-list" data-inset="true">
-				</li>
+				<li data-role="list-divider" role="heading">Mailing Address</li>	
+				<li id="address-list" data-inset="true"></li>
+				</ul>
+			</div> 
+		<div data-role="content">
+				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">Billing Address</li>
+				<li id="address2-list" data-inset="true"></li>
+				</ul>
 			</div>
 		<div data-role="content">
 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
 			<li data-role="list-divider" role="heading">Credit Card</li>	
 				<li id="creditcards-list" data-inset="true">
 				</li>
+				</ul>
 			</div>
 		
 	</div>

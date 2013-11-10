@@ -12,6 +12,11 @@
 		<script src="js/accounting.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
+		<script src="appjs/addressinfo.js"></script>
+		<script src="appjs/addressApp.js"></script>
+		<script src="appjs/address2App.js"></script>
+		<script src="appjs/creditcard.js"></script>
+		<script src="appjs/ccApp.js"></script>
 
 
 </head>
@@ -22,23 +27,60 @@
 			<a data-role="button" href="../DB-Project/Account.html" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left">Account</a>
 			<h1>BoricuaBay</h1>
-			<a data-role="button" data-rel="back" onclick="UpdateAccount()">Save</a>
+			<a data-role="button" data-rel="back" href="../DB-Project/Account.html" onclick="UpdateAddress2(); UpdateCreditcard(); UpdateAddress(); UpdateAccount()">Save</a>
 		</header>
 			<center>
 				<h2>Enter the new account info</h2>
 			</center>
 			<form id="account-view-form">
  				<fieldset data-role="controlgroup">
- 					<ul>
-  					<li><label for="upd-name"> Name: <input id="upd-name" name="name" type="text"/></label></li>
-  					<li><label for="upd-username"> Username: <input id="upd-username" name="username" type="text"/></label></li>
-				    <li><label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
-  					<li><label for="upd-mailingaddress"> Mailing Address: <input id="upd-mailingaddress" name="mailingaddress" type="text"/></label></li>
-  					<li><label for="upd-billingaddress"> Billing Address: <input id="upd-billingaddress" name="billingaddress" type="text"/></label></li>
-  					<li><label for="upd-creditcard"> Credit Card: <input id="upd-creditcard" name="creditcard" type="number"/></label></li>
-  			  	</ul>
+ 					<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>
+  					<li><label for="upd-firstname"> First Name: <input id="upd-firstname" name="firstname" type="text"/></label></li>
+					<li><label for="upd-lastname"> Last Name: <input id="upd-lastname" name="lastname" type="text"/></label></li>
+					<li><label for="upd-username"> Username: <input id="upd-username" name="username" type="text"/></label></li>
+					<li><label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
+					<li><label for="upd-email"> Email: <input id="upd-email" name="email" type="email"/></label></li>
+				</ul>
 			 </fieldset>
 			</form>
+		<form id="creditcard-view-form">
+		<fieldset data-role="controlgroup">
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">CreditCard Info</li>
+				<li><label for="upd-number"> CreditCard Number: <input id="upd-number" name="number" type="text"/></label></li>
+				<li><label for="upd-ownerName"> Owner Name: <input id="upd-ownerName" name="ownerName" type="text"/></label></li>
+				<li><label for="upd-securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="password" /></label></li>
+				<li><label for="upd-expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="month"/></label></li>
+				</ul>
+				</fieldset>
+		</form>
+	<form id="address-view-form">
+		<fieldset data-role="controlgroup">
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">Mailing Address Info</li>
+				<li><label for="upd-addressLine1"> Address Line1: <input id="upd-addressLine1" name="addressLine1" type="text"/></label></li>
+				<li><label for="upd-addressLine2"> Address Line2: <input id="upd-addressLine2" name="addressLine2" type="text"/></label></li>
+				<li><label for="upd-city"> City: <input id="upd-city" name="city" type="text" /></label></li>
+				<li><label for="upd-state"> State: <input id="upd-state" name="state" type="text"/></label></li>
+				<li><label for="upd-country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
+				<li><label for="upd-zipcode"> ZipCode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+				</ul>
+		</fieldset>
+	</form>	
+		<form id="address2-view-form">
+		<fieldset data-role="controlgroup">
+			<ul data-role="listview" data-divider-theme="b" data-inset="true">
+				<li data-role="list-divider" role="heading">Billing Address Info</li>
+				<li><label for="upd2-addressLine1"> Address Line1: <input id="upd2-addressLine1" name="addressLine1" type="text"/></label></li>
+				<li><label for="upd2-addressLine2"> Address Line2: <input id="upd2-addressLine2" name="addressLine2" type="text"/></label></li>
+				<li><label for="upd2-city"> City: <input id="upd2-city" name="city" type="text" /></label></li>
+				<li><label for="upd2-state"> State: <input id="upd2-state" name="state" type="text"/></label></li>
+				<li><label for="upd2-country"> Country: <input id="upd2-country" name="country" type="text"/></label></li>
+				<li><label for="upd2-zipcode"> ZipCode: <input id="upd2-zipcode" name="zipcode" type="text"/></label></li>
+				</ul>
+				</fieldset>
+	</form>	
 		</div>
 	
 </body>

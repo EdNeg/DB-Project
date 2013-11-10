@@ -12,8 +12,8 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 				list.append("<li>" +
 				"<h2>" + "First Name: " + currentAccount.firstname + "</h2>" +
 				"<h2>" + "Last Name: " + currentAccount.lastname + "</h2>" +
-				"<h2>" + "Username: " + currentAccount.username + "</h2>" +
-				"<h2>" + "Password: " + currentAccount.password + "</h2>" +
+				"<h2>" + "Username: " + currentAccount.username  + "</h2>" +
+				"<h2>" + "Password: " +  currentAccount.password + "</h2>" +
 				"<h2>" + "Email: " + currentAccount.email + "</h2>"  + "</li>");
 			
 		list.listview("refresh");		

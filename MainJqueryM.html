@@ -22,8 +22,9 @@
 		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
-		<script src="appjs/addr.js"></script>
+		<script src="appjs/addressinfo.js"></script>
 		<script src="appjs/addressApp.js"></script>
+		<script src="appjs/address2App.js"></script>
 		<script src="appjs/creditcard.js"></script>
 		<script src="appjs/ccApp.js"></script>
 	
@@ -85,7 +86,7 @@
 		<label>
 		 	<input name="checkbox-0" id = "adminCheck" type="checkbox" data-theme="e" data-target= '#adminProfile'>Check if administrator
     	 </label>
-    	<a data-role="button" onclick="VerifyUser(); VerifyCreditcard(); VerifyAddress();" href="../DB-Project/Regular_User.html">Sign in </a>
+    	<a data-role="button" onclick="VerifyUser(); VerifyCreditcard(); VerifyAddress(); VerifyAddress2()" href="../DB-Project/Regular_User.html">Sign in </a>
 	</form>
 </div><!-- Page Sign in -->
 
@@ -138,7 +139,7 @@
 				</ul>
 				</fieldset>
 	</form>
-	<form id="address-billing-form">
+	<form id="address2-billing-form">
 		<fieldset data-role="controlgroup">
 			<ul data-role="listview" data-divider-theme="b" data-inset="true">
 				<li data-role="list-divider" role="heading">Billing Address Info</li>
@@ -152,7 +153,8 @@
 				</fieldset>
 	</form>	
 	
-    <a data-role="button" onclick="SaveAccount(); SaveAddressBilling(); SaveAddressMailing(); SaveCreditCard()">Submit </a>
+	
+    <a data-role="button" onclick="SaveAccount(); SaveAddress2(); SaveAddress(); SaveCreditCard()" href="../DB-Project/Regular_User.html">Submit </a>
 
 
 </div><!-- Page Register -->

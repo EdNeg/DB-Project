@@ -10,7 +10,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 			list.empty();
 				list.append("<li>" +
 				"<h2>" + "CreditCard Number: " + currentCreditcard.number + "</h2>" +
-				"<h2>" + "Last Name: " + currentCreditcard.ownerName + "</h2>" +
+				"<h2>" + "Owner Name: " + currentCreditcard.ownerName + "</h2>" +
 				"<h2>" + "Security Code: " + currentCreditcard.securityCode + "</h2>" +
 				"<h2>" + "Expiration Date: " + currentCreditcard.expDate + "</h2>" + "</li>");
 				
@@ -26,7 +26,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 
 
 
-$(document).on('pagebeforeshow', "#creditcard-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 	// currentCar has been set at this point
 	$("#upd-number").val(currentCreditcard.number);
 	$("#upd-ownerName").val(currentCreditcard.ownerName);
@@ -141,7 +141,7 @@ function UpdateCreditcard(){
 	console.log("form Data: " + formData);
 	var updCreditcard = ConverToJSON(formData);
 	updCreditcard.id = currentCreditcard.id;
-	console.log("Updated Creditcard: " + JSON.stringify(updCreditcard));
+	console.log("Updated creditcard: " + JSON.stringify(updCreditcard));
 	var updCreditcardJSON = JSON.stringify(updCreditcard);
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/creditcards/" + updCreditcard.id,
@@ -152,7 +152,7 @@ function UpdateCreditcard(){
 		success : function(data, textStatus, jqXHR){
 			currentCreditcard = data.creditcard;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#creditcards");
+			$.mobile.navigate("#accounts");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
