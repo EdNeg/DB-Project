@@ -78,6 +78,7 @@ function VerifyUser(){
                                 verify = verifyList[i];
                                 if(verify.userNickname == updAccount.userNickname && verify.password == updAccount.password){
                                         currentAccount = verify;
+                                        GetCreditcardbyUser(currentAccount.userId);
                                         $.mobile.loading("hide");
                                         $.mobile.navigate("../DB-Project/Regular_User.html");
                                         notFound=1;
@@ -220,4 +221,29 @@ function DeleteAccount(){
                         }
                 }
         });
+}
+
+function GetCreditcardbyUser(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/creditcards/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentCreditcard = data.creditcard;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#creditcards");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("Creditcard not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+	});
 }

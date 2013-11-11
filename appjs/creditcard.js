@@ -1,9 +1,10 @@
 module.exports =  { 
-	Creditcard : function (number, ownerName, securityCode, expDate){
-		this.id = "";
-		this.number = number;
-		this.ownerName = ownerName;
+	Creditcard : function (creditCardNumber, creditCardOwner, securityCode, expDate, addressID){
+		this.creditCardID = "";
+		this.creditCardNumber = creditCardNumber;
+		this.creditCardOwner = creditCardOwner;
 		this.securityCode = securityCode;
 		this.expDate = expDate;
+		this.addressID = addressID;
 	}
 }

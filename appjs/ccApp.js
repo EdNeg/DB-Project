@@ -1,6 +1,6 @@
 
 
-$(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
+$(document).on('pagebeforeshow', "#creditCards", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/creditcards",
@@ -9,8 +9,8 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 			var list = $("#creditcards-list");
 			list.empty();
 				list.append("<li>" +
-				"<h2>" + "CreditCard Number: " + currentCreditcard.number + "</h2>" +
-				"<h2>" + "Owner Name: " + currentCreditcard.ownerName + "</h2>" +
+				"<h2>" + "CreditCard Number: " + currentCreditcard.creditCardNumber + "</h2>" +
+				"<h2>" + "Owner Name: " + currentCreditcard.creditCardOwner + "</h2>" +
 				"<h2>" + "Security Code: " + currentCreditcard.securityCode + "</h2>" +
 				"<h2>" + "Expiration Date: " + currentCreditcard.expDate + "</h2>" + "</li>");
 				
@@ -28,10 +28,10 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 	// currentCar has been set at this point
-	$("#upd-number").val(currentCreditcard.number);
-	$("#upd-ownerName").val(currentCreditcard.ownerName);
+	$("#upd-creditCardNumber").val(currentCreditcard.creditCardNumber);
+	$("#upd-creditCardOwner").val(currentCreditcard.creditCardOwner);
 	$("#upd-securityCode").val(currentCreditcard.securityCode);
-	$("#upd-expDate").val(currentCreditcard.expDate);	
+	$("#upd-expDate").val(currentCreditcard.expDate);		
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
