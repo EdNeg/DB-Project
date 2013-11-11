@@ -45,7 +45,7 @@ var connection = mysql.createConnection({
 	user : 'root',
 	password : 'ADMIN',
 	port : 3306,
-	database : 'cars'
+	database : 'boricuabaydb'
 
 });
 
@@ -271,8 +271,14 @@ for (var i=0; i < categoryList.length;++i){
 // REST Operation - HTTP GET to read all categories
 app.get('/DB-Project/categories', function(req, res) {
 	console.log("GET ALL CATEGORIES");
-	var response = {"categories" : categoryList};
-  	res.json(response);
+	connection.query('SELECT categoryID, categoryName FROM bbCategory;', function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The result is: ', rows[i]);
+	}
+  var response = {"categories" : rows};
+  res.json(response);
+});
 });
 
 

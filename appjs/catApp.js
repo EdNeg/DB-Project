@@ -14,7 +14,7 @@ $(document).on('pagebeforeshow', "#categories", function( event, ui ) {
 				category = categoryList[i];
 				list.append("<li><a onclick=GetCategory(" + category.id + ")>" + "<center>" +
 					"<img src= " +  category.iconSrc + "/>"+
-					"<h1>" + category.name +  "</h1>" + "</center>" +
+					"<h1>" + category.categoryName +  "</h1>" + "</center>" +
 					"</a></li>");
 			}
 			list.listview("refresh");	
@@ -79,6 +79,14 @@ function ConverToJSON(formData){
 	return result;
 }
 
+function convert(dbModel){
+	var cliModel = {};
+	
+	cliModel.categoryName = dbModel.categoryName;
+	cliModel.iconSrc = dbModel.iconSrc;
+	return cliModel;
+}
+
 function SaveCategory(){
 	$.mobile.loading("show");
 	var form = $("#category-form");
@@ -117,7 +125,7 @@ function GetCategory(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentCategory = data.category;
+			currentCategory = convert(data.category);
 			$.mobile.loading("hide");
 			$.mobile.navigate("#category-view");
 		},
