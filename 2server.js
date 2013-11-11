@@ -1471,8 +1471,8 @@ app.get('/DB-Project/creditcards/:id', function(req, res) {
 
 var query = connection.query("SELECT * from bbCreditCard as c " +
 		"inner join bbAddress as a on a.addressID = c.addressID " +
-		"inner join bbOwn as o on o.creditCardID = c.creditCardID " +
-		"where o.userID =  " + id, function(err, rows, result){
+		"inner join bbUser as o on u.creditCardID = c.creditCardID " +
+		"where uu.userID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
