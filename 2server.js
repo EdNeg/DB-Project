@@ -65,7 +65,7 @@ var connection = mysql.createConnection({
 app.get('/DB-Project/products', function(req, res) {
 	console.log("GET PRODUCTS");
 	
-	connection.query('SELECT * FROM products', function(err, rows, result) {
+	connection.query('SELECT * FROM bbProduct', function(err, rows, result) {
   if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -88,7 +88,7 @@ app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
 
-var query = connection.query("SELECT * FROM products WHERE pid = " + id, function(err, rows, result){
+var query = connection.query("SELECT * FROM bbProduct WHERE pid = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);

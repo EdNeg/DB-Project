@@ -31,10 +31,10 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	// currentCategory has been set at this point
 	var listy = $("#testy");
 	listy.empty();
-	document.getElementById("currCat-Name").innerHTML = currentCategory.name;
+	document.getElementById("currCat-Name").innerHTML = currentCategory.categoryName;
 	//document.getElementById("currCatName2").innerHTML = currentCategory.name;
 	//document.write(currentCategory.name);
-	algo = currentCategory.name;
+	algo = currentCategory.categoryName;
 	switch(algo){
 		case "Books":
 			listy.append("<ol id='Books' data-role='list-divider' data-inset='true' data-theme='b'></ol>");

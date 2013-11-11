@@ -1181,23 +1181,23 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 		url : "http://localhost:3412/DB-Project/products",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.products;		// ADD var bidProductList = data.bidProduct;
 			var len = productList.length;
 			var list = $("#products-list");
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-					"<img src= " +  product.imgSrc + "/>" +
+				list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc
 					"<p><i>" + product.productName +  "</i></p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
 					"<p> Model: " + product.model + "</p>" + 
 					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p>" + product.description + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.productPrice) + "</p>" +
 					"</a></li>");
 			}
 			list.listview("refresh");
@@ -1216,17 +1216,20 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 
 	
 	//document.getElementById("currPid").innerHTML = currentProduct.id;
-	var brandName = currentProduct.brand + " " + currentProduct.name;
-	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidPrice);
-	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.instPrice);
+	//var brandName = currentProduct.brand + " " + currentProduct.name;
+	var productName = currentProduct.productName;
+	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
+	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
 	var modelNo = "Model: " + currentProduct.model;
 	var dims = "Dimensions: " + currentProduct.dimensions;
-	var pid = "Product id: " + currentProduct.id;
-	document.getElementById("currBrand-Name").innerHTML = brandName;
-	document.getElementById("currImgSrc").src = currentProduct.imgSrc;
+	var pid = "Product id: " + currentProduct.productID;
+	//document.getElementById("currBrand-Name").innerHTML = brandName;
+	document.getElementById("currBrand-Name").innerHTML = productName;
+	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
+	document.getElementById("currImgSrc").src = currentProduct.productPhoto;   // verify it it works
 	document.getElementById("currBidPrice").innerHTML = startPrice;
 	document.getElementById("currInstPrice").innerHTML = instPrice;
-	document.getElementById("currDescription").innerHTML = currentProduct.description;
+	document.getElementById("currDescription").innerHTML = currentProduct.productDesc;
 	document.getElementById("currModel").innerHTML = modelNo;
 	document.getElementById("currDimensions").innerHTML = dims;
 	document.getElementById("currId").innerHTML = pid;
@@ -1244,6 +1247,14 @@ function ConverToJSON(formData){
 			result[o.name] = o.value;
 	});
 	return result;
+}
+
+function convert(dbModel){
+	var cliModel = {};
+	
+	cliModel.categoryName = dbModel.categoryName;
+	cliModel.iconSrc = dbModel.iconSrc;
+	return cliModel;
 }
 
 function SaveProduct(){
@@ -1284,7 +1295,7 @@ function GetProduct(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentProduct = data.product;
+			currentProduct = convert(data.product);
 			$.mobile.loading("hide");
 			$.mobile.navigate("#product-view");
 		},
