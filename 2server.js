@@ -1,5 +1,7 @@
 // Express is the web framework 
 var express = require('express');
+var mysql = require('mysql');
+
 var app = express();
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -37,6 +39,15 @@ for (var i=0; i < productList.length;++i){
 	productList[i].id = productNextId++;
 }
 
+// Database connection string: pg://<username>:<password>@host:port/dbname 
+var connection = mysql.createConnection({
+	host : 'localhost',
+	user : 'root',
+	password : 'ADMIN',
+	port : 3306,
+	database : 'cars'
+
+});
 
 
 
@@ -53,8 +64,15 @@ for (var i=0; i < productList.length;++i){
 // REST Operation - HTTP GET to read all products
 app.get('/DB-Project/products', function(req, res) {
 	console.log("GET PRODUCTS");
-	var response = {"products" : productList};
-  	res.json(response);
+	
+	connection.query('SELECT * FROM products', function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The result is: ', rows[i]);
+	}
+  var response = {"products" : rows};
+  res.json(response);
+});
 });
 
 // REST Operation - HTTP GET sorted by name
@@ -70,28 +88,49 @@ app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
 
-	if ((id < 0) || (id >= productNextId)){
-		// not found
+var query = connection.query("SELECT * FROM products WHERE pid = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
 		res.send("Product not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < productList.length; ++i){
-			if (productList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
+	else {	
+  		var response = {"product" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+
+	/*
+	if ((id < 0) || (id >= productNextId)){
+			// not found
 			res.statusCode = 404;
 			res.send("Product not found.");
 		}
 		else {
-			var response = {"product" : productList[target]};
-  			res.json(response);	
-  		}	
-	}
+			var target = -1;
+			for (var i=0; i < productList.length; ++i){
+				if (productList[i].id == id){
+					target = i;
+					break;	
+				}
+			}
+			if (target == -1){
+				res.statusCode = 404;
+				res.send("Product not found.");
+			}
+			else {
+				var response = {"product" : productList[target]};
+				  res.json(response);	
+			  }	
+		}*/
+	
 });
 
 // REST Operation - HTTP PUT to updated a product based on its id
