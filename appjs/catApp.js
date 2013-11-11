@@ -12,7 +12,7 @@ $(document).on('pagebeforeshow', "#categories", function( event, ui ) {
 			var category;
 			for (var i=0; i < len; ++i){
 				category = categoryList[i];
-				list.append("<li><a onclick=GetCategory(" + category.id + ")>" + "<center>" +
+				list.append("<li><a onclick=GetCategory(" + category.categoryID + ")>" + "<center>" +
 					"<img src= " +  category.iconSrc + "/>"+
 					"<h1>" + category.categoryName +  "</h1>" + "</center>" +
 					"</a></li>");

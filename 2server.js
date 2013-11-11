@@ -287,28 +287,24 @@ app.get('/DB-Project/categories/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET category: " + id);
 
-	if ((id < 0) || (id >= categoryNextId)){
-		// not found
+	var query = connection.query("SELECT categoryID, categoryName FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
 		res.send("Category not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < categoryList.length; ++i){
-			if (categoryList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Category not found.");
-		}
-		else {
-			var response = {"category" : categoryList[target]};
-  			res.json(response);	
-  		}	
-	}
+	else {	
+  		var response = {"category" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
 });
 
 // REST Operation - HTTP PUT to updated a category based on its id
