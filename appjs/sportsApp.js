@@ -77,15 +77,16 @@ var currentSportCat = {};
 
 function GetSportCat(id){
 	$.mobile.loading("show");
-	$.ajax({
+	if(id == 0){
+		$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSportCat = data.sportCat;
+			currentSubCat = data.subCat;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#subCat-view");
+			$.mobile.navigate("#bicycles");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -97,7 +98,101 @@ function GetSportCat(id){
 				alter("Internal Server Error.");
 			}
 		}
-	});
+		});
+	}
+		
+	else if(id == 1){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Sports/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#fishing");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 2){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Sports/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#baseball");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 3){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Sports/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#golf");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 4){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/Sports/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#basketball");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
 }
 
 function UpdateSubCat(){

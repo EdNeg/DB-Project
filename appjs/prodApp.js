@@ -875,6 +875,300 @@ $(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////R
 
 
 
+///////////////////////************************SPORTS**************************//////////////////////////////////////////////
+
+
+
+$(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SBFList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2 + product.tag3;
+				if(superTag =="SportsBicyclesFrames"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SBWList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2 + product.tag3;
+				if(superTag =="SportsBicyclesWheels"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SBHList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2 + product.tag3;
+				if(superTag =="SportsBicyclesHelmets"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SBPList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2 + product.tag3;
+				if(superTag =="SportsBicyclesParts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#fishing", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SFList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2;
+				if(superTag =="SportsFishing"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#baseball", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SBsBList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2;
+				if(superTag =="SportsBaseball"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SGList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2;
+				if(superTag =="SportsGolf"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#basketball", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;
+			var len = productList.length;
+			var list = $("#SBkBList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				superTag = product.tag1 + product.tag2;
+				if(superTag =="SportsBasketball"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
+						"<img src= " +  product.imgSrc + "/>" +
+						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
+						"<p> Model: " + product.model + "</p>" + 
+						"<p> Dimensions: " + product.dimensions + "</p>" +
+						"<p>" + product.description + "</p>" +
+						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
+						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
+						"</a></li>");
+				}
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
 
 
 //----------------------*******************************************************************************************************-->
@@ -926,7 +1220,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.instPrice);
 	var modelNo = "Model: " + currentProduct.model;
 	var dims = "Dimensions: " + currentProduct.dimensions;
-	//var pid = "Product id: " + currentProduct.id;
+	var pid = "Product id: " + currentProduct.id;
 	document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("currImgSrc").src = currentProduct.imgSrc;
 	document.getElementById("currBidPrice").innerHTML = startPrice;
@@ -934,7 +1228,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	document.getElementById("currDescription").innerHTML = currentProduct.description;
 	document.getElementById("currModel").innerHTML = modelNo;
 	document.getElementById("currDimensions").innerHTML = dims;
-	//document.getElementById("currId").innerHTML = pid;
+	document.getElementById("currId").innerHTML = pid;
 	
 	
 });
