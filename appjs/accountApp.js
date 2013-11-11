@@ -54,7 +54,8 @@ function convert(dbModel){
         cliModel.password = dbModel.password;
         return cliModel;
 }
-
+ 
+ 
 function VerifyUser(){
         $.mobile.loading("show");
         var form = $("#verify-form");
