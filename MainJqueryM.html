@@ -76,20 +76,15 @@
 	</header>
 	
 	<form id="verify-form">
-	<label for="upd-username"> Username: <input id="upd-username" name="username" type="text"/></label>
+	<label for="upd-userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
 	<label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label>
 	</form>
 
 	<form>
-	<a data-role="button" onclick="VerifyUser()" href="../DB-Project/Regular_User.html" data-inline="true">Sign in </a>
-	
-	<form>
 		<label>
-		 	<input name="checkbox-0" id = "adminCheck" type="checkbox" data-theme="b" data-target= '#adminProfile'>Check if administrator
-    	</label>
-    	
-    
-    	
+		 	<input name="checkbox-0" id = "adminCheck" type="checkbox" data-theme="e" data-target= '#adminProfile'>Check if administrator
+    	 </label>
+    	<a data-role="button" onclick="VerifyUser(); VerifyCreditcard(); VerifyAddress(); VerifyAddress2()" href="../DB-Project/Regular_User.html">Sign in </a>
 	</form>
 </div><!-- Page Sign in ------------------------------------------------------------------------------------>
 

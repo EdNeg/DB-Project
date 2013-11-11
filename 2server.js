@@ -1343,12 +1343,16 @@ for (var i=0; i < accountList.length;++i){
 
 // REST Operation - HTTP GET to read all cars
 app.get('/DB-Project/accounts', function(req, res) {
-	console.log("GET");
-	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
-	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
-	//console.log("tom: " + JSON.stringify(tom));
-	var response = {"accounts" : accountList};
-  	res.json(response);
+	console.log("GET ACCOUNTS");
+	
+	connection.query('Select * from bbUser', function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The result is: ', rows[i]);
+	}
+  var response = {"accounts" : rows};
+  res.json(response);
+});
 });
 
 // REST Operation - HTTP GET to read a car based on its id
@@ -1356,29 +1360,24 @@ app.get('/DB-Project/accounts/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET account: " + id);
 
-	if ((id < 0) || (id >= accountNextId)){
-		// not found
+var query = connection.query("SELECT * from bbUser where userID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
 		res.send("Account not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < accountList.length; ++i){
-			if (accountList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Account not found.");
-		}
-		else {
-			var response = {"account" : accountList[target]};
-  			res.json(response);	
-  		}	
-	}
-});
+	else {	
+  		var response = {"account" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
 
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/accounts/:id', function(req, res) {
