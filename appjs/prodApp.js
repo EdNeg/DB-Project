@@ -1189,15 +1189,15 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				product = productList[i];
 				list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i>" + product.productName +  "</i></p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
 					"<p> Model: " + product.model + "</p>" + 
 					"<p> Dimensions: " + product.dimensions + "</p>" +
 					"<p>" + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.productPrice) + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
 			}
 			list.listview("refresh");
@@ -1226,7 +1226,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	//document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("currBrand-Name").innerHTML = productName;
 	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
-	document.getElementById("currImgSrc").src = currentProduct.productPhoto;   // verify it it works
+	document.getElementById("currImgSrc").src = currentProduct.productPhoto; 
 	document.getElementById("currBidPrice").innerHTML = startPrice;
 	document.getElementById("currInstPrice").innerHTML = instPrice;
 	document.getElementById("currDescription").innerHTML = currentProduct.productDesc;
@@ -1252,8 +1252,15 @@ function ConverToJSON(formData){
 function convert(dbModel){
 	var cliModel = {};
 	
-	cliModel.categoryName = dbModel.categoryName;
-	cliModel.iconSrc = dbModel.iconSrc;
+	cliModel.productName = dbModel.productName;
+	cliModel.productDesc = dbModel.productDesc;		
+	cliModel.productPhoto = dbModel.productPhoto;
+	cliModel.productPrice = dbModel.productPrice;
+	cliModel.model = dbModel.model;
+	cliModel.brand = dbModel.brand;
+	cliModel.dimensions = dbModel.dimensions;
+	cliModel.tagID = dbModel.tagID;
+	
 	return cliModel;
 }
 
@@ -1295,7 +1302,7 @@ function GetProduct(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentProduct = convert(data.product);
+			currentProduct = data.product;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#product-view");
 		},
