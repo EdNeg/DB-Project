@@ -1592,7 +1592,7 @@ app.get('/DB-Project/addressinfos/:id', function(req, res) {
 
 var query = connection.query("SELECT * FROM bbCreditCard AS c " +
                 "INNER JOIN bbAddress AS a on a.addressID = c.addressID " +
-                "WHERE a.addressID = " + id, function(err, rows, result){
+                "WHERE c.addressID = " + id, function(err, rows, result){
                 if (err) throw err;
         for (i = 0; i<rows.length; i++){
                 console.log('The solution is: ', rows[i]);
