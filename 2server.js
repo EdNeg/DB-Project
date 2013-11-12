@@ -1438,3 +1438,111 @@ app.post('/DB-Project/accounts', function(req, res) {
   	accountList.push(newAccount);
   	res.json(true);
 });
+
+//--------------------------------------Credit Card--------------------------------------------------------------------//
+
+var creditcard = require("./appjs/creditcard.js");
+var Creditcard = creditcard.Creditcard;
+
+var creditcardList = new Array(
+	new Creditcard("123456789", "Frances Acevedo", "1234", "09/2018")
+			
+);
+
+ var creditcardNextId = 0;
+ 
+for (var i=0; i < creditcardList.length;++i){
+	creditcardList[i].id = creditcardNextId++;
+}
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all cars
+app.get('/DB-Project/creditcards/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET creditcard: " + id);
+
+var query = connection.query("SELECT * FROM bbCreditCard AS c " +
+		"INNER JOIN bbAddress AS a on a.addressID = c.addressID " +
+		"INNER JOIN bbUser AS u on u.creditCardID = c.creditCardID " +
+		"WHERE u.userID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Creditcard not found.");
+	}
+	else {	
+  		var response = {"creditcard" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
+// REST Operation - HTTP PUT to updated a car based on its id
+app.put('/DB-Project/creditcards/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT creditcard: " + id);
+
+	if ((id < 0) || (id >= creditcardNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Creditcard not found.");
+	}
+	else if(!req.body.hasOwnProperty('number') || !req.body.hasOwnProperty('ownerName') || !req.body.hasOwnProperty('securityCode')
+		  	|| !req.body.hasOwnProperty('expDate')) {
+		    	res.statusCode = 400;
+		    	return res.send('Error: Missing fields for creditcard.');
+		  	}
+	else {
+		var target = -1;
+		for (var i=0; i < creditcardList.length; ++i){
+			if (creditcardList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Creditcard not found.");			
+		}	
+		else {
+			var theCreditcard = creditcardList[target];
+			theCreditcard.number = req.body.number;
+			theCreditcard.ownerName = req.body.ownerName;
+			theCreditcard.securityCode = req.body.securityCode;
+			theCreditcard.expDate = req.body.expDate;
+			var response = {"creditcard" : theCreditcard};
+  			res.json(response);		
+  		}
+	}
+});
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/creditcards', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('number') || !req.body.hasOwnProperty('ownerName') || !req.body.hasOwnProperty('isShipping') || !req.body.hasOwnProperty('securityCode')
+		  	|| !req.body.hasOwnProperty('expDate')) {
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for creditcard.');
+  	}
+
+  	var newCreditcard = new Creditcard(req.body.number, req.body.ownerName, req.body.isShipping, req.body.securityCode, req.body.expDate);
+  	console.log("New Creditcard: " + JSON.stringify(newCreditcard));
+  	newCreditcard.id = creditcardNextId++;
+  	creditcardList.push(newCreditcard);
+  	res.json(true);
+});
