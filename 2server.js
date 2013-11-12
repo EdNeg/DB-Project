@@ -1546,3 +1546,125 @@ app.post('/DB-Project/creditcards', function(req, res) {
   	creditcardList.push(newCreditcard);
   	res.json(true);
 });
+//--------------------------------------Address-----------------------------------------------------------------//
+
+
+var addressinfo = require("./appjs/addressinfo.js");
+var Addressinfo = addressinfo.Addressinfo;
+
+var addressinfoList = new Array(
+	new Addressinfo("Urb. Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
+			"Carolina", "Puerto Rico", "Estados Unidos", "00979", "0"),
+	new Addressinfo("Urb. Villas del Palmar Oeste", "Calle Palma Real #3", 
+					"Ponce", "PR", "US", "00679", "1")
+			
+);
+ var addressinfoNextId = 0;
+ 
+for (var i=0; i < addressinfoList.length;++i){
+	addressinfoList[i].id = addressinfoNextId++;
+}
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all cars
+app.get('/DB-Project/addressinfos', function(req, res) {
+	console.log("GET Address");
+	//var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
+	//var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
+	//console.log("tom: " + JSON.stringify(tom));
+	var response = {"addressinfos" : addressinfoList};
+  	res.json(response);
+});
+
+// REST Operation - HTTP GET to read a car based on its id
+app.get('/DB-Project/addressinfos/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET addressinfo: " + id);
+
+var query = connection.query("SELECT * FROM bbCreditCard AS c " +
+		"INNER JOIN bbAddress AS a on a.addressID = c.addressID " +
+		"WHERE a.addressID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Creditcard not found.");
+	}
+	else {	
+  		var response = {"creditcard" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
+// REST Operation - HTTP PUT to updated a car based on its id
+app.put('/DB-Project/addressinfos/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT address: " + id);
+
+	if ((id < 0) || (id >= addressinfoNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Address not found.");
+	}
+	else if(!req.body.hasOwnProperty('addressLine1') || !req.body.hasOwnProperty('addressLine2') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') 
+			|| !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode') || !req.body.hasOwnProperty('isBilling')) {
+		    	res.statusCode = 400;
+		    	return res.send('Error: Missing fields for address.');
+		  	}
+	else {
+		var target = -1;
+		for (var i=0; i < addressinfoList.length; ++i){
+			if (addressinfoList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Address not found.");			
+		}	
+		else {
+			var theAddress= addressinfoList[target];
+			theAddress.addressLine1 = req.body.addressLine1;
+			theAddress.addressLine2 = req.body.addressLine2;
+			theAddress.city = req.body.city;
+			theAddress.state = req.body.state;
+			theAddress.country = req.body.country;
+			theAddress.zipcode = req.body.zipcode;
+			theAddress.isBilling = req.body.isBilling;
+			var response = {"addressinfo" : theAddress};
+  			res.json(response);		
+  		}
+	}
+});
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/addressinfos', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('addressLine1') || !req.body.hasOwnProperty('addressLine2') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') 
+			|| !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode') || !req.body.hasOwnProperty('isBilling')) {
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for address.');
+  	}
+
+  	var newAddress = new Address(req.body.addressLine1, req.body.addressLine2, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.isBilling);
+  	console.log("New Address: " + JSON.stringify(newAddress));
+  	newAddress.id = addressinfoNextId++;
+  	addressinfoList.push(newAddress);
+  	res.json(true);
+});

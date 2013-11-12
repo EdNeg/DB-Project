@@ -1,6 +1,6 @@
 
 
-$(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
+$(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
 	console.log("Jose");
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/addressinfos",
