@@ -25,18 +25,18 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
         console.log("Jose");
         $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts",
+                //url : "http://localhost:3412/DB-Project/accounts",
                 contentType: "application/json",
                 success : function(data, textStatus, jqXHR){
                         var list = $("#address-list");
                         list.empty();
                         var account;
                                 list.append("<li>" +
-                                        "<h2>" + "Address Line: " + currentAccount.addressLine + "</h2>" +
-                                        "<h2>" + "City: " + currentAccount.city + "</h2>" +
-                                        "<h2>" + "State: " + currentAccount.state + "</h2>" +
-                                        "<h2>" + "Country: " + currentAccount.country + "</h2>" +
-                                        "<h2>" + "Zipcode: " + currentAccount.zipcode + "</h2>"  + "</li>");
+                                        "<h2>" + "Address Line: " + currentAddress.addressLine + "</h2>" +
+                                        "<h2>" + "City: " + currentAddress.city + "</h2>" +
+                                        "<h2>" + "State: " + currentAddress.state + "</h2>" +
+                                        "<h2>" + "Country: " + currentAddress.country + "</h2>" +
+                                        "<h2>" + "Zipcode: " + currentAddress.zipcode + "</h2>"  + "</li>");
                         
                 list.listview("refresh");               
         },
@@ -145,6 +145,7 @@ function VerifyUser(){
                                 if(verify.userNickname == updAccount.userNickname && verify.password == updAccount.password){
                                         currentAccount = verify;
                                         GetCreditcardbyUser(currentAccount.creditCardID);
+                                        //GetAddressUser(currentAccount.addressID);
                                         $.mobile.loading("hide");
                                         $.mobile.navigate("../DB-Project/Regular_User.html");
                                         notFound=1;
@@ -301,6 +302,32 @@ function GetCreditcardbyUser(id){
                         currentCreditcard = data.creditcard;
                         $.mobile.loading("hide");
                         $.mobile.navigate("#creditcards");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                alert("Creditcard not sesese found.");
+                        }
+                        else {
+                                alter("Internal Server Error.");
+                        }
+                }
+        });
+}
+
+var currentAddress = {};
+function GetAddressUser(id){
+        $.mobile.loading("show");
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/addressinfos/" + id,
+                method: 'get',
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        currentAddress = data.addressinfo;
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#accounts");
                 },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
