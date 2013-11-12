@@ -7,4 +7,4 @@ module.exports =  {
                 this.country = country;
                 this.zipcode = zipcode;
         }
-}
+};

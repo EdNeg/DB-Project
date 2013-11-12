@@ -1602,10 +1602,10 @@ var query = connection.query("SELECT * FROM bbAddress AS a " +
         var len = rows.length;
         if (len == 0){
                 res.statusCode = 404;
-                res.send("Creditcard not found.");
+                res.send("Address not found.");
         }
         else {        
-                  var response = {"creditcard" : rows[0]};
+                  var response = {"addressinfo" : rows[0]};
                 //connection.end();
                   res.json(response);
           }

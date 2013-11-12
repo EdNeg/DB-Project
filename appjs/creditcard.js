@@ -7,4 +7,4 @@ module.exports =  {
                 this.expDate = expDate;
                 this.addressID = addressID;
         }
-}
+};

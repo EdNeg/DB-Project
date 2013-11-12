@@ -1,7 +1,7 @@
 $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
         console.log("Jose");
         $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts",
+                //url : "http://localhost:3412/DB-Project/accounts",
                 contentType: "application/json",
                 success : function(data, textStatus, jqXHR){
                         var list = $("#accounts-list");
@@ -28,10 +28,11 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
                 //url : "http://localhost:3412/DB-Project/accounts",
                 contentType: "application/json",
                 success : function(data, textStatus, jqXHR){
-                        var list = $("#address-list");
+                        var list = $("#address1-list");
                         list.empty();
-                        var account;
+                        
                                 list.append("<li>" +
+                                	
                                         "<h2>" + "Address Line: " + currentAddress.addressLine + "</h2>" +
                                         "<h2>" + "City: " + currentAddress.city + "</h2>" +
                                         "<h2>" + "State: " + currentAddress.state + "</h2>" +
@@ -145,7 +146,7 @@ function VerifyUser(){
                                 if(verify.userNickname == updAccount.userNickname && verify.password == updAccount.password){
                                         currentAccount = verify;
                                         GetCreditcardbyUser(currentAccount.creditCardID);
-                                        //GetAddressUser(currentAccount.addressID);
+                                        GetAddressUser(currentAccount.addressID);
                                         $.mobile.loading("hide");
                                         $.mobile.navigate("../DB-Project/Regular_User.html");
                                         notFound=1;
@@ -317,6 +318,7 @@ function GetCreditcardbyUser(id){
 }
 
 var currentAddress = {};
+
 function GetAddressUser(id){
         $.mobile.loading("show");
         $.ajax({
