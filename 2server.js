@@ -271,7 +271,7 @@ for (var i=0; i < categoryList.length;++i){
 // REST Operation - HTTP GET to read all categories
 app.get('/DB-Project/categories', function(req, res) {
 	console.log("GET ALL CATEGORIES");
-	connection.query('SELECT categoryID, categoryName FROM bbCategory;', function(err, rows, result) {
+	connection.query('SELECT categoryID, categoryName, categoryDesc FROM bbCategory;', function(err, rows, result) {
   if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -287,7 +287,7 @@ app.get('/DB-Project/categories/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET category: " + id);
 
-	var query = connection.query("SELECT categoryID, categoryName FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
+	var query = connection.query("SELECT categoryID, categoryName, categoryDesc FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);

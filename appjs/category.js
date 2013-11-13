@@ -1,7 +1,7 @@
 module.exports =  { 
-	Category : function (name, iconSrc){
+	Category : function (name, categoryDesc){
 		this.id = "";
 		this.name = name;
-		this.iconSrc = iconSrc;
+		this.categoryDesc = categoryDesc;
 	}
 };
