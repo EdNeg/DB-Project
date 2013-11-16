@@ -121,7 +121,8 @@ function ConverToJSON(formData){
         return result;
 }
 
- 
+var isLogged = 0;
+var currentUserID;
  
 function VerifyUser(){
         $.mobile.loading("show");
@@ -147,6 +148,8 @@ function VerifyUser(){
                                         currentAccount = verify;
                                         GetCreditcardbyUser(currentAccount.creditCardID);
                                         GetAddressUser(currentAccount.addressID);
+                                        isLogged = 1;
+                                        currentUserID = currentAccount.userID;
                                         $.mobile.loading("hide");
                                         $.mobile.navigate("../DB-Project/Regular_User.html");
                                         notFound=1;
@@ -177,6 +180,16 @@ function VerifyUser(){
         
 }
 
+
+function VerifyLogged(){
+	if (isLogged == 1){
+		/// proceed
+	}
+	else{
+		/// go back to login screen
+	}
+}
+		
 function SaveAccount(){
         $.mobile.loading("show");
         var form = $("#account-form");

@@ -65,13 +65,15 @@ var connection = mysql.createConnection({
 app.get('/DB-Project/products', function(req, res) {
 	console.log("GET PRODUCTS");
 	
-	connection.query('SELECT * FROM bbProduct', function(err, rows, result) {
+	connection.query("Select * from bbProduct as p " + 
+	"inner join bbBidProduct as b on b.productID = p.productID ;", function(err, rows, result) {
   if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
 	}
   var response = {"products" : rows};
   res.json(response);
+  
 });
 });
 
@@ -88,7 +90,11 @@ app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
 
-var query = connection.query("SELECT * FROM bbProduct WHERE productID= " + id, function(err, rows, result){
+var query = connection.query("Select * from bbProduct as p inner join bbBidProduct" + 
+							"as b on b.productID = p.productID inner join bbTag as t" + 
+							"on p.tagID =t.tagID inner join bbSubCategory as t" + 
+							"on s.subCategoryID =t.subCategoryID inner join bbCategory as s" + 
+							"on s.categoryID =c.categoryID where o.productID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -1669,3 +1675,4 @@ app.post('/DB-Project/addressinfos', function(req, res) {
           addressinfoList.push(newAddress);
           res.json(true);
 });
+
