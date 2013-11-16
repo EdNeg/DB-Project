@@ -40,7 +40,7 @@
 	<body>
   		<div data-role="page" id="home">
 		<header data-role="header" data-theme="d">
-			<h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1>
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
 		    <a href="#products" data-role="button" data-iconpos="left" data-icon="search" data-theme="b">Search</a>
 			<a href="../DB-Project/View_Cart.html" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
@@ -76,22 +76,18 @@
 	</header>
 	
 	<form id="verify-form">
-        <label for="upd-userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
-        <label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label>
-       </form>
+        <label for="upd-userNickname"><font color="white"> Username: </font><input id="upd-userNickname" name="userNickname" type="text"/></label>
+        <label for="upd-password"><font color="white"> Password: </font><input id="upd-password" name="password" type="password"/></label>
+    </form>
 
-	<form>
-	<a data-role="button" onclick="VerifyUser()"  data-inline="true">Sign in </a>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a data-role="button" onclick="VerifyUser()" data-theme="b">Sign in </a></div>
+		<div class="ui-block-b"><a data-role="button" onclick="VerifyAdmin()">Admin Login </a></div>
+	</div>
 	
-	<form>
-		<label>
-		 	<input name="checkbox-0" id = "adminCheck" type="checkbox" data-theme="b" data-target= '#adminProfile'>Check if administrator
-    	</label>
-    	
-    
-    	
-	</form>
 </div><!-- Page Sign in ------------------------------------------------------------------------------------>
+
+
 
 <div data-role="page" id="register">
 	<header data-role="header" data-theme="d">
@@ -134,34 +130,30 @@
 
 
 <div data-role="page" id="adminProfile">
-	<header data-role="header">
+	<header data-role="header" data-theme="d">
 		<h1>Admin Profile</h1>
-		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Home</a>
-		
-		<div data-role="navbar">
-    	<ul>
-       		<li><a href="#add-category" data-iconpos="bottom" data-icon="plus" data-theme="b" data-transition="slidefade">Add Category</a></li>
-       		<li><a href="#" data-iconpos="bottom" data-icon="minus" data-theme="b" data-transition="slidefade">Remove Categories</a></li>
-        	<li><a href="#../DB-Project/EditAccount.html" data-iconpos="bottom" data-icon="edit" data-theme="b" data-transition="slidefade">Edit User Profile</a></li>
-    	</ul>
-	</div><!-- /navbar -->
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
 	</header>
 	
-	<label for="text-basic">Full Name:</label>
-		<input name="text-basic" id="text-basic" type="text" value="">
-		
-	<label for="text-basic">Admin User Name:</label>
-		<input name="text-basic" id="text-basic" type="text" value="">
-
-	<label for="password">Password:</label>
-		<input name="password" id="password" type="password" value="" autocomplete="off">
-		
+	<ul data-role="listview" data-inset="true">
+		<li data-role="list-divider" id = "currAdmin"></li>
+	</ul>
 	
-<form>
-    <input type="submit" value="Submit" data-inline="true">
-</form>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
+		<div class="ui-block-a"><a href="../DB-Project/EditAccount.html" data-role="button" data-icon="edit" data-iconpos="top">Edit User</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
+		<div class="ui-block-a"><a data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
+		<div class="ui-block-a"><a data-role="button" data-icon="edit" data-iconpos="top">Edit Admin</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
+		<div class="ui-block-a"><a href"#add-Category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
+	</div>
 
-<footer data-role="footer" data-position="fixed">
+
+<footer data-role="footer" data-position="fixed" data-theme="b">
 		<nav data-role="navbar">
 			<ul>
 				<li><a href="#reports" data-icon="gear">Reports</a></li>

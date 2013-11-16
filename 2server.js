@@ -90,11 +90,11 @@ app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
 
-var query = connection.query("Select * from bbProduct as p inner join bbBidProduct" + 
-							"as b on b.productID = p.productID inner join bbTag as t" + 
-							"on p.tagID =t.tagID inner join bbSubCategory as t" + 
-							"on s.subCategoryID =t.subCategoryID inner join bbCategory as s" + 
-							"on s.categoryID =c.categoryID where o.productID = " + id, function(err, rows, result){
+var query = connection.query("Select * from bbProduct as p inner join bbBidProduct " + 
+							"as b on b.productID = p.productID inner join bbTag " + 
+							"as t on p.tagID =t.tagID inner join bbSubCategory " + 
+							"as s on s.subCategoryID =t.subCategoryID inner join bbCategory " + 
+							"as c on s.categoryID =c.categoryID where p.productID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -1445,6 +1445,128 @@ app.post('/DB-Project/accounts', function(req, res) {
   	res.json(true);
 });
 
+
+//-----------------------Administrator------------------------------------------------------
+
+var accounta = require("./appjs/account.js");
+var Accounta = accounta.Accounta;
+
+var accountaList = new Array(
+	new Account("Lara Croft", "LC1", "ivc", "Grey House of Doom, Brazil", "Grey House of Doom, Brazil", "00000023445")
+);
+ var accountaNextId = 0;
+ 
+for (var i=0; i < accountaList.length;++i){
+	accountaList[i].id = accountaNextId++;
+}
+// REST Operations
+// Idea: Data is created, read, updated, or deleted through a URL that 
+// identifies the resource to be created, read, updated, or deleted.
+// The URL and any other input data is sent over standard HTTP requests.
+// Mapping of HTTP with REST 
+// a) POST - Created a new object. (Database create operation)
+// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
+// c) PUT - Update an individual object, or collection  (Database update operation)
+// d) DELETE - Remove an individual object, or collection (Database delete operation)
+
+// REST Operation - HTTP GET to read all products
+app.get('/DB-Project/accountas', function(req, res) {
+	console.log("GET ACCOUNTAS");
+	
+	connection.query('SELECT * FROM bbAdmin', function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The result is: ', rows[i]);
+	}
+  var response = {"accountas" : rows};
+  res.json(response);
+});
+});
+
+
+// REST Operation - HTTP GET to read a product based on its id
+app.get('/DB-Project/accountas/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("GET accounta: " + id);
+
+var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"accounta" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
+
+// REST Operation - HTTP PUT to updated a car based on its id
+app.put('/DB-Project/accountas/:id', function(req, res) {
+	var id = req.params.id;
+		console.log("PUT accounta: " + id);
+
+	if ((id < 0) || (id >= accountaNextId)){
+		// not found
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('mailingaddress')
+		  	|| !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+		    	res.statusCode = 400;
+		    	return res.send('Error: Missing fields for account.');
+		  	}
+	else {
+		var target = -1;
+		for (var i=0; i < accountaList.length; ++i){
+			if (accountaList[i].id == id){
+				target = i;
+				break;	
+			}
+		}
+		if (target == -1){
+			res.statusCode = 404;
+			res.send("Account not found.");			
+		}	
+		else {
+			var theAccount= accountList[target];
+			theAccount.name = req.body.name;
+			theAccount.username = req.body.username;
+			theAccount.password = req.body.password;
+			theAccount.mailingaddress = req.body.mailingaddress;
+			theAccount.billingaddress = req.body.billingaddress;
+			theAccount.creditcard = req.body.creditcard;
+			var response = {"accounta" : theAccount};
+  			res.json(response);		
+  		}
+	}
+});
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/accountas', function(req, res) {
+	console.log("POST");
+
+  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')
+  	|| !req.body.hasOwnProperty('mailingaddress') || !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for account.');
+  	}
+
+  	var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	console.log("New Account: " + JSON.stringify(newAccount));
+  	newAccount.id = accountNextId++;
+  	accountList.push(newAccount);
+  	res.json(true);
+});
+
 //--------------------------------------Credit Card--------------------------------------------------------------------//
 
 var creditcard = require("./appjs/creditcard.js");
@@ -1700,7 +1822,7 @@ app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 	
 	connection.query('SELECT productID, userID FROM bbAddtoCart', function(err, rows, result) {
-  if (err) throw err;
+  	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
 	}

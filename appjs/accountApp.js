@@ -101,6 +101,12 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
 
 
 
+$(document).on('pagebeforeshow', "#adminProfile", function( event, ui ) {
+        // currentUser has been set at this point
+        var adminName = "Welcome " + currentAccount.adminUserName + "!";
+        document.getElementById("currAdmin").innerHTML = adminName; 
+});
+
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
         // currentCar has been set at this point
         $("#upd-userName").val(currentAccount.userName);
@@ -180,6 +186,57 @@ function VerifyUser(){
         
 }
 
+function VerifyAdmin(){
+        $.mobile.loading("show");
+        var form = $("#verify-form");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/accountas/",
+                method: 'get',
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        var verifyList = data.accountas;
+                        var len = verifyList.length;
+                        var verify;
+                        var notFound=0;
+                        for (var i=0; i < len; ++i){
+                                verify = verifyList[i];
+                                if(verify.adminUserName == updAccount.userNickname && verify.adminPassword == updAccount.password){
+                                        currentAccount = verify;
+                                        //currentUserID = currentAccount.userID;
+                                        $.mobile.loading("hide");
+                                        $.mobile.navigate("#adminProfile");
+                                        notFound=1;
+                                        break;
+                                }
+                                 
+                                
+                        }
+                        if(notFound != 1){                       
+                       alert("Username and Password Invalid");
+                               $.mobile.navigate("#home");
+                            }  
+                        
+                        
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                alert("Data could not be updated!");
+                        }
+                        else {
+                                alert("Internal Error.");               
+                        }
+                }
+        });
+        
+}
 
 function VerifyLogged(){
 	if (isLogged == 1){
@@ -220,6 +277,7 @@ function SaveAccount(){
 }
 
 var currentAccount = {};
+
 
 function GetAccount(id){
         $.mobile.loading("show");

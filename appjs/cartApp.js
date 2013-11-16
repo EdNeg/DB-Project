@@ -6,6 +6,7 @@ $(document).on('pagebeforeshow', "#carts", function( event, ui ) {
                 contentType: "application/json",
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
+                	alert("seses");
                 	var cartList = data.carts;
         			var len = cartList.length;
                         var list = $("#carts-list");
@@ -57,37 +58,6 @@ function ConverToJSON(formData){
         return result;
 }
 
-
-
-/*function SaveCart(){
-        $.mobile.loading("show");
-        var form = $("#cart-form");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var newAccount = ConverToJSON(formData);
-        console.log("New Account: " + JSON.stringify(newAccount));
-        var newAccountJSON = JSON.stringify(newAccount);
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts",
-                method: 'post',
-                data : newAccountJSON,
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#accounts");
-                        alert("You have created an account!");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        alert("Data could not be added!");
-                }
-        });
-
-
-}*/
-
 var currentCart = {};
 
 function GetCartInfo(id){
@@ -117,90 +87,6 @@ function GetCartInfo(id){
         });
 }
 
-/*function UpdateAccount(){
-        $.mobile.loading("show");
-        var form = $("#account-view-form");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var updAccount = ConverToJSON(formData);
-        updAccount.id = currentAccount.id;
-        console.log("Updated Account: " + JSON.stringify(updAccount));
-        var updAccountJSON = JSON.stringify(updAccount);
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-                method: 'put',
-                data : updAccountJSON,
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentAccount = data.account;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#accounts");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Data could not be updated!");
-                        }
-                        else {
-                                alert("Internal Error.");               
-                        }
-                }
-        });
-}
-
-function DeleteAccount(){
-        $.mobile.loading("show");
-        var id = currentAccount.id;
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/" + id,
-                method: 'delete',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#accounts");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Account not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}*/
-
-var currentProduct = {};
-
-function GetProductInfo(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/products/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentProduct = data.product;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#carts");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Product not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
 
 var currentSeller = {};
 
