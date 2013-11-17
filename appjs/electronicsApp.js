@@ -82,7 +82,7 @@ function GetElectCat(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentElecCat = data.subCat;
+			currentElectCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#tv");
 		},
@@ -106,7 +106,7 @@ function GetElectCat(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentElecCat = data.subCat;
+			currentElectCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#audio");
 		},
@@ -129,7 +129,7 @@ function GetElectCat(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentElecCat = data.subCat;
+			currentElectCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#phones");
 		},
@@ -152,7 +152,7 @@ function GetElectCat(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentElecCat = data.subCat;
+			currentElectCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#cameras");
 		},
@@ -175,7 +175,7 @@ function GetElectCat(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentElecCat = data.subCat;
+			currentElectCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#video");
 		},

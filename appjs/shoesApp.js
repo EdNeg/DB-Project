@@ -1,20 +1,21 @@
 
 
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#shoes-view", function( event, ui ) {
 	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/Shoes",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var shoeCatList = data.Shoes;
+			var shoeCatList = data.shoes;
 			var len = shoeCatList.length;
 			var list = $("#Shoes");
 			list.empty();
 			var shoeCat;
 			for (var i=0; i < len; ++i){
 				shoeCat = shoeCatList[i];
-				list.append("<li><a onclick=GetShoeCat(" + shoeCat.id + ")>" + 
-					"<h1>" + shoeCat.name +  "</h1>" +
+				list.append("<li><a onclick=GetShoeCat(" + shoeCat.subCategoryID + ")>" + "<center>" +
+					"<img src= " +  shoeCat.subCategoryDesc + "/>"+
+					"<h1>" + shoeCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
 			}
@@ -27,11 +28,7 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	});
 });// --------------------------------------------Shoes-List-------------------------------------
 
-$(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentShoeCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentShoeCat.name;
-	
-});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -77,14 +74,14 @@ var currentShoeCat = {};
 
 function GetShoeCat(id){
 	$.mobile.loading("show");
-	if(id == 0){
+	if(id == 17){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Shoes/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentShoeCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#childrenS");
 		},
@@ -101,7 +98,7 @@ function GetShoeCat(id){
 		});
 	}
 		
-	else if(id == 1){
+	else if(id == 18){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Shoes/" + id,
 		method: 'get',
@@ -124,7 +121,7 @@ function GetShoeCat(id){
 		}
 		});
 	}
-	else if(id == 2){
+	else if(id == 19){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Shoes/" + id,
 		method: 'get',

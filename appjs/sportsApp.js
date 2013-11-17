@@ -1,20 +1,21 @@
 
 
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#sports-view", function( event, ui ) {
 	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var sportCatList = data.Sports;
+			var sportCatList = data.sports;
 			var len = sportCatList.length;
 			var list = $("#Sports");
 			list.empty();
 			var sportCat;
 			for (var i=0; i < len; ++i){
 				sportCat = sportCatList[i];
-				list.append("<li><a onclick=GetSportCat(" + sportCat.id + ")>" + 
-					"<h1>" + sportCat.name +  "</h1>" +
+				list.append("<li><a onclick=GetSportCat(" + sportCat.subCategoryID + ")>" + "<center>" +
+					"<img src= " +  sportCat.subCategoryDesc + "/>"+
+					"<h1>" + sportCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
 			}
@@ -27,11 +28,7 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	});
 });// --------------------------------------------Sports-List-------------------------------------
 
-$(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentSportCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentSportCat.name;
-	
-});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -77,7 +74,7 @@ var currentSportCat = {};
 
 function GetSportCat(id){
 	$.mobile.loading("show");
-	if(id == 0){
+	if(id == 20){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',
@@ -101,7 +98,7 @@ function GetSportCat(id){
 		});
 	}
 		
-	else if(id == 1){
+	else if(id == 21){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',
@@ -124,7 +121,7 @@ function GetSportCat(id){
 		}
 		});
 	}
-	else if(id == 2){
+	else if(id == 22){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',
@@ -147,7 +144,7 @@ function GetSportCat(id){
 		}
 		});
 	}
-	else if(id == 3){
+	else if(id == 23){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',
@@ -170,7 +167,7 @@ function GetSportCat(id){
 		}
 		});
 	}
-	else if(id == 4){
+	else if(id == 24){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Sports/" + id,
 		method: 'get',

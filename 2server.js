@@ -450,7 +450,7 @@ app.get('/DB-Project/Books/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET subCat: " + id);
 
-	var query = connection.query("SELECT categoryID, categoryName, categoryDesc FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
+	var query = connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -608,7 +608,7 @@ app.get('/DB-Project/Electronics/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET subCat: " + id);
 
-	var query = connection.query("SELECT * FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
+	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -766,28 +766,24 @@ app.get('/DB-Project/Computers/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET compCat: " + id);
 
-	if ((id < 0) || (id >= compCatNextId)){
-		// not found
+	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
-		res.send("CompCat not found.");
+		res.send("Category not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < compCatList.length; ++i){
-			if (compCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("CompCat not found.");
-		}
-		else {
-			var response = {"compCat" : compCatList[target]};
-  			res.json(response);	
-  		}	
-	}
+	else {	
+  		var response = {"computer" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
 });
 
 // REST Operation - HTTP PUT to updated a compCat based on its id
@@ -925,28 +921,24 @@ app.get('/DB-Project/Clothing/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET clothCat: " + id);
 
-	if ((id < 0) || (id >= clothCatNextId)){
-		// not found
+	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
-		res.send("ClothCat not found.");
+		res.send("Category not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < clothCatList.length; ++i){
-			if (clothCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("clothCat not found.");
-		}
-		else {
-			var response = {"clothCat" : clothCatList[target]};
-  			res.json(response);	
-  		}	
-	}
+	else {	
+  		var response = {"clothing" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
 });
 
 // REST Operation - HTTP PUT to updated a clothCat based on its id
@@ -1070,8 +1062,14 @@ for (var i=0; i < shoeCatList.length;++i){
 // REST Operation - HTTP GET to read all Shoes
 app.get('/DB-Project/Shoes', function(req, res) {
 	console.log("GET ALL SHOES SUBCATEGORIES");
-	var response = {"Shoes" : shoeCatList};
-  	res.json(response);
+	connection.query("Select * from bbSubCategory where categoryID = "+5+";", function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The result is: ', rows[i]);
+	}
+  var response = {"shoes" : rows};
+  res.json(response);
+});
 });
 
 
@@ -1080,28 +1078,24 @@ app.get('/DB-Project/Shoes/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET shoeCat: " + id);
 
-	if ((id < 0) || (id >= shoeCatNextId)){
-		// not found
+	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
-		res.send("ShoeCat not found.");
+		res.send("Category not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < shoeCatList.length; ++i){
-			if (shoeCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("ShoeCat not found.");
-		}
-		else {
-			var response = {"shoeCat" : shoeCatList[target]};
-  			res.json(response);	
-  		}	
-	}
+	else {	
+  		var response = {"shoe" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
 });
 
 // REST Operation - HTTP PUT to updated a shoeCat based on its id
@@ -1226,8 +1220,14 @@ for (var i=0; i < sportCatList.length;++i){
 // REST Operation - HTTP GET to read all Sports
 app.get('/DB-Project/Sports', function(req, res) {
 	console.log("GET ALL SPORTS SUBCATEGORIES");
-	var response = {"Sports" : sportCatList};
-  	res.json(response);
+	connection.query("Select * from bbSubCategory where categoryID = "+6+";", function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The result is: ', rows[i]);
+	}
+  var response = {"sports" : rows};
+  res.json(response);
+});
 });
 
 
@@ -1236,28 +1236,24 @@ app.get('/DB-Project/Sports/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sportCat: " + id);
 
-	if ((id < 0) || (id >= sportCatNextId)){
-		// not found
+	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+		console.log('The solution is: ', rows[i]);
+	}
+	
+	
+	var len = rows.length;
+	if (len == 0){
 		res.statusCode = 404;
-		res.send("SportCat not found.");
+		res.send("Category not found.");
 	}
-	else {
-		var target = -1;
-		for (var i=0; i < sportCatList.length; ++i){
-			if (sportCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("SportCat not found.");
-		}
-		else {
-			var response = {"sportCat" : sportCatList[target]};
-  			res.json(response);	
-  		}	
-	}
+	else {	
+  		var response = {"sport" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
 });
 
 // REST Operation - HTTP PUT to updated a sportCat based on its id
