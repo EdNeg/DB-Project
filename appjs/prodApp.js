@@ -22,15 +22,16 @@ $(document).on('pagebeforeshow', "#childrenB", function( event, ui ) {
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="BooksChildren"){
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-						"<img src= " +  product.productPhoto + "/>" +
-						"<p><i>" + product.brand + " " + product.productName +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.productDesc + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -58,16 +59,17 @@ $(document).on('pagebeforeshow', "#fiction", function( event, ui ) {////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="BooksFiction"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -95,16 +97,17 @@ $(document).on('pagebeforeshow', "#technology", function( event, ui ) {/////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="BooksTechnology"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -132,16 +135,17 @@ $(document).on('pagebeforeshow', "#business", function( event, ui ) {///////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="BooksBusiness"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -173,16 +177,17 @@ $(document).on('pagebeforeshow', "#laptops", function( event, ui ) {////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ComputersLaptops"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -211,16 +216,17 @@ $(document).on('pagebeforeshow', "#desktops", function( event, ui ) {///////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ComputersDesktops"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -248,15 +254,16 @@ $(document).on('pagebeforeshow', "#tablets", function( event, ui ) {////////////
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ComputersTablets"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-						"<img src= " +  product.productPhoto + "/>" +
-						"<p><i>" + product.brand + " " + product.productName +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.productDesc + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -284,16 +291,17 @@ $(document).on('pagebeforeshow', "#printers", function( event, ui ) {///////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ComputersPrinters"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -323,16 +331,17 @@ $(document).on('pagebeforeshow', "#childrenC", function( event, ui ) {//////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ClothingChildren"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -360,16 +369,17 @@ $(document).on('pagebeforeshow', "#menShirts", function( event, ui ) {//////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="ClothingMenShirts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -397,16 +407,17 @@ $(document).on('pagebeforeshow', "#menPants", function( event, ui ) {///////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="ClothingMenPants"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -434,16 +445,17 @@ $(document).on('pagebeforeshow', "#menSocks", function( event, ui ) {///////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="ClothingMenSocks"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -472,16 +484,17 @@ $(document).on('pagebeforeshow', "#womenShirts", function( event, ui ) {////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="ClothingWomenShirts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -509,16 +522,17 @@ $(document).on('pagebeforeshow', "#womenPants", function( event, ui ) {/////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="ClothingWomenPants"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -546,16 +560,17 @@ $(document).on('pagebeforeshow', "#womenDresses", function( event, ui ) {///////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="ClothingWomenDresses"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -587,16 +602,17 @@ $(document).on('pagebeforeshow', "#tv", function( event, ui ) {//////////////REM
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ElectronicsTV"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -625,16 +641,17 @@ $(document).on('pagebeforeshow', "#audio", function( event, ui ) {//////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ElectronicsAudio"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -661,16 +678,17 @@ $(document).on('pagebeforeshow', "#phones", function( event, ui ) {/////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ElectronicsPhones"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -698,16 +716,17 @@ $(document).on('pagebeforeshow', "#cameras", function( event, ui ) {////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ElectronicsCameras"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -734,16 +753,17 @@ $(document).on('pagebeforeshow', "#video", function( event, ui ) {//////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ElectronicsVideo"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -776,16 +796,17 @@ $(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ShoesChildren"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -814,16 +835,17 @@ $(document).on('pagebeforeshow', "#womenS", function( event, ui ) {/////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ShoesWomen"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -850,16 +872,17 @@ $(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////R
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="ShoesMen"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -892,16 +915,17 @@ $(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="SportsBicyclesFrames"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -929,16 +953,17 @@ $(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {/////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="SportsBicyclesWheels"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -966,16 +991,17 @@ $(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="SportsBicyclesHelmets"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -1003,16 +1029,17 @@ $(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2 + product.tag3;
 				if(superTag =="SportsBicyclesParts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -1039,16 +1066,17 @@ $(document).on('pagebeforeshow', "#fishing", function( event, ui ) {////////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="SportsFishing"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -1075,16 +1103,17 @@ $(document).on('pagebeforeshow', "#baseball", function( event, ui ) {///////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="SportsBaseball"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -1111,16 +1140,17 @@ $(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////R
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="SportsGolf"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
@@ -1147,16 +1177,17 @@ $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {/////////
 				product = productList[i];
 				superTag = product.tag1 + product.tag2;
 				if(superTag =="SportsBasketball"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.id + ")>" + 
-						"<img src= " +  product.imgSrc + "/>" +
-						"<p><i>" + product.brand + " " + product.name +  "</i></p>" +
-						"<p> Model: " + product.model + "</p>" + 
-						"<p> Dimensions: " + product.dimensions + "</p>" +
-						"<p>" + product.description + "</p>" +
-						"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.instPrice) + "</p>" +
-						"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-						"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidPrice) + "</p>" +
-						"</a></li>");
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i>" + product.productName +  "</i></p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p>" + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
 				}
 			}
 			list.listview("refresh");
