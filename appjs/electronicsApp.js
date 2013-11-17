@@ -1,20 +1,22 @@
 
 
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#electronics-view", function( event, ui ) {
 	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var electCatList = data.Electronics;
+			
+			var electCatList = data.electronics;
 			var len = electCatList.length;
 			var list = $("#Electronics");
 			list.empty();
 			var electCat;
 			for (var i=0; i < len; ++i){
 				electCat = electCatList[i];
-				list.append("<li><a onclick=GetElectCat(" + electCat.id + ")>" + 
-					"<h1>" + electCat.name +  "</h1>" +
+				list.append("<li><a onclick=GetElectCat(" + electCat.subCategoryID + ")>" + "<center>" +
+					"<img src= " +  electCat.subCategoryDesc + "/>"+
+					"<h1>" + electCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
 			}
@@ -27,11 +29,7 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	});
 });// --------------------------------------------Electronics-List-------------------------------------
 
-$(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentElectCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentElectCat.name;
-	
-});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -77,14 +75,14 @@ var currentElectCat = {};
 
 function GetElectCat(id){
 	$.mobile.loading("show");
-	if(id == 0){
+	if(id == 5){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentElecCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#tv");
 		},
@@ -101,14 +99,14 @@ function GetElectCat(id){
 		});
 	}
 		
-	else if(id == 1){
+	else if(id == 6){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentElecCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#audio");
 		},
@@ -124,14 +122,14 @@ function GetElectCat(id){
 		}
 		});
 	}
-	else if(id == 2){
+	else if(id == 7){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentElecCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#phones");
 		},
@@ -147,14 +145,14 @@ function GetElectCat(id){
 		}
 		});
 	}
-	else if(id == 3){
+	else if(id == 8){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentElecCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#cameras");
 		},
@@ -170,14 +168,14 @@ function GetElectCat(id){
 		}
 		});
 	}
-	else if(id == 4){
+	else if(id == 9){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Electronics/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentSubCat = data.subCat;
+			currentElecCat = data.subCat;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#video");
 		},

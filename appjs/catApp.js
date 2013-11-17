@@ -26,45 +26,8 @@ $(document).on('pagebeforeshow', "#categories", function( event, ui ) {
 	});
 });
 
-var algo = {};
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
-	// currentCategory has been set at this point
-	var listy = $("#testy");
-	listy.empty();
-	document.getElementById("currCat-Name").innerHTML = currentCategory.categoryName;
-	//document.getElementById("currCatName2").innerHTML = currentCategory.name;
-	//document.write(currentCategory.name);
-	algo = currentCategory.categoryName;
-	switch(algo){
-		case "Books":
-			listy.append("<ol id='Books' data-role='list-divider' data-inset='true' data-theme='b'></ol>");
-			break;
-			
-		case "Computers":
-			listy.append("<ol id='Computers' data-role='listview' data-inset='true'></ol>");
-			break;
-		
-		case "Clothing":
-			listy.append("<ol id='Clothing' data-role='listview' data-inset='true'></ol>");
-			break;
-			
-		case "Electronics":
-			listy.append("<ol id='Electronics' data-role='listview' data-inset='true'></ol>");
-			break;
-			
-		case "Shoes":
-			listy.append("<ol id='Shoes' data-role='listview' data-inset='true'></ol>");
-			break;
-			
-		case "Sports":
-			listy.append("<ol id='Sports' data-role='listview' data-inset='true'></ol>");
-			break;
-	}
-	
-	//document.getElementById("currIcoSrc").src = currentCategory.iconSrc;
-	
 
-});
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,27 +82,146 @@ var currentCategory = {};
 
 function GetCategory(id){
 	$.mobile.loading("show");
-	$.ajax({
+	
+	if(id == 1){
+		$.ajax({
 		url : "http://localhost:3412/DB-Project/categories/" + id,
 		method: 'get',
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			currentCategory = convert(data.category);
+			currentSubCat = data.subCat;
 			$.mobile.loading("hide");
-			$.mobile.navigate("#category-view");
+			$.mobile.navigate("#books-view");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Category not found.");
+				alert("SubCat not found.");
 			}
 			else {
 				alter("Internal Server Error.");
 			}
 		}
-	});
+		});
+	}
+		
+	else if(id == 2){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/categories/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#electronics-view");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 3){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/categories/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#computers-view");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 4){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/categories/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#clothing-view");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 5){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/categories/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#shoes-view");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
+	else if(id == 6){
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/categories/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentSubCat = data.subCat;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#sports-view");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("SubCat not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+		});
+	}
 }
 
 function UpdateCategory(){

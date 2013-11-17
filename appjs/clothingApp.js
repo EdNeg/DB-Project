@@ -1,20 +1,21 @@
 
 
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#clothing-view", function( event, ui ) {
 	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/Clothing",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var clothCatList = data.Clothing;
+			var clothCatList = data.clothing;
 			var len = clothCatList.length;
 			var list = $("#Clothing");
 			list.empty();
 			var clothCat;
 			for (var i=0; i < len; ++i){
 				clothCat = clothCatList[i];
-				list.append("<li><a onclick=GetClothCat(" + clothCat.id + ")>" + 
-					"<h1>" + clothCat.name +  "</h1>" +
+				list.append("<li><a onclick=GetClothCat(" + clothCat.subCategoryID + ")>" + "<center>" +
+					"<img src= " +  clothCat.subCategoryDesc + "/>"+
+					"<h1>" + clothCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
 			}
@@ -27,11 +28,6 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	});
 });// --------------------------------------------Clothings-List-------------------------------------
 
-$(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentclothCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentClothCat.name;
-	
-});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -77,7 +73,7 @@ var currentClothCat = {};
 
 function GetClothCat(id){
 	$.mobile.loading("show");
-	if(id == 0){
+	if(id == 14){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Clothing/" + id,
 		method: 'get',
@@ -101,7 +97,7 @@ function GetClothCat(id){
 		});
 	}
 		
-	else if(id == 1){
+	else if(id == 15){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Clothing/" + id,
 		method: 'get',
@@ -124,7 +120,7 @@ function GetClothCat(id){
 		}
 		});
 	}
-	else if(id == 2){
+	else if(id == 16){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Clothing/" + id,
 		method: 'get',

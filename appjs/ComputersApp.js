@@ -1,20 +1,21 @@
 
 
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#computers-view", function( event, ui ) {
 	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/Computers",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var compCatList = data.Computers;
+			var compCatList = data.computers;
 			var len = compCatList.length;
 			var list = $("#Computers");
 			list.empty();
 			var compCat;
 			for (var i=0; i < len; ++i){
 				compCat = compCatList[i];
-				list.append("<li><a onclick=GetCompCat(" + compCat.id + ")>" + 
-					"<h1>" + compCat.name +  "</h1>" +
+				list.append("<li><a onclick=GetCompCat(" + compCat.subCategoryID + ")>" + "<center>" +
+					"<img src= " +  compCat.subCategoryDesc + "/>"+
+					"<h1>" + compCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
 			}
@@ -27,11 +28,7 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 	});
 });// --------------------------------------------Computers-List-------------------------------------
 
-$(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentCompCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentCompCat.name;
-	
-});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -76,7 +73,7 @@ function SaveSubCat(){
 var currentCompCat = {};
 
 function GetCompCat(id){
-	if(id == 0){
+	if(id == 10){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Computers/" + id,
 		method: 'get',
@@ -100,7 +97,7 @@ function GetCompCat(id){
 		});
 	}
 		
-	else if(id == 1){
+	else if(id == 11){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Computers/" + id,
 		method: 'get',
@@ -123,7 +120,7 @@ function GetCompCat(id){
 		}
 		});
 	}
-	else if(id == 2){
+	else if(id == 12){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Computers/" + id,
 		method: 'get',
@@ -146,7 +143,7 @@ function GetCompCat(id){
 		}
 		});
 	}
-	else if(id == 3){
+	else if(id == 13){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Computers/" + id,
 		method: 'get',

@@ -1,20 +1,22 @@
 
 
-$(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
+$(document).on('pagebeforeshow', "#books-view", function( event, ui ) {
 	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/Books",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var subCatList = data.Books;
+			
+			var subCatList = data.books;
 			var len = subCatList.length;
 			var list = $("#Books");
 			list.empty();
 			var subCat;
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
-				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+				list.append("<li><a onclick=GetSubCat(" + subCat.subCategoryID + ")>" + "<center>" +
+					"<img src= " +  subCat.subCategoryDesc + "/>"+ 
+					"<h1>" + subCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
 			}
@@ -29,11 +31,7 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 
 
 
-$(document).on('pagebeforeshow', "#subCat-view", function( event, ui ) {
-	// currentSubCat has been set at this point
-	document.getElementById("currSubCat-Name").innerHTML = currentSubCat.name;
-	
-});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -79,7 +77,7 @@ var currentSubCat = {};
 
 function GetSubCat(id){
 	$.mobile.loading("show");
-	if(id == 0){
+	if(id == 1){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Books/" + id,
 		method: 'get',
@@ -103,7 +101,7 @@ function GetSubCat(id){
 		});
 	}
 		
-	else if(id == 1){
+	else if(id == 2){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Books/" + id,
 		method: 'get',
@@ -126,7 +124,7 @@ function GetSubCat(id){
 		}
 		});
 	}
-	else if(id == 2){
+	else if(id == 3){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Books/" + id,
 		method: 'get',
@@ -149,7 +147,7 @@ function GetSubCat(id){
 		}
 		});
 	}
-	else if(id == 3){
+	else if(id == 4){
 		$.ajax({
 		url : "http://localhost:3412/DB-Project/Books/" + id,
 		method: 'get',
