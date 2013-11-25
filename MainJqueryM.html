@@ -102,27 +102,27 @@
 	</div><!-- /navbar -->
 	</header>
 	<form id "account-form">
-		<label for="name">Full Name:</label>
+		<label for="name"><font color="white">Full Name:</font></label>
 			<input name="name" id="name" type="text"/>
 			
-		<label for="username">User Name:</label>
+		<label for="username"><font color="white">User Name:</font></label>
 			<input name="username" id="username" type="text">
 	
-		<label for="password">Password:</label>
+		<label for="password"><font color="white">Password:</font></label>
 			<input name="password" id="password" type="password" autocomplete="off">
 	
-		<label for="mailingaddress">Shipping Address:</label>
+		<label for="mailingaddress"><font color="white">Shipping Address:</font></label>
 			<input name="mailingaddress" id="mailingaddress" type="text">
 			
-		<label for="billingaddress">Billing Address:</label>
+		<label for="billingaddress"><font color="white">Billing Address:</font></label>
 			<input name="billingaddress" id="billingaddress" type="text">
 		
-		<label for="creditcard">Credit Card Number:</label>
+		<label for="creditcard"><font color="white">Credit Card Number:</font></label>
 			<input name="creditcard" id="creditcard" type="text">		<!-- type="number" -->
 		
 	</form>
 <form>
-    <input type="submit" value="Submit" data-inline="true">
+    <input type="submit" value="Submit" data-inline="true" data-theme="b">
 </form>
 
 </div><!-- Page Register -------------------------------------------------------------------------------------->
@@ -165,7 +165,7 @@
 
 
 <div data-role="page" id="products" >
-		<header data-role="header" data-theme="d">
+		<header data-role="header" data-theme="d" data-position="fixed">
 			<h1>Search Products</h1>
 			<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
 		</header>
@@ -190,11 +190,12 @@
 				<img id = "currImgSrc" style="width: 90%;"></center>
 			
 			<ul data-role="listview" data-inset="true">
-				<li data-role="list-divider" id = "currBrand-Name"></li>
+				<li data-role="list-divider" id = "currName"></li>
 				<li id="currBidPrice"></li>
 				<li id="currInstPrice"></li>
 				<li data-role="list-divider">Description</li>
 				<li id="currDescription"></li>
+				<li id="currBrand"></li>
 				<li id="currModel"></li>
 				<li id="currDimensions"></li>
 				<li id="currId"></li>
@@ -241,7 +242,7 @@
 <div data-role="page" id="books-view">
 	<header data-role="header" data-theme="d">
 		<h1>Books</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
 	
 		<div data-role="content"><!-- try listview-->
@@ -352,6 +353,20 @@
 	<header data-role="header" data-theme='d'>
 		<h1>Children</h1>
 		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<!--
+		<select id="mySel" class="ui-btn-right">
+					<option value="" style="display:none">Sort by: </option>
+					<option value="SortName" href="#categories">Sort by Name</option>
+					<option value="SortBrand">Sort by Brand</option>
+					<option value="SortPrice">Sort by Price</option>
+				</select>-->
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
 	</header>
 	
 	<div data-role="content">
@@ -361,9 +376,83 @@
 				
 		</ul>
 	</div>
-     	
+	     	
 			
 </div><!-- PAGE CHILDREN ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="childrenBName">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" href="#books-view" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCNList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN SORTED BY NAME---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="childrenBBrand">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCBList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN SORTED BY PRICE---------------------------------------------------------------------------------->
+
+<div data-role="page" id="childrenBPrice">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN SORTED BY BRAND---------------------------------------------------------------------------------->
 	
 <div data-role="page" id="fiction">
 	<header data-role="header" data-theme='d'>
