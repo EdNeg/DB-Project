@@ -1404,6 +1404,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	var dims = "Dimensions: " + currentProduct.dimensions;
 	var pid = "Product id: " + currentProduct.productID;
 	var brand = "Brand: " + currentProduct.brand;
+	var user = "Seller: " + currentProduct.userNickname;
 	//document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("currName").innerHTML = productName;
 	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
@@ -1415,6 +1416,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	document.getElementById("currDimensions").innerHTML = dims;
 	document.getElementById("currId").innerHTML = pid;
 	document.getElementById("currBrand").innerHTML = brand;
+	document.getElementById("currSeller").innerHTML = user;
 	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
 	
 	

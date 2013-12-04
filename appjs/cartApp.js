@@ -1,4 +1,41 @@
-$(document).on('pagebeforeshow', "#carts", function( event, ui ) {
+$(document).on('pagebeforeshow', "#myCart", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.products;		// ADD var bidProductList = data.bidProduct;
+			
+			var len = productList.length;
+			var list = $("#products-list");
+			list.empty();
+			var product;
+			
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+				list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+$(document).on('pagebeforeshow', "#MyCart", function( event, ui ) {
         console.log("Jose");
         $.ajax({
                 url : "http://localhost:3412/DB-Project/carts",
@@ -14,13 +51,13 @@ $(document).on('pagebeforeshow', "#carts", function( event, ui ) {
             			var cart;
             			for (var i=0; i < len; ++i){
             				cart = cartList[i];
-            				if(cart.userID == currentUserID){
+            				//if(cart.userID == currentUserID){
             				GetCartInfo(cart.userID);
                                 list.append("<li>" +
-                                "<h2>" + "Product: " + currentProduct.productName + "</h2>" +
-                                "<h2>" + "Product Price: " + currentProduct.productPrice  + "</h2>" +
+                                "<h2>" + "Product: " + currentCart.productName + "</h2>" +
+                                "<h2>" + "Product Price: " + currentCart.productPrice  + "</h2>" +
                                 "<h2>" + "Seller: " +  currentSeller.userNickname + "</h2>" + "</li>");
-            				}
+            				//}
             			}
             			list.listview("refresh");	
             		},
@@ -68,6 +105,7 @@ function GetCartInfo(id){
                 contentType: "application/json",
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
+                	alert("APUUPUU");
                         currentCart = convert(data.cart);
                         GetProductInfo(currentCart.productID);
                         GetProductSeller(currentCart.productID);

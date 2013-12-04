@@ -128,10 +128,12 @@ app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
 
-var query = connection.query("Select * from bbProduct as p inner join bbBidProduct " + 
-							"as b on b.productID = p.productID inner join bbSubCategory " + 
-							"as s inner join bbCategory " + 
-							"as c on s.categoryID =c.categoryID where p.productID = " + id, function(err, rows, result){
+var query = connection.query("Select * from bbProduct as p natural join bbBidProduct " + 
+							"natural join bbSubCategory " + 
+							"natural join bbCategory " + 
+							"natural join bbSell " +
+							"natural join bbUser " +
+							"where p.productID = " + id, function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -1874,7 +1876,9 @@ var Cart = cart.Cart;
 app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 	
-	connection.query('SELECT productID, userID FROM bbAddtoCart', function(err, rows, result) {
+	connection.query("SELECT * from bbProduct as p " +
+		"inner join bbBidProduct as b on b.productID = p.productID " +
+		"inner join bbAddToCart as a on a.productID = p.productID ", function(err, rows, result) {
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -1990,9 +1994,6 @@ var Sell = sell.Sell;
 // REST Operation - HTTP GET to read all cars
 app.get('/DB-Project/sells', function(req, res) {
         console.log("GET Sell");
-        //var tom = {"make" : "Ford", "model" : "Escape", "year" : "2013", "description" : "V4 engine, 30mpg, Gray", "price" : "$18,000"};
-        //var tom = new Car("Ford", "Escape", "2013", "V4 engine, 30mpg, Gray", "$18,000");
-        //console.log("tom: " + JSON.stringify(tom));
         var response = {"sells" : sellinfoList};
           res.json(response);
 });

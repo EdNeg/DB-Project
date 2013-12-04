@@ -22,7 +22,18 @@
 		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
-	
+		<script> function AddToCart(){
+		alert("Item succesfully Added!");
+        var list = $("#carts-list");
+        var cart;
+        list.append("<li>" +
+        "<h2>" + "Product: " + currentProduct.productName + "</h2>" +
+        "<h2>" + "Product Price: " + currentCart.productPrice  + "</h2>" + "</li>");
+        //"<h2>" + "Seller: " +  currentSeller.userNickname + "</h2>" + "</li>");
+            				
+        
+       	list.listview("refresh");	
+    } </script>
 		
 
 	
@@ -202,17 +213,17 @@
 				
 							
 			</ul>
- 		
+			
+			<ul data-role = "listview" data-inset ="true">
+				<li id="currSeller"></li>
+			</ul> 		
 	</div>	
  				 
-
-	<div data-role="navbar">
-    <ul>
-    	<!-- -------VERIFY IF LOGGED----------->
-        <li><a href="#" data-icon="check" data-iconpos="top" data-transition="slidefade" data-theme="b">Place Bid</a></li>
-        <li><a href="#" data-icon="check" data-iconpos="top" data-transition="slidefade" data-theme="b">Add to Cart</a></li>
-    </ul>
-</div><!-- /navbar -->
+		<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#signin" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+         	<div class="ui-block-b"><a href="#carts" onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
+    	</div>
+	
 			
 </div><!-- Page Product Details --------------------------------------------------------------------------->
 
