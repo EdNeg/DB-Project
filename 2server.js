@@ -1416,6 +1416,16 @@ app.get('/DB-Project/accounts', function(req, res) {
 });
 });
 
+app.post('/DB-Project/accounts', function (req, res) {
+  var post = req.body;
+  if (post.user == 'john' && post.password == 'johnspassword') {
+    req.session.user_id = johns_user_id_here;
+    res.redirect('/my_secret_page');
+  } else {
+    res.send('Bad user/pass');
+  }
+});
+
 
 // REST Operation - HTTP GET to read a product based on its id
 app.get('/DB-Project/accountss/:id', function(req, res) {
