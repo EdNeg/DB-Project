@@ -22,7 +22,11 @@
 		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
-		<script> function AddToCart(){
+		<script src="appjs/sell.js"></script>
+		
+		
+		<script> 
+		function AddToCart(){
 		alert("Item succesfully Added!");
         var list = $("#carts-list");
         var cart;
@@ -30,10 +34,17 @@
         "<h2>" + "Product: " + currentProduct.productName + "</h2>" +
         "<h2>" + "Product Price: " + currentCart.productPrice  + "</h2>" + "</li>");
         //"<h2>" + "Seller: " +  currentSeller.userNickname + "</h2>" + "</li>");
-            				
-        
-       	list.listview("refresh");	
-    } </script>
+         list.listview("refresh");	
+    	} 
+    	</script>
+    	
+    	<script> 
+		function PlaceBid(){
+		alert("Bid succesfully Placed!");
+    	} 
+    	</script>
+    	
+    	
 		
 
 	
@@ -87,8 +98,11 @@
 	</header>
 	
 	<form id="verify-form">
-        <label for="upd-userNickname"><font color="white"> Username: </font><input id="upd-userNickname" name="userNickname" type="text"/></label>
-        <label for="upd-password"><font color="white"> Password: </font><input id="upd-password" name="password" type="password"/></label>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+        	<li><label for="upd-userNickname">Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
+        	<label for="upd-password">Password: <input id="upd-password" name="password" type="password"/></label>
+    		</li>
+    	</ul>
     </form>
 
 	<div class="ui-grid-a">
@@ -113,24 +127,26 @@
 	</div><!-- /navbar -->
 	</header>
 	<form id "account-form">
-		<label for="name"><font color="white">Full Name:</font></label>
-			<input name="name" id="name" type="text"/>
-			
-		<label for="username"><font color="white">User Name:</font></label>
-			<input name="username" id="username" type="text">
-	
-		<label for="password"><font color="white">Password:</font></label>
-			<input name="password" id="password" type="password" autocomplete="off">
-	
-		<label for="mailingaddress"><font color="white">Shipping Address:</font></label>
-			<input name="mailingaddress" id="mailingaddress" type="text">
-			
-		<label for="billingaddress"><font color="white">Billing Address:</font></label>
-			<input name="billingaddress" id="billingaddress" type="text">
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li><label for="name">Full Name:</label>
+				<input name="name" id="name" type="text"/>
+				
+			<label for="username">User Name:</label>
+				<input name="username" id="username" type="text">
 		
-		<label for="creditcard"><font color="white">Credit Card Number:</font></label>
-			<input name="creditcard" id="creditcard" type="text">		<!-- type="number" -->
+			<label for="password">Password:</label>
+				<input name="password" id="password" type="password" autocomplete="off">
 		
+			<label for="mailingaddress">Shipping Address:</label>
+				<input name="mailingaddress" id="mailingaddress" type="text">
+				
+			<label for="billingaddress">Billing Address:</label>
+				<input name="billingaddress" id="billingaddress" type="text">
+			
+			<label for="creditcard">Credit Card Number:</label>
+				<input name="creditcard" id="creditcard" type="text">		<!-- type="number" -->
+			</li>
+		</ul>
 	</form>
 <form>
     <input type="submit" value="Submit" data-inline="true" data-theme="b">
@@ -151,15 +167,15 @@
 	</ul>
 	
 	<div class="ui-grid-a">
-		<div class="ui-block-a"><a data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
+		<div class="ui-block-a"><a href="#viewUsers" data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
 		<div class="ui-block-a"><a href="../DB-Project/EditAccount.html" data-role="button" data-icon="edit" data-iconpos="top">Edit User</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
+		<div class="ui-block-a"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
 		<div class="ui-block-a"><a data-role="button" data-icon="edit" data-iconpos="top">Edit Admin</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
-		<div class="ui-block-a"><a href"#add-Category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
+		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
 	</div>
 
@@ -190,7 +206,7 @@
 
 
 <div data-role="page" id="product-view">
-	<header data-role="header" data-theme="d">
+	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
 		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
@@ -220,7 +236,7 @@
 	</div>	
  				 
 		<div class="ui-grid-a">
-            <div class="ui-block-a"><a href="#signin" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+            <div class="ui-block-a"><a href="#signin" onclick="PlaceBid()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
          	<div class="ui-block-b"><a href="#carts" onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
     	</div>
 	
@@ -1169,25 +1185,48 @@
 
 
 <div id="add-category" data-role="page">
-			<div data-role="header" data-theme="b" data-position="fixed">
-				<a data-role="button" data-rel="back">Cancel</a>
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" data-rel="back" data-theme="b">Cancel</a>
 				<h1>Add Category</h1>
-				<a data-role="button" data-rel="back" onclick="SaveCategory()">Save</a>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
 			</div>
-			<center>
-				<h2>Enter category information</h2>
-			</center>
 			<form id="category-form">
- 				<fieldset data-role="controlgroup">
- 					<ul>
-  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
-  					<li><label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">Enter Category Information</li>  
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label>
+  					<label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
   			  	</ul>
-			 </fieldset>
+			
 			</form>
 </div><!-- Page Add Category ---------------------------------------------------------------------------------->
 
 
+
+<div data-role="page" id="viewUsers" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Users Registered</h1>
+			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="users-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- Page View Users------------------------------------------------------------------------>
+
+<div data-role="page" id="viewAdmins" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Administrators Registered</h1>
+			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="admins-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- Page View Admins------------------------------------------------------------------------>
 </body>
 
 	

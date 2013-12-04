@@ -1416,15 +1416,21 @@ app.get('/DB-Project/accounts', function(req, res) {
 });
 });
 
+/*
 app.post('/DB-Project/accounts', function (req, res) {
   var post = req.body;
-  if (post.user == 'john' && post.password == 'johnspassword') {
-    req.session.user_id = johns_user_id_here;
-    res.redirect('/my_secret_page');
+  
+  connection.query('SELECT * FROM bbUser', function(err, rows, result) {
+  if (err) throw err;
+	for (i = 0; i<rows.length; i++){
+  		if (post.user == rows[i].userNickname && post.password == rows[i].password) {
+    req.session.user_id = rows[i].userNickname;
+    res.redirect('../DB-Project/Regular_User.html');
   } else {
     res.send('Bad user/pass');
   }
-});
+});*/
+
 
 
 // REST Operation - HTTP GET to read a product based on its id
