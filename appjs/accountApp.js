@@ -76,22 +76,24 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 		success : function(data, textStatus, jqXHR){
 			var sellList = data.sell;		// ADD var bidProductList = data.bidProduct;
 			var len = sellList.length;
+			alert(len);
 			var list = $("#productUser-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
 			for (var i=0; i < len; ++i){
 				products = sellList[i];
+				GetProductbyUser(pruducts.productID);
 					list.append("<li>" + 
-					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + products.productName +  "</b></i></p>" +
+					"<img src= " +  currentProduct.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + currentProduct.productName +  "</b></i></p>" +
 					"<p>_</p>" +
-					"<p> Brand: " + products.brand  + "</p>" +
-					"<p> Model: " + products.model + "</p>" + 
-					"<p> Dimensions: " + products.dimensions + "</p>" +
-					"<p> Description: " + products.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(products.productPrice) + "</p>" +		
+					"<p> Brand: " + currentProduct.brand  + "</p>" +
+					"<p> Model: " + currentProduct.model + "</p>" + 
+					"<p> Dimensions: " + currentProduct.dimensions + "</p>" +
+					"<p> Description: " + currentProduct.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(currentProduct.productPrice) + "</p>" +		
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(currentProduct.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
 				
 			}

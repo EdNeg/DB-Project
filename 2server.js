@@ -1952,7 +1952,7 @@ app.get('/DB-Project/sells/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sell: " + id);
 
-var query = connection.query("SELECT * FROM bbSell natural join bbProduct WHERE userID = '" + id + "'", function(err, rows, result){
+var query = connection.query("SELECT productID FROM bbSell WHERE userID = '" + id + "'", function(err, rows, result){
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
