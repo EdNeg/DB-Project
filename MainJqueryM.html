@@ -22,6 +22,7 @@
 		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
+		<script src="appjs/sell.js"></script>
 	
 		
 
@@ -43,7 +44,7 @@
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
 		    <a href="#products" data-role="button" data-iconpos="left" data-icon="search" data-theme="b">Search</a>
-			<a href="../DB-Project/View_Cart.html" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+			<a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="VerifyUserCart()">Cart</a>
 		</header>
 	<center>
 			<img border="0" src="../DB-Project/css/img/PR_WIDE.jpg" alt="BoricuaBay" width="800" height="375">
@@ -55,7 +56,7 @@
             <div class="ui-block-a"><a href="#signin" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></div>
          	<div class="ui-block-b"><a href="#register" data-role="button" data-iconpos="bottom" data-icon="edit" data-theme="d"data-transition="slidefade">Register</a></div>
     	</div>
-    	<a href="#categories" data-role="button" data-iconpos="top" data-icon="bars" data-theme="b">Browse Categories</a>
+    	<a href="#categories" data-role="button" data-iconpos="top" data-theme="b">Browse Categories</a>
 	</div><!-- Signin/Register/Browse Categories Buttons -->
 
        
@@ -81,7 +82,7 @@
     </form>
 
 	<div class="ui-grid-a">
-		<div class="ui-block-a"><a data-role="button" onclick="VerifyUser()" data-theme="b">Sign in </a></div>
+		<div class="ui-block-a"><a data-role="button" onclick="LogIn()" data-theme="b">Sign in </a></div>
 		<div class="ui-block-b"><a data-role="button" onclick="VerifyAdmin()">Admin Login </a></div>
 	</div>
 	
@@ -102,27 +103,32 @@
 	</div><!-- /navbar -->
 	</header>
 	<form id "account-form">
-		<label for="name"><font color="white">Full Name:</font></label>
-			<input name="name" id="name" type="text"/>
-			
-		<label for="username"><font color="white">User Name:</font></label>
-			<input name="username" id="username" type="text">
-	
-		<label for="password"><font color="white">Password:</font></label>
-			<input name="password" id="password" type="password" autocomplete="off">
-	
-		<label for="mailingaddress"><font color="white">Shipping Address:</font></label>
-			<input name="mailingaddress" id="mailingaddress" type="text">
-			
-		<label for="billingaddress"><font color="white">Billing Address:</font></label>
-			<input name="billingaddress" id="billingaddress" type="text">
-		
-		<label for="creditcard"><font color="white">Credit Card Number:</font></label>
-			<input name="creditcard" id="creditcard" type="text">		<!-- type="number" -->
-		
-	</form>
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
+  					<li><label for="upd-userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
+  					<li><label for="upd-userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="upd-addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="upd-city"> City: <input id="upd-city" name="city" type="text"/></label></li>
+				    <li><label for="upd-state"> State: <input id="upd-state" name="state" type="text"/></label></li>
+  					<li><label for="upd-country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
+  					<li><label for="upd-zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="upd-creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="upd-creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="upd-securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="upd-expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="upd-caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="upd-ccity"> City: <input id="upd-ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="upd-cstate"> State: <input id="upd-cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="upd-ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="upd-czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
+  			  	</ul>
 <form>
-    <input type="submit" value="Submit" data-inline="true" data-theme="b">
+    <input type="button" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
 </form>
 
 </div><!-- Page Register -------------------------------------------------------------------------------------->
@@ -453,7 +459,7 @@
 	     	
 			
 </div><!-- PAGE CHILDREN SORTED BY BRAND---------------------------------------------------------------------------------->
-	
+	 
 <div data-role="page" id="fiction">
 	<header data-role="header" data-theme='d'>
 		<h1>Fiction</h1>
