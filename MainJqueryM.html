@@ -23,28 +23,8 @@
 		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
 		<script src="appjs/sell.js"></script>
-		
-		
-		<script> 
-		function AddToCart(){
-		alert("Item succesfully Added!");
-        var list = $("#carts-list");
-        var cart;
-        list.append("<li>" +
-        "<h2>" + "Product: " + currentProduct.productName + "</h2>" +
-        "<h2>" + "Product Price: " + currentCart.productPrice  + "</h2>" + "</li>");
-        //"<h2>" + "Seller: " +  currentSeller.userNickname + "</h2>" + "</li>");
-         list.listview("refresh");	
-    	} 
-    	</script>
-    	
-    	<script> 
-		function PlaceBid(){
-		alert("Bid succesfully Placed!");
-    	} 
-    	</script>
-    	
-    	
+		<script src="appjs/order.js"></script>
+
 		
 
 	
@@ -64,7 +44,11 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
-			<a href="../DB-Project/View_Cart.html" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+
+		    <a href="#products" data-role="button" data-iconpos="left" data-icon="search" data-theme="b">Search</a>
+			<a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="VerifyUserCart()">Cart</a>
+
+
 		</header>
            
 		<form id="search-form" data-role="content">
@@ -84,7 +68,7 @@
             <div class="ui-block-a"><a href="#signin" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></div>
          	<div class="ui-block-b"><a href="#register" data-role="button" data-iconpos="bottom" data-icon="edit" data-theme="d"data-transition="slidefade">Register</a></div>
     	</div>
-    	<a href="#categories" data-role="button" data-iconpos="top" data-icon="bars" data-theme="b">Browse Categories</a>
+    	<a href="#categories" data-role="button" data-iconpos="top" data-theme="b">Browse Categories</a>
 	</div><!-- Signin/Register/Browse Categories Buttons -->
 
        
@@ -113,7 +97,7 @@
     </form>
 
 	<div class="ui-grid-a">
-		<div class="ui-block-a"><a data-role="button" onclick="VerifyUser()" data-theme="b">Sign in </a></div>
+		<div class="ui-block-a"><a data-role="button" onclick="LogIn()" data-theme="b">Sign in </a></div>
 		<div class="ui-block-b"><a data-role="button" onclick="VerifyAdmin()">Admin Login </a></div>
 	</div>
 	
@@ -134,29 +118,34 @@
 	</div><!-- /navbar -->
 	</header>
 	<form id "account-form">
-		<ul data-role="listview" data-divider-theme="b" data-inset="true">
-			<li><label for="name">Full Name:</label>
-				<input name="name" id="name" type="text"/>
-				
-			<label for="username">User Name:</label>
-				<input name="username" id="username" type="text">
-		
-			<label for="password">Password:</label>
-				<input name="password" id="password" type="password" autocomplete="off">
-		
-			<label for="mailingaddress">Shipping Address:</label>
-				<input name="mailingaddress" id="mailingaddress" type="text">
-				
-			<label for="billingaddress">Billing Address:</label>
-				<input name="billingaddress" id="billingaddress" type="text">
-			
-			<label for="creditcard">Credit Card Number:</label>
-				<input name="creditcard" id="creditcard" type="text">		<!-- type="number" -->
-			</li>
-		</ul>
-	</form>
+
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
+  					<li><label for="upd-userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
+  					<li><label for="upd-userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="upd-addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="upd-city"> City: <input id="upd-city" name="city" type="text"/></label></li>
+				    <li><label for="upd-state"> State: <input id="upd-state" name="state" type="text"/></label></li>
+  					<li><label for="upd-country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
+  					<li><label for="upd-zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="upd-creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="upd-creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="upd-securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="upd-expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="upd-caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="upd-ccity"> City: <input id="upd-ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="upd-cstate"> State: <input id="upd-cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="upd-ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="upd-czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
+  			  	</ul>
+
 <form>
-    <input type="submit" value="Submit" data-inline="true" data-theme="b">
+    <input type="button" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
 </form>
 
 </div><!-- Page Register -------------------------------------------------------------------------------------->
@@ -215,7 +204,7 @@
 <div data-role="page" id="product-view">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a data-role="button" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
 		
 	<div data-role="content">
