@@ -1,6 +1,9 @@
 // Express is the web framework 
 var express = require('express');
 var mysql = require('mysql');
+var logfmt = require("logfmt");
+
+app.use(logfmt.requestLogger());
 
 var app = express();
 var allowCrossDomain = function(req, res, next) {
@@ -334,8 +337,11 @@ app.post('/DB-Project/products', function(req, res) {
 
 
 // Server starts running when listen is called.
-app.listen(process.env.PORT || 3412);
-console.log("server listening");
+var port = process.env.PORT || 3412;
+app.listen(port, function(){
+	console.log("server listening at port " + port);
+});
+
 
 
 
