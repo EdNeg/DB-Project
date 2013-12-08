@@ -402,31 +402,30 @@ function VerifyAdmin(){
 
 		
 function SaveAccount(){
-	alert("You have created an account!");
-	$.mobile.navigate("#home");
-        var form = $("#account-view-form");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var newAccount = ConverToJSON(formData);
-        console.log("New Account: " + JSON.stringify(newAccount));
-        var newAccountJSON = JSON.stringify(newAccount);
-        $.ajax({
-               url : "http://localhost:3412/DB-Project/accounts",
-               method: 'post',
-                data : newAccountJSON,
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                       $.mobile.loading("hide");
-                       $.mobile.navigate("#accounts");
-                       alert("You have created an account!");
-                },
-                error: function(data, textStatus, jqXHR){
-                       console.log("textStatus: " + textStatus);
-                       $.mobile.loading("hide");
-                       alert("Data could not be added!");
-                }
-        });
+	$.mobile.loading("show");
+	var form = $("#account-form");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newAccount = ConverToJSON(formData);
+	console.log("New Account: " + JSON.stringify(newAccount));
+	var newAccountJSON = JSON.stringify(newAccount);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts",
+		method: 'post',
+		data : newAccountJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			$.mobile.navigate("#accounts");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Data could not be added!");
+		}
+	});
+
 
 }
 
