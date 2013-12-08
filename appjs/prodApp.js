@@ -9,18 +9,16 @@
 
 $(document).on('pagebeforeshow', "#childrenB", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 1,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#BCList");
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksChildren"){
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -33,7 +31,7 @@ $(document).on('pagebeforeshow', "#childrenB", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -45,7 +43,7 @@ $(document).on('pagebeforeshow', "#childrenB", function( event, ui ) {
 	});
 });
 
-
+///////////////////////////////////////////START SORTING///////////////////////////////////////////
 $(document).on('pagebeforeshow', "#childrenBName", function( event, ui ) {
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/productsName",
@@ -58,8 +56,7 @@ $(document).on('pagebeforeshow', "#childrenBName", function( event, ui ) {
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksChildren"){
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -72,7 +69,7 @@ $(document).on('pagebeforeshow', "#childrenBName", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -96,8 +93,7 @@ $(document).on('pagebeforeshow', "#childrenBBrand", function( event, ui ) {
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksChildren"){
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -110,7 +106,7 @@ $(document).on('pagebeforeshow', "#childrenBBrand", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -134,8 +130,7 @@ $(document).on('pagebeforeshow', "#childrenBPrice", function( event, ui ) {
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksChildren"){
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -148,7 +143,7 @@ $(document).on('pagebeforeshow', "#childrenBPrice", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -160,21 +155,21 @@ $(document).on('pagebeforeshow', "#childrenBPrice", function( event, ui ) {
 	});
 });
 
+/////////////////////////END SORTING//////////////////////////////////////////////////
 
 $(document).on('pagebeforeshow', "#fiction", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 2,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#BFList");
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksFiction"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -187,7 +182,7 @@ $(document).on('pagebeforeshow', "#fiction", function( event, ui ) {////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -202,18 +197,17 @@ $(document).on('pagebeforeshow', "#fiction", function( event, ui ) {////////////
 
 $(document).on('pagebeforeshow', "#technology", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 3,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#BTList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksTechnology"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -226,7 +220,7 @@ $(document).on('pagebeforeshow', "#technology", function( event, ui ) {/////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -241,18 +235,17 @@ $(document).on('pagebeforeshow', "#technology", function( event, ui ) {/////////
 
 $(document).on('pagebeforeshow', "#business", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 4,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#BBList");///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="BooksBusiness"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -265,443 +258,7 @@ $(document).on('pagebeforeshow', "#business", function( event, ui ) {///////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-///////////////////////************************COMPUTERS**************************//////////////////////////////////////////////
-
-
-
-$(document).on('pagebeforeshow', "#laptops", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CLList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ComputersLaptops"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-$(document).on('pagebeforeshow', "#desktops", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CDList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ComputersDesktops"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#tablets", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CTList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ComputersTablets"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#printers", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ComputersPrinters"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-///////////////////////************************CLOTHING**************************//////////////////////////////////////////////
-
-$(document).on('pagebeforeshow', "#childrenC", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CCList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ClothingChildren"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#menShirts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CMSList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="ClothingMenShirts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#menPants", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CMPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="ClothingMenPants"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#menSocks", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CMSkList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="ClothingMenSocks"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-$(document).on('pagebeforeshow', "#womenShirts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CWSList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="ClothingWomenShirts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#womenPants", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CWPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="ClothingWomenPants"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#womenDresses", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
-			var len = productList.length;
-			var list = $("#CWDList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="ClothingWomenDresses"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -720,18 +277,17 @@ $(document).on('pagebeforeshow', "#womenDresses", function( event, ui ) {///////
 
 $(document).on('pagebeforeshow', "#tv", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 5,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#ETList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ElectronicsTV"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -744,7 +300,7 @@ $(document).on('pagebeforeshow', "#tv", function( event, ui ) {//////////////REM
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -760,18 +316,17 @@ $(document).on('pagebeforeshow', "#tv", function( event, ui ) {//////////////REM
 
 $(document).on('pagebeforeshow', "#audio", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 6,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#EAList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ElectronicsAudio"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -784,7 +339,7 @@ $(document).on('pagebeforeshow', "#audio", function( event, ui ) {//////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -798,18 +353,17 @@ $(document).on('pagebeforeshow', "#audio", function( event, ui ) {//////////////
 
 $(document).on('pagebeforeshow', "#phones", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 7,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#EPList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ElectronicsPhones"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -822,7 +376,7 @@ $(document).on('pagebeforeshow', "#phones", function( event, ui ) {/////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -837,18 +391,17 @@ $(document).on('pagebeforeshow', "#phones", function( event, ui ) {/////////////
 
 $(document).on('pagebeforeshow', "#cameras", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 8,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#ECList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ElectronicsCameras"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -861,7 +414,7 @@ $(document).on('pagebeforeshow', "#cameras", function( event, ui ) {////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -875,18 +428,17 @@ $(document).on('pagebeforeshow', "#cameras", function( event, ui ) {////////////
 
 $(document).on('pagebeforeshow', "#video", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 9,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#EVList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ElectronicsVideo"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -899,7 +451,7 @@ $(document).on('pagebeforeshow', "#video", function( event, ui ) {//////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -913,24 +465,23 @@ $(document).on('pagebeforeshow', "#video", function( event, ui ) {//////////////
 
 
 
-///////////////////////************************SHOES**************************//////////////////////////////////////////////
+///////////////////////************************COMPUTERS**************************//////////////////////////////////////////////
 
 
 
-$(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+$(document).on('pagebeforeshow', "#laptops", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 10,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
-			var list = $("#SCList");///////////////////////////////////////////////////
+			var list = $("#CLList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ShoesChildren"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -943,7 +494,434 @@ $(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+
+$(document).on('pagebeforeshow', "#desktops", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 11,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CDList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#tablets", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 12,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CTList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#printers", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 13,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CPList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+///////////////////////************************CLOTHING**************************//////////////////////////////////////////////
+
+$(document).on('pagebeforeshow', "#childrenC", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 14,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CCList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#menShirts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 16,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CMSList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#menPants", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 17,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CMPList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#menSocks", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 18,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CMSkList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+
+$(document).on('pagebeforeshow', "#womenShirts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 20,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CWSList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#womenPants", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 21,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CWPList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+$(document).on('pagebeforeshow', "#womenDresses", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 22,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#CWDList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+
+
+
+///////////////////////************************SHOES**************************//////////////////////////////////////////////
+
+
+
+$(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsTag/" + 23,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.tag;
+			var len = productList.length;
+			var list = $("#SCList");///////////////////////////////////////////////////
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
 			}
 			list.listview("refresh");
 							
@@ -959,18 +937,17 @@ $(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////
 
 $(document).on('pagebeforeshow', "#womenS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 24,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SWList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ShoesWomen"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -983,7 +960,7 @@ $(document).on('pagebeforeshow', "#womenS", function( event, ui ) {/////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -997,18 +974,17 @@ $(document).on('pagebeforeshow', "#womenS", function( event, ui ) {/////////////
 
 $(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 25,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SMList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="ShoesMen"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1021,7 +997,7 @@ $(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////R
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1041,18 +1017,17 @@ $(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////R
 
 $(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 27,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SBFList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="SportsBicyclesFrames"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1065,7 +1040,7 @@ $(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1080,18 +1055,17 @@ $(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////
 
 $(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 28,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SBWList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="SportsBicyclesWheels"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1104,7 +1078,7 @@ $(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {/////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1119,18 +1093,17 @@ $(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {/////
 
 $(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 29,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SBHList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="SportsBicyclesHelmets"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1143,7 +1116,7 @@ $(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1158,18 +1131,17 @@ $(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {////
 
 $(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 30,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SBPList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2 + product.tag3;
-				if(superTag =="SportsBicyclesParts"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1182,7 +1154,7 @@ $(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1196,18 +1168,17 @@ $(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////
 
 $(document).on('pagebeforeshow', "#fishing", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 31,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SFList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="SportsFishing"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1220,7 +1191,7 @@ $(document).on('pagebeforeshow', "#fishing", function( event, ui ) {////////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1234,18 +1205,17 @@ $(document).on('pagebeforeshow', "#fishing", function( event, ui ) {////////////
 
 $(document).on('pagebeforeshow', "#baseball", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 32,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SBsBList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="SportsBaseball"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1258,7 +1228,7 @@ $(document).on('pagebeforeshow', "#baseball", function( event, ui ) {///////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1272,18 +1242,17 @@ $(document).on('pagebeforeshow', "#baseball", function( event, ui ) {///////////
 
 $(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 33,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SGList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="SportsGolf"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1296,7 +1265,7 @@ $(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////R
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1310,18 +1279,17 @@ $(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////R
 
 $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {//////////////REMEMBER TO CHANGE 
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productsTag/" + 34,
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;
+			var productList = data.tag;
 			var len = productList.length;
 			var list = $("#SBkBList");///////////////////////////////////////////////////
 			list.empty();
 			var product;
 			for (var i=0; i < len; ++i){
 				product = productList[i];
-				superTag = product.tag1 + product.tag2;
-				if(superTag =="SportsBasketball"){///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
+				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
@@ -1334,7 +1302,7 @@ $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {/////////
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 			}
 			list.listview("refresh");
 							
@@ -1352,18 +1320,18 @@ $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {/////////
 //----------------------*******************************************************************************************************-->
 
 
+
+
 $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products",
+		url : "http://localhost:3412/DB-Project/productSearch/" + $('#search').val(),
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var productList = data.products;		// ADD var bidProductList = data.bidProduct;
-			
+			var productList = data.productSearch;
 			var len = productList.length;
 			var list = $("#products-list");
 			list.empty();
 			var product;
-			
 			for (var i=0; i < len; ++i){
 				product = productList[i];
 				
@@ -1385,11 +1353,10 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			alert("Item doesn't exist!");
 		}
 	});
 });
-
 
 $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	// currentProduct has been set at this point
@@ -1404,6 +1371,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	var dims = "Dimensions: " + currentProduct.dimensions;
 	var pid = "Product id: " + currentProduct.productID;
 	var brand = "Brand: " + currentProduct.brand;
+	var user = "Seller: " + currentProduct.userNickname;
 	//document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("currName").innerHTML = productName;
 	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
@@ -1415,6 +1383,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	document.getElementById("currDimensions").innerHTML = dims;
 	document.getElementById("currId").innerHTML = pid;
 	document.getElementById("currBrand").innerHTML = brand;
+	document.getElementById("currSeller").innerHTML = user;
 	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
 	
 	
@@ -1485,6 +1454,7 @@ function GetProduct(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
+			//alert("herher");
 			currentProduct = data.product;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#product-view");
@@ -1493,7 +1463,7 @@ function GetProduct(id){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Product not found.");
+				alert("Producto not found.");
 			}
 			else {
 				alter("Internal Server Error.");
@@ -1501,6 +1471,8 @@ function GetProduct(id){
 		}
 	});
 }
+
+
 
 function UpdateProduct(){
 	$.mobile.loading("show");

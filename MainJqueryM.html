@@ -24,7 +24,7 @@
 		<script src="appjs/accountApp.js"></script>
 		<script src="appjs/sell.js"></script>
 		<script src="appjs/order.js"></script>
-	
+
 		
 
 	
@@ -44,9 +44,20 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
+
 		    <a href="#products" data-role="button" data-iconpos="left" data-icon="search" data-theme="b">Search</a>
 			<a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="VerifyUserCart()">Cart</a>
+
+
 		</header>
+           
+		<form id="search-form" data-role="content">
+		  
+				<input type="search" name="search" id="search"/ >
+				<a  href="#products" data-theme='b' data-role="button">Search</a>
+			
+			</form>
+    	
 	<center>
 			<img border="0" src="../DB-Project/css/img/PR_WIDE.jpg" alt="BoricuaBay" width="800" height="375">
 
@@ -78,8 +89,11 @@
 	</header>
 	
 	<form id="verify-form">
-        <label for="upd-userNickname"><font color="white"> Username: </font><input id="upd-userNickname" name="userNickname" type="text"/></label>
-        <label for="upd-password"><font color="white"> Password: </font><input id="upd-password" name="password" type="password"/></label>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+        	<li><label for="upd-userNickname">Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
+        	<label for="upd-password">Password: <input id="upd-password" name="password" type="password"/></label>
+    		</li>
+    	</ul>
     </form>
 
 	<div class="ui-grid-a">
@@ -104,6 +118,7 @@
 	</div><!-- /navbar -->
 	</header>
 	<form id "account-form">
+
 		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
  					<li data-role="list-divider" role="heading">User Info</li>   
   					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
@@ -128,6 +143,7 @@
   					<li><label for="upd-ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
   					<li><label for="upd-czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
   			  	</ul>
+
 <form>
     <input type="button" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
 </form>
@@ -147,15 +163,15 @@
 	</ul>
 	
 	<div class="ui-grid-a">
-		<div class="ui-block-a"><a data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
+		<div class="ui-block-a"><a href="#viewUsers" data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
 		<div class="ui-block-a"><a href="../DB-Project/EditAccount.html" data-role="button" data-icon="edit" data-iconpos="top">Edit User</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
+		<div class="ui-block-a"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
 		<div class="ui-block-a"><a data-role="button" data-icon="edit" data-iconpos="top">Edit Admin</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
-		<div class="ui-block-a"><a href"#add-Category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
+		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
 	</div>
 
@@ -186,7 +202,7 @@
 
 
 <div data-role="page" id="product-view">
-	<header data-role="header" data-theme="d">
+	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
 		<a data-role="button" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
@@ -194,7 +210,7 @@
 	<div data-role="content">
 		
 			<center>
-				<img id = "currImgSrc" style="width: 90%;"></center>
+				<img id = "currImgSrc" style="width: 80%;"></center>
 			
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider" id = "currName"></li>
@@ -209,17 +225,17 @@
 				
 							
 			</ul>
- 		
+			
+			<ul data-role = "listview" data-inset ="true">
+				<li id="currSeller"></li>
+			</ul> 		
 	</div>	
  				 
-
-	<div data-role="navbar">
-    <ul>
-    	<!-- -------VERIFY IF LOGGED----------->
-        <li><a href="#" data-icon="check" data-iconpos="top" data-transition="slidefade" data-theme="b">Place Bid</a></li>
-        <li><a href="#" data-icon="check" data-iconpos="top" data-transition="slidefade" data-theme="b">Add to Cart</a></li>
-    </ul>
-</div><!-- /navbar -->
+		<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#signin" onclick="PlaceBid()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+         	<div class="ui-block-b"><a href="#carts" onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
+    	</div>
+	
 			
 </div><!-- Page Product Details --------------------------------------------------------------------------->
 
@@ -1165,25 +1181,48 @@
 
 
 <div id="add-category" data-role="page">
-			<div data-role="header" data-theme="b" data-position="fixed">
-				<a data-role="button" data-rel="back">Cancel</a>
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" data-rel="back" data-theme="b">Cancel</a>
 				<h1>Add Category</h1>
-				<a data-role="button" data-rel="back" onclick="SaveCategory()">Save</a>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
 			</div>
-			<center>
-				<h2>Enter category information</h2>
-			</center>
 			<form id="category-form">
- 				<fieldset data-role="controlgroup">
- 					<ul>
-  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
-  					<li><label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">Enter Category Information</li>  
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label>
+  					<label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
   			  	</ul>
-			 </fieldset>
+			
 			</form>
 </div><!-- Page Add Category ---------------------------------------------------------------------------------->
 
 
+
+<div data-role="page" id="viewUsers" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Users Registered</h1>
+			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="users-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- Page View Users------------------------------------------------------------------------>
+
+<div data-role="page" id="viewAdmins" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Administrators Registered</h1>
+			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="admins-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- Page View Admins------------------------------------------------------------------------>
 </body>
 
 	

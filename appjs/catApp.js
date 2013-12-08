@@ -66,7 +66,8 @@ function SaveCategory(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#categories");
+			alert("Category Successfully Added!");
+			$.mobile.navigate("#adminProfile");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
