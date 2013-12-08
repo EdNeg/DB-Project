@@ -1,3 +1,4 @@
+
 $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
         console.log("Jose");
         $.ajax({
@@ -6,7 +7,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
             contentType: "application/json",
             dataType:"json",
                 success : function(data, textStatus, jqXHR){
-                	var currentAccount = data.account;
+                	    currentAccount = data.account;
                         var list = $("#accounts-list");
                         var list2 = $("#address1-list");
                         list.empty();
@@ -26,7 +27,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Data not found!");
+                        alert("Account not found!");
                 }
         });
 });
@@ -60,7 +61,7 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Data not creds found!");
+                        alert("CreditCard not found!");
                 }
         });
 });
@@ -76,24 +77,22 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 		success : function(data, textStatus, jqXHR){
 			var sellList = data.sell;		// ADD var bidProductList = data.bidProduct;
 			var len = sellList.length;
-			alert(len);
 			var list = $("#productUser-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
 			for (var i=0; i < len; ++i){
 				products = sellList[i];
-				GetProductbyUser(pruducts.productID);
-					list.append("<li>" + 
-					"<img src= " +  currentProduct.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + currentProduct.productName +  "</b></i></p>" +
+					list.append("<li><a onclick=sold(" + products.productID + ")>"  + 
+					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
-					"<p> Brand: " + currentProduct.brand  + "</p>" +
-					"<p> Model: " + currentProduct.model + "</p>" + 
-					"<p> Dimensions: " + currentProduct.dimensions + "</p>" +
-					"<p> Description: " + currentProduct.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(currentProduct.productPrice) + "</p>" +		
+					"<p> Brand: " + products.brand  + "</p>" +
+					"<p> Model: " + products.model + "</p>" + 
+					"<p> Dimensions: " + products.dimensions + "</p>" +
+					"<p> Description: " + products.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(products.productPrice) + "</p>" +		
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(currentProduct.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
 				
 			}
@@ -103,24 +102,25 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data product not found!");
+			alert("You don't have any items at the moment");
 		}
 	});
 });
 
 $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/carts",
-		contentType: "application/json",
+		url : "http://localhost:3412/DB-Project/carts/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			var cartList = data.carts;		// ADD var bidProductList = data.bidProduct;
+			var cartList = data.cart;		// ADD var bidProductList = data.bidProduct;
 			var len = cartList.length;
 			var list = $("#cartUser-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
 			for (var i=0; i < len; ++i){
 				products = cartList[i];
-				if(products.userID == currentAccount.userID){
 					list.append("<li>" + 
 					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
@@ -133,7 +133,6 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
 				
 			}
 			
@@ -149,17 +148,18 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 
 $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/bids",
-		contentType: "application/json",
+		url : "http://localhost:3412/DB-Project/bids/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			var bidList = data.bids;		// ADD var bidProductList = data.bidProduct;
+			var bidList = data.bid;		// ADD var bidProductList = data.bidProduct;
 			var len = bidList.length;
 			var list = $("#bidUser-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
 			for (var i=0; i < len; ++i){
 				products = bidList[i];
-				if(products.userID == currentAccount.userID){
 					list.append("<li>" + 
 					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
@@ -172,7 +172,7 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
-				}
+				
 				
 			}
 			
@@ -181,11 +181,54 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			alert("You have no bids this far");
 		}
 	});
 });
 
+$(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/orders/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			var orderList = data.order;		// ADD var bidProductList = data.bidProduct;
+			var len = orderList.length;
+			var list = $("#soldUser-list");///////////////////////////////////////////////////
+			list.empty();
+			var products;
+			for (var i=0; i < len; ++i){
+				products = orderList[i];
+					list.append("<li>" + 
+					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + products.productName +  "</b></i></p>" +
+					"<p>_</p>" + 
+					"<p> Brand: " + products.brand  + "</p>" +
+					"<p> Model: " + products.model + "</p>" + 
+					"<p> User sold to: " + products.userNickname + "</p>" +
+					"<p> Date Purchased: " + products.paidDate + "</p>" +
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"><font color = 'red'> Sold: </font>" + accounting.formatMoney(products.productPrice) + "</p>" +	
+					"</a></li>");	
+			}
+			
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("You have no bids this far");
+		}
+	});
+});
+
+
+
+$(document).on('pagebeforeshow', "#regular", function( event, ui ) {
+// currentUser has been set at this point
+document.getElementById("regularUser").innerHTML = loginID.userNickname; 
+});
 
 $(document).on('pagebeforeshow', "#adminProfile", function( event, ui ) {
         // currentUser has been set at this point
@@ -214,35 +257,6 @@ $(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
         $("#upd-czipcode").val(currentCreditCard.zipcode);
 });
 
-$(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
-	// currentProduct has been set at this point
-
-	
-	//document.getElementById("currPid").innerHTML = currentProduct.id;
-	//var brandName = currentProduct.brand + " " + currentProduct.name;
-	var productName = currentProduct.productName;
-	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
-	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
-	var modelNo = "Model: " + currentProduct.model;
-	var dims = "Dimensions: " + currentProduct.dimensions;
-	var pid = "Product id: " + currentProduct.productID;
-	var brand = "Brand: " + currentProduct.brand;
-	//document.getElementById("currBrand-Name").innerHTML = brandName;
-	document.getElementById("currName").innerHTML = productName;
-	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
-	document.getElementById("currImgSrc").src = currentProduct.productPhoto; 
-	document.getElementById("currBidPrice").innerHTML = startPrice;
-	document.getElementById("currInstPrice").innerHTML = instPrice;
-	document.getElementById("currDescription").innerHTML = currentProduct.productDesc;
-	document.getElementById("currModel").innerHTML = modelNo;
-	document.getElementById("currDimensions").innerHTML = dims;
-	document.getElementById("currId").innerHTML = pid;
-	document.getElementById("currBrand").innerHTML = brand;
-	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
-	
-	
-});
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
 
@@ -255,7 +269,7 @@ function ConverToJSON(formData){
         return result;
 }
 
-var loginID;
+var loginID = 0;
 function LogIn(){
 	 $.mobile.loading("show");
      $.ajax({
@@ -285,103 +299,17 @@ function LogIn(){
 }
 
 function VerifyUserCart(){
-	$.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/",
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        var verifyList = data.accounts;
-                        var len = verifyList.length;
-                        var verify;
-                        var notFound=0;
-                        for (var i=0; i < len; ++i){
-                                verify = verifyList[i];
-                                if(verify.userID == currentAccount.userID){
-                                        $.mobile.loading("hide");
-                                        $.mobile.navigate("../DB-Project/View_Cart.html");
-                                        notFound=1;
-                                                  break;
-                                }
-                                 
-                                
-                        }
-                        if(notFound != 1){
-                                
-                       alert("Please Sign In");
-                               $.mobile.navigate("#home");
-                            }  
-                        
-                        
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Data could not be updated!");
-                        }
-                        else {
-                                alert("Internal Error.");               
-                        }
-                }
-        });
+	if(loginID != 0){
+		$.mobile.loading("hide");
+        $.mobile.navigate("../DB-Project/View_Cart.html");
+	}
+	else{
+		alert("Please Log In or Register");
+	}
 }
 
  
-function VerifyUser(){
-        $.mobile.loading("show");
-        var form = $("#verify-form");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var updAccount = ConverToJSON(formData);
-        console.log("Updated Account: " + JSON.stringify(updAccount));
-        var updAccountJSON = JSON.stringify(updAccount);
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/",
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        var verifyList = data.accounts;
-                        var len = verifyList.length;
-                        var verify;
-                        var notFound=0;
-                        for (var i=0; i < len; ++i){
-                                verify = verifyList[i];
-                                if(verify.userNickname == updAccount.userNickname && verify.password == updAccount.password){
-                                        currentAccount = verify;
-                                        GetCreditcardbyUser(currentAccount.creditCardID);
-                                        GetAddressUser(currentAccount.addressID);
-                                        //GetSellbyUser(currentAccount.userID);
-                                        $.mobile.loading("hide");
-                                        $.mobile.navigate("../DB-Project/Regular_User.html");
-                                        notFound=1;
-                                                  break;
-                                }
-                                 
-                                
-                        }
-                        if(notFound != 1){
-                                
-                       alert("Username and Password Invalid");
-                               $.mobile.navigate("#home");
-                            }  
-                        
-                        
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Data could not be updated!");
-                        }
-                        else {
-                                alert("Internal Error.");               
-                        }
-                }
-        });
-        
-}
+
 
 function VerifyAdmin(){
         $.mobile.loading("show");
@@ -467,33 +395,6 @@ function SaveAccount(){
 
 }
 
-var currentAccount = {};
-
-
-function GetAccount(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentAccount = convert(data.account);
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#accounts");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Account not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
 
 function UpdateAccount(){
 	alert("You have edited your account!");
@@ -547,114 +448,6 @@ function DeleteAccount(){
                         $.mobile.loading("hide");
                         if (data.status == 404){
                                 alert("Account not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
-var currentCreditcard = {};
-
-function GetCreditcardbyUser(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/creditcards/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentCreditcard = data.creditcard;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#creditcards");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Creditcard not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
-
-var currentAddress = {};
-
-function GetAddressUser(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/addressinfos/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentAddress = data.addressinfo;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#accounts");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Creditcard Address not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
-
-var currentSell = {};
-
-function GetSellbyUser(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/sells/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentSell = data.sell;
-                        	alert(currentSell.productName);
-                          $.mobile.loading("hide");
-                        $.mobile.navigate("#productUser");
-                     
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Sell not sesese found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
-
-var currentProduct = {};
-function GetProductbyUser(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/products/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentProduct = data.product;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#product-view");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Product not sesese found.");
                         }
                         else {
                                 alter("Internal Server Error.");
