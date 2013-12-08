@@ -64,9 +64,16 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
-		    <a href="#products" data-role="button" data-iconpos="left" data-icon="search" data-theme="b">Search</a>
 			<a href="../DB-Project/View_Cart.html" data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
 		</header>
+           
+		<form id="search-form" data-role="content">
+		  
+				<input type="search" name="search" id="search"/ >
+				<a  href="#products" data-theme='b' data-role="button">Search</a>
+			
+			</form>
+    	
 	<center>
 			<img border="0" src="../DB-Project/css/img/PR_WIDE.jpg" alt="BoricuaBay" width="800" height="375">
 
@@ -214,7 +221,7 @@
 	<div data-role="content">
 		
 			<center>
-				<img id = "currImgSrc" style="width: 90%;"></center>
+				<img id = "currImgSrc" style="width: 80%;"></center>
 			
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider" id = "currName"></li>
