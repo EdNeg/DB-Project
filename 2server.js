@@ -1593,22 +1593,29 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 	}
 });
 
-//REST Operation - HTTP POST to add a new a car
+/*
+//REST Operation - HTTP POST to add a new a user
 app.post('/DB-Project/accounts', function(req, res) {
-	console.log("POST");
+	console.log("POST User");
 
-  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('mailingaddress') || !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+  	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
+  	|| !req.body.hasOwnProperty('creditCardID') || !req.body.hasOwnProperty('bankAccountID') || !req.body.hasOwnProperty('addressID')){
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for account.');
   	}
 
-  	var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
+  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (" +1,'Man T. Cado','icecream',
+  		'icecream@gmail.com','1234',NULL,NULL,NULL,NULL,NULL);,, function(err, rows, result){
+  			
+  		});
   	console.log("New Account: " + JSON.stringify(newAccount));
-  	newAccount.id = accountNextId++;
+  	//newAccount.id = accountNextId++;
   	accountList.push(newAccount);
   	res.json(true);
-});
+});*/
+
 
 
 //-----------------------Administrator------------------------------------------------------
