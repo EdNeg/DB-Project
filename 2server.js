@@ -2,10 +2,10 @@
 var express = require('express');
 var mysql = require('mysql');
 var logfmt = require("logfmt");
-
+var app = express();
 app.use(logfmt.requestLogger());
 
-var app = express();
+
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
