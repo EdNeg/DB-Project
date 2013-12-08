@@ -186,7 +186,7 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 	});
 });
 
-<<<<<<< HEAD
+
 $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/orders/" + loginID.userID,
@@ -212,35 +212,7 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"><font color = 'red'> Sold: </font>" + accounting.formatMoney(products.productPrice) + "</p>" +	
 					"</a></li>");	
-=======
-$(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/sells",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var sellList = data.sells;		// ADD var bidProductList = data.bidProduct;
-			var len = sellList.length;
-			var list = $("#productUser-list");///////////////////////////////////////////////////
-			list.empty();
-			var products;
-			for (var i=0; i < len; ++i){
-				products = sellList[i];
-				if(products.userID == currentAccount.userID){
-					GetProductbyUser(products.productID);
-					list.append("<li>" + 
-					"<img src= " +  currentProduct.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + currentProduct.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + currentProduct.brand  + "</p>" +
-					"<p> Model: " + currentProduct.model + "</p>" + 
-					"<p> Dimensions: " + currentProduct.dimensions + "</p>" +
-					"<p> Description: " + currentProduct.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(currentProduct.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(currentProduct.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				}
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 			}
 			
 			list.listview("refresh");
@@ -248,18 +220,11 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-<<<<<<< HEAD
 			alert("You have no bids this far");
 		}
 	});
 });
-=======
-			alert("Data not found!");
-		}
-	});
-});
 
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
 
 
 
@@ -293,8 +258,7 @@ $(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
         $("#upd-cstate").val(currentCreditCard.state);
         $("#upd-ccountry").val(currentCreditCard.country);
         $("#upd-czipcode").val(currentCreditCard.zipcode);
-<<<<<<< HEAD
-=======
+
 });
 
 $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
@@ -324,7 +288,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
 	
 	
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -339,7 +303,7 @@ function ConverToJSON(formData){
         return result;
 }
 
-<<<<<<< HEAD
+
 var loginID = 0;
 function LogIn(){
 	 $.mobile.loading("show");
@@ -377,62 +341,7 @@ function VerifyUserCart(){
 	else{
 		alert("Please Log In or Register");
 	}
-=======
- 
-function VerifyUser(){
-        $.mobile.loading("show");
-        var form = $("#verify-form");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var updAccount = ConverToJSON(formData);
-        console.log("Updated Account: " + JSON.stringify(updAccount));
-        var updAccountJSON = JSON.stringify(updAccount);
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/",
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        var verifyList = data.accounts;
-                        var len = verifyList.length;
-                        var verify;
-                        var notFound=0;
-                        for (var i=0; i < len; ++i){
-                                verify = verifyList[i];
-                                if(verify.userNickname == updAccount.userNickname && verify.password == updAccount.password){
-                                        currentAccount = verify;
-                                        GetCreditcardbyUser(currentAccount.creditCardID);
-                                        GetAddressUser(currentAccount.addressID);
-                                        //GetSellbyUser(currentAccount.userID);
-                                        $.mobile.loading("hide");
-                                        $.mobile.navigate("../DB-Project/Regular_User.html");
-                                        notFound=1;
-                                                  break;
-                                }
-                                 
-                                
-                        }
-                        if(notFound != 1){
-                                
-                       alert("Username and Password Invalid");
-                               $.mobile.navigate("#home");
-                            }  
-                        
-                        
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Data could not be updated!");
-                        }
-                        else {
-                                alert("Internal Error.");               
-                        }
-                }
-        });
-        
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 }
 
  
@@ -519,8 +428,6 @@ function SaveAccount(){
                 //}
         //});
 
-
-<<<<<<< HEAD
 }
 
 
@@ -557,35 +464,6 @@ function UpdateAccount(){
                         //}
                 //}
         //});
-=======
-}
-
-var currentAccount = {};
-
-
-function GetAccount(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/accounts/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentAccount = convert(data.account);
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#accounts");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Account not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
 }
 
 function UpdateAccount(){
@@ -647,33 +525,8 @@ function DeleteAccount(){
                 }
         });
 }
-var currentCreditcard = {};
 
-function GetCreditcardbyUser(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/creditcards/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentCreditcard = data.creditcard;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#creditcards");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Creditcard not sesese found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
-}
+
 
 var currentAddress = {};
 
@@ -701,8 +554,6 @@ function GetAddressUser(id){
                 }
         });
 }
-<<<<<<< HEAD
-=======
 
 var currentSell = {};
 
@@ -725,32 +576,6 @@ function GetSellbyUser(id){
                         $.mobile.loading("hide");
                         if (data.status == 404){
                                 alert("Sell not found.");
-                        }
-                        else {
-                                alter("Internal Server Error.");
-                        }
-                }
-        });
-}
-
-var currentProduct = {};
-function GetProductbyUser(id){
-        $.mobile.loading("show");
-        $.ajax({
-                url : "http://localhost:3412/DB-Project/products/" + id,
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        currentProduct = data.product;
-                        $.mobile.loading("hide");
-                        $.mobile.navigate("#productUser-list");
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Product not sesese found.");
                         }
                         else {
                                 alter("Internal Server Error.");
@@ -824,4 +649,4 @@ $(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
 		}
 	});
 });
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+

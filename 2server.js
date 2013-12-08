@@ -1483,7 +1483,6 @@ app.get('/DB-Project/accounts/:ids', function(req, res) {
 var query = connection.query("SELECT * FROM bbUser NATURAL JOIN bbAddress WHERE userID = '" + ids  + "'", function(err, rows, result){	
 	if (err) throw err;
 	
-<<<<<<< HEAD
 	
 	var len = rows.length;
 	if (len == 0){
@@ -1497,19 +1496,7 @@ var query = connection.query("SELECT * FROM bbUser NATURAL JOIN bbAddress WHERE 
   	}
  });
   });
-=======
-	connection.query('SELECT * FROM bbUser', function(err, rows, result) {
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"accounts" : rows};
-  res.json(response);
-});
-});
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 
 /*
 app.post('/DB-Project/accounts', function (req, res) {
@@ -1537,14 +1524,7 @@ app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
 var query = connection.query("SELECT * FROM bbUser WHERE userNickname = '" + id  + "'" + " AND " +
 		"password = '" + idp + "'", function(err, rows, result){
 		if (err) throw err;
-<<<<<<< HEAD
-=======
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 	
 	
 	var len = rows.length;
@@ -1754,7 +1734,6 @@ app.get('/DB-Project/creditcards/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET creditcard: " + ids);
 
-<<<<<<< HEAD
 var query = connection.query("SELECT * from bbCreditCard as c " +
 		"inner join bbAddress as a on a.addressID = c.addressID " +
 		"inner join bbUser as u on u.creditCardID = c.creditCardID " +
@@ -1763,18 +1742,7 @@ var query = connection.query("SELECT * from bbCreditCard as c " +
         console.log('The solution is: ', rows[i]);
 }	
 	if (err) throw err;
-=======
-var query = connection.query("SELECT * FROM bbCreditCard AS c " +
-		"INNER JOIN bbAddress AS a on a.addressID = c.addressID " +
-		"INNER JOIN bbUser AS u on u.creditCardID = c.creditCardID " +
-		"WHERE u.creditCardID = " + id, function(err, rows, result){
-		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 	
 	
 	var len = rows.length;
@@ -1992,14 +1960,9 @@ var Cart = cart.Cart;
 // REST Operation - HTTP GET to read all cars
 app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
-	
-<<<<<<< HEAD
+
 	connection.query('SELECT * FROM bbAddtoCart natural join bbProduct', function(err, rows, result) {
-=======
-	connection.query("SELECT * from bbProduct as p " +
-		"inner join bbBidProduct as b on b.productID = p.productID " +
-		"inner join bbAddToCart as a on a.productID = p.productID ", function(err, rows, result) {
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
   	if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -2232,7 +2195,7 @@ var Bid = bid.Bid;
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
 // REST Operation - HTTP GET to read all cars
-<<<<<<< HEAD
+
 app.get('/DB-Project/bids', function(req, res) {
 	console.log("GET BIDS");
 	
@@ -2244,12 +2207,7 @@ app.get('/DB-Project/bids', function(req, res) {
   var response = {"bids" : rows};
   res.json(response);
 });
-=======
-app.get('/DB-Project/sells', function(req, res) {
-        console.log("GET Sell");
-        var response = {"sells" : sellinfoList};
-          res.json(response);
->>>>>>> 5e346869583a895e5a875360249c71a19cb42c7a
+
 });
 
 // REST Operation - HTTP GET to read a car based on its id
