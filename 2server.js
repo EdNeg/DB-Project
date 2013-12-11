@@ -1,6 +1,7 @@
 // Express is the web framework 
 var express = require('express');
-var mysql = require('mysql');
+//var mysql = require('mysql');
+var pg = require('pg');
 var logfmt = require("logfmt");
 var http = require('http');
 var app = express();
@@ -55,7 +56,8 @@ for (var i=0; i < productList.length;++i){
 	productList[i].id = productNextId++;
 }
 
-// Database connection string: pg://<username>:<password>@host:port/dbname 
+//Mysql Database Connection
+/*
 var connection = mysql.createConnection({
 	host : 'localhost',
 	user : 'root',
@@ -63,7 +65,17 @@ var connection = mysql.createConnection({
 	port : 3306,
 	database : 'boricuabaydb'
 
+});*/
+
+// Postgres Database connection string: pg://<username>:<password>@host:port/dbname 
+pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  client.query('SELECT * FROM your_table', function(err, result) {
+    done();
+    if(err) return console.error(err);
+    console.log(result.rows);
+  });
 });
+
 
 
 app.get('/', function(req, res) {
