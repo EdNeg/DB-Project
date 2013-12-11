@@ -4,7 +4,8 @@
   "description": "Ebay styled webapp",
   "main": "2server.js",
   "dependencies": {
-    "express": "~3.3.8"
+    "express": "~3.3.8",
+    "mysql": "2.x.x"
   },
   "devDependencies": {},
   "scripts": {
