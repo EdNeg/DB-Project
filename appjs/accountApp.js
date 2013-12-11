@@ -611,7 +611,7 @@ $(document).on('pagebeforeshow', "#viewUsers", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			alert("Data notefound!");
 		}
 	});
 });
