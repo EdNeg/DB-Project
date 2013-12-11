@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Title</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<script src="js/jquery.mobile-1.3.1.js"></script>
+		<script src="appjs/product.js"></script>
+		<script src="appjs/prodApp.js"></script>
+
+<meta charset="utf-8">
+
+</head>
+
+<body>
+	<div data-role="page" id="regular">
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left">User Name</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" data-rel="back" onclick="SaveProduct()">Save</a>
+		</header>
+		<center>
+				<h2>Enter New Product</h2>
+			</center>
+			<form id="product-form">
+ 				<fieldset data-role="controlgroup">
+ 					<ul>
+  					<li><label for="imgSrc"> Image Source: <input id="imgSrc" name="imgSrc" type="text"/></label></li>
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+  					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
+				    <li><label for="bidPrice"> Bid Price: <input id="bidPrice" name="bidPrice" type="number"/></label></li>
+  					<li><label for="instPrice"> Instant Price: <input id="instPrice" name="instPrice" type="number"/></label></li>
+  					<li><label for="description"> Description: <input id="description" name="description" type="text"/></label></li>
+  					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
+  					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+		</div>
+</body>
+</html>

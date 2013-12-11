@@ -1,0 +1,527 @@
+-- MySQL dump 10.13  Distrib 5.5.34, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: boricuabaydb
+-- ------------------------------------------------------
+-- Server version	5.5.34-0ubuntu0.12.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `bbAddToCart`
+--
+
+DROP TABLE IF EXISTS `bbAddToCart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbAddToCart` (
+  `productID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `aQuantity` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`productID`,`userID`),
+  KEY `fk_bbProduct_has_bbUser_bbUser1_idx` (`userID`),
+  KEY `fk_bbProduct_has_bbUser_bbProduct1_idx` (`productID`),
+  CONSTRAINT `fk_bbProduct_has_bbUser_bbProduct1` FOREIGN KEY (`productID`) REFERENCES `bbProduct` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbProduct_has_bbUser_bbUser1` FOREIGN KEY (`userID`) REFERENCES `bbUser` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbAddToCart`
+--
+
+LOCK TABLES `bbAddToCart` WRITE;
+/*!40000 ALTER TABLE `bbAddToCart` DISABLE KEYS */;
+INSERT INTO `bbAddToCart` VALUES (1,1,NULL),(1,2,NULL),(1,3,NULL),(2,1,NULL),(2,2,NULL),(3,1,NULL),(3,3,NULL),(4,2,NULL),(4,4,NULL),(5,3,NULL),(5,5,NULL),(5,12,NULL),(6,2,NULL),(6,3,NULL),(7,2,NULL),(7,3,NULL);
+/*!40000 ALTER TABLE `bbAddToCart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbAddress`
+--
+
+DROP TABLE IF EXISTS `bbAddress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbAddress` (
+  `addressID` int(11) NOT NULL AUTO_INCREMENT,
+  `addressLine` varchar(145) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `state` varchar(45) NOT NULL,
+  `country` varchar(45) NOT NULL,
+  `zipcode` varchar(15) NOT NULL,
+  PRIMARY KEY (`addressID`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbAddress`
+--
+
+LOCK TABLES `bbAddress` WRITE;
+/*!40000 ALTER TABLE `bbAddress` DISABLE KEYS */;
+INSERT INTO `bbAddress` VALUES (1,'calle la esquina famosa','Mayaguez','PR','Puerto Rico','00680'),(2,'la gran via','Moca','PR','Puerto Rico','00676'),(3,'Calle luna','Humacao','PR','Puerto Rico','00623'),(4,'pueblo','San Sebastian','PR','Puerto Rico','00685'),(5,'calle la esquina famosa','Mayaguez','PR','Puerto Rico','00680'),(6,'la gran via','Moca','PR','Puerto Rico','00676'),(7,'Calle luna','Humacao','PR','Puerto Rico','00623'),(8,'pueblo','San Sebastian','PR','Puerto Rico','00685'),(9,'carr 125','Lares','PR','Puerto Rico','00635'),(10,'Oasis','Culebra','PR','Puerto Rico','00670'),(11,'Calle sol','Ponce','PR','Puerto Rico','00645'),(12,'Calle sin salida','Arecibo','PR','Puerto Rico','00626'),(13,'Stefani','Aguadilla','PR','Puerto Rico','00648'),(14,'Chardon','San Juan','PR','Puerto Rico','00630'),(15,'Chicharon','Bayamon','PR','Puerto Rico','00615'),(16,'Mascaras','Hatillo','PR','Puerto Rico','00672'),(17,'casa roja','Fajardo','PR','Puerto Rico','00651'),(18,'hacienda','Utuado','PR','Puerto Rico','00679'),(19,'Playa','Yabucoa','PR','Puerto Rico','00676');
+/*!40000 ALTER TABLE `bbAddress` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbAdmin`
+--
+
+DROP TABLE IF EXISTS `bbAdmin`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbAdmin` (
+  `adminID` int(11) NOT NULL AUTO_INCREMENT,
+  `adminUserName` varchar(45) NOT NULL,
+  `adminPassword` varchar(45) NOT NULL,
+  PRIMARY KEY (`adminID`),
+  UNIQUE KEY `adminUserName_UNIQUE` (`adminUserName`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbAdmin`
+--
+
+LOCK TABLES `bbAdmin` WRITE;
+/*!40000 ALTER TABLE `bbAdmin` DISABLE KEYS */;
+INSERT INTO `bbAdmin` VALUES (1,'admin','1234'),(2,'admin2','1234');
+/*!40000 ALTER TABLE `bbAdmin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbBankAccount`
+--
+
+DROP TABLE IF EXISTS `bbBankAccount`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbBankAccount` (
+  `bankAccountID` int(11) NOT NULL AUTO_INCREMENT,
+  `accountNumber` varchar(45) NOT NULL,
+  `accountType` varchar(45) NOT NULL,
+  `accountOwner` varchar(100) NOT NULL,
+  `bankName` varchar(45) NOT NULL,
+  PRIMARY KEY (`bankAccountID`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbBankAccount`
+--
+
+LOCK TABLES `bbBankAccount` WRITE;
+/*!40000 ALTER TABLE `bbBankAccount` DISABLE KEYS */;
+INSERT INTO `bbBankAccount` VALUES (1,'12345','Check','Larry Samonga','Banco Popular'),(2,'76544','Check','Larry Cita','Doral Bank'),(3,'12343','Check','Elsy K Rio','Banco Popular'),(4,'12321','Check','Elba Lazo','Doral Bank'),(5,'8734','Check','Elka Brito','Banco Popular'),(6,'2334','Check','Alan Brito','Doral Bank'),(7,'76412','Check','Man T. Cado','Banco Popular'),(8,'90345','Check','Mila Kunis','Doral Bank'),(9,'82345','Check','Elizabeth Hurley','Banco Popular'),(10,'12112','Check','Zooey Deschanel','Doral Bank'),(11,'12332','Check','Jose Rivera','Banco Popular'),(12,'1122','Check','Pedro Perez','Doral Bank'),(13,'2222','Check','Larry Cita','Banco Popular'),(14,'1111','Check','Pedro Rivera','Doral Bank'),(15,'3333','Check','Pepe','Banco Popular');
+/*!40000 ALTER TABLE `bbBankAccount` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbBidFor`
+--
+
+DROP TABLE IF EXISTS `bbBidFor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbBidFor` (
+  `userID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `bidDate` date NOT NULL,
+  `bidAmount` decimal(14,2) NOT NULL,
+  PRIMARY KEY (`userID`,`productID`),
+  KEY `fk_bbUser_has_bbBidProduct_bbBidProduct1_idx` (`productID`),
+  KEY `fk_bbUser_has_bbBidProduct_bbUser1_idx` (`userID`),
+  CONSTRAINT `fk_bbUser_has_bbBidProduct_bbBidProduct1` FOREIGN KEY (`productID`) REFERENCES `bbBidProduct` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbUser_has_bbBidProduct_bbUser1` FOREIGN KEY (`userID`) REFERENCES `bbUser` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbBidFor`
+--
+
+LOCK TABLES `bbBidFor` WRITE;
+/*!40000 ALTER TABLE `bbBidFor` DISABLE KEYS */;
+INSERT INTO `bbBidFor` VALUES (1,2,'2013-11-01',3.00),(1,3,'2013-11-11',4.00),(1,4,'2013-11-01',3.00),(2,1,'2013-11-01',5.00),(2,3,'2013-11-11',4.00),(2,6,'2013-11-11',4.00),(2,12,'2013-11-11',4.00),(3,3,'2013-11-01',3.00),(5,1,'2013-11-01',5.00),(6,2,'2013-11-11',4.00),(6,6,'2013-11-11',4.00),(7,1,'2013-11-01',3.00),(8,1,'2013-11-01',3.00),(9,2,'2013-11-11',4.00),(10,1,'2013-11-01',9.00);
+/*!40000 ALTER TABLE `bbBidFor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbBidProduct`
+--
+
+DROP TABLE IF EXISTS `bbBidProduct`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbBidProduct` (
+  `productID` int(11) NOT NULL,
+  `bidStartingPrice` decimal(14,2) NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  PRIMARY KEY (`productID`),
+  CONSTRAINT `fk_table1_bbProduct1` FOREIGN KEY (`productID`) REFERENCES `bbProduct` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbBidProduct`
+--
+
+LOCK TABLES `bbBidProduct` WRITE;
+/*!40000 ALTER TABLE `bbBidProduct` DISABLE KEYS */;
+INSERT INTO `bbBidProduct` VALUES (1,5.00,'2013-11-01','2013-11-29'),(2,4.00,'2013-11-01','2013-11-30'),(3,5.00,'2013-11-01','2013-11-29'),(4,4.00,'2013-11-01','2013-11-30'),(5,5.00,'2013-11-01','2013-11-29'),(6,4.00,'2013-11-01','2013-11-30'),(7,5.00,'2013-11-01','2013-11-29'),(8,4.00,'2013-11-01','2013-11-30'),(9,5.00,'2013-11-01','2013-11-29'),(10,4.00,'2013-11-01','2013-11-30'),(11,5.00,'2013-11-01','2013-11-29'),(12,4.00,'2013-11-01','2013-11-30'),(13,5.00,'2013-11-01','2013-11-29'),(14,4.00,'2013-11-01','2013-11-30'),(15,5.00,'2013-11-01','2013-11-29'),(16,0.60,'2013-11-01','2013-11-29'),(17,2.09,'2013-11-01','2013-11-29'),(18,2.50,'2013-11-01','2013-11-29');
+/*!40000 ALTER TABLE `bbBidProduct` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbCategory`
+--
+
+DROP TABLE IF EXISTS `bbCategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbCategory` (
+  `categoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(45) NOT NULL,
+  `categoryDesc` varchar(145) DEFAULT NULL,
+  PRIMARY KEY (`categoryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbCategory`
+--
+
+LOCK TABLES `bbCategory` WRITE;
+/*!40000 ALTER TABLE `bbCategory` DISABLE KEYS */;
+INSERT INTO `bbCategory` VALUES (1,'Books','/css/icons/book.png'),(2,'Electronics','/css/icons/ipod.png'),(3,'Computers','/css/icons/tv.png'),(4,'Clothing','/css/icons/tshirt.png'),(5,'Shoes','/css/icons/Boot.png'),(6,'Sports','/css/glyphish-icons/golf.png');
+/*!40000 ALTER TABLE `bbCategory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbContain`
+--
+
+DROP TABLE IF EXISTS `bbContain`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbContain` (
+  `orderID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `cQuantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`orderID`,`productID`),
+  UNIQUE KEY `productID` (`productID`),
+  KEY `fk_bbOrder_has_bbProduct_bbProduct1_idx` (`productID`),
+  KEY `fk_bbOrder_has_bbProduct_bbOrder1_idx` (`orderID`),
+  CONSTRAINT `fk_bbOrder_has_bbProduct_bbOrder1` FOREIGN KEY (`orderID`) REFERENCES `bbOrder` (`orderID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbOrder_has_bbProduct_bbProduct1` FOREIGN KEY (`productID`) REFERENCES `bbProduct` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbContain`
+--
+
+LOCK TABLES `bbContain` WRITE;
+/*!40000 ALTER TABLE `bbContain` DISABLE KEYS */;
+INSERT INTO `bbContain` VALUES (1,1,NULL),(1,2,NULL),(2,3,NULL),(2,18,NULL),(3,6,NULL),(3,15,NULL),(4,5,NULL),(4,16,NULL),(5,4,NULL),(5,12,NULL),(6,7,NULL),(6,8,NULL),(7,13,NULL),(7,14,NULL),(8,17,NULL);
+/*!40000 ALTER TABLE `bbContain` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbCreditCard`
+--
+
+DROP TABLE IF EXISTS `bbCreditCard`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbCreditCard` (
+  `creditCardID` int(11) NOT NULL AUTO_INCREMENT,
+  `creditCardNumber` varchar(45) NOT NULL,
+  `creditCardOwner` varchar(100) NOT NULL,
+  `securityCode` varchar(15) NOT NULL,
+  `expDate` date NOT NULL,
+  `addressID` int(11) NOT NULL,
+  PRIMARY KEY (`creditCardID`),
+  KEY `fk_bbCreditCard_bbAddress1_idx` (`addressID`),
+  CONSTRAINT `fk_bbCreditCard_bbAddress1` FOREIGN KEY (`addressID`) REFERENCES `bbAddress` (`addressID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbCreditCard`
+--
+
+LOCK TABLES `bbCreditCard` WRITE;
+/*!40000 ALTER TABLE `bbCreditCard` DISABLE KEYS */;
+INSERT INTO `bbCreditCard` VALUES (1,'1234','Larry Samonga','123','2013-11-12',1),(2,'5678','Elvio Lao','123','2013-11-12',1),(3,'4321','Larry Cita','123','2013-11-12',2),(4,'8765','Zooey Deschanel','123','2013-11-12',3),(15,'1234','Larry Samonga','123','2013-11-12',1),(16,'5678','Elvio Lao','123','2013-11-12',1),(17,'4321','Larry Cita','123','2013-11-12',2),(18,'8765','Zooey Deschanel','123','2013-11-12',3),(19,'3456','Mila Kunis','123','2013-11-12',5),(20,'7890','Elizabeth Hurley','123','2013-11-12',4),(21,'7623','Lola Mento','123','2013-11-12',6),(22,'0987','Man T Cado','123','2013-11-12',7),(23,'3412','Elma K Nazo','123','2013-11-12',8),(24,'6523','Elsy K Rio','123','2013-11-12',9),(25,'3645','Rosa Melo','123','2013-11-12',10),(26,'0963','Deborah Melo','123','2013-11-12',11),(27,'0909','Elka Brito','123','2013-11-12',12),(28,'8671','Jose Perez','123','2013-11-12',13),(29,'1222','Alan Brito','123','2013-11-12',14);
+/*!40000 ALTER TABLE `bbCreditCard` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbOrder`
+--
+
+DROP TABLE IF EXISTS `bbOrder`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbOrder` (
+  `orderID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  PRIMARY KEY (`orderID`),
+  KEY `fk_bbOrder_bbUser1_idx` (`userID`),
+  CONSTRAINT `fk_bbOrder_bbUser1` FOREIGN KEY (`userID`) REFERENCES `bbUser` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbOrder`
+--
+
+LOCK TABLES `bbOrder` WRITE;
+/*!40000 ALTER TABLE `bbOrder` DISABLE KEYS */;
+INSERT INTO `bbOrder` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9),(10,10),(11,11),(12,12);
+/*!40000 ALTER TABLE `bbOrder` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbPay`
+--
+
+DROP TABLE IF EXISTS `bbPay`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbPay` (
+  `creditCardID` int(11) NOT NULL,
+  `bankAccountID` int(11) NOT NULL,
+  `paidAmount` decimal(10,0) NOT NULL,
+  `paidDate` date NOT NULL,
+  `orderID` int(11) NOT NULL,
+  PRIMARY KEY (`creditCardID`,`bankAccountID`,`orderID`),
+  UNIQUE KEY `orderID` (`orderID`),
+  KEY `fk_bbCreditCard_has_bbBankAccount_bbBankAccount1_idx` (`bankAccountID`),
+  KEY `fk_bbCreditCard_has_bbBankAccount_bbCreditCard1_idx` (`creditCardID`),
+  KEY `fk_bbPay_bbOrder1_idx` (`orderID`),
+  CONSTRAINT `fk_bbCreditCard_has_bbBankAccount_bbBankAccount1` FOREIGN KEY (`bankAccountID`) REFERENCES `bbBankAccount` (`bankAccountID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbCreditCard_has_bbBankAccount_bbCreditCard1` FOREIGN KEY (`creditCardID`) REFERENCES `bbCreditCard` (`creditCardID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbPay_bbOrder1` FOREIGN KEY (`orderID`) REFERENCES `bbOrder` (`orderID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbPay`
+--
+
+LOCK TABLES `bbPay` WRITE;
+/*!40000 ALTER TABLE `bbPay` DISABLE KEYS */;
+INSERT INTO `bbPay` VALUES (1,1,2,'2013-11-01',1),(2,2,12,'2013-11-01',2),(3,3,3,'2013-11-01',3),(4,4,4,'2013-11-01',4);
+/*!40000 ALTER TABLE `bbPay` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbProduct`
+--
+
+DROP TABLE IF EXISTS `bbProduct`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbProduct` (
+  `productID` int(11) NOT NULL AUTO_INCREMENT,
+  `productName` varchar(45) NOT NULL,
+  `productDesc` varchar(245) DEFAULT NULL,
+  `productPhoto` varchar(200) DEFAULT NULL,
+  `productPrice` decimal(14,2) DEFAULT NULL,
+  `model` varchar(45) DEFAULT NULL,
+  `brand` varchar(45) DEFAULT NULL,
+  `dimensions` varchar(45) DEFAULT NULL,
+  `tagID` int(11) NOT NULL,
+  PRIMARY KEY (`productID`),
+  KEY `fk_bbProduct_bbTag1_idx` (`tagID`),
+  CONSTRAINT `fk_bbProduct_bbTag1` FOREIGN KEY (`tagID`) REFERENCES `bbTag` (`tagID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbProduct`
+--
+
+LOCK TABLES `bbProduct` WRITE;
+/*!40000 ALTER TABLE `bbProduct` DISABLE KEYS */;
+INSERT INTO `bbProduct` VALUES (1,'Nikon COOLPIX S4300 16.0 MP Digital Camera','Brand New Mint Nothing tells a story like a photo! The COOLPIX S4300 is the right choice to catch every moment. Whether hanging out at the mall or posing with friends before you hit the prom, keep your family and friends in the loop. With its hi','/css/img/nikoncoolpix.jpg',105.99,'S4300','Nikon','6 x 8 x 8 inches',8),(2,'Apple iPad 2 16GB, Wi-Fi, 9.7in - Black','Things come alive on the stunning 9.7-inch widescreen LED Multi-Touch display of the Apple iPad 2. With WiFi and 3G support, this 32GB Apple iPad ensures you stay connected to your world all the time. The built-in dual-core A5 chip in this Wi-Fi','/css/img/ipad.jpg',330.00,'Wi-Fi + 3G','Apple','9.5 X 7.31 X 0.34 ',12),(3,'Sexy Women Sleeveless Mini Slim Lace Sheer','The dress is made from soft material. Please allow slight deviation for the measurement date. Our size table is the item\'s size measured by laying flat, not your body size. It\'s the best way to get the correct size by measure your current same s','/css/img/viewImage.jpg',5.89,'N/A','Unbranded','Small/Medium/Large',22),(4,'NWT HOLLISTER by Abercrombie Men\'s Desert','Colorful plaid pattern, seagull embroidery at left chest pocket, button-down collar, Vintage Hollister Wash, Muscle Fit, Imported 100% soft sueded cotton.','/css/img/shirt.jpg',18.99,'N/A','Hollister','Small/Medium/Large',16),(5,'Bicycle Bike Road Cycling new Yellow Giro ','To us, the hallmark of a Giro design are its three central vents. And, not coincidentally, you\'ll find this feature on the Giro Saros Helmet. It was originally part of the Prolight design, but nearly every subsequent helmet has revolved around t','/css/img/helmet.jpg',31.99,'2025611','Giro Live STRONG','56-62cm One Size',29),(6,'THE HITCHHIKER\'S GUIDE TO THE GALAXY Box Set ','This really is the ultimate answer to Life, the Universe and Everything - all five radio series of The Hitchhiker\'s Guide to the Galaxy collected together for the first time, in a handsome box with magnetic lid. ','/css/img/hitch.jpg',19.95,'9780563504191','Picador','13.2 x 20 cm',2),(7,'GORGEOUS JIMMY CHOO SHOES HEELS MURANO GLASS ','GORGEOUS JIMMY CHOO SHOES SANDALS. Sz 37 1/2.Beautiful Murano Glass beads and dark chocolate brown suede. Made in Italy.Heel is 3 1/4 inches all together with the sole 3 1/2 inches.The insole measures 9 1/2 inches long.Great condition.Worn only ','/css/img/taco.jpg',49.99,'Sandals heels','Jimmy Choo','N/A',24),(8,'MOLTEN GG7 BGG7 G7 Basketball FIBA Official','Official game ball for BBL, official ball of the British Basketball League and Basketball Ireland, Also, South American, Baltic, Chinese, French, German,Indonesian, Italian, Malaysian, Norwegian, Puerto Rican, Slovakian and Spanish Basketball Fe','/css/img/basketball2.jpg',59.99,'GG7','MOLTEN','N/A',34),(9,'VIZIO E470i-A0 47-inch class 1080p 120Hz','Introducing the new E-series slim frame design. The VIZIO 47-InchClass LED Smart TV is shattering the mold in a way only VIZIO can, with high-quality design and picture at the best value. Enjoy crystal-clear action and eye-popping images in 1080','/css/img/vizio.jpg',469.99,'E470I-A0','Vizio','25.06 X 42.31 X 3.23',5),(10,'HP EliteBook 8540w 15.6\" 1920x1080 Core i7','Powered by a zippy 2.66 GHz Intel Core i7-620M processor, the HP EliteBook 8540w laptop renders flexible and reliable computing solutions at an amazing speed. With a gorgeous 15.6-inch LED-backlit HD anti-glare display, this EliteBook laptop is ','/css/img/hp8560W.jpg',385.75,'EliteBook 8540w','HP','9.98 X 1.28 X 14.7',10),(11,'Canon PIXMA MP980 All-In-One Wireless Inkjet ','When you\'re already making one of the best ranges of all-in-one printers, it may be hard to think of ways to improve. With the PIXMA MP980, Canon has decided to look at the inks, offering a different colour mix for those who want to print black ','/css/img/canonPrinter.jpg',99.95,'PIXMA MP960','Canon','18.5 x 7.6 x 13.5',13),(12,'High Speed 12+1 Ball Bearing Spinning Spool ','5 pieces of ball bearing, gear ratio 5.2:1. Aluminum spool with high-tensile gear. Left / right interchangeable collapsible handle. Fully adjustable cast control with sound. Excellent line lay oscillation system. Ultra-thin streamline designed b','/css/img/reel.jpg',17.13,'BF200','Yoshikawa','4.3 x 4.3 x 2.8in',31),(13,'Rich Dad Poor Dad : What the Rich Teach ','Anyone stuck in the rat-race of living paycheck to paycheck, enslaved by the house mortgage and bills, will appreciate this breath of fresh air. Learn about the methods that have created more than a few millionaires. This is the first abridged m','/css/img/RichPoorBook.jpg',9.69,'Min edition','Running Press Miniature Editions','0.7 x 2.8 x 3.1 inches',4),(14,'Easton XC 26\' 10 Speed MTB Moutain Bike 6 ','Anti high-temperature fiber and resin for the brake surface, make the rim could bear the high braking temperature about 150-170 degree generated from high speed braking.','/css/img/wheel.jpg',249.50,'N/A','Easton','26.77in x 29.53in x 3.94in',28),(15,'New 8 Pairs Mens Cotton Low Cut Ankle Socks','Size : Free Size // 250-280mm, US 7-11, UK 6-11, EU 40-45, Color : Gray with White as picture Offer : 8 pack(8pairs as picture) Material : Cotton, Polyester,  other. Made in Korea ','/css/img/socks.jpg',8.90,'N/A','N/A','US 7-11, UK 6-11, EU 40-45',18),(16,'A Ballad of the Civil War by Mary Stolz (Pape','Tom Rigby didn\'t think that anything could ever come between him and his twin, Jack. But things begin to change when Tom learns that they are not allowed to play with their friend Aaron anymore because he\'s a slave. Tom is upset, but Jack doesn\'','/css/img/BookC1.jpg',1.00,'Trophy Chapter Books','HarperCollins','0.2 x 5.2 x 7.8 inches',1),(17,'Space Stars Planets & Spacecraft Sue Becklake','With over 200 full-color images per book these gorgeously illustrated reference titles are perfect for children.','/css/img/SpaceC.jpg',5.00,'See & Explore Library','DK CHILDREN','11 x 8.5 x 0.3 inches',1),(18,'Peek-A-Boo Valentine NEW Flaps LOONEY Bugs','For ages 4+. This is a board book with flaps just like the hugely successful \'Peek-a-Boo!\'. Each of the Baby Looney Tunes gang has made a valentine. Rhymed and metered verse give the young reader clues as to the maker of the valentine. Only by l','/css/img/Bookc2.jpg',4.00,'9780824966744','Joseph Ritchie','6 x 6 x 0.7 inches',1);
+/*!40000 ALTER TABLE `bbProduct` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbRate`
+--
+
+DROP TABLE IF EXISTS `bbRate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbRate` (
+  `raterUserID` int(11) NOT NULL,
+  `ratedUserID` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  PRIMARY KEY (`raterUserID`,`ratedUserID`),
+  KEY `fk_bbUser_has_bbUser_bbUser1_idx` (`ratedUserID`),
+  KEY `fk_bbUser_has_bbUser_bbUser_idx` (`raterUserID`),
+  CONSTRAINT `fk_bbUser_has_bbUser_bbUser` FOREIGN KEY (`raterUserID`) REFERENCES `bbUser` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbUser_has_bbUser_bbUser1` FOREIGN KEY (`ratedUserID`) REFERENCES `bbUser` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbRate`
+--
+
+LOCK TABLES `bbRate` WRITE;
+/*!40000 ALTER TABLE `bbRate` DISABLE KEYS */;
+INSERT INTO `bbRate` VALUES (1,2,5),(1,3,2),(1,4,5),(1,5,4),(1,6,2),(1,7,3),(1,8,2),(1,9,2),(2,1,3),(3,1,3),(4,1,4),(5,1,3),(6,1,5),(7,1,2),(8,1,5);
+/*!40000 ALTER TABLE `bbRate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbSell`
+--
+
+DROP TABLE IF EXISTS `bbSell`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbSell` (
+  `userID` int(11) NOT NULL,
+  `productID` int(11) NOT NULL,
+  `sQuantity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`userID`,`productID`),
+  UNIQUE KEY `productID` (`productID`),
+  UNIQUE KEY `productID_2` (`productID`),
+  KEY `fk_bbUser_has_bbProduct_bbProduct1_idx` (`productID`),
+  KEY `fk_bbUser_has_bbProduct_bbUser1_idx` (`userID`),
+  CONSTRAINT `fk_bbUser_has_bbProduct_bbProduct1` FOREIGN KEY (`productID`) REFERENCES `bbProduct` (`productID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbUser_has_bbProduct_bbUser1` FOREIGN KEY (`userID`) REFERENCES `bbUser` (`userID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbSell`
+--
+
+LOCK TABLES `bbSell` WRITE;
+/*!40000 ALTER TABLE `bbSell` DISABLE KEYS */;
+INSERT INTO `bbSell` VALUES (1,5,NULL),(1,8,NULL),(1,13,NULL),(1,15,NULL),(2,1,NULL),(2,2,NULL),(2,4,NULL),(2,10,NULL),(2,12,NULL),(3,3,NULL),(3,7,NULL),(3,11,NULL),(4,6,NULL),(5,9,NULL),(8,14,NULL),(9,16,NULL),(9,17,NULL),(9,18,NULL);
+/*!40000 ALTER TABLE `bbSell` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbSubCategory`
+--
+
+DROP TABLE IF EXISTS `bbSubCategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbSubCategory` (
+  `subCategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `subCategoryName` varchar(45) NOT NULL,
+  `subCategoryDesc` varchar(145) DEFAULT NULL,
+  `categoryID` int(11) NOT NULL,
+  PRIMARY KEY (`subCategoryID`),
+  KEY `fk_bbSubCategory_bbCategory1_idx` (`categoryID`),
+  CONSTRAINT `fk_bbSubCategory_bbCategory1` FOREIGN KEY (`categoryID`) REFERENCES `bbCategory` (`categoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbSubCategory`
+--
+
+LOCK TABLES `bbSubCategory` WRITE;
+/*!40000 ALTER TABLE `bbSubCategory` DISABLE KEYS */;
+INSERT INTO `bbSubCategory` VALUES (1,'Children','/css/icons/puzzle.png',1),(2,'Fiction','/css/icons/ufo.png',1),(3,'Technology','/css/icons/Microprocessor.png',1),(4,'Business','/css/icons/suitcase.png',1),(5,'TV','/css/icons/tv.png',2),(6,'Audio','/css/icons/music.png',2),(7,'Phones','/css/icons/iphone.png',2),(8,'Cameras','/css/icons/camera.png',2),(9,'Video','/css/icons/Multimedia.png',2),(10,'Laptops','/css/icons/macbook.png',3),(11,'Desktops','/css/icons/imac.png',3),(12,'Tablets','/css/icons/ipad.png',3),(13,'Printers','/css/icons/printer.png',3),(14,'Children','/css/icons/puzzle.png',4),(15,'Men','/css/icons/Suit.png',4),(16,'Women','/css/icons/Coat.png',4),(17,'Children','/css/icons/puzzle.png',5),(18,'Women','/css/icons/Coat.png',5),(19,'Men','/css/icons/Suit.png',5),(20,'Bicycles','/css/icons/bike.png',6),(21,'Fishing','/css/icons/Fishing.png',6),(22,'Baseball','/css/icons/baseball.png',6),(23,'Golf','/css/icons/golf.png',6),(24,'Basketball','/css/icons/basketball.png',6);
+/*!40000 ALTER TABLE `bbSubCategory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbTag`
+--
+
+DROP TABLE IF EXISTS `bbTag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbTag` (
+  `tagID` int(11) NOT NULL AUTO_INCREMENT,
+  `tagName` varchar(45) DEFAULT NULL,
+  `subCategoryID` int(11) NOT NULL,
+  PRIMARY KEY (`tagID`),
+  KEY `fk_bbTag_bbSubCategory1_idx` (`subCategoryID`),
+  CONSTRAINT `fk_bbTag_bbSubCategory1` FOREIGN KEY (`subCategoryID`) REFERENCES `bbSubCategory` (`subCategoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbTag`
+--
+
+LOCK TABLES `bbTag` WRITE;
+/*!40000 ALTER TABLE `bbTag` DISABLE KEYS */;
+INSERT INTO `bbTag` VALUES (1,NULL,1),(2,NULL,2),(3,NULL,3),(4,NULL,4),(5,NULL,5),(6,NULL,6),(7,NULL,7),(8,NULL,8),(9,NULL,9),(10,NULL,10),(11,NULL,11),(12,NULL,12),(13,NULL,13),(14,NULL,14),(15,NULL,15),(16,'Shirts',15),(17,'Pants',15),(18,'Socks',15),(19,NULL,16),(20,'Shirts',16),(21,'Pants',16),(22,'Dresses',16),(23,NULL,17),(24,NULL,18),(25,NULL,19),(26,NULL,20),(27,'Frames',20),(28,'Wheels',20),(29,'Helmet',20),(30,'Parts',20),(31,NULL,21),(32,NULL,22),(33,NULL,23),(34,NULL,24);
+/*!40000 ALTER TABLE `bbTag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbUser`
+--
+
+DROP TABLE IF EXISTS `bbUser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bbUser` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(100) NOT NULL,
+  `userNickname` varchar(100) NOT NULL,
+  `userEmail` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `birthdate` datetime DEFAULT NULL,
+  `gender` varchar(8) DEFAULT NULL,
+  `creditCardID` int(11) DEFAULT NULL,
+  `bankAccountID` int(11) DEFAULT NULL,
+  `addressID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`userID`),
+  UNIQUE KEY `userEmail_UNIQUE` (`userEmail`),
+  UNIQUE KEY `userNickname_UNIQUE` (`userNickname`),
+  KEY `fk_bbUser_bbCreditCard1_idx` (`creditCardID`),
+  KEY `fk_bbUser_bbBankAccount1_idx` (`bankAccountID`),
+  KEY `fk_bbUser_bbAddress1_idx` (`addressID`),
+  CONSTRAINT `fk_bbUser_bbAddress1` FOREIGN KEY (`addressID`) REFERENCES `bbAddress` (`addressID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbUser_bbBankAccount1` FOREIGN KEY (`bankAccountID`) REFERENCES `bbBankAccount` (`bankAccountID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bbUser_bbCreditCard1` FOREIGN KEY (`creditCardID`) REFERENCES `bbCreditCard` (`creditCardID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbUser`
+--
+
+LOCK TABLES `bbUser` WRITE;
+/*!40000 ALTER TABLE `bbUser` DISABLE KEYS */;
+INSERT INTO `bbUser` VALUES (1,'Man T. Cado','icecream','icecream@gmail.com','1234',NULL,NULL,2,3,1),(2,'Elmo Killo','moki','killo@gmail.com','1234',NULL,NULL,3,6,2),(3,'Larry Cita','risa','larrrycita@gmail.com','1234',NULL,NULL,4,1,13),(4,'Elma K. Nazo','makana','elma@gmail.com','1234',NULL,NULL,3,7,9),(5,'Elsy K. Rio','sicario','elsyk@gmail.com','1234',NULL,NULL,15,12,10),(6,'Elka Brito','kbri','britoka@gmail.com','1234',NULL,NULL,15,12,10),(7,'Elmo K. No','moca','mocano@gmail.com','1234',NULL,NULL,1,1,2),(8,'Rosa Melpollo','pollo','rosita@gmail.com','1234',NULL,NULL,2,6,8),(9,'Elba Lazo','bala','elbita@gmail.com','1234',NULL,NULL,4,2,3),(10,'Lola Mento','triste','lamento@gmail.com','1234',NULL,NULL,4,5,7),(11,'Alan Brito','metalico123','alambre@gmail.com','1234',NULL,NULL,2,9,3),(12,'Rosa Melo','pinkmelo','rosam@gmail.com','1234',NULL,NULL,1,2,3),(13,'Elba Zurita','trash','trash@gmail.com','1234',NULL,NULL,3,4,3),(27,'Larry Samonga','larry1','larrysa@gmail.com','1234',NULL,NULL,4,2,6),(28,'Deborah Melpollo','deborah','deborahmel@gmail.com','1234',NULL,NULL,3,5,13);
+/*!40000 ALTER TABLE `bbUser` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-12-11 10:18:11

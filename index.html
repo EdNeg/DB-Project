@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Title</title>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		<script src="js/accounting.js"></script>
+		<script src="appjs/product.js"></script>
+		<script src="appjs/prodApp.js"></script>
+		<script src="appjs/login.js"></script>
+		<script src="appjs/catApp.js"></script>
+		<script src="appjs/category.js"></script>
+		<script src="appjs/subCat.js"></script>
+		<script src="appjs/booksApp.js"></script>
+		<script src="appjs/ComputersApp.js"></script>
+		<script src="appjs/clothingApp.js"></script>
+		<script src="appjs/electronicsApp.js"></script>
+		<script src="appjs/shoesApp.js"></script>
+		<script src="appjs/sportsApp.js"></script>
+		<script src="appjs/account.js"></script>
+		<script src="appjs/accountApp.js"></script>
+		<script src="appjs/sell.js"></script>
+		<script src="appjs/order.js"></script>
+
+		
+
+	
+		<meta charset="utf-8">
+		
+	<style>
+		.ui-content .ui-listview{font-style: italic;} .ui-li-divider{font-style: italic; font-size:2em;} 
+		.ui-page.ui-body-c { background: url(/css/img/gradient3.jpg);background-repeat:no-repeat;
+		background-position:center center; background-size:cover; }
+		
+		</style><!-- List Divider Font Size, Background image -->
+	
+	</head>
+		
+	<body>
+  		<div data-role="page" id="home">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+			
+			<a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="VerifyUserCart()">Cart</a>
+
+
+		</header>
+           
+		<form id="search-form" data-role="content">
+		  
+				<input type="search" name="search" id="search"/ >
+				<a  href="#products" data-theme='b' data-role="button">Search</a>
+			
+			</form>
+    	
+	<center>
+			<img border="0" src="/css/img/PR_WIDE.jpg" alt="BoricuaBay" width="800" height="375">
+
+	</center>
+
+	<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#signin" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></div>
+         	<div class="ui-block-b"><a href="#register" data-role="button" data-iconpos="bottom" data-icon="edit" data-theme="d"data-transition="slidefade">Register</a></div>
+    	</div>
+    	<a href="#categories" data-role="button" data-iconpos="top" data-theme="b" data-icon="bars">Browse Categories</a>
+	</div><!-- Signin/Register/Browse Categories Buttons -->
+
+       
+</div><!-- Page Home ------------------------------------------------------------------------------------>
+			
+	
+<div data-role="page" id="signin">
+	<header data-role="header" data-theme="d">
+		<h1>Sign in</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		
+		<div data-role="navbar">
+    	<ul>
+       		<li><a href="#signin" class="ui-btn-active" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></li>
+        	<li><a href="#register" data-iconpos="bottom" data-icon="edit" data-theme="d" data-transition="slidefade">Register</a></li>
+    	</ul>
+	</div><!-- /navbar -->
+	</header>
+	
+	<form id="verify-form">
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+        	<li><label for="upd-userNickname">Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
+        	<label for="upd-password">Password: <input id="upd-password" name="password" type="password"/></label>
+    		</li>
+    	</ul>
+    </form>
+
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a data-role="button" onclick="LogIn()" data-theme="b">Sign in </a></div>
+		<div class="ui-block-b"><a data-role="button" onclick="VerifyAdmin()">Admin Login </a></div>
+	</div>
+	
+</div><!-- Page Sign in ------------------------------------------------------------------------------------>
+
+
+
+<div data-role="page" id="register">
+	<header data-role="header" data-theme="d">
+		<h1>Register</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		
+		<div data-role="navbar">
+    	<ul>
+       		<li><a href="#signin" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></li>
+        	<li><a href="#register" class="ui-btn-active" data-iconpos="bottom" data-icon="edit" data-theme="d" data-transition="slidefade">Register</a></li>
+    	</ul>
+	</div><!-- /navbar -->
+	</header>
+	<form id "account-form">
+
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
+  					<li><label for="userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
+  					<li><label for="userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="city"> City: <input id="upd-city" name="city" type="text"/></label></li>
+				    <li><label for="state"> State: <input id="upd-state" name="state" type="text"/></label></li>
+  					<li><label for="country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
+  					<li><label for="zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="ccity"> City: <input id="upd-ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="cstate"> State: <input id="upd-cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
+  			  	</ul>
+
+<form>
+    <input type="button" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
+</form>
+
+</div><!-- Page Register -------------------------------------------------------------------------------------->
+	
+
+
+<div data-role="page" id="adminProfile">
+	<header data-role="header" data-theme="d">
+		<h1>Admin Profile</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+	</header>
+	
+	<ul data-role="listview" data-inset="true">
+		<li data-role="list-divider" id = "currAdmin"></li>
+	</ul>
+	
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#viewUsers" data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
+		<div class="ui-block-a"><a href="../DB-Project/EditAccount.html" data-role="button" data-icon="edit" data-iconpos="top">Edit User</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
+		<div class="ui-block-a"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
+		<div class="ui-block-a"><a data-role="button" data-icon="edit" data-iconpos="top">Edit Admin</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
+		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
+		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
+	</div>
+
+
+<footer data-role="footer" data-position="fixed" data-theme="b">
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#reports" data-icon="gear">Reports</a></li>
+			</ul>
+		</nav>
+	</footer>
+</div><!-- Page Admin Profile ----------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id="products" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Search Products</h1>
+			<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		</header>
+<div data-role="content">
+		<ul id="products-list" data-role="listview" data-filter="true"  data-inset="true">
+			
+		</ul>
+</div>
+	
+</div><!-- Page Search Products ------------------------------------------------------------------------>
+
+
+<div data-role="page" id="product-view">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Product Detail</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+		
+	<div data-role="content">
+		
+			<center>
+				<img id = "currImgSrc" style="width: 80%;"></center>
+			
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id = "currName"></li>
+				<li id="currBidPrice"></li>
+				<li id="currInstPrice"></li>
+				<li data-role="list-divider">Description</li>
+				<li id="currDescription"></li>
+				<li id="currBrand"></li>
+				<li id="currModel"></li>
+				<li id="currDimensions"></li>
+				<li id="currId"></li>
+				
+							
+			</ul>
+			
+			<ul data-role = "listview" data-inset ="true">
+				<li id="currSeller"></li>
+			</ul> 		
+	</div>	
+ 				 
+		<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#signin" onclick="PlaceBid()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+         	<div class="ui-block-b"><a href="#carts" onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
+    	</div>
+	
+			
+</div><!-- Page Product Details --------------------------------------------------------------------------->
+
+<div data-role="page" id="categories">
+	<header data-role="header" data-theme="d">
+		<h1>Categories</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		
+		
+	</header>
+	<div data-role = "content">
+	<ul id="categories-list" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 
+
+	
+	
+</div><!-- Page Categories ----------------------------------------------------------------------------------->	
+
+
+
+
+<!----------------------*******************************************************************************************************-->
+<!----------------------********************************CATEGORIES START****************************************************-->
+<!----------------------*******************************************************************************************************-->
+<div data-role="page" id="books-view">
+	<header data-role="header" data-theme="d">
+		<h1>Books</h1>
+		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+		<div data-role="content"><!-- try listview-->
+		 <ul id="Books" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
+		 
+		 </ul>
+ 	</div>
+	
+	
+	
+</div><!-- Page Books ----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="electronics-view">
+	<header data-role="header" data-theme="d">
+		<h1>Electronics</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+		<div data-role="content"><!-- try listview-->
+		 <ul id="Electronics" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
+		 	 
+		 </ul>
+ 	</div>
+	
+	
+	
+</div><!-- Page Electronics ----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="computers-view">
+	<header data-role="header" data-theme="d">
+		<h1>Computers</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+		<div data-role="content"><!-- try listview-->
+		 <ul id="Computers" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
+		 	 
+		 </ul>
+ 	</div>
+	
+	
+	
+</div><!-- Page Computers ----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="clothing-view">
+	<header data-role="header" data-theme="d">
+		<h1>Clothing</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+		<div data-role="content"><!-- try listview-->
+		 <ul id="Clothing" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
+		 	 
+		 </ul>
+ 	</div>
+	
+	
+	
+</div><!-- Page Clothing ----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="shoes-view">
+	<header data-role="header" data-theme="d">
+		<h1>Shoes</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+		<div data-role="content"><!-- try listview-->
+		 <ul id="Shoes" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
+		 	 
+		 </ul>
+ 	</div>
+	
+	
+	
+</div><!-- Page Shoes ----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="sports-view">
+	<header data-role="header" data-theme="d">
+		<h1>Sports</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+		<div data-role="content"><!-- try listview-->
+		 <ul id="Sports" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
+		 	 
+		 </ul>
+ 	</div>
+	
+	
+	
+</div><!-- Page Sports ----------------------------------------------------------------------------->
+
+
+
+<!----------------------*******************************************************************************************************-->
+<!----------------------********************************SUBCATEGORIES START****************************************************-->
+<!----------------------*******************************************************************************************************-->
+
+
+<!----------------------********************************BOOKS****************************************************-->
+
+<div data-role="page" id="childrenB">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<!--
+		<select id="mySel" class="ui-btn-right">
+					<option value="" style="display:none">Sort by: </option>
+					<option value="SortName" href="#categories">Sort by Name</option>
+					<option value="SortBrand">Sort by Brand</option>
+					<option value="SortPrice">Sort by Price</option>
+				</select>-->
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="childrenBName">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" href="#books-view" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCNList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN SORTED BY NAME---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="childrenBBrand">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCBList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN SORTED BY PRICE---------------------------------------------------------------------------------->
+
+<div data-role="page" id="childrenBPrice">
+	<header data-role="header" data-theme='d'>
+		<h1>Children</h1>
+		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<nav data-role="navbar">
+			<ul>
+				<li><a href="#childrenBName">Sort By Name</a></li>
+				<li><a href="#childrenBBrand">Sort By Brand</a></li>
+				<li><a href="#childrenBPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BCPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Children</li>  		-->			
+				
+		</ul>
+	</div>
+	     	
+			
+</div><!-- PAGE CHILDREN SORTED BY BRAND---------------------------------------------------------------------------------->
+	 
+<div data-role="page" id="fiction">
+	<header data-role="header" data-theme='d'>
+		<h1>Fiction</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BFList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Fiction</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE FICTION ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="technology">
+	<header data-role="header" data-theme='d'>
+		<h1>Technology</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BTList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Technology</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE TECHNOLOGY ---------------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id="business">
+	<header data-role="header" data-theme='d'>
+		<h1>Business</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="BBList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BUSINESS ---------------------------------------------------------------------------------->
+
+
+
+<!----------------------********************************COMPUTERS***************************************************-->
+
+
+<div data-role="page" id="laptops">
+	<header data-role="header" data-theme='d'>
+		<h1>Laptops</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CLList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE LAPTOPS ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="desktops">
+	<header data-role="header" data-theme='d'>
+		<h1>Desktops</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CDList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE DESKTOPS ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="tablets">
+	<header data-role="header" data-theme='d'>
+		<h1>Tablets</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CTList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE TABLETS ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="printers">
+	<header data-role="header" data-theme='d'>
+		<h1>Printers</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE PRINTERS ---------------------------------------------------------------------------------->
+
+
+<!----------------------********************************CLOTHING****************************************************-->
+
+
+<div data-role="page" id="childrenC">
+	<header data-role="header" data-theme='d'>
+		<h1>Children's Clothing</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CCList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE CHILDRENC ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="menC">
+	<header data-role="header" data-theme='d'>
+		<h1>Men</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content"><!-- try listview-->
+		 <ul data-role="listview" data-inset="true">
+		 	<li data-icon="false" data-theme="b"><a href="#menShirts" ><center> <img src= "/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#menPants" ><center> <img src= "/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#menSocks" ><center> <img src= "/css/icons/Socks.png"/><h1>Socks</h1></center></a></li>	
+		 
+		 
+		 </ul>
+		
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+	</div>
+  	
+			
+</div><!-- 	PAGE MENC ---------------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id="menShirts">
+	<header data-role="header" data-theme='d'>
+		<h1>Men Shirts</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CMSList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE MEN SHIRTS ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="menPants">
+	<header data-role="header" data-theme='d'>
+		<h1>Men Pants</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CMPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE MEN PANTS---------------------------------------------------------------------------------->
+
+<div data-role="page" id="menSocks">
+	<header data-role="header" data-theme='d'>
+		<h1>Men Socks</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CMSkList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE MEN SOCKS ---------------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id="womenC">
+	<header data-role="header" data-theme='d'>
+		<h1>Women</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		 <ul data-role="listview" data-inset="true">
+		 	<li data-icon="false" data-theme="b"><a href="#womenShirts" ><center> <img src= "/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#womenPants" ><center> <img src= "/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#womenDresses" ><center> <img src= "/css/icons/Dress.png"/><h1>Dresses</h1></center></a></li>	
+		 		 
+		 </ul>
+							
+	</div>
+</div><!-- 	PAGE WOMENC ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="womenShirts">
+	<header data-role="header" data-theme='d'>
+		<h1>Women Shirts</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CWSList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE WOMEN SHIRTS ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="womenPants">
+	<header data-role="header" data-theme='d'>
+		<h1>Women Pants</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CWPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE WOMEN PANTS---------------------------------------------------------------------------------->
+
+<div data-role="page" id="womenDresses">
+	<header data-role="header" data-theme='d'>
+		<h1>Women Dresses</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="CWDList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE WOMEN DRESSES ---------------------------------------------------------------------------------->
+
+
+<!----------------------**********************************ELECTRONICS***************************************************-->
+
+
+<div data-role="page" id="tv">
+	<header data-role="header" data-theme='d'>
+		<h1>TV</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="ETList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE TV ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="audio">
+	<header data-role="header" data-theme='d'>
+		<h1>Audio</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="EAList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE AUDIO ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="phones">
+	<header data-role="header" data-theme='d'>
+		<h1>Phones</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="EPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE PHONES ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="cameras">
+	<header data-role="header" data-theme='d'>
+		<h1>Cameras</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="ECList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE CAMERAS ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="video">
+	<header data-role="header" data-theme='d'>
+		<h1>Video</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="EVList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE VIDEO ---------------------------------------------------------------------------------->
+
+
+<!----------------------**********************************SHOES***************************************************-->
+
+
+<div data-role="page" id="childrenS">
+	<header data-role="header" data-theme='d'>
+		<h1>Children Shoes</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SCList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE CHILDREN SHOES---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="womenS">
+	<header data-role="header" data-theme='d'>
+		<h1>Women Shoes</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SWList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE WOMEN SHOES---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="menS">
+	<header data-role="header" data-theme='d'>
+		<h1>Men Shoes</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SMList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE MEN SHOES---------------------------------------------------------------------------------->
+
+
+
+<!----------------------********************************SPORTS****************************************************-->
+
+<div data-role="page" id="bicycles">
+	<header data-role="header" data-theme='d'>
+		<h1>Bicycles</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content"><!-- try listview-->
+		 <ul data-role="listview" data-inset="true">
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesFrames" ><center> <img src= "/css/icons/frame.png"/><h1>Frames</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesWheels" ><center> <img src= "/css/icons/wheel.png"/><h1>Wheels</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesHelmets" ><center> <img src= "/css/icons/helmet.png"/><h1>Helmets</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesParts" ><center> <img src= "/css/icons/parts.png"/><h1>Parts</h1></center></a></li>		
+		 
+		 
+		 </ul>
+		
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+	</div>
+  	
+			
+</div><!-- 	PAGE BICYCLES ---------------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id="bicyclesFrames">
+	<header data-role="header" data-theme='d'>
+		<h1>Frames</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SBFList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BICYCLE FRAMES---------------------------------------------------------------------------------->
+
+<div data-role="page" id="bicyclesWheels">
+	<header data-role="header" data-theme='d'>
+		<h1>Wheels</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SBWList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BICYCLE WHEELS---------------------------------------------------------------------------------->
+
+<div data-role="page" id="bicyclesHelmets">
+	<header data-role="header" data-theme='d'>
+		<h1>Helmets</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SBHList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BICYCLE HELMETS ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="bicyclesParts">
+	<header data-role="header" data-theme='d'>
+		<h1>Parts</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SBPList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BICYCLE PARTS ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="fishing">
+	<header data-role="header" data-theme='d'>
+		<h1>Fishing</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SFList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE FISHING ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="baseball">
+	<header data-role="header" data-theme='d'>
+		<h1>Baseball</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SBsBList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BASEBALL ---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="golf">
+	<header data-role="header" data-theme='d'>
+		<h1>Golf</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SGList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE GOLF---------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="basketball">
+	<header data-role="header" data-theme='d'>
+		<h1>Basketball</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header>
+	
+	<div data-role="content">
+		<ul id="SBkBList" data-role="listview" data-filter="true"  data-inset="true">
+		
+			<!--<li data-role="list-divider">Business</li>  		-->			
+				
+		</ul>
+	</div>
+  	
+			
+</div><!-- 	PAGE BASKETBALL ---------------------------------------------------------------------------------->
+
+
+<!----------------------*******************************************************************************************************-->
+<!----------------------********************************SUBCATEGORIES END****************************************************-->
+<!----------------------*******************************************************************************************************-->
+
+
+
+
+<div data-role="page" id= "crud-user">
+<header data-role="header">
+		<h1>Modify User Profile</h1>	
+	
+	
+</div><!-- Page Edit User ------------------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id= "crud-category">
+<header data-role="header">
+		<h1>Modify Category</h1>	
+	
+	
+</div><!-- Page Edit Categories ------------------------------------------------------------------------------->
+
+<div data-role="page" id= "reports">
+<header data-role="header">
+	<h1>Reports</h1>
+	<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <h4>Total Sales</h4>
+    <ul data-role="listview" data-inset="true">
+        <li>Day</li>
+        <li>Week</li>
+        <li>Month</li>
+    </ul>
+    </div>
+    <div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <h4>Total Sales by Product</h4>
+    <ul data-role="listview" data-inset="true">
+        <li>Day</li>
+        <li>Week</li>
+        <li>Month</li>
+    </ul>
+    
+</div>
+<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <h4>Total Revenue by Product</h4>
+    <ul data-role="listview" data-inset="true">
+        <li>Day</li>
+        <li>Week</li>
+        <li>Month</li>
+    </ul>
+    
+</div>
+
+	
+	
+</div><!-- Page Reports -------------------------------------------------------------------------------------->
+
+<div id="sell-product" data-role="page">
+			<div data-role="header" data-theme="b" data-position="fixed">
+				<a data-role="button" data-rel="back">Cancel</a>
+				<h1>New Product</h1>
+				<a data-role="button" data-rel="back" onclick="SaveProduct()">Sell</a>
+			</div>
+			<center>
+				<h2>Enter product information</h2>
+			</center>
+			<form id="product-form">
+ 				<fieldset data-role="controlgroup">
+ 					<ul>
+  					<li><label for="imgSrc"> <img src = "/css/img/ipad-normal.jpg"  width="250" height="250"/> </label></li>
+ 					<li><label for="id"> Product id: <input id="id" name="id" type="number"/></label></li>
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+  					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
+  					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
+  					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
+  					<li><label for="bidPrice"> Bid Price $: <input id="bidPrice" name="bidPrice" type="number"/></label></li>
+  					<li><label for="instPrice"> Instant Price $: <input id="instPrice" name="instPrice" type="number"/></label></li>
+  			  		<li><label for="description"> Description: <input id="description" name="description" type="text"/></label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!-- Page Sell Product ---------------------------------------------------------------------------------->
+
+
+<div id="add-category" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" data-rel="back" data-theme="b">Cancel</a>
+				<h1>Add Category</h1>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
+			</div>
+			<form id="category-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">Enter Category Information</li>  
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label>
+  					<label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
+  			  	</ul>
+			
+			</form>
+</div><!-- Page Add Category ---------------------------------------------------------------------------------->
+
+
+
+<div data-role="page" id="viewUsers" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Users Registered</h1>
+			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="users-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- Page View Users------------------------------------------------------------------------>
+
+<div data-role="page" id="viewAdmins" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Administrators Registered</h1>
+			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="admins-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- Page View Admins------------------------------------------------------------------------>
+</body>
+
+	
+</html>
