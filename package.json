@@ -5,8 +5,8 @@
   "main": "2server.js",
   "dependencies": {
     "express": "~3.3.8",
-    "mysql": "2.x.x",
-    "logfmt": "0.x.x"
+    "mysql": "~2.0.0",
+    "logfmt": "~0.17.0"
   },
   "devDependencies": {},
   "scripts": {
