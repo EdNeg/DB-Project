@@ -14,7 +14,7 @@ $(document).on('pagebeforeshow', "#category-view", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+					"<h1>" + "'" + subCat.name + "'" +  "</h1>" +
 					"<img src= " +  subCat.iconSrc + "/>" + 
 					"</a></li>");
 			}
@@ -41,7 +41,7 @@ $(document).on('pagebeforeshow', "#subCats", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+					"<h1>" + "'" + subCat.name + "'" +  "</h1>" +
 					"<img src= " +  subCat.iconSrc + "/>" + 
 					"</a></li>");
 			}
@@ -68,7 +68,7 @@ $(document).on('pagebeforeshow', "#subCats", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+					"<h1>" + "'" + subCat.name + "'" +  "</h1>" +
 					"<img src= " +  subCat.iconSrc + "/>" + 
 					"</a></li>");
 			}
@@ -95,7 +95,7 @@ $(document).on('pagebeforeshow', "#subCats", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+					"<h1>" + "'" + subCat.name + "'" +  "</h1>" +
 					"<img src= " +  subCat.iconSrc + "/>" + 
 					"</a></li>");
 			}
@@ -122,7 +122,7 @@ $(document).on('pagebeforeshow', "#subCats", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+					"<h1>" + "'" + subCat.name + "'" +  "</h1>" +
 					"<img src= " +  subCat.iconSrc + "/>" + 
 					"</a></li>");
 			}
@@ -149,7 +149,7 @@ $(document).on('pagebeforeshow', "#subCats", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.id + ")>" + 
-					"<h1>" + subCat.name +  "</h1>" +
+					"<h1>" + "'" + subCat.name + "'" +  "</h1>" +
 					"<img src= " +  subCat.iconSrc + "/>" + 
 					"</a></li>");
 			}

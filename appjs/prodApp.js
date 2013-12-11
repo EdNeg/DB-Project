@@ -20,7 +20,7 @@ $(document).on('pagebeforeshow', "#childrenB", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				product = productList[i];
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -58,7 +58,7 @@ $(document).on('pagebeforeshow', "#childrenBName", function( event, ui ) {
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -95,7 +95,7 @@ $(document).on('pagebeforeshow', "#childrenBBrand", function( event, ui ) {
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -132,7 +132,7 @@ $(document).on('pagebeforeshow', "#childrenBPrice", function( event, ui ) {
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -171,7 +171,7 @@ $(document).on('pagebeforeshow', "#fiction", function( event, ui ) {////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -209,7 +209,7 @@ $(document).on('pagebeforeshow', "#technology", function( event, ui ) {/////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -247,7 +247,7 @@ $(document).on('pagebeforeshow', "#business", function( event, ui ) {///////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -289,7 +289,7 @@ $(document).on('pagebeforeshow', "#tv", function( event, ui ) {//////////////REM
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -328,7 +328,7 @@ $(document).on('pagebeforeshow', "#audio", function( event, ui ) {//////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -365,7 +365,7 @@ $(document).on('pagebeforeshow', "#phones", function( event, ui ) {/////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -403,7 +403,7 @@ $(document).on('pagebeforeshow', "#cameras", function( event, ui ) {////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -440,7 +440,7 @@ $(document).on('pagebeforeshow', "#video", function( event, ui ) {//////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -483,7 +483,7 @@ $(document).on('pagebeforeshow', "#laptops", function( event, ui ) {////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -522,7 +522,7 @@ $(document).on('pagebeforeshow', "#desktops", function( event, ui ) {///////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -559,7 +559,7 @@ $(document).on('pagebeforeshow', "#tablets", function( event, ui ) {////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -597,7 +597,7 @@ $(document).on('pagebeforeshow', "#printers", function( event, ui ) {///////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -637,7 +637,7 @@ $(document).on('pagebeforeshow', "#childrenC", function( event, ui ) {//////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -675,7 +675,7 @@ $(document).on('pagebeforeshow', "#menShirts", function( event, ui ) {//////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -713,7 +713,7 @@ $(document).on('pagebeforeshow', "#menPants", function( event, ui ) {///////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -751,7 +751,7 @@ $(document).on('pagebeforeshow', "#menSocks", function( event, ui ) {///////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -790,7 +790,7 @@ $(document).on('pagebeforeshow', "#womenShirts", function( event, ui ) {////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -828,7 +828,7 @@ $(document).on('pagebeforeshow', "#womenPants", function( event, ui ) {/////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -866,7 +866,7 @@ $(document).on('pagebeforeshow', "#womenDresses", function( event, ui ) {///////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -910,7 +910,7 @@ $(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -949,7 +949,7 @@ $(document).on('pagebeforeshow', "#womenS", function( event, ui ) {/////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -986,7 +986,7 @@ $(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////R
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1029,7 +1029,7 @@ $(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1067,7 +1067,7 @@ $(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {/////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1105,7 +1105,7 @@ $(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1143,7 +1143,7 @@ $(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1180,7 +1180,7 @@ $(document).on('pagebeforeshow', "#fishing", function( event, ui ) {////////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1217,7 +1217,7 @@ $(document).on('pagebeforeshow', "#baseball", function( event, ui ) {///////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1254,7 +1254,7 @@ $(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////R
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1291,7 +1291,7 @@ $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {/////////
 				product = productList[i];
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
@@ -1336,7 +1336,7 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 				product = productList[i];
 				
 				list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +  "'" + product.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
