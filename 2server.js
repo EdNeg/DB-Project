@@ -18,11 +18,45 @@ var allowCrossDomain = function(req, res, next) {
 };
 
 app.configure(function () {
+  app.use(express.bodyParser());
   app.use(allowCrossDomain);
+  app.use(app.router);
 });
 
 
-app.use(express.bodyParser());
+module.exports.demo = function(queryString, callback)
+{
+try
+{
+    connection.connect();
+    console.log('Step 1');
+
+    connection.query(queryString, function(err, rows, fields)
+    {
+        console.log('Step 2');
+        if (err)
+        {
+            console.log("ERROR : " + err);
+        }
+        console.log('The solution is: ', rows[0].solution);
+
+        callback(rows[0].solution);
+
+        return rows[0].solution;
+    });
+    callback();
+
+    connection.end();
+    console.log('Step 3');
+}
+catch(ex)
+{
+    console.log("EXCEPTION : " + ex);
+}
+};
+
+
+
 
 var product = require("./appjs/product.js");
 var Product = product.Product;
@@ -1581,28 +1615,54 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 	}
 });
 
-/*
+
 //REST Operation - HTTP POST to add a new a user
 app.post('/DB-Project/accounts', function(req, res) {
+	console.log(req.body.userEmail);
 	console.log("POST User");
 
-  	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('creditCardID') || !req.body.hasOwnProperty('bankAccountID') || !req.body.hasOwnProperty('addressID')){
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for account.');
-  	}
+//  	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
+//  	|| !req.body.hasOwnProperty('userEmail') || !req.body.hasOwnProperty('addressLine') || !req.body.hasOwnProperty('city')
+//	|| !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')
+//	|| !req.body.hasOwnProperty('creditCardNumber') || !req.body.hasOwnProperty('creditCardOwner') || !req.body.hasOwnProperty('securityCode')
+//	|| !req.body.hasOwnProperty('expDate') || !req.body.hasOwnProperty('caddressLine') || !req.body.hasOwnProperty('ccity')
+//	|| !req.body.hasOwnProperty('cstate') || !req.body.hasOwnProperty('ccountry') || !req.body.hasOwnProperty('czipcode')){
+//    	res.statusCode = 400;
+//    	return res.send('Error: Missing fields for account.');
+//  	}
+	
+	
 
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
   	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
-  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (" +1,'Man T. Cado','icecream',
-  		'icecream@gmail.com','1234',NULL,NULL,NULL,NULL,NULL);,, function(err, rows, result){
-  			
-  		});
-  	console.log("New Account: " + JSON.stringify(newAccount));
-  	//newAccount.id = accountNextId++;
-  	accountList.push(newAccount);
+  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
+  		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL,NULL,NULL)");
+  	var getquery = connection.query("SET @last_insert_id_in_bbUser = LAST_INSERT_ID()");	
+  	
+  	console.log("Here");
+  	var query1 = connection.query("INSERT INTO `bbAddress` (`addressID`,`addressLine`,`city`,`state`,`country`," +
+  	  		"`zipcode`) VALUES (NULL, '" + req.body.addressLine + "', '"+ req.body.city + 
+  	  		"', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zipcode + "')");
+  	var getquery1 = connection.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
+  	console.log("Here1");
+  	var query2 = connection.query("INSERT INTO `bbAddress` (`addressID`,`addressLine`,`city`,`state`,`country`," +
+  	  		"`zipcode`) VALUES (NULL, '" + req.body.caddressLine + "', '"+ req.body.ccity + 
+  	  		"', '" + req.body.cstate + "', '" + req.body.ccountry + "', '" + req.body.czipcode + "')");
+  	var getquery2 = connection.query("SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()");
+  	console.log("Here2");
+	var query3 = connection.query("INSERT INTO `bbCreditCard` (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`," +
+  	  		"`addressID`) VALUES (NULL, '" + req.body.creditCardOwner + "', '"+ req.body.creditCardNumber + 
+  	  		"', '" + req.body.securityCode + "', '" + req.body.expDate + "', @last_insert_id_in_bbAddress1)");
+  	var getquery3 = connection.query("SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()");
+  	console.log("Here3");
+  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser");
+  	console.log("Here4");
+  	console.log("New Account: " + req.body.userEmail);
+  	console.log("New Mailing Address: " + res.response);
+  	console.log("New Biling Address: " + getquery2);
+  	console.log("New CreditCard:" + getquery3);
   	res.json(true);
-});*/
+});
 
 
 

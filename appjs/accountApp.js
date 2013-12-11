@@ -407,7 +407,7 @@ function SaveAccount(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var newAccount = ConverToJSON(formData);
-	console.log("New Account: " + JSON.stringify(newAccount));
+	console.log("New Account form: " + JSON.stringify(newAccount));
 	var newAccountJSON = JSON.stringify(newAccount);
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/accounts",
