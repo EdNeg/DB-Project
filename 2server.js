@@ -82,8 +82,8 @@ pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
-  });
-});*/
+  });*/
+});
 
 
 
