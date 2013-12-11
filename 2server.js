@@ -30,7 +30,7 @@ app.use(express.bodyParser());
 
 // Server starts running when listen is called.
 var port = process.env.PORT || 3412;
-pp.listen(port, function(){
+app.listen(port, function(){
 	console.log("server listening at port " + port);
 });
 
