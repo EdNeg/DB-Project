@@ -2,6 +2,7 @@
 var express = require('express');
 var mysql = require('mysql');
 var logfmt = require("logfmt");
+var http = require('http');
 var app = express();
 app.use(logfmt.requestLogger());
 
@@ -27,6 +28,16 @@ app.configure(function () {
 
 app.use(express.bodyParser());
 
+// Server starts running when listen is called.
+var port = process.env.PORT || 3412;
+pp.listen(port, function(){
+	console.log("server listening at port " + port);
+});
+
+//http.createServer(app).listen(port, function () {
+   /// console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+//});
+
 var product = require("./appjs/product.js");
 var Product = product.Product;
 
@@ -47,7 +58,7 @@ var connection = mysql.createConnection({
 	host : 'localhost',
 	user : 'root',
 	password : 'ADMIN',
-	//port : 3306,
+	port : 3306,
 	database : 'boricuabaydb'
 
 });
@@ -336,11 +347,7 @@ app.post('/DB-Project/products', function(req, res) {
 });
 
 
-// Server starts running when listen is called.
-var port = process.env.PORT || 3412;
-app.listen(port, function(){
-	console.log("server listening at port " + port);
-});
+
 
 
 
