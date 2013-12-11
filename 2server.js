@@ -64,7 +64,9 @@ var connection = mysql.createConnection({
 });
 
 
-
+app.get('/', function(req, res) {
+  res.send('Hello World!');
+});
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
