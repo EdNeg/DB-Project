@@ -1336,7 +1336,7 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 				product = productList[i];
 				
 				list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-					"<img src= " +  product.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +  "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
