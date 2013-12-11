@@ -30,6 +30,8 @@ app.use(express.bodyParser());
 
 // Server starts running when listen is called.
 var port = process.env.PORT || 3412;
+process.env.PWD = process.cwd();
+app.use(express.static(process.env.PWD));
 app.listen(port, function(){
 	console.log("server listening at port " + port);
 });
