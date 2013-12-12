@@ -42,8 +42,7 @@ app.listen(port, function(){
    /// console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 //});
 
-var product = require("./appjs/product.js");
-var Product = product.Product;
+
 
 
 //Mysql Database Connection
@@ -396,8 +395,7 @@ app.post('/DB-Project/products/:id', function(req, res) {
 //--------------------------------------Category---------------------------------------------------------------//
 	
 	
-var category = require("./appjs/category.js");
-var Category = category.Category;
+
 
 
 // REST Operations
@@ -540,29 +538,6 @@ app.post('/DB-Project/categories', function(req, res) {
 
 //--------------------------------------Books SubCategories---------------------------------------------------------------//
 	
-	
-var subCat = require("./appjs/subCat.js");
-var SubCat = subCat.SubCat;
-
-
-var subCatList = new Array(
-	new SubCat("Children"),
-	new SubCat("Fiction"),
-	new SubCat("Technology"),
-	new SubCat("Business")
-
-
-);
-
-
- var subCatNextId = 0;
- 
-for (var i=0; i < subCatList.length;++i){
-	subCatList[i].id = subCatNextId++;
-}
-
-
-
 
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -706,29 +681,6 @@ app.post('/DB-Project/Books', function(req, res) {
 //--------------------------------------Electronics---------------------------------------------------------------//
 	
 	
-var electCat = require("./appjs/subCat.js");
-var ElectCat = electCat.ElectCat;
-
-
-var electCatList = new Array(
-	new SubCat("TV"),
-	new SubCat("Audio"),
-	new SubCat("Phones"),
-	new SubCat("Cameras"),
-	new SubCat("Video")
-	
-);
-
-
- var electCatNextId = 0;
- 
-for (var i=0; i < electCatList.length;++i){
-	electCatList[i].id = electCatNextId++;
-}
-
-
-
-
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -871,27 +823,6 @@ app.post('/DB-Project/Electronics', function(req, res) {
 
 //--------------------------------------Computers---------------------------------------------------------------//
 	
-	
-var compCat = require("./appjs/subCat.js");
-var CompCat = compCat.CompCat;
-
-
-var compCatList = new Array(
-	new SubCat("Laptops"),
-	new SubCat("Desktops"),
-	new SubCat("Tablets"),
-	new SubCat("Printers")
-);
-
-
- var compCatNextId = 0;
- 
-for (var i=0; i < compCatList.length;++i){
-	compCatList[i].id = compCatNextId++;
-}
-
-
-
 
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -1033,27 +964,6 @@ app.post('/DB-Project/Computers', function(req, res) {
 
 //--------------------------------------Clothings---------------------------------------------------------------//
 	
-	
-var clothCat = require("./appjs/subCat.js");
-var ClothCat = clothCat.ClothCat;
-
-
-var clothCatList = new Array(
-	new SubCat("Children"),
-	new SubCat("Men"),
-	new SubCat("Women")
-
-);
-
-
- var clothCatNextId = 0;
- 
-for (var i=0; i < clothCatList.length;++i){
-	clothCatList[i].id = clothCatNextId++;
-}
-
-
-
 
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -1197,28 +1107,6 @@ app.post('/DB-Project/Clothing', function(req, res) {
 
 //--------------------------------------Shoes---------------------------------------------------------------//
 	
-	
-var shoeCat = require("./appjs/subCat.js");
-var ShoeCat = shoeCat.ShoeCat;
-
-
-var shoeCatList = new Array(
-	new SubCat("Children"),
-	new SubCat("Women"),
-	new SubCat("Men")
-	
-	
-);
-
-
- var shoeCatNextId = 0;
- 
-for (var i=0; i < shoeCatList.length;++i){
-	shoeCatList[i].id = shoeCatNextId++;
-}
-
-
-
 
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -1361,30 +1249,6 @@ app.post('/DB-Project/Shoes', function(req, res) {
 
 //--------------------------------------Sports---------------------------------------------------------------//
 	
-	
-var sportCat = require("./appjs/subCat.js");
-var SportCat = sportCat.SportCat;
-
-
-var sportCatList = new Array(
-	new SubCat("Bicycles"),
-	new SubCat("Fishing"),
-	new SubCat("Baseball"),
-	new SubCat("Golf"),
-	new SubCat("Basketball")
-	
-	
-);
-
-
- var sportCatNextId = 0;
- 
-for (var i=0; i < sportCatList.length;++i){
-	sportCatList[i].id = sportCatNextId++;
-}
-
-
-
 
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -1528,8 +1392,6 @@ app.post('/DB-Project/Sports', function(req, res) {
 
 //-----------------------Regular User------------------------------------------------------
 
-var account = require("./appjs/account.js");
-var Account = account.Account;
 
 // Gets the user Information
 app.get('/DB-Project/accounts/:ids', function(req, res) {
@@ -1695,17 +1557,7 @@ app.post('/DB-Project/accounts', function(req, res) {
 
 //-----------------------Administrator------------------------------------------------------
 
-var accounta = require("./appjs/account.js");
-var Accounta = accounta.Accounta;
 
-var accountaList = new Array(
-	new Account("Lara Croft", "LC1", "ivc", "Grey House of Doom, Brazil", "Grey House of Doom, Brazil", "00000023445")
-);
- var accountaNextId = 0;
- 
-for (var i=0; i < accountaList.length;++i){
-	accountaList[i].id = accountaNextId++;
-}
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -1823,8 +1675,6 @@ app.post('/DB-Project/accountas', function(req, res) {
 
 //--------------------------------------Credit Card--------------------------------------------------------------------//
 
-var creditcard = require("./appjs/creditcard.js");
-var Creditcard = creditcard.Creditcard;
 
 //Gets the creditcard info
 app.get('/DB-Project/creditcards/:ids', function(req, res) {
@@ -1917,21 +1767,7 @@ app.post('/DB-Project/creditcards', function(req, res) {
 //--------------------------------------Address-----------------------------------------------------------------//
 
 
-var addressinfo = require("./appjs/addressinfo.js");
-var Addressinfo = addressinfo.Addressinfo;
 
-var addressinfoList = new Array(
-        new Addressinfo("Urb. Villas del Palmar Sur", "Calle Palma de Sombrero #2", 
-                        "Carolina", "Puerto Rico", "Estados Unidos", "00979", "0"),
-        new Addressinfo("Urb. Villas del Palmar Oeste", "Calle Palma Real #3", 
-                                        "Ponce", "PR", "US", "00679", "1")
-                        
-);
- var addressinfoNextId = 0;
- 
-for (var i=0; i < addressinfoList.length;++i){
-        addressinfoList[i].id = addressinfoNextId++;
-}
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -2043,10 +1879,6 @@ app.post('/DB-Project/addressinfos', function(req, res) {
 
 
 //--------------------------------------Cart-----------------------------------------------------------------//
-
-
-var cart = require("./appjs/cart.js");
-var Cart = cart.Cart;
 
 
 // REST Operations
@@ -2168,10 +2000,6 @@ app.post('/DB-Project/addressinfos', function(req, res) {
 });
 
 //--------------------------------------Sell-----------------------------------------------------------------//
-
-
-var sell = require("./appjs/sell.js");
-var Sell = sell.Sell;
 
 
 // REST Operation - HTTP GET to read all cars
@@ -2297,10 +2125,6 @@ app.post('/DB-Project/sells', function(req, res) {
 });
 
 //--------------------------------------Bid-----------------------------------------------------------------//
-
-
-var bid = require("./appjs/bid.js");
-var Bid = bid.Bid;
 
 
 // REST Operations
@@ -2513,8 +2337,6 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
 //--------------------------------------Order-----------------------------------------------------------------//
 
 
-var order = require("./appjs/order.js");
-var Order = order.Order;
 
 
 // REST Operations
