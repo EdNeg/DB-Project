@@ -83,7 +83,7 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				products = sellList[i];
 					list.append("<li><a onclick=sold(" + products.productID + ")>"  + 
-					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " + "'" + products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + products.brand  + "</p>" +
@@ -141,7 +141,7 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			alert("You don't have any items in the Cart at the moment");
 		}
 	});
 });
@@ -212,6 +212,45 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
 					"<p class=\"ui-li-aside\"><font color = 'red'> Sold: </font>" + accounting.formatMoney(products.productPrice) + "</p>" +	
 					"</a></li>");	
+
+			}
+			
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("You have no bids this far");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#BidforProduct", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/abids/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			var productBidList = data.bidproduct;		// ADD var bidProductList = data.bidProduct;
+			var len = productBidList.length;
+			var list = $("#BidforProduct-list");///////////////////////////////////////////////////
+			list.empty();
+			var products;
+			for (var i=0; i < len; ++i){
+				products = productBidList[i];
+					list.append("<li>" + 
+					"<img src= " +  "'"+ products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + products.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + products.brand  + "</p>" +
+					"<p> Model: " + products.model + "</p>" + 
+					"<p> Description: " + products.productDesc + "</p>" +
+					"<p> Bidding User: " + products.userNickname + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Amount: " + accounting.formatMoney(products.bidAmount) + "</p>" +
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +	
+					"<p class=\"ui-li-aside\"> Bid Date: " + products.bidDate + "</p>" +
+					"</li>");	
 
 			}
 			
@@ -428,6 +467,73 @@ function SaveAccount(){
 
 
 }
+
+function SaveProductUser(){
+	$.mobile.loading("show");
+	var form = $("#product-form");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newProduct = ConverToJSON(formData);
+	console.log("New Product: " + JSON.stringify(newProduct));
+	var newProductJSON = JSON.stringify(newProduct);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products/" + loginID.userID,
+		method: 'post',
+		data : newProductJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			$.mobile.navigate("../DB-Project/Currently_Selling");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Data could not be added!");
+		}
+	});
+
+
+}
+
+
+
+function PlaceBid(){
+	if(loginID == 0){
+		alert("You must be logged In!");
+		$.mobile.navigate("#home");
+	}
+	else{
+	$.mobile.loading("show");
+	var form = $("#placeBid-form");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newPlaceBid = ConverToJSON(formData);
+	console.log("New Place Bid: " + JSON.stringify(newPlaceBid));
+	var newPlaceBidJSON = JSON.stringify(newPlaceBid);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/placebids/" + loginID.userID + "/" + bidProductID + "/" + bidstartingPrice + "/" + startdate + "/" + enddate,
+		method: 'post',
+		data : newPlaceBidJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			alert("You have succesfully placed a bid!");
+			$.mobile.navigate("#categories");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Bid not found");
+		}
+	});
+	}
+
+
+}
+
+
 
 
 function UpdateAccount(){

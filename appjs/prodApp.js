@@ -1372,6 +1372,8 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	var pid = "Product id: " + currentProduct.productID;
 	var brand = "Brand: " + currentProduct.brand;
 	var user = "Seller: " + currentProduct.userNickname;
+	var startTime = "Starting Date: " + currentProduct.startDate;
+	var endTime = "Ending Date: " + currentProduct.endDate;
 	//document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("currName").innerHTML = productName;
 	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
@@ -1384,6 +1386,11 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	document.getElementById("currId").innerHTML = pid;
 	document.getElementById("currBrand").innerHTML = brand;
 	document.getElementById("currSeller").innerHTML = user;
+	document.getElementById("currStartDate").innerHTML = startTime;
+	document.getElementById("currEndDate").innerHTML = endTime;
+
+
+	
 	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
 	
 	
@@ -1445,7 +1452,10 @@ function SaveProduct(){
 }
 
 var currentProduct = {};
-
+var bidProductID;
+var bidstartingPrice;
+var startdate;
+var enddate;
 function GetProduct(id){
 	$.mobile.loading("show");
 	$.ajax({
@@ -1456,8 +1466,13 @@ function GetProduct(id){
 		success : function(data, textStatus, jqXHR){
 			//alert("herher");
 			currentProduct = data.product;
+			bidProductID = id;
+			bidstartingPrice = currentProduct.bidStartingPrice;
+			startdate = currentProduct.startDate;
+			enddate = currentProduct.endDate;
 			$.mobile.loading("hide");
 			$.mobile.navigate("#product-view");
+			
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
