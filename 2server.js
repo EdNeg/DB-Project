@@ -1,7 +1,7 @@
 // Express is the web framework 
 var express = require('express');
 //var mysql = require('mysql');
-var pg = require('pg');
+var pg = require('pg').native;
 var logfmt = require("logfmt");
 var http = require('http');
 
@@ -85,10 +85,12 @@ var connection = mysql.createConnection({
 
 
 
-var conString = "postgres://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
+
+var conString = "pg://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
 
 var connection = new pg.Client(conString);
 connection.connect();
+
 
 
 
@@ -105,6 +107,7 @@ connection.connect(function(err) {
 
 
 
+
 /*
 pg.connect(process.env.DATABASE_URL, function(err, client, done) {
   client.query('SELECT * FROM bbProduct', function(err, result) {
@@ -113,6 +116,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     console.log(result.rows);
   });
 });*/
+
 
 
 
