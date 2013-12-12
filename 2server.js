@@ -131,7 +131,9 @@ connection.connect();*/
 
 
 app.get('/', function(req, res) {
-  res.send('Hello Worldy!');
+  //res.send('Hello Worldy!');
+  response.sendfile(__dirname + '/index.html');
+  
 });
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
