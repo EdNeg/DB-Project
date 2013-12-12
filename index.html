@@ -10,23 +10,15 @@
 		<script src="js/accounting.js"></script>
 		
 		<script src="appjs/prodApp.js"></script>
-		<script src="appjs/login.js"></script>
 		<script src="appjs/catApp.js"></script>
-		<script src="appjs/category.js"></script>
-		<script src="appjs/subCat.js"></script>
 		<script src="appjs/booksApp.js"></script>
 		<script src="appjs/ComputersApp.js"></script>
 		<script src="appjs/clothingApp.js"></script>
 		<script src="appjs/electronicsApp.js"></script>
 		<script src="appjs/shoesApp.js"></script>
 		<script src="appjs/sportsApp.js"></script>
-		<script src="appjs/account.js"></script>
 		<script src="appjs/accountApp.js"></script>
-		<script src="appjs/sell.js"></script>
-		<script src="appjs/order.js"></script>
-
 		
-
 	
 		<meta charset="utf-8">
 		
@@ -70,7 +62,7 @@
 	</div><!-- Signin/Register/Browse Categories Buttons -->
 
        
-</div><!-- Page Home ------------------------------------------------------------------------------------>
+</div><!-------------------------------------------------------------------------- Page Home ------------------------------------------------------------------------------------>
 			
 	
 <div data-role="page" id="signin">
@@ -99,7 +91,7 @@
 		<div class="ui-block-b"><a data-role="button" onclick="VerifyAdmin()">Admin Login </a></div>
 	</div>
 	
-</div><!-- Page Sign in ------------------------------------------------------------------------------------>
+</div><!-- --------------------------------------------------------------------Page Sign in ------------------------------------------------------------------------------------>
 
 
 
@@ -149,7 +141,7 @@
     <input type="submit" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
 </center>
 
-</div><!-- Page Register -------------------------------------------------------------------------------------->
+</div><!-- ---------------------------------------------------------Page Register -------------------------------------------------------------------------------------->
 	
 
 
@@ -184,7 +176,7 @@
 			</ul>
 		</nav>
 	</footer>
-</div><!-- Page Admin Profile ----------------------------------------------------------------------------->
+</div><!-- ------------------------------------------------------------------Page Admin Profile ----------------------------------------------------------------------------->
 
 
 
@@ -241,7 +233,7 @@
     	</div>
 	
 			
-</div><!-- Page Product Details --------------------------------------------------------------------------->
+</div><!-- ---------------------------------------------------------------------Page Product Details --------------------------------------------------------------------------->
 
 <div data-role="page" id="categories">
 	<header data-role="header" data-theme="d">
@@ -258,7 +250,7 @@
 
 	
 	
-</div><!-- Page Categories ----------------------------------------------------------------------------------->	
+</div><!--------------------------------------------------------------------- Page Categories ----------------------------------------------------------------------------------->	
 
 
 
@@ -280,7 +272,7 @@
 	
 	
 	
-</div><!-- Page Books ----------------------------------------------------------------------------->
+</div><!-- --------------------------------------------------------------------Page Books ----------------------------------------------------------------------------->
 
 
 <div data-role="page" id="electronics-view">
@@ -297,7 +289,7 @@
 	
 	
 	
-</div><!-- Page Electronics ----------------------------------------------------------------------------->
+</div><!-- ---------------------------------------------------------------------Page Electronics ----------------------------------------------------------------------------->
 
 
 <div data-role="page" id="computers-view">
@@ -1198,7 +1190,7 @@
   			  	</ul>
 			
 			</form>
-</div><!-- Page Add Category ---------------------------------------------------------------------------------->
+</div><!-- -------------------------------------------Page Add Category ---------------------------------------------------------------------------------->
 
 
 
@@ -1213,7 +1205,7 @@
 		</ul>
 </div>
 	
-</div><!-- Page View Users------------------------------------------------------------------------>
+</div><!-- ---------------------------------------Page View Users------------------------------------------------------------------------>
 
 <div data-role="page" id="viewAdmins" >
 		<header data-role="header" data-theme="d" data-position="fixed">
@@ -1226,31 +1218,314 @@
 		</ul>
 </div>
 	
-</div><!-- Page View Admins------------------------------------------------------------------------>
+</div><!-- -----------------------------------------Page View Admins------------------------------------------------------------------------>
 
-	<div data-role="page" id="regular">
+<div data-role="page" id="regular">
+	<header data-role="header">
+		<a data-role="button" href="../DB-Project/index.html" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Home</a>
+		<h1>BoricuaBay</h1>
+	</header>
+	<br>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="regularUser"></li>
+		<li data-theme="c"><a href="../DB-Project/Account.html" data-transition="slide">
+				Account </a></li>
+		<li data-theme="c"><a href="../DB-Project/Cart.html" data-transition="slide"> View
+				Cart </a></li>
+		<li data-theme="c"><a href="../DB-Project/Bids.html" data-transition="slide"> View
+				Bids </a></li>
+
+		<li data-theme="c"><a href="../DB-Project/Sell_Product.html" data-transition="slide">Products</a></li>
+		<li data-theme="c"><a href="../DB-Project/Sold_History.html"
+			data-transition="slide"> Sold Product </a></li>
+
+	</ul>
+</div><!----------------------------------------------------User Main Page----------------------------------------------------------------------------->
+
+<div id="accounts" data-role="page">
+	<header data-role="header">
+	        <a data-role="button" href="../DB-Project/Account.html" data-icon="arrow-l"
+	                data-iconpos="left" class="ui-btn-left">Account</a>
+	        <h1>BoricuaBay</h1>
+	</header>
+    <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="true">
+    <li data-role="list-divider" role="heading">User Info</li>      
+            <li id="accounts-list" data-inset="true">
+            </ul>
+    </div>
+    <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="true">
+            <li data-role="list-divider" role="heading">Mailing Address</li>        
+            <li id="address1-list" data-inset="true">
+            </ul>
+    </div>  
+</div><!----------------------------------------------------User View Account----------------------------------------------------------------------------->
+
+
+<div id="placeBid" data-role="page">
+	<header data-role="header">
+	                <a data-role="button" href="#product-view" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Cancel</a>
+	                <h1>BoricuaBay</h1>
+	        </header>
+	        <form id="placeBid-form">
+			<fieldset data-role="controlgroup">
+		 	<ul data-role="listview" data-divider-theme="b" data-inset="true">   
+				<li><label for="bidAmount"> Bid Amount: <input id="bidAmount" name="bidAmount" type="number"/></label></li>
+					</ul>
+		  	</fieldset>
+		</form>
+
+	<center>
+	    <a type="submit" data-inline="true" data-theme="b"  onclick="PlaceBid()">Place Bid </a>
+	</center>
+</div><!----------------------------------------------------Place Bids----------------------------------------------------------------------------->
+
+<div id="soldUser" data-role="page">
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="../DB-Project/Sold_History.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left">Sold History</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		 <div data-role="content">
+		 	<h2 color="red" >NOT SOLD </h2>
+                               
+</div><!----------------------------------------------------Not_Sold----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="newProduct">
+
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left">User Name</a>
+			<h1>BoricuaBay</h1>
+
+			<a data-role="button" data-rel="back" onclick="SaveProductUser()">Save</a>
+		</header>
+			<form id="product-form">
+ 				<fieldset data-role="controlgroup">
+ 					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+  					<li><label for="productPhoto"> Image Source: <input id="productPhoto" name="productPhoto" type="text"/></label></li>
+  					<li><label for="productName"> Name: <input id="productName" name="productName" type="text"/></label></li>
+  					<li><label for="productDesc"> Description: <input id="productDesc" name="productDesc" type="text"/></label></li>
+  					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
+  					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
+  					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
+  					<li><label for="productPrice"> Instant Price: <input id="productPrice" name="productPrice" type="number"/></label></li>
+				    <li><label for="bidStartingPrice"> Bid Price: <input id="bidStartingPrice" name="bidStartingPrice" type="number"/></label></li>
+				    <li><label for="startDate"> Bid Start Date: <input  type="date" id="startDate" name="startDate"/></label></li>
+				    <li><label for="endDate"> Bid End Date: <input id="endDate" name="endDate" type="date"/></label></li>
+
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div>	<!----------------------------------------------------New_Product----------------------------------------------------------------------------->	
+
+<div id="account-view" data-role="page">
+	<header data-role="header" data-theme="d">
+			<a data-role="button" href="../DB-Project/Account.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" data-rel="back" onclick="UpdateAccount()" data-theme="b">Save</a>
+		</header>
+			<form id="account-view-form">
+ 				<fieldset data-role="controlgroup">
+ 					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
+  					<li><label for="upd-userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
+  					<li><label for="upd-userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="upd-addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="upd-city"> City: <input id="upd-city" name="city" type="text"/></label></li>
+				    <li><label for="upd-state"> State: <input id="upd-state" name="state" type="text"/></label></li>
+  					<li><label for="upd-country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
+  					<li><label for="upd-zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="upd-creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="upd-creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="upd-securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="upd-expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="upd-caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="upd-ccity"> City: <input id="upd-ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="upd-cstate"> State: <input id="upd-cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="upd-ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="upd-czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Account----------------------------------------------------------------------------->	
+
+<div id="productUser" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul id="productUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>                        
+</div><!----------------------------------------------------Currently_Selling----------------------------------------------------------------------------->	
+
+
+<div id="cartUser" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul id="cartUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                       
+                        
+</div><!----------------------------------------------------		C A R T			----------------------------------------------------------------------------->
+
+<div id="bidUser" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul id="bidUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                       
+                        
+</div><!----------------------------------------------------		B I D S		----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="Account">
 		<header data-role="header">
-			<a data-role="button" href="../DB-Project/index.html" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Home</a>
+			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+		data-iconpos="left" class="ui-btn-left">Profile</a>
+
 			<h1>BoricuaBay</h1>
 		</header>
 		<br>
 		<br>
 		<ul data-role="listview" data-divider-theme="b" data-inset="true">
-			<li data-role="list-divider" role="heading" id="regularUser"></li>
-			<li data-theme="c"><a href="../DB-Project/Account.html" data-transition="slide">
-					Account </a></li>
-			<li data-theme="c"><a href="../DB-Project/Cart.html" data-transition="slide"> View
-					Cart </a></li>
-			<li data-theme="c"><a href="../DB-Project/Bids.html" data-transition="slide"> View
-					Bids </a></li>
-
-			<li data-theme="c"><a href="../DB-Project/Sell_Product.html" data-transition="slide">Products</a></li>
-			<li data-theme="c"><a href="../DB-Project/Sold_History.html"
-				data-transition="slide"> Sold Product </a></li>
-
+			<li data-role="list-divider" role="heading">Account</li>
+			<li data-theme="c"><a href="../DB-Project/ViewAccount.html" data-transition="slide">
+					View Personal Information</a></li>
+			<li data-theme="c"><a href="../DB-Project/View_Creditcard.html" data-transition="slide">
+					View Credit Card</a></li>
+			<li data-theme="c"><a href="../DB-Project/EditAccount.html" data-transition="slide">
+				    Edit Account</a></li>
 		</ul>
-	</div>
-	<!--User Main Page-->
+
+</div><!----------------------------------------------------		Account		----------------------------------------------------------------------------->
+
+
+<div id="BidforProduct" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" href="../DB-Project/Sell_Product.html" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul id="BidforProduct-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                                         
+</div><!----------------------------------------------------		Product Bids		----------------------------------------------------------------------------->
+
+<div data-role="page" id="sellProduct">
+
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left">User Name</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li data-role="list-divider" role="heading">Sell Product</li>
+			<li data-theme="c"><a href="../DB-Project/New_Product.html" data-transition="slide">
+					New Product </a></li>
+
+			<li data-theme="c"><a href="../DB-Project/Currently_Selling.html" data-transition="slide">
+					Currently Selling</a></li>
+			<li data-theme="c"><a href="../DB-Project/Product_Bids.html" data-transition="slide"> See Product Bids </a></li>
+		</ul>
+</div><!----------------------------------------------------		Sell Product		----------------------------------------------------------------------------->
+
+
+<div id="soldUser" data-role="page">
+		<header data-role="header" data-theme="d">
+			<a data-role="button" data-rel="back" href="../DB-Project/Sold_Product.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left">Sold History</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		 <div data-role="content">
+                                <ul id="soldUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+</div><!----------------------------------------------------		Sold History		----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="soldProduct">
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left">User Name</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li data-role="list-divider" role="heading">Sold Product</li>
+			<li data-theme="c"><a href="../DB-Project/Sold_History.html" data-transition="slide">
+					Sold Product History </a></li>
+			<li data-theme="c"><a href="#" data-transition="slide"> See
+					Bids </a></li>
+		</ul>
+</div><!----------------------------------------------------		Sold Product		----------------------------------------------------------------------------->
+
+<div id="cartUser" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" data-rel="back" href="../DB-Project/MainJqueryM.html" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Home</a>
+                         <h1><i>BoricuaBay</i></h1>
+
+                </header>
+                        <div data-role="content">
+                                <ul id="cartUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                       
+                        
+</div><!----------------------------------------------------		View Cart		----------------------------------------------------------------------------->
+
+
+<div id="creditcards" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" data-rel="back" href="../DB-Project/Account.html" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                        <li data-role="list-divider" role="heading">Credit Card Info</li>      
+                                <li id="creditcards-list" data-inset="true">
+                                </ul>
+                        </div> 
+                        <div data-role="content">
+                                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                                <li data-role="list-divider" role="heading">Billing Address</li>        
+                                <li id="address-list" data-inset="true">
+                                </ul>
+                        </div> 
+</div><!----------------------------------------------------		View Creditcard		----------------------------------------------------------------------------->
+
+
+
 
 </body>
 
