@@ -75,13 +75,15 @@ connection.connect(function(err) {
     return console.error('could not connect to postgres', err);
   }*/
 //Test connection within console
+/*
 pg.connect(conString, function(err, client, done) {
   client.query('SELECT * FROM "bbCategory"', function(err, result) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
   });
-});
+});*/
+
 
 /*
 var pg = require('pg').native
