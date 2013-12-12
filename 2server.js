@@ -88,8 +88,10 @@ var connection = mysql.createConnection({
 
 var conString = "pg://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
 
+/*
 var connection = new pg.Client(conString);
-connection.connect();
+connection.connect();*/
+
 
 
 
@@ -108,14 +110,14 @@ connection.connect(function(err) {
 
 
 
-/*
-pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-  client.query('SELECT * FROM bbProduct', function(err, result) {
+
+pg.connect(conString, function(err, client, done) {
+  client.query('SELECT * FROM "bbCategory"', function(err, result) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
   });
-});*/
+});
 
 
 
@@ -449,25 +451,6 @@ var category = require("./appjs/category.js");
 var Category = category.Category;
 
 
-var categoryList = new Array(
-	new Category("Books", "../DB-Project/css/glyphish-icons/book.png"),
-	new Category("Computers", "../DB-Project/css/glyphish-icons/widescreen.png"),
-	new Category("Clothing", "../DB-Project/css/glyphish-icons/tshirt.png"),
-	new Category("Electronics" , "../DB-Project/css/glyphish-icons/ipod.png"),
-	new Category("Shoes", "../DB-Project/css/glyphish-icons/shoebox.png"),
-	new Category("Sports", "../DB-Project/css/glyphish-icons/golf.png")
-
-
-);
- var categoryNextId = 0;
- 
-for (var i=0; i < categoryList.length;++i){
-	categoryList[i].id = categoryNextId++;
-}
-
-
-
-
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -481,15 +464,17 @@ for (var i=0; i < categoryList.length;++i){
 // REST Operation - HTTP GET to read all categories
 app.get('/DB-Project/categories', function(req, res) {
 	console.log("GET ALL CATEGORIES");
-	connection.query('SELECT * FROM "bbCategory";', function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbCategory"', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
-	
-  var response = {"categories" : rows};
+  console.log(result.rows[0]);
+  var response = {"categories" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -498,8 +483,8 @@ app.get('/DB-Project/categories', function(req, res) {
 app.get('/DB-Project/categories/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET category: " + id);
-
-	connection.query("SELECT * FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
+	
+	client.query("SELECT * FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
