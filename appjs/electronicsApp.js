@@ -15,7 +15,10 @@ $(document).on('pagebeforeshow', "#electronics-view", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				electCat = electCatList[i];
 				list.append("<li><a onclick=GetElectCat(" + electCat.subCategoryID + ")>" + "<center>" +
-					"<img src= " +  electCat.subCategoryDesc + "/>"+
+
+
+					"<img src= " +  "'" +  electCat.subCategoryDesc +  "'" + "/>"+
+
 					"<h1>" + electCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");

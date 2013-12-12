@@ -1,7 +1,10 @@
 // Express is the web framework 
 var express = require('express');
-var mysql = require('mysql');
+//var mysql = require('mysql');
+var pg = require('pg');
 var logfmt = require("logfmt");
+var http = require('http');
+
 var app = express();
 app.use(logfmt.requestLogger());
 
@@ -31,6 +34,18 @@ app.configure(function () {
 
 
 
+// Server starts running when listen is called.
+var port = process.env.PORT || 3412;
+process.env.PWD = process.cwd();
+app.use(express.static(process.env.PWD));
+app.listen(port, function(){
+	console.log("server listening at port " + port);
+});
+
+//http.createServer(app).listen(port, function () {
+   /// console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+//});
+
 var product = require("./appjs/product.js");
 var Product = product.Product;
 
@@ -46,7 +61,10 @@ for (var i=0; i < productList.length;++i){
 	productList[i].id = productNextId++;
 }
 
-// Database connection string: pg://<username>:<password>@host:port/dbname 
+
+//Mysql Database Connection
+/*
+
 var connection = mysql.createConnection({
 	host : 'localhost',
 	user : 'root',
@@ -54,10 +72,57 @@ var connection = mysql.createConnection({
 	port : 3306,
 	database : 'boricuabaydb'
 
+
+});
+
+});*/
+
+// Postgres Database connection string: pg://<username>:<password>@host:port/dbname 
+
+
+
+var conString = "postgres://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
+
+var connection = new pg.Client(conString);
+connection.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+
+
+  
+  
+
+
+/*
+pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  client.query('SELECT * FROM bbProduct', function(err, result) {
+    done();
+    if(err) return console.error(err);
+    console.log(result.rows);
+  });
 });
 
 
 
+/*
+var pg = require('pg').native
+  , connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/boricuabay'
+  , client
+  , query;
+
+connection = new pg.Client(connectionString);
+connection.connect();*/
+
+
+
+
+
+
+
+app.get('/', function(req, res) {
+  res.send('Hello World!');
+});
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -142,8 +207,13 @@ app.get('/DB-Project/productsPrice', function(req, res) {
   var response = {"productsPrice" : rows};
   res.json(response);
   
+
+
 });
 });
+
+
+
 
 
 
@@ -347,11 +417,8 @@ app.post('/DB-Project/products/:id', function(req, res) {
 });
 
 
-// Server starts running when listen is called.
-var port = process.env.PORT || 3412;
-app.listen(port, function(){
-	console.log("server listening at port " + port);
-});
+
+
 
 
 
@@ -1599,6 +1666,7 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 });
 
 
+
 //REST Operation - HTTP POST to add a new a user
 app.post('/DB-Project/accounts', function(req, res) {
 	console.log(req.body.userEmail);
@@ -1646,6 +1714,7 @@ app.post('/DB-Project/accounts', function(req, res) {
   	console.log("New CreditCard:" );
   	res.json(true);
 });
+
 
 
 
@@ -2011,7 +2080,9 @@ var Cart = cart.Cart;
 app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 
+
 	connection.query('SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+
 
   	if (err) throw err;
 	/*
@@ -2029,7 +2100,10 @@ app.get('/DB-Project/carts/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET carts: " + id);
 
+
 var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+
                 if (err) throw err;
         /*
         for (i = 0; i<rows.length; i++){
@@ -2121,7 +2195,10 @@ app.get('/DB-Project/sells/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sell: " + id);
 
+
 var query = connection.query("SELECT * FROM bbSell natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -2147,7 +2224,10 @@ app.get('/DB-Project/sells/:id', function(req, res) {
                 console.log("GET sells: " + id);
 
 var query = connection.query("SELECT * from bbSell natural join bbUser " +
+
 		"natural join bbProduct natural join bbBidProduct " +
+
+
 		"where userID = " + id, function(err, rows, result){
                 if (err) throw err;
         for (i = 0; i<rows.length; i++){
@@ -2249,7 +2329,11 @@ var Bid = bid.Bid;
 app.get('/DB-Project/bids', function(req, res) {
 	console.log("GET BIDS");
 	
+
 	connection.query('SELECT * from bbBidFor natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+
+	
+
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -2265,7 +2349,9 @@ app.get('/DB-Project/bids/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET bids: " + id);
 
+
 var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
                 if (err) throw err;
         /*
         for (i = 0; i<rows.length; i++){
@@ -2287,6 +2373,7 @@ var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natu
  });
   });
 
+
 app.get('/DB-Project/abids/:ids', function(req, res) {
     var ids = req.params.ids;
             console.log("GET bidproduct: " + ids);
@@ -2307,6 +2394,7 @@ var query = connection.query("SELECT u.userNickname, b.bidDate, b.bidAmount, r.p
       
 });
 });
+
 
 
   
@@ -2351,6 +2439,7 @@ app.put('/DB-Project/bids/:id', function(req, res) {
                   }
         }
 });
+
 
 var d = new Date();
 var month = d.getMonth()+1;
@@ -2420,6 +2509,8 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
 			console.log("Here6");
 			return res.send('The bid date has passed');
 		}
+
+
 });
 //--------------------------------------Order-----------------------------------------------------------------//
 
@@ -2442,7 +2533,9 @@ var Order = order.Order;
 app.get('/DB-Project/orders', function(req, res) {
 	console.log("GET ORDERS");
 	
+
 	connection.query('SELECT * from bbOrder natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -2460,7 +2553,9 @@ app.get('/DB-Project/orders/:id', function(req, res) {
 var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, " +
 		"r.brand, r.model, r.dimensions FROM bbOrder as o inner join bbPay as p on " +
 		"o.orderID = p.orderID inner join bbUser as u on o.userID = u.userID inner join bbContain " +
+
 		"as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join bbBidProduct as bp on r.productID = bp.productID inner join " +
+
 		"bbSell as s on r.productID = s.productID WHERE s.userID= '" + id + "'", function(err, rows, result){
                 if (err) throw err;
         for (i = 0; i<rows.length; i++){

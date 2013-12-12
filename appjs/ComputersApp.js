@@ -14,7 +14,9 @@ $(document).on('pagebeforeshow', "#computers-view", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				compCat = compCatList[i];
 				list.append("<li><a onclick=GetCompCat(" + compCat.subCategoryID + ")>" + "<center>" +
-					"<img src= " +  compCat.subCategoryDesc + "/>"+
+
+					"<img src= " +  "'" +  compCat.subCategoryDesc +  "'" + "/>"+
+
 					"<h1>" + compCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");

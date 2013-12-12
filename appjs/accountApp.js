@@ -83,7 +83,9 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				products = sellList[i];
 					list.append("<li><a onclick=sold(" + products.productID + ")>"  + 
+
 					"<img src= " + "'" + products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + products.brand  + "</p>" +
@@ -141,7 +143,9 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
+
 			alert("You don't have any items in the Cart at the moment");
+
 		}
 	});
 });
@@ -225,6 +229,7 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 	});
 });
 
+
 $(document).on('pagebeforeshow', "#BidforProduct", function( event, ui ) {
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/abids/" + loginID.userID,
@@ -263,6 +268,7 @@ $(document).on('pagebeforeshow', "#BidforProduct", function( event, ui ) {
 		}
 	});
 });
+
 
 
 
@@ -446,7 +452,9 @@ function SaveAccount(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var newAccount = ConverToJSON(formData);
+
 	console.log("New Account form: " + JSON.stringify(newAccount));
+
 	var newAccountJSON = JSON.stringify(newAccount);
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/accounts",
@@ -467,6 +475,7 @@ function SaveAccount(){
 
 
 }
+
 
 function SaveProductUser(){
 	$.mobile.loading("show");
@@ -532,6 +541,7 @@ function PlaceBid(){
 
 
 }
+
 
 
 
