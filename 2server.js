@@ -30,10 +30,6 @@ app.configure(function () {
 });
 
 
-
-
-
-
 // Server starts running when listen is called.
 var port = process.env.PORT || 3412;
 process.env.PWD = process.cwd();
@@ -49,21 +45,8 @@ app.listen(port, function(){
 var product = require("./appjs/product.js");
 var Product = product.Product;
 
-var productList = new Array(
-	new Product("Ipad", "Apple", "APPL2455", "Red Cover, 32GB, Black", "10 X 4", "199", "300", "../DB-Project/css/img/ipad-normal.jpg", "Computers", "Tablets"), //REMEMBER TO CHANGE BACK TO COMPUTERS, TABLETS
-	new Product("Air", "Nike", "NK31", "Green Laces, Blue, Size 10 1/2", "10 X 4", "75", "125", "../DB-Project/css/img/nike.jpg", "Shoes", "Men"),		//REMEMBER TO CHANGE BACK TO SHOES, MEN
-	new Product("Polo", "Nautica", "NAU421", "White with blue stripes, Medium", "10 X 4", "20", "50", "../DB-Project/css/img/naut.jpg", "Clothing", "Men", "Shirt"),
-	new Product("Ultrabook", "Samsung", "SMSG2775", "Gray, 128GB SSD, 13.6 Screen", "13.6 X 7", "399", "500", "../DB-Project/css/img/samsung.jpg", "Computers", "Laptops")
-);
- var productNextId = 0;
- 
-for (var i=0; i < productList.length;++i){
-	productList[i].id = productNextId++;
-}
-
 
 //Mysql Database Connection
-
 
 /*
 var connection = mysql.createConnection({
@@ -77,14 +60,7 @@ var connection = mysql.createConnection({
 });*/
 
 
-
-
 // Postgres Database connection string: pg://<username>:<password>@host:port/dbname 
-
-
-
-
-
 
 var conString = "pg://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
 
@@ -93,24 +69,12 @@ var connection = new pg.Client(conString);
 connection.connect();*/
 
 
-
-
-
 /*
 connection.connect(function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);
   }*/
-
-
-
-  
-  
-
-
-
-
-
+//Test connection within console
 pg.connect(conString, function(err, client, done) {
   client.query('SELECT * FROM "bbCategory"', function(err, result) {
     done();
@@ -118,10 +82,6 @@ pg.connect(conString, function(err, client, done) {
     console.log(result.rows);
   });
 });
-
-
-
-
 
 /*
 var pg = require('pg').native
@@ -132,17 +92,14 @@ var pg = require('pg').native
 connection = new pg.Client(connectionString);
 connection.connect();*/
 
-
-
-
-
-
-
+// Let heroku app know where to start
 app.get('/', function(req, res) {
   //res.send('Hello Worldy!');
   res.sendfile(__dirname + '/index.html');
   
 });
+
+
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -179,85 +136,82 @@ app.get('/DB-Project/products', function(req, res) {
 //PRODUCTS ORDERED BY NAME
 app.get('/DB-Project/productsName', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY NAME");
-	
-	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by p.productName;", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {	
+	client.query('Select * from "bbProduct" as p ' + 
+	'inner join "bbBidProduct" as b on b.productID = p.productID order by p.productName' , function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"productsName" : rows};
+  var response = {"productsName" : result.rows};
   res.json(response);
   
+});
 });
 });
 
 //PRODUCTS ORDERED BY BRAND
 app.get('/DB-Project/productsBrand', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY BRAND");
-	
-	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by p.brand;", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {	
+	client.query('Select * from "bbProduct" as p ' + 
+	'inner join "bbBidProduct" as b on b.productID = p.productID order by p.brand;', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"productsBrand" : rows};
+  var response = {"productsBrand" : result.rows};
   res.json(response);
   
+});
 });
 });
 
 //PRODUCTS ORDERED BY PRICE
 app.get('/DB-Project/productsPrice', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY PRICE");
-	
-	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by b.bidStartingPrice;", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {	
+
+	client.query('Select * from "bbProduct" as p ' + 
+	'inner join "bbBidProduct" as b on b.productID = p.productID order by b.bidStartingPrice;', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"productsPrice" : rows};
+  var response = {"productsPrice" : result.rows};
   res.json(response);
   
 
 
 });
 });
-
-
-
-
-
+});
 
 
 // REST Operation - HTTP GET to read a product based on its id
 app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
-
-var query = connection.query("Select * from bbProduct as p natural join bbBidProduct " + 
-							"natural join bbTag " +
-							"natural join bbSubCategory " + 
-							"natural join bbCategory " + 
-							"natural join bbSell " +
-							"natural join bbUser " +
-							"where p.productID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {	
+var query = client.query('Select * from "bbProduct" as p natural join "bbBidProduct" ' + 
+							'natural join "bbTag" ' +
+							'natural join "bbSubCategory" ' + 
+							'natural join "bbCategory" ' + 
+							'natural join "bbSell" ' +
+							'natural join "bbUser" ' +
+							'where p.productID = ' + id, function(err, result){
 		if (err) throw err;
 
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The solution is: ', rows[i]);
 		}*/
-	
-	
 	
 
 	var len = rows.length;
@@ -266,12 +220,13 @@ var query = connection.query("Select * from bbProduct as p natural join bbBidPro
 		res.send("Product noty found.");
 	}
 	else {	
-  		var response = {"product" : rows[0]};
+  		var response = {"product" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });
 
+});
 });
 
 	
@@ -281,13 +236,9 @@ var query = connection.query("Select * from bbProduct as p natural join bbBidPro
 app.get('/DB-Project/productSearch/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product by name: " + id);
-
-var query = connection.query("SELECT * FROM boricuabaydb.bbProduct  natural join bbBidProduct where productName like '%" + id + "%';", function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {	
+		var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" where productName like %' + id + '%;', function(err, result){
 		if (err) throw err;
-	
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}
 	
 	var len = rows.length;
 	if (len == 0){
@@ -295,11 +246,12 @@ var query = connection.query("SELECT * FROM boricuabaydb.bbProduct  natural join
 		res.send("Product not found.");
 	}
 	else {	
-  		var response = {"productSearch" : rows};
+  		var response = {"productSearch" : result.rows};
 		//connection.end();
   		res.json(response);
   	}
- });	
+});	
+});
 });
 
 
@@ -308,8 +260,8 @@ var query = connection.query("SELECT * FROM boricuabaydb.bbProduct  natural join
 app.get('/DB-Project/productsTag/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product with tagID: " + id);
-
-var query = connection.query("Select * from bbProduct natural join bbBidProduct natural join bbTag where tagID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {	
+		var query = client.query('Select * from "bbProduct" natural join "bbBidProduct" natural join "bbTag" where tagID = ' + id, function(err, result){
 		if (err) throw err;
 
 	/*
@@ -322,22 +274,16 @@ var query = connection.query("Select * from bbProduct natural join bbBidProduct 
 		res.send("Product noty found.");
 	}
 	else {	
-  		var response = {"tag" : rows};
+  		var response = {"tag" : result.rows};
 		//connection.end();
   		res.json(response);
   	}
  });
 
 });
+});
 
-
-
-
-
-
-
-
-
+/*
 // REST Operation - HTTP PUT to updated a product based on its id
 app.put('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
@@ -380,7 +326,8 @@ app.put('/DB-Project/products/:id', function(req, res) {
   			res.json(response);		
   		}
 	}
-});
+});*/
+
 
 // REST Operation - HTTP DELETE to delete a product based on its id
 app.del('/DB-Project/products/:id', function(req, res) {
@@ -422,20 +369,20 @@ app.post('/DB-Project/products/:id', function(req, res) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for product.');
   	}
-
-	var query = connection.query("INSERT INTO `bbProduct` (`productID`,`productName`,`productDesc`,`productPhoto`,`productPrice`," +
-	  		"`model`,`brand`,`dimensions`,`tagID`) VALUES (NULL, '" + req.body.productName + "', '"+ req.body.productDesc + 
-	  		"', '" + req.body.productPhoto + "', '" + req.body.productPrice + "','" + req.body.model + "','" + req.body.brand + "','" + req.body.dimensions + "',1)");
-	var getquery = connection.query("SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()");	
-	var query1 = connection.query("INSERT INTO `bbBidProduct` (`productID`,`bidStartingPrice`,`startDate`,`endDate`) " +
-			"VALUES (@last_insert_id_in_bbProduct, '" + req.body.bidStartingPrice + "', '"+ req.body.startDate + 
-	  		"', '" + req.body.endDate + "')"); 
-	var query2 = connection.query("INSERT INTO `bbSell` (`userID`,`productID`,`sQuantity`) " +
-			"VALUES ('"+id+"', @last_insert_id_in_bbProduct, NULL)"); 
+	pg.connect(conString, function(err, client, done) {	
+	var query = client.query('INSERT INTO "bbProduct" (`productID`,`productName`,`productDesc`,`productPhoto`,`productPrice`,' +
+	  		'`model`,`brand`,`dimensions`,`tagID`) VALUES (NULL, "' +  req.body.productName + '", "'+ req.body.productDesc + 
+	  		'", "' + req.body.productPhoto + '", "' + req.body.productPrice + '", "' + req.body.model + '", "' + req.body.brand + '", "' + req.body.dimensions + '",1)');
+	var getquery = client.query('SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()');	
+	var query1 = client.query('INSERT INTO "bbBidProduct" (`productID`,`bidStartingPrice`,`startDate`,`endDate`) ' +
+			'VALUES (@last_insert_id_in_bbProduct, "' + req.body.bidStartingPrice + '", "'+ req.body.startDate + 
+	  		'", "' + req.body.endDate + '")'); 
+	var query2 = client.query('INSERT INTO "bbSell" (`userID`,`productID`,`sQuantity`) ' +
+			'VALUES ("'+id+'", @last_insert_id_in_bbProduct, NULL)'); 
 	
   	res.json(true);
 });
-
+});
 
 
 
@@ -465,13 +412,13 @@ var Category = category.Category;
 app.get('/DB-Project/categories', function(req, res) {
 	console.log("GET ALL CATEGORIES");
 	pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbCategory"', function(err, result) {
+	client.query('Select * FROM "bbCategory"', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
-  console.log(result.rows[0]);
+  
   var response = {"categories" : result.rows};
   res.json(response);
 });
@@ -483,8 +430,8 @@ app.get('/DB-Project/categories', function(req, res) {
 app.get('/DB-Project/categories/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET category: " + id);
-	
-	client.query("SELECT * FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbCategory" WHERE categoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -499,11 +446,12 @@ app.get('/DB-Project/categories/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"category" : rows[0]};
+  		var response = {"category" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
+});
 });
 
 // REST Operation - HTTP PUT to updated a category based on its id
@@ -627,15 +575,17 @@ for (var i=0; i < subCatList.length;++i){
 // REST Operation - HTTP GET to read all Books
 app.get('/DB-Project/Books', function(req, res) {
 	console.log("GET ALL BOOKS SUBCATEGORIES");
-	connection.query("Select * from bbSubCategory where categoryID = "+1+";", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('Select * from "bbSubCategory" where categoryID = '+1+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"books" : rows};
+  var response = {"books" : resultrows};
   res.json(response);
+});
 });
 });
 
@@ -644,8 +594,8 @@ app.get('/DB-Project/Books', function(req, res) {
 app.get('/DB-Project/Books/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET subCat: " + id);
-
-	var query = connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {
+	var query = client.query('SELECT * FROM "bbSubCategory" WHERE subCategoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -660,11 +610,12 @@ app.get('/DB-Project/Books/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"book" : rows[0]};
+  		var response = {"book" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
+});
 });
 
 // REST Operation - HTTP PUT to updated a subCat based on its id
@@ -789,15 +740,17 @@ for (var i=0; i < electCatList.length;++i){
 // REST Operation - HTTP GET to read all Electronics
 app.get('/DB-Project/Electronics', function(req, res) {
 	console.log("GET ALL ELECTRONICS SUBCATEGORIES");
-	connection.query("Select * from bbSubCategory where categoryID = "+2+";", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('Select * from "bbSubCategory" where categoryID = '+2+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"electronics" : rows};
+  var response = {"electronics" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -806,8 +759,8 @@ app.get('/DB-Project/Electronics', function(req, res) {
 app.get('/DB-Project/Electronics/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET subCat: " + id);
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbSubCategory" WHERE subCategoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -822,13 +775,13 @@ app.get('/DB-Project/Electronics/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"electronic" : rows[0]};
+  		var response = {"electronic" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
 });
-
+});
 
 // REST Operation - HTTP PUT to updated a electCat based on its id
 app.put('/DB-Project/Electronics/:id', function(req, res) {
@@ -951,15 +904,17 @@ for (var i=0; i < compCatList.length;++i){
 // REST Operation - HTTP GET to read all Computers
 app.get('/DB-Project/Computers', function(req, res) {
 	console.log("GET ALL COMPUTER SUBCATEGORIES");
-	connection.query("Select * from bbSubCategory where categoryID = "+3+";", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('Select * from "bbSubCategory" where categoryID = '+3+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"computers" : rows};
+  var response = {"computers" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -968,8 +923,8 @@ app.get('/DB-Project/Computers', function(req, res) {
 app.get('/DB-Project/Computers/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET compCat: " + id);
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbSubCategory" WHERE subCategoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -984,11 +939,12 @@ app.get('/DB-Project/Computers/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"computer" : rows[0]};
+  		var response = {"computer" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
+});
 });
 
 // REST Operation - HTTP PUT to updated a compCat based on its id
@@ -1110,15 +1066,17 @@ for (var i=0; i < clothCatList.length;++i){
 // REST Operation - HTTP GET to read all Clothings
 app.get('/DB-Project/Clothing', function(req, res) {
 	console.log("GET ALL CLOTHING SUBCATEGORIES");
-	connection.query("Select * from bbSubCategory where categoryID = "+4+";", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('Select * from "bbSubCategory" where categoryID = '+4+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"clothing" : rows};
+  var response = {"clothing" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -1127,8 +1085,9 @@ app.get('/DB-Project/Clothing', function(req, res) {
 app.get('/DB-Project/Clothing/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET clothCat: " + id);
+		pg.connect(conString, function(err, client, done) {
 
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+	client.query('SELECT * FROM "bbSubCategory" WHERE subCategoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1143,11 +1102,12 @@ app.get('/DB-Project/Clothing/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"clothing" : rows[0]};
+  		var response = {"clothing" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
+});
 });
 
 // REST Operation - HTTP PUT to updated a clothCat based on its id
@@ -1271,15 +1231,17 @@ for (var i=0; i < shoeCatList.length;++i){
 // REST Operation - HTTP GET to read all Shoes
 app.get('/DB-Project/Shoes', function(req, res) {
 	console.log("GET ALL SHOES SUBCATEGORIES");
-	connection.query("Select * from bbSubCategory where categoryID = "+5+";", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('Select * from "bbSubCategory" where categoryID = '+5+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"shoes" : rows};
+  var response = {"shoes" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -1288,8 +1250,9 @@ app.get('/DB-Project/Shoes', function(req, res) {
 app.get('/DB-Project/Shoes/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET shoeCat: " + id);
+		pg.connect(conString, function(err, client, done) {
 
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+	client.query('SELECT * FROM "bbSubCategory" WHERE subCategoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1304,11 +1267,12 @@ app.get('/DB-Project/Shoes/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"shoe" : rows[0]};
+  		var response = {"shoe" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
+});
 });
 
 // REST Operation - HTTP PUT to updated a shoeCat based on its id
@@ -1433,15 +1397,17 @@ for (var i=0; i < sportCatList.length;++i){
 // REST Operation - HTTP GET to read all Sports
 app.get('/DB-Project/Sports', function(req, res) {
 	console.log("GET ALL SPORTS SUBCATEGORIES");
-	connection.query("Select * from bbSubCategory where categoryID = "+6+";", function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('Select * from "bbSubCategory" where categoryID = '+6+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"sports" : rows};
+  var response = {"sports" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -1450,8 +1416,8 @@ app.get('/DB-Project/Sports', function(req, res) {
 app.get('/DB-Project/Sports/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sportCat: " + id);
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbSubCategory" WHERE subCategoryID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1466,11 +1432,12 @@ app.get('/DB-Project/Sports/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"sport" : rows[0]};
+  		var response = {"sport" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
+});
 });
 
 // REST Operation - HTTP PUT to updated a sportCat based on its id
@@ -1566,8 +1533,9 @@ var Account = account.Account;
 app.get('/DB-Project/accounts/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET account: " + ids);
+		pg.connect(conString, function(err, client, done) {
 
-var query = connection.query("SELECT * FROM bbUser NATURAL JOIN bbAddress WHERE userID = '" + ids  + "'", function(err, rows, result){	
+var query = client.query('SELECT * FROM "bbUser" NATURAL JOIN "bbAddress" WHERE userID = "' + ids  + '"', function(err, result){	
 	if (err) throw err;
 	
 	
@@ -1577,12 +1545,13 @@ var query = connection.query("SELECT * FROM bbUser NATURAL JOIN bbAddress WHERE 
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"account" : rows[0]};
+  		var response = {"account" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });
   });
+});
 
 
 /*
@@ -1607,9 +1576,9 @@ app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
 	var id = req.params.id;
 	var idp = req.params.idp;
 		console.log("GET account: " + id);
-
-var query = connection.query("SELECT * FROM bbUser WHERE userNickname = '" + id  + "'" + " AND " +
-		"password = '" + idp + "'", function(err, rows, result){
+		pg.connect(conString, function(err, client, done) {
+var query = client.query('SELECT * FROM "bbUser" WHERE userNickname = "' + id  + '"' + ' AND ' +
+		'password = "' + idp + '"', function(err, result){
 		if (err) throw err;
 
 	
@@ -1620,13 +1589,13 @@ var query = connection.query("SELECT * FROM bbUser WHERE userNickname = '" + id 
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"account" : rows[0]};
+  		var response = {"account" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });
   });
-
+});
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/accounts/:id', function(req, res) {
 	var id = req.params.id;
@@ -1686,36 +1655,37 @@ app.post('/DB-Project/accounts', function(req, res) {
   	}
 	
 	
-
+	pg.connect(conString, function(err, client, done) {
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
-  	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
-  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
-  		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL,NULL,NULL)");
-  	var getquery = connection.query("SET @last_insert_id_in_bbUser = LAST_INSERT_ID()");	
+  	var query = client.query('INSERT INTO "bbUser" (`userID`,`userName`,`userNickname`,`userEmail`,`password`,' +
+  		'`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, "' + req.body.userName + '", "'+ req.body.userNickname + 
+  		'", "' + req.body.userEmail + '", "' + req.body.password + '",NULL,NULL,NULL,NULL,NULL)');
+  	var getquery = client.query('SET @last_insert_id_in_bbUser = LAST_INSERT_ID()');	
   	
+
+  	var query1 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
+  	  		'`zipcode`) VALUES (NULL, "' + req.body.addressLine + '", "'+ req.body.city + 
+  	  		'", "' + req.body.state + '", "' + req.body.country + '", "' + req.body.zipcode + '")');
+  	var getquery1 = client.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
  
-  	var query1 = connection.query("INSERT INTO `bbAddress` (`addressID`,`addressLine`,`city`,`state`,`country`," +
-  	  		"`zipcode`) VALUES (NULL, '" + req.body.addressLine + "', '"+ req.body.city + 
-  	  		"', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zipcode + "')");
-  	var getquery1 = connection.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
- 
-  	var query2 = connection.query("INSERT INTO `bbAddress` (`addressID`,`addressLine`,`city`,`state`,`country`," +
-  	  		"`zipcode`) VALUES (NULL, '" + req.body.caddressLine + "', '"+ req.body.ccity + 
-  	  		"', '" + req.body.cstate + "', '" + req.body.ccountry + "', '" + req.body.czipcode + "')");
-  	var getquery2 = connection.query("SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()");
+  	var query2 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
+  	  		'`zipcode`) VALUES (NULL, "' + req.body.caddressLine + '", "'+ req.body.ccity + 
+  	  		'", "' + req.body.cstate + '", "' + req.body.ccountry + '", "' + req.body.czipcode + '")');
+  	var getquery2 = client.query('SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()');
   	
-	var query3 = connection.query("INSERT INTO `bbCreditCard` (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`," +
-  	  		"`addressID`) VALUES (NULL, '" + req.body.creditCardOwner + "', '"+ req.body.creditCardNumber + 
-  	  		"', '" + req.body.securityCode + "', '" + req.body.expDate + "', @last_insert_id_in_bbAddress1)");
-  	var getquery3 = connection.query("SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()");
+	var query3 = client.query('INSERT INTO "bbCreditCard" (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`,' +
+  	  		'`addressID`) VALUES (NULL, "' + req.body.creditCardOwner + '", "'+ req.body.creditCardNumber + 
+  	  		'", "' + req.body.securityCode + '", "' + req.body.expDate + '", @last_insert_id_in_bbAddress1)');
+  	var getquery3 = client.query('SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()');
   	
-  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser");
+  	var query4 = client.query('UPDATE "bbUser" SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser');
   	
   	console.log("New Account: ");
   	console.log("New Mailing Address: ");
   	console.log("New Biling Address: " );
   	console.log("New CreditCard:" );
   	res.json(true);
+});
 });
 
 
@@ -1747,16 +1717,17 @@ for (var i=0; i < accountaList.length;++i){
 // REST Operation - HTTP GET to read all products
 app.get('/DB-Project/accountas', function(req, res) {
 	console.log("GET ACCOUNTAS");
-	
-	connection.query('SELECT * FROM bbAdmin', function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbAdmin"', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"accountas" : rows};
+  var response = {"accountas" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -1765,8 +1736,9 @@ app.get('/DB-Project/accountas', function(req, res) {
 app.get('/DB-Project/accountas/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET accounta: " + id);
+		pg.connect(conString, function(err, client, done) {
 
-var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, function(err, rows, result){
+var query = client.query('SELECT * FROM "bbAdmin" WHERE userID = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1781,11 +1753,12 @@ var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, funct
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"accounta" : rows[0]};
+  		var response = {"accounta" : result.rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });
+  });
   });
 
 // REST Operation - HTTP PUT to updated a car based on its id
@@ -1855,11 +1828,12 @@ var Creditcard = creditcard.Creditcard;
 app.get('/DB-Project/creditcards/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET creditcard: " + ids);
+		pg.connect(conString, function(err, client, done) {
 
-var query = connection.query("SELECT * from bbCreditCard as c " +
-		"inner join bbAddress as a on a.addressID = c.addressID " +
-		"inner join bbUser as u on u.creditCardID = c.creditCardID " +
-		"where u.userID = '" + ids  + "'", function(err, rows, result){
+var query = client.query('SELECT * from "bbCreditCard" as c ' +
+		'inner join "bbAddress" as a on a.addressID = c.addressID ' +
+		'inner join "bbUser" as u on u.creditCardID = c.creditCardID ' +
+		'where u.userID = "' + ids  + '"', function(err, result){
 	for (i = 0; i<rows.length; i++){
         console.log('The solution is: ', rows[i]);
 }	
@@ -1873,12 +1847,13 @@ var query = connection.query("SELECT * from bbCreditCard as c " +
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"creditcard" : rows[0]};
-		//connection.end();
+  		var response = {"creditcard" : result.rows[0]};
+		//client.end();
   		res.json(response);
   	}
  });
   });
+});
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/creditcards/:id', function(req, res) {
 	var id = req.params.id;
@@ -1977,10 +1952,10 @@ app.get('/DB-Project/addressinfos', function(req, res) {
 app.get('/DB-Project/addressinfos/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET addressinfo: " + id);
-
-var query = connection.query("SELECT * FROM bbAddress AS a " +
-		"INNER JOIN bbUser AS u on u.addressID = a.addressID  " +
-		"WHERE u.addressID = " + id, function(err, rows, result){
+pg.connect(conString, function(err, client, done) {
+var query = client.query('SELECT * FROM "bbAddress" AS a ' +
+		'INNER JOIN "bbUser" AS u on u.addressID = a.addressID  ' +
+		'WHERE u.addressID = ' + id, function(err, result){
                 if (err) throw err;
         /*
         for (i = 0; i<rows.length; i++){
@@ -1995,11 +1970,12 @@ var query = connection.query("SELECT * FROM bbAddress AS a " +
                 res.send("Address not found.");
         }
         else {        
-                  var response = {"addressinfo" : rows[0]};
-                //connection.end();
+                  var response = {"addressinfo" : result.rows[0]};
+                //client.end();
                   res.json(response);
           }
  });
+  });
   });
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/addressinfos/:id', function(req, res) {
@@ -2083,8 +2059,8 @@ var Cart = cart.Cart;
 app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 
-
-	connection.query('SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * FROM "bbAddtoCart" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
 
 
   	if (err) throw err;
@@ -2093,7 +2069,7 @@ app.get('/DB-Project/carts', function(req, res) {
 			console.log('The result is: ', rows[i]);
 		}*/
 	
-  var response = {"carts" : rows};
+  var response = {"carts" : result.rows};
   res.json(response);
 });
 });
@@ -2103,8 +2079,8 @@ app.get('/DB-Project/carts/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET carts: " + id);
 
-
-var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+pg.connect(conString, function(err, client, done) {
+var query = client.query('SELECT * FROM "bbAddtoCart" natural join "bbProduct" natural join "bbBidProduct" WHERE userID = "' + id + '"', function(err, result){
 
 
                 if (err) throw err;
@@ -2121,12 +2097,13 @@ var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct n
                 res.send("Cart not found.");
         }
         else {        
-                  var response = {"cart" : rows};
-                //connection.end();
+                  var response = {"cart" : result.rows};
+                //client.end();
                   res.json(response);
           }
  });
   });
+});
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/addressinfos/:id', function(req, res) {
         var id = req.params.id;
@@ -2197,9 +2174,10 @@ var Sell = sell.Sell;
 app.get('/DB-Project/sells/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sell: " + id);
+		pg.connect(conString, function(err, client, done) {
 
 
-var query = connection.query("SELECT * FROM bbSell natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natural join "bbBidProduct" WHERE userID = "' + id + '"', function(err, result){
 
 
 		if (err) throw err;
@@ -2214,28 +2192,31 @@ var query = connection.query("SELECT * FROM bbSell natural join bbProduct natura
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"sell" : rows};
-		//connection.end();
+  		var response = {"sell" : result.rows};
+		//client.end();
   		res.json(response);
   	}
  });
   });
+});
 
 // REST Operation - HTTP GET to read a car based on its id
 app.get('/DB-Project/sells/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET sells: " + id);
+pg.connect(conString, function(err, client, done) {
+var query = client.query('SELECT * from "bbSell" natural join "bbUser" ' +
 
-var query = connection.query("SELECT * from bbSell natural join bbUser " +
-
-		"natural join bbProduct natural join bbBidProduct " +
+		'natural join "bbProduct" natural join "bbBidProduct" ' +
 
 
-		"where userID = " + id, function(err, rows, result){
+		'where userID = ' + id, function(err, result){
                 if (err) throw err;
+        /*
         for (i = 0; i<rows.length; i++){
-                console.log('The solution is: ', rows[i]);
-        }
+                        console.log('The solution is: ', rows[i]);
+                }*/
+        
         
         
         var len = rows.length;
@@ -2244,12 +2225,13 @@ var query = connection.query("SELECT * from bbSell natural join bbUser " +
                 res.send("Sell not found.");
         }
         else {        
-                  var response = {"sell" : rows[0]};
-                //connection.end();
+                  var response = {"sell" : result.rows[0]};
+                //client.end();
                   res.json(response);
           }
  });
   });
+});
   
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/sells/:id', function(req, res) {
@@ -2332,28 +2314,30 @@ var Bid = bid.Bid;
 app.get('/DB-Project/bids', function(req, res) {
 	console.log("GET BIDS");
 	
-
-	connection.query('SELECT * from bbBidFor natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+	pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * from "bbBidFor" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
 
 	
 
   	if (err) throw err;
+	/*
 	for (i = 0; i<rows.length; i++){
-		console.log('The result is: ', rows[i]);
-	}
-  var response = {"bids" : rows};
+			console.log('The result is: ', rows[i]);
+		}*/
+	
+  var response = {"bids" : result.rows};
   res.json(response);
 });
-
+});
 });
 
 // REST Operation - HTTP GET to read a car based on its id
 app.get('/DB-Project/bids/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET bids: " + id);
+pg.connect(conString, function(err, client, done) {
 
-
-var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natural join "bbBidProduct" WHERE userID = "' + id + '"', function(err, result){
 
                 if (err) throw err;
         /*
@@ -2369,35 +2353,37 @@ var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natu
                 res.send("Bid not found.");
         }
         else {        
-                  var response = {"bid" : rows};
-                //connection.end();
+                  var response = {"bid" : result.rows};
+                //client.end();
                   res.json(response);
           }
  });
   });
+});
 
 
 app.get('/DB-Project/abids/:ids', function(req, res) {
     var ids = req.params.ids;
             console.log("GET bidproduct: " + ids);
+            pg.connect(conString, function(err, client, done) {
 
-var query = connection.query("SELECT u.userNickname, b.bidDate, b.bidAmount, r.productPhoto, r.productDesc, r.productName, " +
-		"r.brand, r.model, r.dimensions FROM bbBidFor as b inner join bbUser as u on b.userID = u.userID " +
-		"inner join bbProduct as r on b.productID = r.productID inner join " +
-		"bbSell as s on r.productID = s.productID WHERE s.userID= '"+ ids + "'", function(err, rows, result){
+var query = client.query('SELECT u.userNickname, b.bidDate, b.bidAmount, r.productPhoto, r.productDesc, r.productName, ' +
+		'r.brand, r.model, r.dimensions FROM "bbBidFor" as b inner join "bbUser" as u on b.userID = u.userID ' +
+		'inner join "bbProduct" as r on b.productID = r.productID inner join ' +
+		'"bbSell" as s on r.productID = s.productID WHERE s.userID= "'+ ids + '"', function(err, result){
             if (err) throw err;
     
     for (i = 0; i<rows.length; i++){
                   console.log('The solution is: ', rows[i]);
             }
          
-              var response = {"bidproduct" : rows};
-            //connection.end();
+              var response = {"bidproduct" : result.rows};
+            //client.end();
               res.json(response);
       
 });
 });
-
+});
 
 
   
@@ -2468,7 +2454,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         console.log(sd);
         console.log(ed);
         console.log(output);
-       
+       pg.connect(conString, function(err, client, done) {
           if(!req.body.hasOwnProperty('bidAmount')) {
         	  console.log("Problem?");
             res.statusCode = 400;
@@ -2476,7 +2462,8 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           }
           
           if(count == 0){
-        	  var query2 = connection.query("Select * from bbBidFor Where userID = '" + id + "' AND productID = '"+ idp +"'"); 
+          	
+        	  var query2 = client.query('Select * from "bbBidFor" Where userID = "' + id + '" AND productID = "'+ idp +'"'); 
         	  count = 1;
         	  return res.send('You have already placed a bid!');
           }
@@ -2489,9 +2476,9 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           
           if(cb > idb && count == 0){
         	  console.log("Here2");
-        	  var query1 = connection.query("UPDATE `bbBidProduct` SET `bidStartingPrice`= '" + req.body.bidAmount + "' WHERE `productID`='"+ idp +"'");
-        	  var query = connection.query("INSERT INTO `bbBidFor` (`userID`,`productID`,`bidDate`,`bidAmount`) " +
-              		"VALUES ('" + id + "', '" + idp + "', '"+ output + "', '" + cb + "')");
+        	  var query1 = client.query('UPDATE "bbBidProduct" SET `bidStartingPrice`= "'+ req.body.bidAmount + '" WHERE `productID`="'+ idp +'"');
+        	  var query = client.query('INSERT INTO "bbBidFor" (`userID`,`productID`,`bidDate`,`bidAmount`) ' +
+              		'VALUES ("' + id + '", "' + idp + '", "'+ output + '", "' + cb + '"")');
         	  
         	  res.json(true);
         	  return;
@@ -2516,6 +2503,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
 
 
 });
+});
 //--------------------------------------Order-----------------------------------------------------------------//
 
 
@@ -2537,15 +2525,16 @@ var Order = order.Order;
 app.get('/DB-Project/orders', function(req, res) {
 	console.log("GET ORDERS");
 	
-
-	connection.query('SELECT * from bbOrder natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+pg.connect(conString, function(err, client, done) {
+	client.query('SELECT * from "bbOrder" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
 
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
 	}
-  var response = {"bids" : rows};
+  var response = {"bids" : result.rows};
   res.json(response);
+});
 });
 });
 
@@ -2553,14 +2542,15 @@ app.get('/DB-Project/orders', function(req, res) {
 app.get('/DB-Project/orders/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET order: " + id);
+                pg.connect(conString, function(err, client, done) {
 
-var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, " +
-		"r.brand, r.model, r.dimensions FROM bbOrder as o inner join bbPay as p on " +
-		"o.orderID = p.orderID inner join bbUser as u on o.userID = u.userID inner join bbContain " +
+var query = client.query('SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, ' +
+		'r.brand, r.model, r.dimensions FROM "bbOrder" as o inner join "bbPay" as p on ' +
+		'o.orderID = p.orderID inner join "bbUser" as u on o.userID = u.userID inner join "bbContain" ' +
 
-		"as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join bbBidProduct as bp on r.productID = bp.productID inner join " +
+		'as c on o.orderID = c.orderID inner join "bbProduct" as r on c.productID = r.productID inner join "bbBidProduct" as bp on r.productID = bp.productID inner join ' +
 
-		"bbSell as s on r.productID = s.productID WHERE s.userID= '" + id + "'", function(err, rows, result){
+		'"bbSell as s on r.productID = s.productID WHERE s.userID= "' + id + '"', function(err, result){
                 if (err) throw err;
         for (i = 0; i<rows.length; i++){
                 console.log('The solution is: ', rows[i]);
@@ -2573,13 +2563,13 @@ var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto,
                 res.send("Order not found.");
         }
         else {        
-                  var response = {"order" : rows};
-                //connection.end();
+                  var response = {"order" : result.rows};
+                //client.end();
                   res.json(response);
           }
  });
   });
-  
+});
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/bids/:id', function(req, res) {
         var id = req.params.id;
@@ -2638,3 +2628,4 @@ app.post('/DB-Project/sells', function(req, res) {
           addressinfoList.push(newAddress);
           res.json(true);
 });
+
