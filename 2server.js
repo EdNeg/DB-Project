@@ -81,23 +81,25 @@ connection.connect(function(err) {
   
   
 
-/*
+
 pg.connect(process.env.DATABASE_URL, function(err, client, done) {
   client.query('SELECT * FROM bbProduct', function(err, result) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
   });
-});*/
+});
 
 
+/*
 var pg = require('pg').native
   , connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/boricuabay'
   , client
   , query;
 
 connection = new pg.Client(connectionString);
-connection.connect();
+connection.connect();*/
+
 
 
 

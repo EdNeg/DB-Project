@@ -1324,7 +1324,7 @@ $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {/////////
 
 $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:5432/DB-Project/productSearch/" + $('#search').val(),
+		url : "http://localhost:3412/DB-Project/productSearch/" + $('#search').val(),
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
 			var productList = data.productSearch;
