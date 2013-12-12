@@ -74,10 +74,14 @@ var connection = mysql.createConnection({
 var conString = "postgres://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
 
 var connection = new pg.Client(conString);
+connection.connect();
+
+/*
 connection.connect(function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);
-  }
+  }*/
+
 
 
   
