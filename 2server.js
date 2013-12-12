@@ -2628,4 +2628,4 @@ app.post('/DB-Project/sells', function(req, res) {
           addressinfoList.push(newAddress);
           res.json(true);
 });
-
+});
