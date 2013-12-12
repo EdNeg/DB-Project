@@ -18,27 +18,26 @@
 </head>
 
 <body>
-	<div data-role="page" id="regular">
+	<div data-role="page" id="newProduct">
 		<header data-role="header" data-theme="d">
 			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left">User Name</a>
 			<h1>BoricuaBay</h1>
-			<a data-role="button" data-rel="back" onclick="SaveProduct()">Save</a>
+			<a data-role="button" data-rel="back" onclick="SaveProductUser()">Save</a>
 		</header>
-		<center>
-				<h2>Enter New Product</h2>
-			</center>
 			<form id="product-form">
  				<fieldset data-role="controlgroup">
- 					<ul>
-  					<li><label for="imgSrc"> Image Source: <input id="imgSrc" name="imgSrc" type="text"/></label></li>
-  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+ 					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+  					<li><label for="productPhoto"> Image Source: <input id="productPhoto" name="productPhoto" type="text"/></label></li>
+  					<li><label for="productName"> Name: <input id="productName" name="productName" type="text"/></label></li>
+  					<li><label for="productDesc"> Description: <input id="productDesc" name="productDesc" type="text"/></label></li>
   					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
-				    <li><label for="bidPrice"> Bid Price: <input id="bidPrice" name="bidPrice" type="number"/></label></li>
-  					<li><label for="instPrice"> Instant Price: <input id="instPrice" name="instPrice" type="number"/></label></li>
-  					<li><label for="description"> Description: <input id="description" name="description" type="text"/></label></li>
   					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
   					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
+  					<li><label for="productPrice"> Instant Price: <input id="productPrice" name="productPrice" type="number"/></label></li>
+				    <li><label for="bidStartingPrice"> Bid Price: <input id="bidStartingPrice" name="bidStartingPrice" type="number"/></label></li>
+				    <li><label for="startDate"> Bid Start Date: <input  type="date" id="startDate" name="startDate"/></label></li>
+				    <li><label for="endDate"> Bid End Date: <input id="endDate" name="endDate" type="date"/></label></li>
   			  	</ul>
 			 </fieldset>
 			</form>
