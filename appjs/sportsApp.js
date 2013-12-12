@@ -14,7 +14,9 @@ $(document).on('pagebeforeshow', "#sports-view", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				sportCat = sportCatList[i];
 				list.append("<li><a onclick=GetSportCat(" + sportCat.subCategoryID + ")>" + "<center>" +
+
 					"<img src= " +  "'" + sportCat.subCategoryDesc +"'" + "/>"+
+
 					"<h1>" + sportCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");

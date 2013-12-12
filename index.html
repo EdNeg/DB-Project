@@ -115,36 +115,39 @@
     	</ul>
 	</div><!-- /navbar -->
 	</header>
-	<form id "account-form">
-
+	
+	<form id="account-form">
+		<fieldset data-role="controlgroup">
 		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
  					<li data-role="list-divider" role="heading">User Info</li>   
-  					<li><label for="userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
-  					<li><label for="userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label></li>
-				    <li><label for="password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
-  					<li><label for="userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
+  					<li><label for="userName"> Name: <input id="userName" name="userName" type="text"/></label></li>
+  					<li><label for="userNickname"> Username: <input id="userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="password"> Password: <input id="password" name="password" type="password"/></label></li>
+  					<li><label for="userEmail"> Email: <input id="userEmail" name="userEmail" type="text"/></label></li>
   					<li data-role="list-divider" role="heading">Mailing Address</li>
-  					<li><label for="addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
-  					<li><label for="city"> City: <input id="upd-city" name="city" type="text"/></label></li>
-				    <li><label for="state"> State: <input id="upd-state" name="state" type="text"/></label></li>
-  					<li><label for="country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
-  					<li><label for="zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+  					<li><label for="addressLine"> Address Line: <input id="addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="city"> City: <input id="city" name="city" type="text"/></label></li>
+				    <li><label for="state"> State: <input id="state" name="state" type="text"/></label></li>
+  					<li><label for="country"> Country: <input id="country" name="country" type="text"/></label></li>
+  					<li><label for="zipcode"> Zipcode: <input id="zipcode" name="zipcode" type="text"/></label></li>
   					<li data-role="list-divider" role="heading">CreditCard Info</li>
-  					<li><label for="creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
-  					<li><label for="creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
-				    <li><label for="securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text"/></label></li>
-  					<li><label for="expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text"/></label></li>
+  					<li><label for="creditCardNumber"> CreditCard Number: <input id="creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="creditCardOwner"> CreditCard Owner: <input id="creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="securityCode"> Security Code: <input id="securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="expDate"> Expiration Date: <input id="expDate" name="expDate" type="text"/></label></li>
   					<li data-role="list-divider" role="heading">Billing Address</li>
-  					<li><label for="caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text"/></label></li>
-  					<li><label for="ccity"> City: <input id="upd-ccity" name="ccity" type="text"/></label></li>
-				    <li><label for="cstate"> State: <input id="upd-cstate" name="cstate" type="text"/></label></li>
-  					<li><label for="ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
-  					<li><label for="czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
+  					<li><label for="caddressLine"> Address Line: <input id="caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="ccity"> City: <input id="ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="cstate"> State: <input id="cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="ccountry"> Country: <input id="ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="czipcode"> Zipcode: <input id="czipcode" name="czipcode" type="text"/></label></li>
   			  	</ul>
+  			  	</fieldset>
+			</form>
 
-<form>
-    <input type="button" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
-</form>
+<center>
+    <input type="submit" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
+</center>
 
 </div><!-- Page Register -------------------------------------------------------------------------------------->
 	
@@ -199,10 +202,10 @@
 </div><!-- Page Search Products ------------------------------------------------------------------------>
 
 
-<div data-role="page" id="product-view">
+<<div data-role="page" id="product-view">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
 		
 	<div data-role="content">
@@ -220,6 +223,9 @@
 				<li id="currModel"></li>
 				<li id="currDimensions"></li>
 				<li id="currId"></li>
+				<li id="currStartDate"></li>
+				<li id="currEndDate"></li>
+
 				
 							
 			</ul>
@@ -230,7 +236,7 @@
 	</div>	
  				 
 		<div class="ui-grid-a">
-            <div class="ui-block-a"><a href="#signin" onclick="PlaceBid()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+            <div class="ui-block-a"><a href="../DB-Project/Place_Bid.html"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
          	<div class="ui-block-b"><a href="#carts" onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
     	</div>
 	

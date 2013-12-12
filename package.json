@@ -4,10 +4,12 @@
   "description": "Ebay styled webapp",
   "main": "2server.js",
   "dependencies": {
+
     "pg": "~2.8.3",
     "express": "~3.3.8",
     "mysql": "~2.0.0",
     "logfmt": "~0.17.0"
+
   },
   "devDependencies": {},
   "scripts": {

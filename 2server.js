@@ -4,6 +4,7 @@ var express = require('express');
 var pg = require('pg');
 var logfmt = require("logfmt");
 var http = require('http');
+
 var app = express();
 app.use(logfmt.requestLogger());
 
@@ -23,11 +24,15 @@ var allowCrossDomain = function(req, res, next) {
 };
 
 app.configure(function () {
+  app.use(express.bodyParser());
   app.use(allowCrossDomain);
+  app.use(app.router);
 });
 
 
-app.use(express.bodyParser());
+
+
+
 
 // Server starts running when listen is called.
 var port = process.env.PORT || 3412;
@@ -56,14 +61,19 @@ for (var i=0; i < productList.length;++i){
 	productList[i].id = productNextId++;
 }
 
+
 //Mysql Database Connection
 /*
+
 var connection = mysql.createConnection({
 	host : 'localhost',
 	user : 'root',
 	password : 'ADMIN',
 	port : 3306,
 	database : 'boricuabaydb'
+
+
+});
 
 });*/
 
@@ -107,6 +117,7 @@ var pg = require('pg').native
 
 connection = new pg.Client(connectionString);
 connection.connect();*/
+
 
 
 
@@ -200,8 +211,13 @@ app.get('/DB-Project/productsPrice', function(req, res) {
   var response = {"productsPrice" : rows};
   res.json(response);
   
+
+
 });
 });
+
+
+
 
 
 
@@ -380,22 +396,30 @@ app.del('/DB-Project/products/:id', function(req, res) {
 });
 
 // REST Operation - HTTP POST to add a new a product
-app.post('/DB-Project/products', function(req, res) {
+app.post('/DB-Project/products/:id', function(req, res) {
+	var id = req.params.id;
 	console.log("POST");
 
-  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('brand')
-  	|| !req.body.hasOwnProperty('model') || !req.body.hasOwnProperty('bidPrice') || !req.body.hasOwnProperty('description') || !req.body.hasOwnProperty('insstPrice') 
-  	|| !req.body.hasOwnProperty('dimensions') || !req.body.hasOwnProperty('imgSrc')) {
+  	if(!req.body.hasOwnProperty('productName') || !req.body.hasOwnProperty('brand')
+  	|| !req.body.hasOwnProperty('model') || !req.body.hasOwnProperty('bidStartingPrice') || !req.body.hasOwnProperty('productDesc') || !req.body.hasOwnProperty('productPrice') 
+  	|| !req.body.hasOwnProperty('dimensions') || !req.body.hasOwnProperty('startDate') || !req.body.hasOwnProperty('endDate') || !req.body.hasOwnProperty('productPhoto')) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for product.');
   	}
 
-  	var newProduct = new Product(req.body.name, req.body.brand, req.body.model, req.body.description, req.body.dimensions, req.body.bidPrice, req.body.instPrice, req.body.imgSrc);
-  	console.log("New Product: " + JSON.stringify(newProduct));
-  	newProduct.id = productNextId++;
-  	productList.push(newProduct);
+	var query = connection.query("INSERT INTO `bbProduct` (`productID`,`productName`,`productDesc`,`productPhoto`,`productPrice`," +
+	  		"`model`,`brand`,`dimensions`,`tagID`) VALUES (NULL, '" + req.body.productName + "', '"+ req.body.productDesc + 
+	  		"', '" + req.body.productPhoto + "', '" + req.body.productPrice + "','" + req.body.model + "','" + req.body.brand + "','" + req.body.dimensions + "',1)");
+	var getquery = connection.query("SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()");	
+	var query1 = connection.query("INSERT INTO `bbBidProduct` (`productID`,`bidStartingPrice`,`startDate`,`endDate`) " +
+			"VALUES (@last_insert_id_in_bbProduct, '" + req.body.bidStartingPrice + "', '"+ req.body.startDate + 
+	  		"', '" + req.body.endDate + "')"); 
+	var query2 = connection.query("INSERT INTO `bbSell` (`userID`,`productID`,`sQuantity`) " +
+			"VALUES ('"+id+"', @last_insert_id_in_bbProduct, NULL)"); 
+	
   	res.json(true);
 });
+
 
 
 
@@ -1645,28 +1669,56 @@ app.put('/DB-Project/accounts/:id', function(req, res) {
 	}
 });
 
-/*
+
+
 //REST Operation - HTTP POST to add a new a user
 app.post('/DB-Project/accounts', function(req, res) {
+	console.log(req.body.userEmail);
 	console.log("POST User");
 
   	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('creditCardID') || !req.body.hasOwnProperty('bankAccountID') || !req.body.hasOwnProperty('addressID')){
+  	|| !req.body.hasOwnProperty('userEmail') || !req.body.hasOwnProperty('addressLine') || !req.body.hasOwnProperty('city')
+	|| !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')
+	|| !req.body.hasOwnProperty('creditCardNumber') || !req.body.hasOwnProperty('creditCardOwner') || !req.body.hasOwnProperty('securityCode')
+	|| !req.body.hasOwnProperty('expDate') || !req.body.hasOwnProperty('caddressLine') || !req.body.hasOwnProperty('ccity')
+	|| !req.body.hasOwnProperty('cstate') || !req.body.hasOwnProperty('ccountry') || !req.body.hasOwnProperty('czipcode')){
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for account.');
   	}
+	
+	
 
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
   	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
-  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (" +1,'Man T. Cado','icecream',
-  		'icecream@gmail.com','1234',NULL,NULL,NULL,NULL,NULL);,, function(err, rows, result){
-  			
-  		});
-  	console.log("New Account: " + JSON.stringify(newAccount));
-  	//newAccount.id = accountNextId++;
-  	accountList.push(newAccount);
+  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
+  		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL,NULL,NULL)");
+  	var getquery = connection.query("SET @last_insert_id_in_bbUser = LAST_INSERT_ID()");	
+  	
+ 
+  	var query1 = connection.query("INSERT INTO `bbAddress` (`addressID`,`addressLine`,`city`,`state`,`country`," +
+  	  		"`zipcode`) VALUES (NULL, '" + req.body.addressLine + "', '"+ req.body.city + 
+  	  		"', '" + req.body.state + "', '" + req.body.country + "', '" + req.body.zipcode + "')");
+  	var getquery1 = connection.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
+ 
+  	var query2 = connection.query("INSERT INTO `bbAddress` (`addressID`,`addressLine`,`city`,`state`,`country`," +
+  	  		"`zipcode`) VALUES (NULL, '" + req.body.caddressLine + "', '"+ req.body.ccity + 
+  	  		"', '" + req.body.cstate + "', '" + req.body.ccountry + "', '" + req.body.czipcode + "')");
+  	var getquery2 = connection.query("SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()");
+  	
+	var query3 = connection.query("INSERT INTO `bbCreditCard` (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`," +
+  	  		"`addressID`) VALUES (NULL, '" + req.body.creditCardOwner + "', '"+ req.body.creditCardNumber + 
+  	  		"', '" + req.body.securityCode + "', '" + req.body.expDate + "', @last_insert_id_in_bbAddress1)");
+  	var getquery3 = connection.query("SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()");
+  	
+  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser");
+  	
+  	console.log("New Account: ");
+  	console.log("New Mailing Address: ");
+  	console.log("New Biling Address: " );
+  	console.log("New CreditCard:" );
   	res.json(true);
-});*/
+});
+
 
 
 
@@ -2032,7 +2084,9 @@ var Cart = cart.Cart;
 app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 
-	connection.query('SELECT * FROM bbAddtoCart natural join bbProduct', function(err, rows, result) {
+
+	connection.query('SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+
 
   	if (err) throw err;
 	/*
@@ -2050,7 +2104,10 @@ app.get('/DB-Project/carts/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET carts: " + id);
 
-var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+
                 if (err) throw err;
         /*
         for (i = 0; i<rows.length; i++){
@@ -2142,7 +2199,10 @@ app.get('/DB-Project/sells/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sell: " + id);
 
-var query = connection.query("SELECT * FROM bbSell natural join bbProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+var query = connection.query("SELECT * FROM bbSell natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+
 		if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The solution is: ', rows[i]);
@@ -2168,7 +2228,10 @@ app.get('/DB-Project/sells/:id', function(req, res) {
                 console.log("GET sells: " + id);
 
 var query = connection.query("SELECT * from bbSell natural join bbUser " +
-		"natural join bbProduct " +
+
+		"natural join bbProduct natural join bbBidProduct " +
+
+
 		"where userID = " + id, function(err, rows, result){
                 if (err) throw err;
         for (i = 0; i<rows.length; i++){
@@ -2270,7 +2333,11 @@ var Bid = bid.Bid;
 app.get('/DB-Project/bids', function(req, res) {
 	console.log("GET BIDS");
 	
-	connection.query('SELECT * from bbBidFor natural join bbProduct', function(err, rows, result) {
+
+	connection.query('SELECT * from bbBidFor natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+
+	
+
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -2286,7 +2353,9 @@ app.get('/DB-Project/bids/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET bids: " + id);
 
-var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
+var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natural join bbBidProduct WHERE userID = '" + id + "'", function(err, rows, result){
+
                 if (err) throw err;
         /*
         for (i = 0; i<rows.length; i++){
@@ -2307,6 +2376,31 @@ var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct WHER
           }
  });
   });
+
+
+app.get('/DB-Project/abids/:ids', function(req, res) {
+    var ids = req.params.ids;
+            console.log("GET bidproduct: " + ids);
+
+var query = connection.query("SELECT u.userNickname, b.bidDate, b.bidAmount, r.productPhoto, r.productDesc, r.productName, " +
+		"r.brand, r.model, r.dimensions FROM bbBidFor as b inner join bbUser as u on b.userID = u.userID " +
+		"inner join bbProduct as r on b.productID = r.productID inner join " +
+		"bbSell as s on r.productID = s.productID WHERE s.userID= '"+ ids + "'", function(err, rows, result){
+            if (err) throw err;
+    
+    for (i = 0; i<rows.length; i++){
+                  console.log('The solution is: ', rows[i]);
+            }
+         
+              var response = {"bidproduct" : rows};
+            //connection.end();
+              res.json(response);
+      
+});
+});
+
+
+
   
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/bids/:id', function(req, res) {
@@ -2350,21 +2444,77 @@ app.put('/DB-Project/bids/:id', function(req, res) {
         }
 });
 
-//REST Operation - HTTP POST to add a new a car
-app.post('/DB-Project/sells', function(req, res) {
-        console.log("POST");
 
-          if(!req.body.hasOwnProperty('addressLine1') || !req.body.hasOwnProperty('addressLine2') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') 
-                        || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode') || !req.body.hasOwnProperty('isBilling')) {
+var d = new Date();
+var month = d.getMonth()+1;
+var day = d.getDate();
+var output = d.getFullYear() + '-' +
+(month<10 ? '0' : '') + month + '-' +
+(day<10 ? '0' : '') + day;
+
+//REST Operation - HTTP POST to add a new a car
+app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
+	var id = parseFloat(req.params.id);
+	var idp = req.params.idp;
+	var idb = req.params.idb;
+	var sd = req.params.sd;
+	var ed = req.params.ed;
+	var cb = parseFloat(req.body.bidAmount);
+	var count = 0;
+        console.log("POST");
+        console.log(idb);
+        console.log(req.body.bidAmount);
+        console.log(id);
+        console.log(idp);
+        console.log(sd);
+        console.log(ed);
+        console.log(output);
+       
+          if(!req.body.hasOwnProperty('bidAmount')) {
+        	  console.log("Problem?");
             res.statusCode = 400;
             return res.send('Error: Missing fields for address.');
           }
+          
+          if(count == 0){
+        	  var query2 = connection.query("Select * from bbBidFor Where userID = '" + id + "' AND productID = '"+ idp +"'"); 
+        	  count = 1;
+        	  return res.send('You have already placed a bid!');
+          }
+          
+          console.log("Here");
+          if(output >= sd && output <= ed){
+        	  console.log("Here1");
+        	  console.log("el chikitin: "+idb);
+        	  console.log("el grande: "+cb);
+          
+          if(cb > idb && count = 0){
+        	  console.log("Here2");
+        	  var query1 = connection.query("UPDATE `bbBidProduct` SET `bidStartingPrice`= '" + req.body.bidAmount + "' WHERE `productID`='"+ idp +"'");
+        	  var query = connection.query("INSERT INTO `bbBidFor` (`userID`,`productID`,`bidDate`,`bidAmount`) " +
+              		"VALUES ('" + id + "', '" + idp + "', '"+ output + "', '" + cb + "')");
+        	  
+        	  res.json(true);
+        	  return;
+          }
+          else{
+        	  console.log("Here35");
+        	  return res.send('The bid amount is less than the bid starting price!');
+          }
+          console.log("Her4");
+          
+          }
+          console.log("Herein");
+		if(output < sd){
+			console.log("Here5");
+			return res.send('The bid date has not started yet');
+		}
+		if(output > ed){
+			console.log("Here6");
+			return res.send('The bid date has passed');
+		}
 
-          var newAddress = new Address(req.body.addressLine1, req.body.addressLine2, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.isBilling);
-          console.log("New Address: " + JSON.stringify(newAddress));
-          newAddress.id = addressinfoNextId++;
-          addressinfoList.push(newAddress);
-          res.json(true);
+
 });
 //--------------------------------------Order-----------------------------------------------------------------//
 
@@ -2387,7 +2537,9 @@ var Order = order.Order;
 app.get('/DB-Project/orders', function(req, res) {
 	console.log("GET ORDERS");
 	
-	connection.query('SELECT * from bbOrder natural join bbProduct', function(err, rows, result) {
+
+	connection.query('SELECT * from bbOrder natural join bbProduct natural join bbBidProduct', function(err, rows, result) {
+
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
@@ -2405,7 +2557,9 @@ app.get('/DB-Project/orders/:id', function(req, res) {
 var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, " +
 		"r.brand, r.model, r.dimensions FROM bbOrder as o inner join bbPay as p on " +
 		"o.orderID = p.orderID inner join bbUser as u on o.userID = u.userID inner join bbContain " +
-		"as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join " +
+
+		"as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join bbBidProduct as bp on r.productID = bp.productID inner join " +
+
 		"bbSell as s on r.productID = s.productID WHERE s.userID= '" + id + "'", function(err, rows, result){
                 if (err) throw err;
         for (i = 0; i<rows.length; i++){

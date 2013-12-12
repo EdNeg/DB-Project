@@ -15,7 +15,11 @@ $(document).on('pagebeforeshow', "#books-view", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				subCat = subCatList[i];
 				list.append("<li><a onclick=GetSubCat(" + subCat.subCategoryID + ")>" + "<center>" +
+
+					
+
 					"<img src= " +  "'" + subCat.subCategoryDesc +"'" + "/>"+ 
+
 					"<h1>" + subCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");

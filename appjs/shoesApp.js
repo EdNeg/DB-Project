@@ -14,7 +14,9 @@ $(document).on('pagebeforeshow', "#shoes-view", function( event, ui ) {
 			for (var i=0; i < len; ++i){
 				shoeCat = shoeCatList[i];
 				list.append("<li><a onclick=GetShoeCat(" + shoeCat.subCategoryID + ")>" + "<center>" +
+
 					"<img src= " +  "'" +  shoeCat.subCategoryDesc +  "'" + "/>"+
+
 					"<h1>" + shoeCat.subCategoryName +  "</h1>" + "</center>" +
 					
 					"</a></li>");
