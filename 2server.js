@@ -431,7 +431,7 @@ app.get('/DB-Project/categories/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET category: " + id);
 		pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbCategory" WHERE categoryID = ' + id, function(err, result){
+	client.query('SELECT * FROM "bbCategory" WHERE "categoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
