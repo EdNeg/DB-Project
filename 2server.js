@@ -96,8 +96,8 @@ var pg = require('pg').native
   , client
   , query;
 
-client = new pg.Client(connectionString);
-client.connect();
+connection = new pg.Client(connectionString);
+connection.connect();
 
 
 
