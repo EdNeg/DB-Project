@@ -237,7 +237,7 @@ app.get('/DB-Project/productSearch/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product by name: " + id);
 		pg.connect(conString, function(err, client, done) {	
-		var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" where "productName" like %' + id + '%;', function(err, result){
+		var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" where "productName" ilike ' + "'%" + id + "%';" ,function(err, result){
 		if (err) throw err;
 	
 	var len =result.rows.length;
@@ -1535,7 +1535,7 @@ app.get('/DB-Project/accounts/:ids', function(req, res) {
 		console.log("GET account: " + ids);
 		pg.connect(conString, function(err, client, done) {
 
-var query = client.query('SELECT * FROM "bbUser" NATURAL JOIN "bbAddress" WHERE "userID" = "' + ids  + '"', function(err, result){	
+var query = client.query('SELECT * FROM "bbUser" NATURAL JOIN "bbAddress" WHERE "userID" = ' + ids, function(err, result){	
 	if (err) throw err;
 	
 	
@@ -1577,8 +1577,8 @@ app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
 	var idp = req.params.idp;
 		console.log("GET account: " + id);
 		pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * FROM "bbUser" WHERE "userNickname" = "' + id  + '"' + ' AND ' +
-		'password = "' + idp + '"', function(err, result){
+var query = client.query('SELECT * FROM "bbUser" WHERE "userNickname" = ' + "'" + id  + "'" + ' AND ' +
+		'password = ' + "'" + idp + "'", function(err, result){
 		if (err) throw err;
 
 	
@@ -1833,10 +1833,12 @@ app.get('/DB-Project/creditcards/:ids', function(req, res) {
 var query = client.query('SELECT * from "bbCreditCard" as c ' +
 		'inner join "bbAddress" as a on a."addressID" = c."addressID" ' +
 		'inner join "bbUser" as u on u."creditCardID" = c."creditCardID" ' +
-		'where u."userID" = "' + ids  + '"', function(err, result){
+		'where u."userID" = ' + ids, function(err, result){
+	/*
 	for (i = 0; i<rows.length; i++){
-        console.log('The solution is: ', rows[i]);
-}	
+			console.log('The solution is: ', rows[i]);
+	}	*/
+	
 	if (err) throw err;
 
 	
