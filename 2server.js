@@ -63,7 +63,7 @@ for (var i=0; i < productList.length;++i){
 
 
 //Mysql Database Connection
-/*
+
 
 var connection = mysql.createConnection({
 	host : 'localhost',
@@ -75,16 +75,18 @@ var connection = mysql.createConnection({
 
 });
 
-});*/
+
 
 // Postgres Database connection string: pg://<username>:<password>@host:port/dbname 
 
 
 
-var conString = "postgres://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
+v/*
+ar conString = "postgres://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
 
 var connection = new pg.Client(conString);
-connection.connect();
+connection.connect();*/
+
 
 /*
 connection.connect(function(err) {
