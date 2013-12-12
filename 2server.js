@@ -132,7 +132,7 @@ connection.connect();*/
 
 app.get('/', function(req, res) {
   //res.send('Hello Worldy!');
-  response.sendfile(__dirname + '/index.html');
+  res.sendfile(__dirname + '/index.html');
   
 });
 // REST Operations
