@@ -360,7 +360,7 @@ function LogIn(){
              success : function(data, textStatus, jqXHR){
                      loginID = data.account;
                                      $.mobile.loading("hide");
-                                     $.mobile.navigate("../DB-Project/Regular_User.html");          
+                                     $.mobile.navigate("/DB-Project/Regular_User.html");          
                      
              },
              error: function(data, textStatus, jqXHR){
