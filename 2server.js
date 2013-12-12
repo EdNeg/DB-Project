@@ -1,7 +1,7 @@
 // Express is the web framework 
 var express = require('express');
 //var mysql = require('mysql');
-var pg = require('pg');
+//var pg = require('pg');
 var logfmt = require("logfmt");
 var http = require('http');
 var app = express();
@@ -30,7 +30,7 @@ app.configure(function () {
 app.use(express.bodyParser());
 
 // Server starts running when listen is called.
-var port = process.env.PORT || 5432;
+var port = process.env.PORT || 3412;
 process.env.PWD = process.cwd();
 app.use(express.static(process.env.PWD));
 app.listen(port, function(){
@@ -81,13 +81,24 @@ connection.connect(function(err) {
   
   
 
+/*
 pg.connect(process.env.DATABASE_URL, function(err, client, done) {
   client.query('SELECT * FROM bbProduct', function(err, result) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
   });
-});
+});*/
+
+
+var pg = require('pg').native
+  , connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/boricuabay'
+  , client
+  , query;
+
+client = new pg.Client(connectionString);
+client.connect();
+
 
 
 
