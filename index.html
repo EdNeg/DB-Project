@@ -1222,21 +1222,21 @@
 
 <div data-role="page" id="regular">
 	<header data-role="header">
-		<a data-role="button" href="../DB-Project/index.html" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Home</a>
+		<a data-role="button" href="#home" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Home</a>
 		<h1>BoricuaBay</h1>
 	</header>
 	<br>
 	<br>
 	<ul data-role="listview" data-divider-theme="b" data-inset="true">
 		<li data-role="list-divider" role="heading" id="regularUser"></li>
-		<li data-theme="c"><a href="../DB-Project/Account.html" data-transition="slide">
+		<li data-theme="c"><a href="#Account" data-transition="slide">
 				Account </a></li>
-		<li data-theme="c"><a href="../DB-Project/Cart.html" data-transition="slide"> View
+		<li data-theme="c"><a href="#cartUser" data-transition="slide"> View
 				Cart </a></li>
-		<li data-theme="c"><a href="../DB-Project/Bids.html" data-transition="slide"> View
+		<li data-theme="c"><a href="#bidUser" data-transition="slide"> View
 				Bids </a></li>
 
-		<li data-theme="c"><a href="../DB-Project/Sell_Product.html" data-transition="slide">Products</a></li>
+		<li data-theme="c"><a href="#sellProduct" data-transition="slide">Products</a></li>
 		<li data-theme="c"><a href="../DB-Project/Sold_History.html"
 			data-transition="slide"> Sold Product </a></li>
 
@@ -1245,7 +1245,7 @@
 
 <div id="accounts" data-role="page">
 	<header data-role="header">
-	        <a data-role="button" href="../DB-Project/Account.html" data-icon="arrow-l"
+	        <a data-role="button" href="#Account" data-icon="arrow-l"
 	                data-iconpos="left" class="ui-btn-left">Account</a>
 	        <h1>BoricuaBay</h1>
 	</header>
@@ -1299,7 +1299,7 @@
 <div data-role="page" id="newProduct">
 
 		<header data-role="header" data-theme="d">
-			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+			<a data-role="button" href="#sellProduct" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left">User Name</a>
 			<h1>BoricuaBay</h1>
 
@@ -1326,7 +1326,7 @@
 
 <div id="account-view" data-role="page">
 	<header data-role="header" data-theme="d">
-			<a data-role="button" href="../DB-Project/Account.html" data-icon="arrow-l"
+			<a data-role="button" href="#Account" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
 			<h1>BoricuaBay</h1>
 			<a data-role="button" data-rel="back" onclick="UpdateAccount()" data-theme="b">Save</a>
@@ -1363,7 +1363,7 @@
 
 <div id="productUser" data-role="page">
         <header data-role="header">
-                        <a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+                        <a data-role="button" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
@@ -1376,7 +1376,7 @@
 
 <div id="cartUser" data-role="page">
         <header data-role="header">
-                        <a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+                        <a data-role="button" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
@@ -1390,7 +1390,7 @@
 
 <div id="bidUser" data-role="page">
         <header data-role="header">
-                        <a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+                        <a data-role="button" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
@@ -1414,11 +1414,11 @@
 		<br>
 		<ul data-role="listview" data-divider-theme="b" data-inset="true">
 			<li data-role="list-divider" role="heading">Account</li>
-			<li data-theme="c"><a href="../DB-Project/ViewAccount.html" data-transition="slide">
+			<li data-theme="c"><a href="#accounts" data-transition="slide">
 					View Personal Information</a></li>
-			<li data-theme="c"><a href="../DB-Project/View_Creditcard.html" data-transition="slide">
+			<li data-theme="c"><a href="#creditcards" data-transition="slide">
 					View Credit Card</a></li>
-			<li data-theme="c"><a href="../DB-Project/EditAccount.html" data-transition="slide">
+			<li data-theme="c"><a href="#account-view" data-transition="slide">
 				    Edit Account</a></li>
 		</ul>
 
@@ -1427,7 +1427,7 @@
 
 <div id="BidforProduct" data-role="page">
         <header data-role="header">
-                        <a data-role="button" href="../DB-Project/Sell_Product.html" data-icon="arrow-l"
+                        <a data-role="button" href="#sellProduct" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
@@ -1441,7 +1441,7 @@
 <div data-role="page" id="sellProduct">
 
 		<header data-role="header" data-theme="d">
-			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+			<a data-role="button" href="#regular" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left">User Name</a>
 			<h1>BoricuaBay</h1>
 		</header>
@@ -1449,19 +1449,19 @@
 		<br>
 		<ul data-role="listview" data-divider-theme="b" data-inset="true">
 			<li data-role="list-divider" role="heading">Sell Product</li>
-			<li data-theme="c"><a href="../DB-Project/New_Product.html" data-transition="slide">
+			<li data-theme="c"><a href="#newProduct" data-transition="slide">
 					New Product </a></li>
 
-			<li data-theme="c"><a href="../DB-Project/Currently_Selling.html" data-transition="slide">
+			<li data-theme="c"><a href="#productUser" data-transition="slide">
 					Currently Selling</a></li>
-			<li data-theme="c"><a href="../DB-Project/Product_Bids.html" data-transition="slide"> See Product Bids </a></li>
+			<li data-theme="c"><a href="#BidforProduct" data-transition="slide"> See Product Bids </a></li>
 		</ul>
 </div><!----------------------------------------------------		Sell Product		----------------------------------------------------------------------------->
 
 
 <div id="soldUser" data-role="page">
 		<header data-role="header" data-theme="d">
-			<a data-role="button" data-rel="back" href="../DB-Project/Sold_Product.html" data-icon="arrow-l"
+			<a data-role="button" data-rel="back" href="#soldProduct" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left">Sold History</a>
 			<h1>BoricuaBay</h1>
 		</header>
@@ -1473,7 +1473,7 @@
 
 <div data-role="page" id="soldProduct">
 		<header data-role="header" data-theme="d">
-			<a data-role="button" href="../DB-Project/Regular_User.html" data-icon="arrow-l"
+			<a data-role="button" href="#regular" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left">User Name</a>
 			<h1>BoricuaBay</h1>
 		</header>
@@ -1481,16 +1481,14 @@
 		<br>
 		<ul data-role="listview" data-divider-theme="b" data-inset="true">
 			<li data-role="list-divider" role="heading">Sold Product</li>
-			<li data-theme="c"><a href="../DB-Project/Sold_History.html" data-transition="slide">
+			<li data-theme="c"><a href="#soldUser" data-transition="slide">
 					Sold Product History </a></li>
-			<li data-theme="c"><a href="#" data-transition="slide"> See
-					Bids </a></li>
 		</ul>
 </div><!----------------------------------------------------		Sold Product		----------------------------------------------------------------------------->
 
 <div id="cartUser" data-role="page">
         <header data-role="header">
-                        <a data-role="button" data-rel="back" href="../DB-Project/MainJqueryM.html" data-icon="arrow-l"
+                        <a data-role="button" data-rel="back" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left">Home</a>
                          <h1><i>BoricuaBay</i></h1>
 
@@ -1506,7 +1504,7 @@
 
 <div id="creditcards" data-role="page">
         <header data-role="header">
-                        <a data-role="button" data-rel="back" href="../DB-Project/Account.html" data-icon="arrow-l"
+                        <a data-role="button" data-rel="back" href="#Account" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
