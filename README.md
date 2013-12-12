@@ -12,7 +12,7 @@ Heroku:
 1. Open browser and go to boricuabay.herokuapp.com
 2. Open terminal and type:
 	$ node 2server.js 
-3. Another way to connect to localhost is by typing in terminal:
+3. Another way to connect to localhost is by typing in terminal (installation of heroku is required):
 	$ foreman start -p 3412
 	
 Note: Don't include $ when typing. 
