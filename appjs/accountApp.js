@@ -381,7 +381,7 @@ function LogIn(){
 function VerifyUserCart(){
 	if(loginID != 0){
 		$.mobile.loading("hide");
-        $.mobile.navigate("../DB-Project/View_Cart.html");
+        $.mobile.navigate("#cartUser");
 	}
 	else{
 		alert("Please Log In or Register");
@@ -493,7 +493,7 @@ function SaveProductUser(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("../DB-Project/Currently_Selling");
+			$.mobile.navigate("#productUser");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -548,7 +548,7 @@ function PlaceBid(){
 
 function UpdateAccount(){
 	alert("You have edited your account!");
-	$.mobile.navigate("../DB-Project/Account.html");
+	$.mobile.navigate("#Account");
         //$.mobile.loading("show");
         //var form = $("#account-view-form");
         //var formData = form.serializeArray();
@@ -583,7 +583,7 @@ function UpdateAccount(){
 
 function UpdateAccount(){
 	alert("You have edited your account!");
-	$.mobile.navigate("../DB-Project/Account.html");
+	$.mobile.navigate("#Account");
         //$.mobile.loading("show");
         //var form = $("#account-view-form");
         //var formData = form.serializeArray();

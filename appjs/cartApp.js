@@ -63,7 +63,7 @@ $(document).on('pagebeforeshow', "#MyCart", function( event, ui ) {
             		},
                 	else{
                 		alert("You are not signed in");
-                		$.mobile.navigate("../DB-Project/MainJqueryM.html);
+                		$.mobile.navigate("#home");
                 	}
         },
                 error: function(data, textStatus, jqXHR){
