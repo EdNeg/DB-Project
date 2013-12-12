@@ -2490,7 +2490,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         	  console.log("el chikitin: "+idb);
         	  console.log("el grande: "+cb);
           
-          if(cb > idb && count = 0){
+          if(cb > idb && count == 0){
         	  console.log("Here2");
         	  var query1 = connection.query("UPDATE `bbBidProduct` SET `bidStartingPrice`= '" + req.body.bidAmount + "' WHERE `productID`='"+ idp +"'");
         	  var query = connection.query("INSERT INTO `bbBidFor` (`userID`,`productID`,`bidDate`,`bidAmount`) " +
@@ -2499,6 +2499,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         	  res.json(true);
         	  return;
           }
+          
           else{
         	  console.log("Here35");
         	  return res.send('The bid amount is less than the bid starting price!');
