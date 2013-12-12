@@ -2337,6 +2337,8 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
 //--------------------------------------Order-----------------------------------------------------------------//
 
 
+var order = require("./appjs/order.js");
+var Order = order.Order;
 
 
 // REST Operations
