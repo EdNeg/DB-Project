@@ -481,7 +481,7 @@ for (var i=0; i < categoryList.length;++i){
 // REST Operation - HTTP GET to read all categories
 app.get('/DB-Project/categories', function(req, res) {
 	console.log("GET ALL CATEGORIES");
-	connection.query('SELECT * FROM bbCategory;', function(err, rows, result) {
+	connection.query('SELECT * FROM "bbCategory";', function(err, rows, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
