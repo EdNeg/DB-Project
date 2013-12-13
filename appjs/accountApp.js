@@ -123,8 +123,10 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = cartList[i];
-					list.append("<li>" + 
-					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+
+					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + products.brand  + "</p>" +
@@ -166,11 +168,11 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 			var products;
 			//alert(cartList[i]);
 				products = cartList[0];
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
 
-					"<img src= " +  "'" + product.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
 
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
 					"<p> Model: " + products.model + "</p>" + 
@@ -210,8 +212,10 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = bidList[i];
-					list.append("<li>" + 
-					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+
+					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + products.brand  + "</p>" +
@@ -251,8 +255,10 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = orderList[i];
-					list.append("<li>" + 
-					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+
+					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" + 
 					"<p> Brand: " + products.brand  + "</p>" +
