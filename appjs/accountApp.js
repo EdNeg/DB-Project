@@ -630,6 +630,7 @@ function UpdateAccount(){
         //});
 }
 
+
 function UpdateAccount(){
 	alert("You have edited your account!");
 	$.mobile.navigate("#Account");

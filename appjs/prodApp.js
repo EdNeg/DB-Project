@@ -1435,7 +1435,7 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	//document.getElementById("currPid").innerHTML = currentProduct.id;
 	//var brandName = currentProduct.brand + " " + currentProduct.name;
 	var productName = currentProduct.productName;
-	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
+	var startPrice = "Bid Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
 	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
 	var modelNo = "Model: " + currentProduct.model;
 	var dims = "Dimensions: " + currentProduct.dimensions;
