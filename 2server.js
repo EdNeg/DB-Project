@@ -1,7 +1,7 @@
 // Express is the web framework 
 var express = require('express');
 //var mysql = require('mysql');
-var pg = require('pg');
+var pg = require('pg').native;
 var logfmt = require("logfmt");
 var http = require('http');
 
