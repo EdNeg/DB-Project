@@ -33,6 +33,30 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 });
 
 
+$(document).on('pagebeforeshow', "#invoice", function( event, ui ) {
+        console.log("Jose");
+        $.ajax({
+        	//url : "http://localhost:3412/DB-Project/accounts/" + loginID.userID,
+            //method: 'get',
+            contentType: "application/json",
+            dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        var list = $("#invoice-list");
+                        list.empty();
+                        list.append("<li>" +
+                                "<h2>" + "Your Order ID: " + currentOrder.orderID + "</h2>" +
+                                "<h2>" + "Date Paid: " + currentAccount.paidDate  + "</h2>" +"</li>");
+                        list.listview("refresh");                
+        },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        alert("Account not found!");
+                }
+        });
+});
+
+var currentCreditcard = {};
+
 $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
         console.log("Jose");
         $.ajax({
@@ -41,7 +65,7 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
             contentType: "application/json",
             dataType:"json",
                 success : function(data, textStatus, jqXHR){
-                	var currentCreditcard = data.creditcard;
+                	 currentCreditcard = data.creditcard;
                         var list = $("#creditcards-list");
                         var list2 = $("#address-list");
                         list.empty();
@@ -585,6 +609,52 @@ function PlaceBid(){
 
 
 }
+
+var currentOrder = {};
+function PlaceOrder(){
+	if(loginID == 0){
+		alert("You must be logged In!");
+		$.mobile.navigate("#home");
+	}
+	else{
+	$.mobile.loading("show");
+	var lenu = notuserCart.length;
+	for(var i = 0; i<lenu; i++){
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/insertProducts/" + loginID.userID + "/" + notuserCart[i],
+		method: 'post',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Product could not be added");
+		}
+	});
+	}
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" + currentCreditcard.creditCardID + "/" + currentCreditcard.bankAccountID,
+		method: 'post',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentOrder = data.order;
+			$.mobile.navigate("#invoice");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Product could not be added");
+		}
+	});
+	}
+	
+
+
+}
+
 
 var notuserCart = [];
 var i = 0;
