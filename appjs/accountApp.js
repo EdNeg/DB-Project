@@ -228,10 +228,14 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 			var bidList = data.bid;		// ADD var bidProductList = data.bidProduct;
 			var len = bidList.length;
 			var list = $("#bidUser-list");///////////////////////////////////////////////////
+			var list1 = $("#bidUserd-list");
 			list.empty();
 			var products;
 			for (var i=0; i < len; ++i){
 				products = bidList[i];
+				if(output > products.endDate){
+					list1.append("<li><font color = 'red'> You won the Bid for : </font>" + products.productName + "</li>");	
+				}
 					list.append("<li>" + 
 					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
