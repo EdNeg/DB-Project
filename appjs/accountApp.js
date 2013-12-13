@@ -161,11 +161,11 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 		success : function(data, textStatus, jqXHR){
 			var cartList = data.cart;		// ADD var bidProductList = data.bidProduct;
 			var len = cartList.length;
-			var list = $("#cartUser-list");///////////////////////////////////////////////////
+			var list = $("#cartHome-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
-			for (var i=0; i < len; ++i){
-				products = cartList[i];
+			//alert(cartList[i]);
+				products = cartList[0];
 					list.append("<li>" + 
 					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
@@ -179,7 +179,7 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
 					"</a></li>");
 				
-			}
+			
 			
 			list.listview("refresh");
 							
