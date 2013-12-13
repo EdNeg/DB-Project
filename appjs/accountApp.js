@@ -150,6 +150,50 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 	});
 });
 
+$(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
+	var lenu = notuserCart.length;
+	for(var i = 0; i<lenu; i++){
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			var cartList = data.cart;		// ADD var bidProductList = data.bidProduct;
+			var len = cartList.length;
+			var list = $("#cartUser-list");///////////////////////////////////////////////////
+			list.empty();
+			var products;
+			for (var i=0; i < len; ++i){
+				products = cartList[i];
+					list.append("<li>" + 
+					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + products.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + products.brand  + "</p>" +
+					"<p> Model: " + products.model + "</p>" + 
+					"<p> Dimensions: " + products.dimensions + "</p>" +
+					"<p> Description: " + products.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(products.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+
+			alert("You don't have any items in the Cart at the moment");
+
+		}
+	});
+	}
+});
+
 $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/bids/" + loginID.userID,
@@ -542,8 +586,13 @@ function PlaceBid(){
 
 }
 
-
-
+var notuserCart = [];
+var i = 0;
+function AddToCart(){
+	notuserCart[i++]= bidProductID;
+	alert("You have succesfully added a product!");
+	$.mobile.navigate("#categories");
+}
 
 
 function UpdateAccount(){

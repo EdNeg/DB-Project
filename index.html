@@ -36,7 +36,7 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
-			<a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="VerifyUserCart()">Cart</a>
+			<a data-role="button"  href="#cartHome" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
 
 
 		</header>
@@ -233,8 +233,8 @@
 	</div>	
  				 
 		<div class="ui-grid-a">
-            <div class="ui-block-a"><a href="../DB-Project/Place_Bid.html"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
-         	<div class="ui-block-b"><a href="#carts" onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
+            <div class="ui-block-a"><a href="placeBid"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+         	<div class="ui-block-b"><a onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
     	</div>
 	
 			
@@ -1392,6 +1392,21 @@
                        
                         
 </div><!----------------------------------------------------		C A R T			----------------------------------------------------------------------------->
+
+
+<div id="cartHome" data-role="page">
+        <header data-role="header">
+                        <a data-role="button" href="#home" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left">Home</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul id="cartHome-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                       
+                        
+</div><!----------------------------------------------------	C A R T	 HOME	----------------------------------------------------------------------------->
 
 <div id="bidUser" data-role="page">
         <header data-role="header">
