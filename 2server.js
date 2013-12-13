@@ -378,13 +378,29 @@ app.post('/DB-Project/products/:id', function(req, res) {
 	  		'model,brand,dimensions,"tagID") VALUES (' +  req.body.productName + ', '+ req.body.productDesc + 
 	  		', ' + req.body.productPhoto + ', ' + req.body.productPrice + ', ' + req.body.model + ', ' + req.body.brand + ', ' + req.body.dimensions + ', 1)');	 //FIX!!!!
 	var getquery = client.query('SET "@last_insert_id_in_bbProduct" = "LAST_INSERT_ID()"');	
-	var query1 = client.query('INSERT INTO "bbBidProduct" ("bidStartingPrice","startDate","endDate") ' +
+	var query1 = client.query('INSERT INTO "bbBidProduct" ("productID","bidStartingPrice","startDate","endDate") ' +
 			'VALUES ("@last_insert_id_in_bbProduct", "' + req.body.bidStartingPrice + ', '+ req.body.startDate + 
 	  		', ' + req.body.endDate + '")'); 
-	var query2 = client.query('INSERT INTO "bbSell" (userID`,`productID`,`sQuantity`) ' +
-			'VALUES ("'+id+'", @last_insert_id_in_bbProduct, NULL)'); 
+	var query2 = client.query('INSERT INTO "bbSell" ("userID","productID","sQuantity") ' +
+			'VALUES ('+id+', "@last_insert_id_in_bbProduct", NULL)'); 
 	
   	res.json(true);
+  	done();
+});
+});
+
+app.post('/DB-Project/insertProducts/:id/:idp', function(req, res) {
+	var id = parseFloat(req.params.id);
+	var idp = parseFloat(req.params.idp);
+        console.log("POST Products in Add");
+       pg.connect(conString, function(err, client, done) {
+        	  var query = client.query('INSERT INTO "bbAddToCart" ("productID","userID","aQuantity") ' +
+              		'VALUES (' + id + ', ' + idp + ', null)');
+        	  
+        	  res.json(true);
+        	  return;
+
+done();
 });
 });
 
@@ -1710,6 +1726,7 @@ app.get('/DB-Project/creditcards/:ids', function(req, res) {
 
 var query = client.query('SELECT * from "bbCreditCard" as c ' +
 		'inner join "bbAddress" as a on a."addressID" = c."addressID" ' +
+		'inner join "bbBankAccount" as b on u."bankAccountID" = b."bankAccountID" ' +
 		'inner join "bbUser" as u on u."creditCardID" = c."creditCardID" ' +
 		'where u."userID" = ' + ids, function(err, result){
 	/*
@@ -2513,18 +2530,36 @@ app.put('/DB-Project/bids/:id', function(req, res) {
 });
 
 //REST Operation - HTTP POST to add a new a car
-app.post('/DB-Project/sells', function(req, res) {
-        console.log("POST");
+app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
+	var id = req.params.id;
+	var idc = req.params.idc;
+	var idb = req.params.idb;
+        console.log("POST Place Order " + id);
+       pg.connect(conString, function(err, client, done) {
+        	  var query = client.query('INSERT INTO "bbOrder" ("userID") ' +
+              		'VALUES (' + id + ')');
+        	  var getquery = client.query('SET "@last_insert_id_in_bbOrder" = "LAST_INSERT_ID()"');
+        	  var query1 = client.query('INSERT INTO "bbPay" ("creditCardID","bankAccountID","paidAmount","paidDate","orderID) ' +
+                		'VALUES (' + idc + ', '+idb+', null, '+output+', @last_insert_id_in_bbOrder)');
+        	  var query2 = client.query('Select "orderID", "paidDate" from "bbPay" natural join "bbOrder" where "userID"= '+id, function(err, result){
+        			if (err) throw err;
 
-          if(!req.body.hasOwnProperty('addressLine1') || !req.body.hasOwnProperty('addressLine2') || !req.body.hasOwnProperty('city') || !req.body.hasOwnProperty('state') 
-                        || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode') || !req.body.hasOwnProperty('isBilling')) {
-            res.statusCode = 400;
-            return res.send('Error: Missing fields for address.');
-          }
+        			/*
+        			for (i = 0; i<rows.length; i++){
+        					console.log('The solution is: ', rows[i]);
+        				}*/
+        			var len =result.rows.length;
+        			if (len == 0){
+        				res.statusCode = 404;
+        				res.send("Product noty found.");
+        			}
+        			else {	
+        		  		var response = {"order" : result.rows};
+        				//connection.end();
+        		  		res.json(response);
+        		  	}
+        		 });
 
-          var newAddress = new Address(req.body.addressLine1, req.body.addressLine2, req.body.city, req.body.state, req.body.country, req.body.zipcode, req.body.isBilling);
-          console.log("New Address: " + JSON.stringify(newAddress));
-          newAddress.id = addressinfoNextId++;
-          addressinfoList.push(newAddress);
-          res.json(true);
+
+});
 });
