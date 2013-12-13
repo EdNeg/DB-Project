@@ -423,6 +423,7 @@ function ConverToJSON(formData){
 
 var loginID = 0;
 function LogIn(){
+	document.getElementById("cartHome").id = 'cartUser';
 	 $.mobile.loading("show");
      $.ajax({
              url : "http://localhost:3412/DB-Project/accounts/" + $('#upd-userNickname').val() +"/"+ $('#upd-password').val(),
