@@ -237,7 +237,7 @@ var query = client.query('Select * from "bbProduct" as p natural join "bbBidProd
 app.get('/DB-Project/productSearch/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product by name: " + id);
-		pg.connect(conString, function(err, client) {	
+		pg.connect(conString, function(err, client, done) {	
 		var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" where "productName" ilike ' + "'%" + id + "%';" ,function(err, result){
 		
 			if (err) throw err;

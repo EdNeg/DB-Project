@@ -1387,7 +1387,125 @@ $(document).on('pagebeforeshow', "#basketball", function( event, ui ) {/////////
 //----------------------********************************SUBCATEGORIES END****************************************************-->
 //----------------------*******************************************************************************************************-->
 
+///////////////////////////////////////////START SORTING///////////////////////////////////////////
+$(document).on('pagebeforeshow', "#productSortName", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsName",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.productsName;
+			var len = productList.length;
+			var list = $("#PSNList");
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#productSortBrand", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsBrand",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.productsBrand;
+			var len = productList.length;
+			var list = $("#PSBList");
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+$(document).on('pagebeforeshow', "#productSortPrice", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsPrice",
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.productsPrice;
+			var len = productList.length;
+			var list = $("#PSPList");
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("Data not found!");
+		}
+	});
+});
+
+/////////////////////////END SORTING//////////////////////////////////////////////////
 
 
 $(document).on('pagebeforeshow', "#products", function( event, ui ) {
