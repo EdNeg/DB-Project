@@ -375,13 +375,13 @@ app.post('/DB-Project/products/:id', function(req, res) {
   	}
 	pg.connect(conString, function(err, client, done) {	
 	var query = client.query('INSERT INTO "bbProduct" ("productName","productDesc","productPhoto","productPrice",' +
-	  		'model,brand,dimensions,tagID) VALUES (' +  req.body.productName + ', '+ req.body.productDesc + 
+	  		'model,brand,dimensions,"tagID") VALUES (' +  req.body.productName + ', '+ req.body.productDesc + 
 	  		', ' + req.body.productPhoto + ', ' + req.body.productPrice + ', ' + req.body.model + ', ' + req.body.brand + ', ' + req.body.dimensions + ', 1)');	 //FIX!!!!
-	var getquery = client.query('SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()');	
-	var query1 = client.query('INSERT INTO "bbBidProduct" (`productID`,`bidStartingPrice`,`startDate`,`endDate`) ' +
-			'VALUES (@last_insert_id_in_bbProduct, "' + req.body.bidStartingPrice + '", "'+ req.body.startDate + 
-	  		'", "' + req.body.endDate + '")'); 
-	var query2 = client.query('INSERT INTO "bbSell" (`userID`,`productID`,`sQuantity`) ' +
+	var getquery = client.query('SET "@last_insert_id_in_bbProduct" = "LAST_INSERT_ID()"');	
+	var query1 = client.query('INSERT INTO "bbBidProduct" ("bidStartingPrice","startDate","endDate") ' +
+			'VALUES ("@last_insert_id_in_bbProduct", "' + req.body.bidStartingPrice + ', '+ req.body.startDate + 
+	  		', ' + req.body.endDate + '")'); 
+	var query2 = client.query('INSERT INTO "bbSell" (userID`,`productID`,`sQuantity`) ' +
 			'VALUES ("'+id+'", @last_insert_id_in_bbProduct, NULL)'); 
 	
   	res.json(true);
