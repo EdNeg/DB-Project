@@ -371,9 +371,9 @@ app.post('/DB-Project/products/:id', function(req, res) {
     	return res.send('Error: Missing fields for product.');
   	}
 	pg.connect(conString, function(err, client, done) {	
-	var query = client.query('INSERT INTO "bbProduct" (`productID`,`productName`,`productDesc`,`productPhoto`,`productPrice`,' +
-	  		'`model`,`brand`,`dimensions`,`tagID`) VALUES (NULL, "' +  req.body.productName + '", "'+ req.body.productDesc + 
-	  		'", "' + req.body.productPhoto + '", "' + req.body.productPrice + '", "' + req.body.model + '", "' + req.body.brand + '", "' + req.body.dimensions + '",1)');
+	var query = client.query('INSERT INTO "bbProduct" ("productName","productDesc","productPhoto","productPrice",' +
+	  		'model,brand,dimensions,tagID) VALUES (' +  req.body.productName + ', '+ req.body.productDesc + 
+	  		', ' + req.body.productPhoto + ', ' + req.body.productPrice + ', ' + req.body.model + ', ' + req.body.brand + ', ' + req.body.dimensions + ', 1)');	 //FIX!!!!
 	var getquery = client.query('SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()');	
 	var query1 = client.query('INSERT INTO "bbBidProduct" (`productID`,`bidStartingPrice`,`startDate`,`endDate`) ' +
 			'VALUES (@last_insert_id_in_bbProduct, "' + req.body.bidStartingPrice + '", "'+ req.body.startDate + 
@@ -1909,6 +1909,7 @@ pg.connect(conString, function(err, client, done) {
   res.json(response);
 });
 });
+});
 
 // REST Operation - HTTP GET to read a car based on its id
 app.get('/DB-Project/carts/:id', function(req, res) {
@@ -1916,14 +1917,16 @@ app.get('/DB-Project/carts/:id', function(req, res) {
                 console.log("GET carts: " + id);
 
 pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * FROM "bbAddtoCart" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = "' + id + '"', function(err, result){
+var query = client.query('SELECT * FROM "bbAddToCart" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
 
 
                 if (err) throw err;
-        /*
-        for (i = 0; i<rows.length; i++){
-                        console.log('The solution is: ', rows[i]);
-                }*/
+        
+     /*
+        for (i = 0; i<result.rows.length; i++){
+                             console.log('The solution is: ', rows[i]);
+                     }*/
+     
         
         
         
@@ -2009,13 +2012,15 @@ app.get('/DB-Project/sells/:id', function(req, res) {
 		pg.connect(conString, function(err, client, done) {
 
 
-var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = "' + id + '"', function(err, result){
+var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
 
 
 		if (err) throw err;
+	/*
 	for (i = 0; i<rows.length; i++){
-		console.log('The solution is: ', rows[i]);
-	}
+			console.log('The solution is: ', rows[i]);
+		}*/
+	
 	
 	
 	var len =result.rows.length;
@@ -2165,7 +2170,7 @@ app.get('/DB-Project/bids/:id', function(req, res) {
                 console.log("GET bids: " + id);
 pg.connect(conString, function(err, client, done) {
 
-var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = "' + id + '"', function(err, result){
+var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
 
                 if (err) throw err;
         /*
@@ -2337,9 +2342,6 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
 //--------------------------------------Order-----------------------------------------------------------------//
 
 
-var order = require("./appjs/order.js");
-var Order = order.Order;
-
 
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
@@ -2380,11 +2382,13 @@ var query = client.query('SELECT u."userNickname", p."paidDate", r."productPhoto
 
 		'as c on o."orderID" = c."orderID" inner join "bbProduct" as r on c."productID" = r."productID" inner join "bbBidProduct" as bp on r."productID" = bp."productID" inner join ' +
 
-		'"bbSell" as s on r."productID" = s."productID" WHERE s."userID"= "' + id + '"', function(err, result){
+		'"bbSell" as s on r."productID" = s."productID" WHERE s."userID"= ' + id, function(err, result){
                 if (err) throw err;
+        /*
         for (i = 0; i<rows.length; i++){
-                console.log('The solution is: ', rows[i]);
-        }
+                        console.log('The solution is: ', rows[i]);
+                }*/
+        
         
         
         var len =result.rows.length;
@@ -2457,5 +2461,4 @@ app.post('/DB-Project/sells', function(req, res) {
           newAddress.id = addressinfoNextId++;
           addressinfoList.push(newAddress);
           res.json(true);
-});
 });

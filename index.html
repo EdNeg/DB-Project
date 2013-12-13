@@ -1095,15 +1095,97 @@
 <!----------------------********************************SUBCATEGORIES END****************************************************-->
 <!----------------------*******************************************************************************************************-->
 
+<div id="Account" data-role="page">
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="#regular" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Profile</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li data-role="list-divider" role="heading">Account</li>
+			<li data-theme="c"><a href="#accounts" data-transition="slide">
+					View Personal Information</a></li>
+			<li data-theme="c"><a href="#creditcards" data-transition="slide">
+					View Credit Card</a></li>
+			<li data-theme="c"><a href="#account-view" data-transition="slide">
+				    Edit Account</a></li>
+		</ul>
+
+</div><!----------------------------------------------------		Account		----------------------------------------------------------------------------->
+
+
+<div id="cartUser" data-role="page">
+        <header data-role="header" data-theme="d">
+                        <a data-role="button" data-rel="back" href="#regular" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left" data-theme="b">Home</a>
+                         <h1><i>BoricuaBay</i></h1>
+
+                </header>
+                        <div data-role="content">
+                                <ul id="cartUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                       
+                        
+</div><!----------------------------------------------------		View Cart		----------------------------------------------------------------------------->
 
 
 
-<div data-role="page" id= "crud-user">
-<header data-role="header">
-		<h1>Modify User Profile</h1>	
-	
-	
-</div><!-- Page Edit User ------------------------------------------------------------------------------------->
+<div id="bidUser" data-role="page">
+        <header data-role="header" data-theme="d">
+                        <a data-role="button" href="#regular" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul id="bidUser-list" data-role="listview" data-inset="true">
+                                	</ul>
+                        </div>
+                       
+                        
+</div><!----------------------------------------------------		B I D S		----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="sellProduct">
+
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="#regular" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">User Name</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li data-role="list-divider" role="heading">Sell Product</li>
+			<li data-theme="c"><a href="#newProduct" data-transition="slide">
+					New Product </a></li>
+
+			<li data-theme="c"><a href="#productUser" data-transition="slide">
+					Currently Selling</a></li>
+			<li data-theme="c"><a href="#BidforProduct" data-transition="slide"> See Product Bids </a></li>
+		</ul>
+</div><!----------------------------------------------------		Sell Product		----------------------------------------------------------------------------->
+
+<div id="creditcards" data-role="page">
+        <header data-role="header" data-theme="d">
+                        <a data-role="button" data-rel="back" href="#Account" data-icon="arrow-l"
+                                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
+                        <h1>BoricuaBay</h1>
+                </header>
+                        <div data-role="content">
+                                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                        <li data-role="list-divider" role="heading">Credit Card Info</li>      
+                                <li id="creditcards-list" data-inset="true">
+                                </ul>
+                        </div> 
+                        <div data-role="content">
+                                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                                <li data-role="list-divider" role="heading">Billing Address</li>        
+                                <li id="address-list" data-inset="true">
+                                </ul>
+                        </div> 
+</div><!----------------------------------------------------		View Creditcard		----------------------------------------------------------------------------->
 
 
 
@@ -1221,32 +1303,30 @@
 </div><!-- -----------------------------------------Page View Admins------------------------------------------------------------------------>
 
 <div data-role="page" id="regular">
-	<header data-role="header">
-		<a data-role="button" href="#home" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Home</a>
+	<header data-role="header" data-theme="d">
+		<a data-role="button" href="#home" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Home</a>
 		<h1>BoricuaBay</h1>
 	</header>
 	<br>
 	<br>
 	<ul data-role="listview" data-divider-theme="b" data-inset="true">
 		<li data-role="list-divider" role="heading" id="regularUser"></li>
-		<li data-theme="c"><a href="#home" data-transition="slide">
-				Account </a></li>
+		<li data-theme="c"><a href="#Account" data-transition="slide">Account </a></li>
 		<li data-theme="c"><a href="#cartUser" data-transition="slide"> View
 				Cart </a></li>
 		<li data-theme="c"><a href="#bidUser" data-transition="slide"> View
 				Bids </a></li>
 
 		<li data-theme="c"><a href="#sellProduct" data-transition="slide">Products</a></li>
-		<li data-theme="c"><a href="../DB-Project/Sold_History.html"
-			data-transition="slide"> Sold Product </a></li>
+		<li data-theme="c"><a href="#soldUser"data-transition="slide"> Sold Product </a></li>
 
 	</ul>
 </div><!----------------------------------------------------User Main Page----------------------------------------------------------------------------->
 
 <div id="accounts" data-role="page">
-	<header data-role="header">
+	<header data-role="header" data-theme="d">
 	        <a data-role="button" href="#Account" data-icon="arrow-l"
-	                data-iconpos="left" class="ui-btn-left">Account</a>
+	                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
 	        <h1>BoricuaBay</h1>
 	</header>
     <div data-role="content">
@@ -1265,8 +1345,8 @@
 
 
 <div id="placeBid" data-role="page">
-	<header data-role="header">
-	                <a data-role="button" href="#product-view" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">Cancel</a>
+	<header data-role="header" data-theme="d">
+	                <a data-role="button" href="#product-view" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Cancel</a>
 	                <h1>BoricuaBay</h1>
 	        </header>
 	        <form id="placeBid-form">
@@ -1282,25 +1362,13 @@
 	</center>
 </div><!----------------------------------------------------Place Bids----------------------------------------------------------------------------->
 
-<div id="soldUser" data-role="page">
-		<header data-role="header" data-theme="d">
-			<a data-role="button" href="../DB-Project/Sold_History.html" data-icon="arrow-l"
-				data-iconpos="left" class="ui-btn-left">Sold History</a>
-			<h1>BoricuaBay</h1>
-		</header>
-		<br>
-		<br>
-		 <div data-role="content">
-		 	<h2 color="red" >NOT SOLD </h2>
-                               
-</div><!----------------------------------------------------Not_Sold----------------------------------------------------------------------------->
 
 
 <div data-role="page" id="newProduct">
 
-		<header data-role="header" data-theme="d">
+		<header data-role="header" data-theme="d" data-position="fixed">
 			<a data-role="button" href="#sellProduct" data-icon="arrow-l"
-				data-iconpos="left" class="ui-btn-left">User Name</a>
+				data-iconpos="left" class="ui-btn-left" data-theme="b">User Name</a>
 			<h1>BoricuaBay</h1>
 
 			<a data-role="button" data-rel="back" onclick="SaveProductUser()">Save</a>
@@ -1311,6 +1379,239 @@
   					<li><label for="productPhoto"> Image Source: <input id="productPhoto" name="productPhoto" type="text"/></label></li>
   					<li><label for="productName"> Name: <input id="productName" name="productName" type="text"/></label></li>
   					<li><label for="productDesc"> Description: <input id="productDesc" name="productDesc" type="text"/></label></li>
+  					<br/>
+  					<select id="opts" onchange="showForm()">
+					   <option value="0">Select Category</option>
+					   <option value="1">Books</option>
+					   <option value="2">Electronics</option>
+					   <option value="3">Computers</option>
+					   <option value="4">Clothing</option>
+					   <option value="5">Shoes</option>
+					   <option value="6">Sports</option>
+
+					</select>
+					
+					<div id="f1" style="display:none">
+					   <form name="form1">
+					       <select onchange="showForm()">
+					           <option value="0">Select Sub-category</option>
+					           <option value="1">Children</option>
+					           <option value="2">Fiction</option>
+					           <option value="3">Technology</option>
+					           <option value="4">Business</option>
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f2" style="display:none">
+					   <form name="form2">
+					       <select onchange="showForm()">
+					           <option value="0">Select Sub-category</option>
+					           <option value="1">TV</option>
+					           <option value="2">Audio</option>
+					           <option value="3">Phones</option>
+					           <option value="4">Cameras</option>
+					           <option value="5">Video</option>
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f3" style="display:none">
+					   <form name="form3">
+					       <select onchange="showForm()">
+					           <option value="0">Select Sub-category</option>
+					           <option value="1">Laptops</option>
+					           <option value="2">Desktops</option>
+					           <option value="3">Tablets</option>
+					           <option value="4">Printers</option>
+					         
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f4" style="display:none">
+					   <form name="form4">
+					       <select id="opts1" onchange="showForm()">
+					           <option value="0">Select Sub-category</option>
+					           <option value="1">Children</option>
+					           <option value="2">Men</option>
+					           <option value="3">Women</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f5" style="display:none">
+					   <form name="form5">
+					       <select onchange="showForm()">
+					           <option value="0">Select Tag</option>
+					           <option value="1">Shirts</option>
+					           <option value="2">Pants</option>
+					           <option value="3">Socks</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f6" style="display:none">
+					   <form name="form6">
+					       <select onchange="showForm()">
+					           <option value="0">Select Tag</option>
+					           <option value="1">Shirts</option>
+					           <option value="2">Pants</option>
+					           <option value="3">Dresses</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f7" style="display:none">
+					   <form name="form7">
+					       <select id="opts2" onchange="showForm()">
+					           <option value="0">Select Sub-Category</option>
+					           <option value="1">Bicycles</option>
+					           <option value="2">Fishing</option>
+					           <option value="3">Baseball</option>
+					           <option value="4">Golf</option>
+					           <option value="5">Basketball</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f8" style="display:none">
+					   <form name="form8">
+					       <select onchange="showForm()">
+					           <option value="0">Select Tag</option>
+					           <option value="1">Frames</option>
+					           <option value="2">Wheels</option>
+					           <option value="3">Helmets</option>
+					           <option value="4">Parts</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					   
+					   
+					   <script type="text/javascript">
+					   function showForm() {
+					       var selopt = document.getElementById("opts").value;
+					        var selopt1 = document.getElementById("opts1").value;
+					        var selopt2 = document.getElementById("opts2").value;
+					        
+					       if (selopt == 1) {
+					           document.getElementById("f1").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           
+					       }
+					       if (selopt == 2) {
+					           document.getElementById("f2").style.display = "block";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					       }
+					       if (selopt == 0) {
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					       }
+					       if (selopt == 3) {
+					           document.getElementById("f3").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           
+					           
+					       }if (selopt == 4) {
+					           document.getElementById("f4").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           
+					       }
+					       if (selopt == 5) {
+					           document.getElementById("f4").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           
+					           
+					       }if (selopt == 6) {
+					           document.getElementById("f7").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           
+					       }
+					       //////SubCats
+					       if (selopt1 == 2) {
+					           document.getElementById("f5").style.display = "block";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "block";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					       }
+					       if (selopt1 == 3) {
+					           document.getElementById("f6").style.display = "block";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "block";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					       }
+					       if (selopt2 == 1) {
+					           document.getElementById("f8").style.display = "block";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f7").style.display = "block";
+					           document.getElementById("f1").style.display = "none";
+					       }
+					       
+					   }
+					</script>
+					<br />
+					<br />
   					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
   					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
   					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
@@ -1321,11 +1622,13 @@
 
   			  	</ul>
 			 </fieldset>
-			</form>
+			 
+			 
+</form>
 </div>	<!----------------------------------------------------New_Product----------------------------------------------------------------------------->	
 
 <div id="account-view" data-role="page">
-	<header data-role="header" data-theme="d">
+	<header data-role="header" data-theme="d" data-position="fixed">
 			<a data-role="button" href="#Account" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
 			<h1>BoricuaBay</h1>
@@ -1362,9 +1665,9 @@
 </div><!----------------------------------------------------Edit Account----------------------------------------------------------------------------->	
 
 <div id="productUser" data-role="page">
-        <header data-role="header">
+        <header data-role="header" data-theme="d">
                         <a data-role="button" href="#regular" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left">Account</a>
+                                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
                         <div data-role="content">
@@ -1374,61 +1677,13 @@
 </div><!----------------------------------------------------Currently_Selling----------------------------------------------------------------------------->	
 
 
-<div id="cartUser" data-role="page">
-        <header data-role="header">
-                        <a data-role="button" href="#regular" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left">Account</a>
-                        <h1>BoricuaBay</h1>
-                </header>
-                        <div data-role="content">
-                                <ul id="cartUser-list" data-role="listview" data-inset="true">
-                                	</ul>
-                        </div>
-                       
-                        
-</div><!----------------------------------------------------		C A R T			----------------------------------------------------------------------------->
 
-<div id="bidUser" data-role="page">
-        <header data-role="header">
-                        <a data-role="button" href="#regular" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left">Account</a>
-                        <h1>BoricuaBay</h1>
-                </header>
-                        <div data-role="content">
-                                <ul id="bidUser-list" data-role="listview" data-inset="true">
-                                	</ul>
-                        </div>
-                       
-                        
-</div><!----------------------------------------------------		B I D S		----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="Account">
-		<header data-role="header">
-			<a data-role="button" href="#regular" data-icon="arrow-l"
-		data-iconpos="left" class="ui-btn-left">Profile</a>
-
-			<h1>BoricuaBay</h1>
-		</header>
-		<br>
-		<br>
-		<ul data-role="listview" data-divider-theme="b" data-inset="true">
-			<li data-role="list-divider" role="heading">Account</li>
-			<li data-theme="c"><a href="#accounts" data-transition="slide">
-					View Personal Information</a></li>
-			<li data-theme="c"><a href="#creditcards" data-transition="slide">
-					View Credit Card</a></li>
-			<li data-theme="c"><a href="#account-view" data-transition="slide">
-				    Edit Account</a></li>
-		</ul>
-
-</div><!----------------------------------------------------		Account		----------------------------------------------------------------------------->
 
 
 <div id="BidforProduct" data-role="page">
-        <header data-role="header">
+        <header data-role="header" data-theme="d">
                         <a data-role="button" href="#sellProduct" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left">Account</a>
+                                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
                         <h1>BoricuaBay</h1>
                 </header>
                         <div data-role="content">
@@ -1438,31 +1693,13 @@
                                          
 </div><!----------------------------------------------------		Product Bids		----------------------------------------------------------------------------->
 
-<div data-role="page" id="sellProduct">
 
-		<header data-role="header" data-theme="d">
-			<a data-role="button" href="#regular" data-icon="arrow-l"
-				data-iconpos="left" class="ui-btn-left">User Name</a>
-			<h1>BoricuaBay</h1>
-		</header>
-		<br>
-		<br>
-		<ul data-role="listview" data-divider-theme="b" data-inset="true">
-			<li data-role="list-divider" role="heading">Sell Product</li>
-			<li data-theme="c"><a href="#newProduct" data-transition="slide">
-					New Product </a></li>
-
-			<li data-theme="c"><a href="#productUser" data-transition="slide">
-					Currently Selling</a></li>
-			<li data-theme="c"><a href="#BidforProduct" data-transition="slide"> See Product Bids </a></li>
-		</ul>
-</div><!----------------------------------------------------		Sell Product		----------------------------------------------------------------------------->
 
 
 <div id="soldUser" data-role="page">
 		<header data-role="header" data-theme="d">
 			<a data-role="button" data-rel="back" href="#soldProduct" data-icon="arrow-l"
-				data-iconpos="left" class="ui-btn-left">Sold History</a>
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Sold History</a>
 			<h1>BoricuaBay</h1>
 		</header>
 		 <div data-role="content">
@@ -1474,7 +1711,7 @@
 <div data-role="page" id="soldProduct">
 		<header data-role="header" data-theme="d">
 			<a data-role="button" href="#regular" data-icon="arrow-l"
-				data-iconpos="left" class="ui-btn-left">User Name</a>
+				data-iconpos="left" class="ui-btn-left" data-theme"b">User Name</a>
 			<h1>BoricuaBay</h1>
 		</header>
 		<br>
@@ -1486,41 +1723,10 @@
 		</ul>
 </div><!----------------------------------------------------		Sold Product		----------------------------------------------------------------------------->
 
-<div id="cartUser" data-role="page">
-        <header data-role="header">
-                        <a data-role="button" data-rel="back" href="#regular" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left">Home</a>
-                         <h1><i>BoricuaBay</i></h1>
-
-                </header>
-                        <div data-role="content">
-                                <ul id="cartUser-list" data-role="listview" data-inset="true">
-                                	</ul>
-                        </div>
-                       
-                        
-</div><!----------------------------------------------------		View Cart		----------------------------------------------------------------------------->
 
 
-<div id="creditcards" data-role="page">
-        <header data-role="header">
-                        <a data-role="button" data-rel="back" href="#Account" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left">Account</a>
-                        <h1>BoricuaBay</h1>
-                </header>
-                        <div data-role="content">
-                                <ul data-role="listview" data-divider-theme="b" data-inset="true">
-                        <li data-role="list-divider" role="heading">Credit Card Info</li>      
-                                <li id="creditcards-list" data-inset="true">
-                                </ul>
-                        </div> 
-                        <div data-role="content">
-                                <ul data-role="listview" data-divider-theme="b" data-inset="true">
-                                <li data-role="list-divider" role="heading">Billing Address</li>        
-                                <li id="address-list" data-inset="true">
-                                </ul>
-                        </div> 
-</div><!----------------------------------------------------		View Creditcard		----------------------------------------------------------------------------->
+
+
 
 
 

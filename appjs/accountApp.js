@@ -542,45 +542,6 @@ function PlaceBid(){
 
 }
 
-
-
-
-
-function UpdateAccount(){
-	alert("You have edited your account!");
-	$.mobile.navigate("#Account");
-        //$.mobile.loading("show");
-        //var form = $("#account-view-form");
-        //var formData = form.serializeArray();
-        //console.log("form Data: " + formData);
-        //var updAccount = ConverToJSON(formData);
-        //updAccount.id = currentAccount.id;
-        //console.log("Updated Account: " + JSON.stringify(updAccount));
-        //var updAccountJSON = JSON.stringify(updAccount);
-        //$.ajax({
-         //       url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-           //     method: 'put',
-             //   data : updAccountJSON,
-               // contentType: "application/json",
-                //dataType:"json",
-                //success : function(data, textStatus, jqXHR){
-                  //      currentAccount = data.account;
-                    //    $.mobile.loading("hide");
-                      //  $.mobile.navigate("#accounts");
-                //},
-                //error: function(data, textStatus, jqXHR){
-                  //      console.log("textStatus: " + textStatus);
-                    //    $.mobile.loading("hide");
-                      //  if (data.status == 404){
-                        //        alert("Data could not be updated!");
-                       // }
-                       // else {
-                         //       alert("Internal Error.");               
-                        //}
-                //}
-        //});
-}
-
 function UpdateAccount(){
 	alert("You have edited your account!");
 	$.mobile.navigate("#Account");
