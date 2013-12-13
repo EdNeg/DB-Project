@@ -1541,9 +1541,9 @@ app.post('/DB-Project/accounts', function(req, res) {
   	  		'`addressID`) VALUES (NULL, "' + req.body.creditCardOwner + '", "'+ req.body.creditCardNumber + 
   	  		'", "' + req.body.securityCode + '", "' + req.body.expDate + '", @last_insert_id_in_bbAddress1)');
   	var getquery3 = client.query('SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()');
-  	var query35 = client.query('INSERT INTO "bbBankAccount" (`accountNumber`,`accountType`,`accountOwner`,`bankName)'+
-  			'VALUES ("' + req.body.accountNumber + '", "'+ req.body.accountType + 
-  	  		'", "' + req.body.accountOwner + '", "' + req.body.bankName + '")');
+  	var query35 = client.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName")'+
+  			'VALUES (' + req.body.accountNumber + ', '+ req.body.accountType + 
+  	  		', ' + req.body.accountOwner + ', ' + req.body.bankName + ')');
   	
   	var query4 = client.query('UPDATE "bbUser" SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser');
   	
