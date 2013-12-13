@@ -166,11 +166,13 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 			var products;
 			//alert(cartList[i]);
 				products = cartList[0];
-					list.append("<li>" + 
-					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
-					"<p><i><b>" + products.productName +  "</b></i></p>" +
+					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
+
+					"<img src= " +  "'" + product.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
-					"<p> Brand: " + products.brand  + "</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
 					"<p> Model: " + products.model + "</p>" + 
 					"<p> Dimensions: " + products.dimensions + "</p>" +
 					"<p> Description: " + products.productDesc + "</p>" +

@@ -147,7 +147,7 @@ app.get('/DB-Project/productsName', function(req, res) {
 	
   var response = {"productsName" : result.rows};
   res.json(response);
-  
+  done();
 });
 });
 });
@@ -166,7 +166,7 @@ app.get('/DB-Project/productsBrand', function(req, res) {
 	
   var response = {"productsBrand" : result.rows};
   res.json(response);
-  
+  done();
 });
 });
 });
@@ -186,7 +186,7 @@ app.get('/DB-Project/productsPrice', function(req, res) {
 	
   var response = {"productsPrice" : result.rows};
   res.json(response);
-  
+  done();
 
 
 });
@@ -224,6 +224,7 @@ var query = client.query('Select * from "bbProduct" as p natural join "bbBidProd
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });
 
 });
@@ -251,6 +252,7 @@ app.get('/DB-Project/productSearch/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
 });	
 });
 });
@@ -279,6 +281,7 @@ app.get('/DB-Project/productsTag/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });
 
 });
@@ -421,6 +424,7 @@ app.get('/DB-Project/categories', function(req, res) {
   
   var response = {"categories" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -450,6 +454,7 @@ app.get('/DB-Project/categories/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });	
 });
 });
@@ -488,6 +493,7 @@ app.put('/DB-Project/categories/:id', function(req, res) {
 			var response = {"category" : theCategory};
   			res.json(response);		
   		}
+  		
 	}
 });
 
@@ -562,6 +568,7 @@ app.get('/DB-Project/Books', function(req, res) {
 	
   var response = {"books" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -591,6 +598,7 @@ app.get('/DB-Project/Books/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });	
 });
 });
@@ -704,6 +712,7 @@ app.get('/DB-Project/Electronics', function(req, res) {
 	
   var response = {"electronics" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -733,6 +742,7 @@ app.get('/DB-Project/Electronics/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  done();
  });	
 });
 });
@@ -847,6 +857,7 @@ app.get('/DB-Project/Computers', function(req, res) {
 	
   var response = {"computers" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -876,6 +887,7 @@ app.get('/DB-Project/Computers/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });	
 });
 });
@@ -988,6 +1000,7 @@ app.get('/DB-Project/Clothing', function(req, res) {
 	
   var response = {"clothing" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -1018,6 +1031,7 @@ app.get('/DB-Project/Clothing/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });	
 });
 });
@@ -1131,6 +1145,7 @@ app.get('/DB-Project/Shoes', function(req, res) {
 	
   var response = {"shoes" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -1161,6 +1176,7 @@ app.get('/DB-Project/Shoes/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });	
 });
 });
@@ -1273,6 +1289,7 @@ app.get('/DB-Project/Sports', function(req, res) {
 	
   var response = {"sports" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -1302,6 +1319,7 @@ app.get('/DB-Project/Sports/:id', function(req, res) {
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });	
 });
 });
@@ -1413,6 +1431,7 @@ var query = client.query('SELECT * FROM "bbUser" NATURAL JOIN "bbAddress" WHERE 
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });
   });
 });
@@ -1457,6 +1476,7 @@ var query = client.query('SELECT * FROM "bbUser" WHERE "userNickname" = ' + "'" 
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });
   });
 });
@@ -1552,6 +1572,7 @@ app.post('/DB-Project/accounts', function(req, res) {
   	console.log("New Biling Address: " );
   	console.log("New CreditCard:" );
   	res.json(true);
+  	done();
 });
 });
 
@@ -1584,6 +1605,7 @@ app.get('/DB-Project/accountas', function(req, res) {
 	
   var response = {"accountas" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -1614,6 +1636,7 @@ var query = client.query('SELECT * FROM "bbAdmin" WHERE "userID" = ' + id, funct
 		//connection.end();
   		res.json(response);
   	}
+  	done();
  });
   });
   });
@@ -1708,6 +1731,7 @@ var query = client.query('SELECT * from "bbCreditCard" as c ' +
 		//client.end();
   		res.json(response);
   	}
+  	done();
  });
   });
 });
@@ -1910,6 +1934,7 @@ pg.connect(conString, function(err, client, done) {
 	
   var response = {"carts" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -1943,6 +1968,7 @@ var query = client.query('SELECT * FROM "bbAddToCart" natural join "bbProduct" n
                 //client.end();
                   res.json(response);
           }
+          done();
  });
   });
 });
@@ -1973,6 +1999,7 @@ var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" 
             //client.end();
               res.json(response);
       }
+      done();
 });
 });
 });
@@ -2066,6 +2093,7 @@ var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natura
 		//client.end();
   		res.json(response);
   	}
+  	done();
  });
   });
 });
@@ -2099,6 +2127,7 @@ var query = client.query('SELECT * from "bbSell" natural join "bbUser" ' +
                 //client.end();
                   res.json(response);
           }
+          done();
  });
   });
 });
@@ -2193,6 +2222,7 @@ app.get('/DB-Project/bids', function(req, res) {
 	
   var response = {"bids" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -2223,6 +2253,7 @@ var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natu
                 //client.end();
                   res.json(response);
           }
+          done();
  });
   });
 });
@@ -2236,7 +2267,7 @@ app.get('/DB-Project/abids/:ids', function(req, res) {
 var query = client.query('SELECT u."userNickname", b."bidDate", b."bidAmount", r."productPhoto", r."productDesc", r."productName", ' +
 		'r.brand, r.model, r.dimensions FROM "bbBidFor" as b inner join "bbUser" as u on b."userID" = u."userID" ' +
 		'inner join "bbProduct" as r on b."productID" = r."productID" inner join ' +
-		'"bbSell" as s on r."productID" = s."productID" WHERE s."userID"= "'+ ids + '"', function(err, result){
+		'"bbSell" as s on r."productID" = s."productID" WHERE s."userID"= '+ ids, function(err, result){
             if (err) throw err;
     
     /*
@@ -2248,7 +2279,7 @@ var query = client.query('SELECT u."userNickname", b."bidDate", b."bidAmount", r
               var response = {"bidproduct" : result.rows};
             //client.end();
               res.json(response);
-      
+      done();
 });
 });
 });
@@ -2368,7 +2399,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
 			console.log("Here6");
 			return res.send('The bid date has passed');
 		}
-
+done();
 
 });
 });
@@ -2399,6 +2430,7 @@ pg.connect(conString, function(err, client, done) {
 	}
   var response = {"bids" : result.rows};
   res.json(response);
+  done();
 });
 });
 });
@@ -2434,6 +2466,7 @@ var query = client.query('SELECT u."userNickname", p."paidDate", r."productPhoto
                 //client.end();
                   res.json(response);
           }
+          done();
  });
   });
 });
