@@ -232,17 +232,24 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 			var bidList = data.bid;		// ADD var bidProductList = data.bidProduct;
 			var len = bidList.length;
 			var list = $("#bidUser-list");///////////////////////////////////////////////////
+			var list1 = $("#bidUserd-list");
 			list.empty();
 			var products;
-			for (var i=0; i < len; ++i){
-				products = bidList[i];
-					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
-
-					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + products.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + products.brand  + "</p>" +
+  			for (var i=0; i < len; ++i){
+  				products = bidList[i];
+- 					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+- 
+ -				if(output > products.endDate){
+++	if(output > products.endDate){
++ 					list1.append("<li><font color = 'red'> You won the Bid for : </font>" + products.productName + "</li>");	
++ 				}
++ 					list.append("<li>" + 
+ -					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+ +					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+ +
+  					"<p><i><b>" + products.productName +  "</b></i></p>" +
+  					"<p>_</p>" +
+  					"<p> Brand: " + products.brand  + "</p>" +
 					"<p> Model: " + products.model + "</p>" + 
 					"<p> Dimensions: " + products.dimensions + "</p>" +
 					"<p> Description: " + products.productDesc + "</p>" +
@@ -427,6 +434,7 @@ function ConverToJSON(formData){
 
 var loginID = 0;
 function LogIn(){
+	document.getElementById("cartHome").id = 'cartUser';
 	 $.mobile.loading("show");
      $.ajax({
              url : "http://localhost:3412/DB-Project/accounts/" + $('#upd-userNickname').val() +"/"+ $('#upd-password').val(),
