@@ -1724,7 +1724,7 @@ app.get('/DB-Project/creditcards/:ids', function(req, res) {
 		console.log("GET creditcard: " + ids);
 		pg.connect(conString, function(err, client, done) {
 
-var query = client.query('SELECT * from "bbCreditCard" as c ' +
+var query = client.query('SELECT * FROM "bbCreditCard" as c ' +
 		'inner join "bbAddress" as a on a."addressID" = c."addressID" ' +
 		'inner join "bbBankAccount" as b on u."bankAccountID" = b."bankAccountID" ' +
 		'inner join "bbUser" as u on u."creditCardID" = c."creditCardID" ' +
