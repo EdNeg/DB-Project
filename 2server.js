@@ -1946,6 +1946,36 @@ var query = client.query('SELECT * FROM "bbAddToCart" natural join "bbProduct" n
  });
   });
 });
+
+app.get('/DB-Project/notuserCarts/:id', function(req, res) {
+    var id = req.params.id;
+            console.log("GET carts: " + id);
+
+pg.connect(conString, function(err, client, done) {
+var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" WHERE "productID" = ' + id, function(err, result){
+
+
+            if (err) throw err;
+    /*
+    for (i = 0; i<rows.length; i++){
+                    console.log('The solution is: ', rows[i]);
+            }*/
+    
+    
+    
+    var len =result.rows.length;
+    if (len == 0){
+            res.statusCode = 404;
+            res.send("Cart not found.");
+    }
+    else {        
+              var response = {"cart" : result.rows};
+            //client.end();
+              res.json(response);
+      }
+});
+});
+});
 // REST Operation - HTTP PUT to updated a car based on its id
 app.put('/DB-Project/addressinfos/:id', function(req, res) {
         var id = req.params.id;
