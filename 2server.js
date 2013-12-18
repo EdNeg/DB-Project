@@ -1975,7 +1975,7 @@ app.get('/DB-Project/carts/:id', function(req, res) {
         
         
         
-        var len =result.rows.length;
+        var len =rows.length;
         if (len == 0){
                 res.statusCode = 404;
                 res.send("Cart not found.");
@@ -2100,7 +2100,7 @@ var query = connection.query("SELECT * FROM bbSell natural join bbProduct natura
 	
 	
 	
-	var len =result.rows.length;
+	var len =rows.length;
 	if (len == 0){
 		res.statusCode = 404;
 		res.send("Account not found.");
