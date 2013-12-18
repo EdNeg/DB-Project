@@ -47,7 +47,7 @@ app.listen(port, function(){
 
 //Mysql Database Connection
 
-/*
+
 var connection = mysql.createConnection({
 	host : 'localhost',
 	user : 'root',
@@ -56,15 +56,15 @@ var connection = mysql.createConnection({
 	database : 'boricuabaydb'
 
 
-});*/
+});
 
 
 // Postgres Database connection string: pg://<username>:<password>@host:port/dbname 
 
-var conString = "pg://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
+//var conString = "pg://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
 
 /*
-var connection = new pg.Client(conString);
+var connection = new pg.connection(conString);
 connection.connect();*/
 
 
@@ -75,8 +75,8 @@ connection.connect(function(err) {
   }*/
 //Test connection within console
 /*
-pg.connect(conString, function(err, client, done) {
-  client.query('SELECT * FROM "bbCategory"', function(err, result) {
+pg.connect(conString, function(err, connection, done) {
+  connection.query('SELECT * FROM "bbCategory"', function(err, result) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
@@ -87,10 +87,10 @@ pg.connect(conString, function(err, client, done) {
 /*
 var pg = require('pg').native
   , connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/boricuabay'
-  , client
+  , connection
   , query;
 
-connection = new pg.Client(connectionString);
+connection = new pg.connection(connectionString);
 connection.connect();*/
 
 // Let heroku app know where to start
@@ -136,8 +136,8 @@ app.get('/DB-Project/products', function(req, res) {
 //PRODUCTS ORDERED BY NAME
 app.get('/DB-Project/productsName', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY NAME");
-	pg.connect(conString, function(err, client, done) {	
-	client.query('Select * from "bbProduct" as p ' + 
+	pg.connect(conString, function(err, connection, done) {	
+	connection.query('Select * from "bbProduct" as p ' + 
 	'inner join "bbBidProduct" as b on b."productID" = p."productID" order by p."productName"' , function(err, result) {
   if (err) throw err;
 	/*
@@ -155,8 +155,8 @@ app.get('/DB-Project/productsName', function(req, res) {
 //PRODUCTS ORDERED BY BRAND
 app.get('/DB-Project/productsBrand', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY BRAND");
-	pg.connect(conString, function(err, client, done) {	
-	client.query('Select * from "bbProduct" as p ' + 
+	pg.connect(conString, function(err, connection, done) {	
+	connection.query('Select * from "bbProduct" as p ' + 
 	'inner join "bbBidProduct" as b on b."productID" = p."productID" order by p.brand;', function(err, result) {
   if (err) throw err;
 	/*
@@ -174,9 +174,9 @@ app.get('/DB-Project/productsBrand', function(req, res) {
 //PRODUCTS ORDERED BY PRICE
 app.get('/DB-Project/productsPrice', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY PRICE");
-	pg.connect(conString, function(err, client, done) {	
+	pg.connect(conString, function(err, connection, done) {	
 
-	client.query('Select * from "bbProduct" as p ' + 
+	connection.query('Select * from "bbProduct" as p ' + 
 	'inner join "bbBidProduct" as b on b."productID" = p."productID" order by b."bidStartingPrice";', function(err, result) {
   if (err) throw err;
 	/*
@@ -198,8 +198,8 @@ app.get('/DB-Project/productsPrice', function(req, res) {
 app.get('/DB-Project/products/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product: " + id);
-		pg.connect(conString, function(err, client, done) {	
-var query = client.query('Select * from "bbProduct" as p natural join "bbBidProduct" ' + 
+		pg.connect(conString, function(err, connection, done) {	
+var query = connection.query('Select * from "bbProduct" as p natural join "bbBidProduct" ' + 
 							'natural join "bbTag" ' +
 							'natural join "bbSubCategory" ' + 
 							'natural join "bbCategory" ' + 
@@ -237,8 +237,8 @@ var query = client.query('Select * from "bbProduct" as p natural join "bbBidProd
 app.get('/DB-Project/productSearch/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product by name: " + id);
-		pg.connect(conString, function(err, client, done) {	
-		var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" where "productName" ilike ' + "'%" + id + "%';" ,function(err, result){
+		pg.connect(conString, function(err, connection, done) {	
+		var query = connection.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" where "productName" ilike ' + "'%" + id + "%';" ,function(err, result){
 		
 			if (err) throw err;
 	
@@ -263,8 +263,8 @@ app.get('/DB-Project/productSearch/:id', function(req, res) {
 app.get('/DB-Project/productsTag/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET product with tagID: " + id);
-		pg.connect(conString, function(err, client, done) {	
-		var query = client.query('Select * from "bbProduct" natural join "bbBidProduct" natural join "bbTag" where "tagID" = ' + id, function(err, result){
+		pg.connect(conString, function(err, connection, done) {	
+		var query = connection.query('Select * from "bbProduct" natural join "bbBidProduct" natural join "bbTag" where "tagID" = ' + id, function(err, result){
 		if (err) throw err;
 
 	/*
@@ -373,15 +373,15 @@ app.post('/DB-Project/products/:id', function(req, res) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for product.');
   	}
-	pg.connect(conString, function(err, client, done) {	
-	var query = client.query('INSERT INTO "bbProduct" ("productName","productDesc","productPhoto","productPrice",' +
+	pg.connect(conString, function(err, connection, done) {	
+	var query = connection.query('INSERT INTO "bbProduct" ("productName","productDesc","productPhoto","productPrice",' +
 	  		'model,brand,dimensions,"tagID") VALUES (' +  req.body.productName + ', '+ req.body.productDesc + 
 	  		', ' + req.body.productPhoto + ', ' + req.body.productPrice + ', ' + req.body.model + ', ' + req.body.brand + ', ' + req.body.dimensions + ', 1)');	 //FIX!!!!
-	var getquery = client.query('SET "@last_insert_id_in_bbProduct" = "LAST_INSERT_ID()"');	
-	var query1 = client.query('INSERT INTO "bbBidProduct" ("productID","bidStartingPrice","startDate","endDate") ' +
+	var getquery = connection.query('SET "@last_insert_id_in_bbProduct" = "LAST_INSERT_ID()"');	
+	var query1 = connection.query('INSERT INTO "bbBidProduct" ("productID","bidStartingPrice","startDate","endDate") ' +
 			'VALUES ("@last_insert_id_in_bbProduct", "' + req.body.bidStartingPrice + ', '+ req.body.startDate + 
 	  		', ' + req.body.endDate + '")'); 
-	var query2 = client.query('INSERT INTO "bbSell" ("userID","productID","sQuantity") ' +
+	var query2 = connection.query('INSERT INTO "bbSell" ("userID","productID","sQuantity") ' +
 			'VALUES ('+id+', "@last_insert_id_in_bbProduct", NULL)'); 
 	
   	res.json(true);
@@ -393,8 +393,8 @@ app.post('/DB-Project/insertProducts/:id/:idp', function(req, res) {
 	var id = parseFloat(req.params.id);
 	var idp = parseFloat(req.params.idp);
         console.log("POST Products in Add");
-       pg.connect(conString, function(err, client, done) {
-        	  var query = client.query('INSERT INTO "bbAddToCart" ("productID","userID","aQuantity") ' +
+       pg.connect(conString, function(err, connection, done) {
+        	  var query = connection.query('INSERT INTO "bbAddToCart" ("productID","userID","aQuantity") ' +
               		'VALUES (' + id + ', ' + idp + ', null)');
         	  
         	  res.json(true);
@@ -430,8 +430,8 @@ done();
 // REST Operation - HTTP GET to read all categories
 app.get('/DB-Project/categories', function(req, res) {
 	console.log("GET ALL CATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * FROM "bbCategory"', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * FROM "bbCategory"', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -450,8 +450,8 @@ app.get('/DB-Project/categories', function(req, res) {
 app.get('/DB-Project/categories/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET category: " + id);
-		pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbCategory" WHERE "categoryID" = ' + id, function(err, result){
+		pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * FROM "bbCategory" WHERE "categoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -574,8 +574,8 @@ app.post('/DB-Project/categories', function(req, res) {
 // REST Operation - HTTP GET to read all Books
 app.get('/DB-Project/Books', function(req, res) {
 	console.log("GET ALL BOOKS SUBCATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * from "bbSubCategory" where "categoryID" = '+1+';', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * from "bbSubCategory" where "categoryID" = '+1+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -594,8 +594,8 @@ app.get('/DB-Project/Books', function(req, res) {
 app.get('/DB-Project/Books/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET subCat: " + id);
-		pg.connect(conString, function(err, client, done) {
-	var query = client.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
+		pg.connect(conString, function(err, connection, done) {
+	var query = connection.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -718,8 +718,8 @@ app.post('/DB-Project/Books', function(req, res) {
 // REST Operation - HTTP GET to read all Electronics
 app.get('/DB-Project/Electronics', function(req, res) {
 	console.log("GET ALL ELECTRONICS SUBCATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * from "bbSubCategory" where "categoryID" = '+2+';', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * from "bbSubCategory" where "categoryID" = '+2+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -738,8 +738,8 @@ app.get('/DB-Project/Electronics', function(req, res) {
 app.get('/DB-Project/Electronics/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET subCat: " + id);
-		pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
+		pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -863,8 +863,8 @@ app.post('/DB-Project/Electronics', function(req, res) {
 // REST Operation - HTTP GET to read all Computers
 app.get('/DB-Project/Computers', function(req, res) {
 	console.log("GET ALL COMPUTER SUBCATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * from "bbSubCategory" where "categoryID" = '+3+';', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * from "bbSubCategory" where "categoryID" = '+3+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -883,8 +883,8 @@ app.get('/DB-Project/Computers', function(req, res) {
 app.get('/DB-Project/Computers/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET compCat: " + id);
-		pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
+		pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1006,8 +1006,8 @@ app.post('/DB-Project/Computers', function(req, res) {
 // REST Operation - HTTP GET to read all Clothings
 app.get('/DB-Project/Clothing', function(req, res) {
 	console.log("GET ALL CLOTHING SUBCATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * from "bbSubCategory" where "categoryID" = '+4+';', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * from "bbSubCategory" where "categoryID" = '+4+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1026,9 +1026,9 @@ app.get('/DB-Project/Clothing', function(req, res) {
 app.get('/DB-Project/Clothing/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET clothCat: " + id);
-		pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, connection, done) {
 
-	client.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
+	connection.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1151,8 +1151,8 @@ app.post('/DB-Project/Clothing', function(req, res) {
 // REST Operation - HTTP GET to read all Shoes
 app.get('/DB-Project/Shoes', function(req, res) {
 	console.log("GET ALL SHOES SUBCATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * from "bbSubCategory" where "categoryID" = '+5+';', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * from "bbSubCategory" where "categoryID" = '+5+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1171,9 +1171,9 @@ app.get('/DB-Project/Shoes', function(req, res) {
 app.get('/DB-Project/Shoes/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET shoeCat: " + id);
-		pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, connection, done) {
 
-	client.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
+	connection.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1295,8 +1295,8 @@ app.post('/DB-Project/Shoes', function(req, res) {
 // REST Operation - HTTP GET to read all Sports
 app.get('/DB-Project/Sports', function(req, res) {
 	console.log("GET ALL SPORTS SUBCATEGORIES");
-	pg.connect(conString, function(err, client, done) {
-	client.query('Select * from "bbSubCategory" where "categoryID" = '+6+';', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('Select * from "bbSubCategory" where "categoryID" = '+6+';', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1315,8 +1315,8 @@ app.get('/DB-Project/Sports', function(req, res) {
 app.get('/DB-Project/Sports/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sportCat: " + id);
-		pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
+		pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * FROM "bbSubCategory" WHERE "subCategoryID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1431,9 +1431,9 @@ app.post('/DB-Project/Sports', function(req, res) {
 app.get('/DB-Project/accounts/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET account: " + ids);
-		pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, connection, done) {
 
-var query = client.query('SELECT * FROM "bbUser" NATURAL JOIN "bbAddress" WHERE "userID" = ' + ids, function(err, result){	
+var query = connection.query('SELECT * FROM "bbUser" NATURAL JOIN "bbAddress" WHERE "userID" = ' + ids, function(err, result){	
 	if (err) throw err;
 	
 	
@@ -1475,8 +1475,8 @@ app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
 	var id = req.params.id;
 	var idp = req.params.idp;
 		console.log("GET account: " + id);
-		pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * FROM "bbUser" WHERE "userNickname" = ' + "'" + id  + "'" + ' AND ' +
+		pg.connect(conString, function(err, connection, done) {
+var query = connection.query('SELECT * FROM "bbUser" WHERE "userNickname" = ' + "'" + id  + "'" + ' AND ' +
 		'password = ' + "'" + idp + "'", function(err, result){
 		if (err) throw err;
 
@@ -1555,37 +1555,37 @@ app.post('/DB-Project/accounts', function(req, res) {
   	}
 	
 	
-	pg.connect(conString, function(err, client, done) {
+	pg.connect(conString, function(err, connection, done) {
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
   	
-  	client.query('INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
+  	connection.query('INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
   	  		'zipcode) VALUES (' + "'" + req.body.caddressLine + "'" + ', '+ "'" + req.body.ccity + "'" + 
   	  		', ' + "'" + req.body.cstate + "'" + ', ' + "'" + req.body.ccountry + "'" + ', '+ req.body.czipcode + ");");
   	  		
-  	  	client.query('SELECT LASTVAL() as value0;');  	
+  	  	connection.query('SELECT LASTVAL() as value0;');  	
   	var billAddressID = res.value0;
   	
-  	client.query('INSERT INTO "bbCreditCard" ("creditCardOwner", "creditCardNumber", "securityCode", "expDate",' +
+  	connection.query('INSERT INTO "bbCreditCard" ("creditCardOwner", "creditCardNumber", "securityCode", "expDate",' +
   	  		'"addressID") VALUES (' + "'" + req.body.creditCardOwner + "'" + ', '+ "'" + req.body.creditCardNumber + "'" + 
   	  		', ' + "'" + req.body.securityCode + "' , '"+ req.body.expDate+ "' , "+  1 +  ');');
-  	  		client.query('SELECT LASTVAL() as value1;'); 
+  	  		connection.query('SELECT LASTVAL() as value1;'); 
   	var creditCardID = res.value1;
   	
-  	client.query('INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
+  	connection.query('INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
   	  		'zipcode) VALUES (' + "'" + req.body.caddressLine + "'" + ', '+ "'" + req.body.ccity + "'" + 
   	  		', ' + "'" + req.body.cstate + "'" + ', ' + "'" + req.body.ccountry + "'" + ', ' + "'" + req.body.czipcode + "'" +  ');');
-  	  		client.query('SELECT LASTVAL() as value2;'); 
+  	  		connection.query('SELECT LASTVAL() as value2;'); 
   	var shippingAddressID = res.value2;
   	
-  	client.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName") '+'VALUES (' + "'" +  req.body.accountNumber + "'" +  ', '+ "'" + 
+  	connection.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName") '+'VALUES (' + "'" +  req.body.accountNumber + "'" +  ', '+ "'" + 
   		 req.body.accountType + "'" + ', ' + "'" +  req.body.accountOwner + "'" +  ', ' + "'" +  req.body.bankName + "'" +   ');');
-  		 client.query('SELECT LASTVAL() as value3;'); 
+  		 connection.query('SELECT LASTVAL() as value3;'); 
   	var bankAccountID = res.value3;
   	
-  	var query = client.query('INSERT INTO "bbUser" ("userName","userNickname","userEmail","password",' +
+  	var query = connection.query('INSERT INTO "bbUser" ("userName","userNickname","userEmail","password",' +
   		'birthdate,gender,"creditCardID","bankAccountID","addressID") VALUES ('+ "'" +req.body.userName + "' , '" + req.body.userNickname + "' , '"+ 
   		req.body.userEmail + "' , '" + req.body.password + "' ,NULL,NULL , '" + creditCardID + "' , '"+ bankAccountID + "' , '" + shippingAddressID + "'" + ');');
-  	client.query('SELECT LASTVAL() as value4;'); 
+  	connection.query('SELECT LASTVAL() as value4;'); 
   	
   		
   		
@@ -1606,22 +1606,22 @@ app.post('/DB-Project/accounts', function(req, res) {
 						   */
 		  
   	/*
-	  var query1 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
+	  var query1 = connection.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
 					  '`zipcode`) VALUES (NULL, "' + req.body.addressLine + '", "'+ req.body.city + 
 					  '", "' + req.body.state + '", "' + req.body.country + '", "' + req.body.zipcode + '")');
-			var getquery1 = client.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
-					var query2 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
+			var getquery1 = connection.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
+					var query2 = connection.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
 					  '`zipcode`) VALUES (NULL, "' + req.body.caddressLine + '", "'+ req.body.ccity + 
 					  '", "' + req.body.cstate + '", "' + req.body.ccountry + '", "' + req.body.czipcode + '")');
-			var getquery2 = client.query('SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()');
-					   var query3 = client.query('INSERT INTO "bbCreditCard" (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`,' +
+			var getquery2 = connection.query('SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()');
+					   var query3 = connection.query('INSERT INTO "bbCreditCard" (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`,' +
 					  '`addressID`) VALUES (NULL, "' + req.body.creditCardOwner + '", "'+ req.body.creditCardNumber + 
 					  '", "' + req.body.securityCode + '", "' + req.body.expDate + '", @last_insert_id_in_bbAddress1)');
-			var getquery3 = client.query('SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()');
-			var query35 = client.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName")'+
+			var getquery3 = connection.query('SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()');
+			var query35 = connection.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName")'+
 					'VALUES (' + req.body.accountNumber + ', '+ req.body.accountType + 
 					  ', ' + req.body.accountOwner + ', ' + req.body.bankName + ')');
-						 var query4 = client.query('UPDATE "bbUser" SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser');
+						 var query4 = connection.query('UPDATE "bbUser" SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser');
 			*/
 	  
   	console.log("New Account: ");
@@ -1652,8 +1652,8 @@ app.post('/DB-Project/accounts', function(req, res) {
 // REST Operation - HTTP GET to read all products
 app.get('/DB-Project/accountas', function(req, res) {
 	console.log("GET ACCOUNTAS");
-	pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbAdmin"', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * FROM "bbAdmin"', function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1672,9 +1672,9 @@ app.get('/DB-Project/accountas', function(req, res) {
 app.get('/DB-Project/accountas/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET accounta: " + id);
-		pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, connection, done) {
 
-var query = client.query('SELECT * FROM "bbAdmin" WHERE "userID" = ' + id, function(err, result){
+var query = connection.query('SELECT * FROM "bbAdmin" WHERE "userID" = ' + id, function(err, result){
 		if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -1763,9 +1763,9 @@ app.post('/DB-Project/accountas', function(req, res) {
 app.get('/DB-Project/creditcards/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET creditcard: " + ids);
-		pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, connection, done) {
 
-var query = client.query('SELECT * from "bbCreditCard" as c ' +
+var query = connection.query('SELECT * from "bbCreditCard" as c ' +
 		'inner join "bbAddress" as a on a."addressID" = c."addressID" ' +
 		'inner join "bbBankAccount" as b on u."bankAccountID" = b."bankAccountID" ' +
 		'inner join "bbUser" as u on u."creditCardID" = c."creditCardID" ' +
@@ -1786,7 +1786,7 @@ var query = client.query('SELECT * from "bbCreditCard" as c ' +
 	}
 	else {	
   		var response = {"creditcard" : result.rows[0]};
-		//client.end();
+		//connection.end();
   		res.json(response);
   	}
   	done();
@@ -1877,8 +1877,8 @@ app.get('/DB-Project/addressinfos', function(req, res) {
 app.get('/DB-Project/addressinfos/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET addressinfo: " + id);
-pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * FROM "bbAddress" AS a ' +
+pg.connect(conString, function(err, connection, done) {
+var query = connection.query('SELECT * FROM "bbAddress" AS a ' +
 		'INNER JOIN "bbUser" AS u on u."addressID" = a."addressID"  ' +
 		'WHERE u."addressID" = ' + id, function(err, result){
                 if (err) throw err;
@@ -1896,7 +1896,7 @@ var query = client.query('SELECT * FROM "bbAddress" AS a ' +
         }
         else {        
                   var response = {"addressinfo" : result.rows[0]};
-                //client.end();
+                //connection.end();
                   res.json(response);
           }
  });
@@ -1980,8 +1980,8 @@ app.post('/DB-Project/addressinfos', function(req, res) {
 app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 
-pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * FROM "bbAddtoCart" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
+pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * FROM "bbAddtoCart" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
 
 
   	if (err) throw err;
@@ -2002,8 +2002,8 @@ app.get('/DB-Project/carts/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET carts: " + id);
 
-pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * FROM "bbAddToCart" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
+pg.connect(conString, function(err, connection, done) {
+var query = connection.query('SELECT * FROM "bbAddToCart" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
 
 
                 if (err) throw err;
@@ -2023,7 +2023,7 @@ var query = client.query('SELECT * FROM "bbAddToCart" natural join "bbProduct" n
         }
         else {        
                   var response = {"cart" : result.rows};
-                //client.end();
+                //connection.end();
                   res.json(response);
           }
           done();
@@ -2035,8 +2035,8 @@ app.get('/DB-Project/notuserCarts/:id', function(req, res) {
     var id = req.params.id;
             console.log("GET carts: " + id);
 
-pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" WHERE "productID" = ' + id, function(err, result){
+pg.connect(conString, function(err, connection, done) {
+var query = connection.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" WHERE "productID" = ' + id, function(err, result){
 
 
             if (err) throw err;
@@ -2054,7 +2054,7 @@ var query = client.query('SELECT * FROM "bbProduct" natural join "bbBidProduct" 
     }
     else {        
               var response = {"cart" : result.rows};
-            //client.end();
+            //connection.end();
               res.json(response);
       }
       done();
@@ -2127,10 +2127,10 @@ app.post('/DB-Project/addressinfos', function(req, res) {
 app.get('/DB-Project/sells/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET sell: " + id);
-		pg.connect(conString, function(err, client, done) {
+		pg.connect(conString, function(err, connection, done) {
 
 
-var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
+var query = connection.query('SELECT * FROM "bbSell" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
 
 
 		if (err) throw err;
@@ -2148,7 +2148,7 @@ var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natura
 	}
 	else {	
   		var response = {"sell" : result.rows};
-		//client.end();
+		//connection.end();
   		res.json(response);
   	}
   	done();
@@ -2160,8 +2160,8 @@ var query = client.query('SELECT * FROM "bbSell" natural join "bbProduct" natura
 app.get('/DB-Project/sells/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET sells: " + id);
-pg.connect(conString, function(err, client, done) {
-var query = client.query('SELECT * from "bbSell" natural join "bbUser" ' +
+pg.connect(conString, function(err, connection, done) {
+var query = connection.query('SELECT * from "bbSell" natural join "bbUser" ' +
 
 		'natural join "bbProduct" natural join "bbBidProduct" ' +
 
@@ -2182,7 +2182,7 @@ var query = client.query('SELECT * from "bbSell" natural join "bbUser" ' +
         }
         else {        
                   var response = {"sell" : result.rows[0]};
-                //client.end();
+                //connection.end();
                   res.json(response);
           }
           done();
@@ -2267,8 +2267,8 @@ app.post('/DB-Project/sells', function(req, res) {
 app.get('/DB-Project/bids', function(req, res) {
 	console.log("GET BIDS");
 	
-	pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * from "bbBidFor" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
+	pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * from "bbBidFor" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
 
 	
 
@@ -2289,9 +2289,9 @@ app.get('/DB-Project/bids', function(req, res) {
 app.get('/DB-Project/bids/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET bids: " + id);
-pg.connect(conString, function(err, client, done) {
+pg.connect(conString, function(err, connection, done) {
 
-var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
+var query = connection.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natural join "bbBidProduct" WHERE "userID" = ' + id, function(err, result){
 
                 if (err) throw err;
         /*
@@ -2308,7 +2308,7 @@ var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natu
         }
         else {        
                   var response = {"bid" : result.rows};
-                //client.end();
+                //connection.end();
                   res.json(response);
           }
           done();
@@ -2320,9 +2320,9 @@ var query = client.query('SELECT * FROM "bbBidFor" natural join "bbProduct" natu
 app.get('/DB-Project/abids/:ids', function(req, res) {
     var ids = req.params.ids;
             console.log("GET bidproduct: " + ids);
-            pg.connect(conString, function(err, client, done) {
+            pg.connect(conString, function(err, connection, done) {
 
-var query = client.query('SELECT u."userNickname", b."bidDate", b."bidAmount", r."productPhoto", r."productDesc", r."productName", ' +
+var query = connection.query('SELECT u."userNickname", b."bidDate", b."bidAmount", r."productPhoto", r."productDesc", r."productName", ' +
 		'r.brand, r.model, r.dimensions FROM "bbBidFor" as b inner join "bbUser" as u on b."userID" = u."userID" ' +
 		'inner join "bbProduct" as r on b."productID" = r."productID" inner join ' +
 		'"bbSell" as s on r."productID" = s."productID" WHERE s."userID"= '+ ids, function(err, result){
@@ -2335,7 +2335,7 @@ var query = client.query('SELECT u."userNickname", b."bidDate", b."bidAmount", r
     
          
               var response = {"bidproduct" : result.rows};
-            //client.end();
+            //connection.end();
               res.json(response);
       done();
 });
@@ -2411,7 +2411,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         console.log(sd);
         console.log(ed);
         console.log(output);
-       pg.connect(conString, function(err, client, done) {
+       pg.connect(conString, function(err, connection, done) {
           if(!req.body.hasOwnProperty('bidAmount')) {
         	  console.log("Problem?");
             res.statusCode = 400;
@@ -2420,7 +2420,7 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           
           if(count == 0){
           	
-        	  var query2 = client.query('Select * from "bbBidFor" Where "userID" = "' + id + '" AND "productID" = "'+ idp +'"'); 
+        	  var query2 = connection.query('Select * from "bbBidFor" Where "userID" = "' + id + '" AND "productID" = "'+ idp +'"'); 
         	  count = 1;
         	  return res.send('You have already placed a bid!');
           }
@@ -2433,8 +2433,8 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           
           if(cb > idb && count == 0){
         	  console.log("Here2");
-        	  var query1 = client.query('UPDATE "bbBidProduct" SET `bidStartingPrice`= "'+ req.body.bidAmount + '" WHERE "productID"="'+ idp +'"');
-        	  var query = client.query('INSERT INTO "bbBidFor" (`userID`,`productID`,`bidDate`,`bidAmount`) ' +
+        	  var query1 = connection.query('UPDATE "bbBidProduct" SET `bidStartingPrice`= "'+ req.body.bidAmount + '" WHERE "productID"="'+ idp +'"');
+        	  var query = connection.query('INSERT INTO "bbBidFor" (`userID`,`productID`,`bidDate`,`bidAmount`) ' +
               		'VALUES ("' + id + '", "' + idp + '", "'+ output + '", "' + cb + '"")');
         	  
         	  res.json(true);
@@ -2479,8 +2479,8 @@ done();
 app.get('/DB-Project/orders', function(req, res) {
 	console.log("GET ORDERS");
 	
-pg.connect(conString, function(err, client, done) {
-	client.query('SELECT * from "bbOrder" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
+pg.connect(conString, function(err, connection, done) {
+	connection.query('SELECT * from "bbOrder" natural join "bbProduct" natural join "bbBidProduct"', function(err, result) {
 
   	if (err) throw err;
 	for (i = 0; i<rows.length; i++){
@@ -2497,9 +2497,9 @@ pg.connect(conString, function(err, client, done) {
 app.get('/DB-Project/orders/:id', function(req, res) {
         var id = req.params.id;
                 console.log("GET order: " + id);
-                pg.connect(conString, function(err, client, done) {
+                pg.connect(conString, function(err, connection, done) {
 
-var query = client.query('SELECT u."userNickname", p."paidDate", r."productPhoto", r."productDesc", r."productName", r."productPrice", ' +
+var query = connection.query('SELECT u."userNickname", p."paidDate", r."productPhoto", r."productDesc", r."productName", r."productPrice", ' +
 		'r.brand, r.model, r.dimensions FROM "bbOrder" as o inner join "bbPay" as p on ' +
 		'o."orderID" = p."orderID" inner join "bbUser" as u on o."userID" = u."userID" inner join "bbContain" ' +
 
@@ -2521,7 +2521,7 @@ var query = client.query('SELECT u."userNickname", p."paidDate", r."productPhoto
         }
         else {        
                   var response = {"order" : result.rows};
-                //client.end();
+                //connection.end();
                   res.json(response);
           }
           done();
@@ -2576,13 +2576,13 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
 	var idc = req.params.idc;
 	var idb = req.params.idb;
         console.log("POST Place Order " + id);
-       pg.connect(conString, function(err, client, done) {
-        	  var query = client.query('INSERT INTO "bbOrder" ("userID") ' +
+       pg.connect(conString, function(err, connection, done) {
+        	  var query = connection.query('INSERT INTO "bbOrder" ("userID") ' +
               		'VALUES (' + id + ')');
-        	  var getquery = client.query('SET "@last_insert_id_in_bbOrder" = "LAST_INSERT_ID()"');
-        	  var query1 = client.query('INSERT INTO "bbPay" ("creditCardID","bankAccountID","paidAmount","paidDate","orderID) ' +
+        	  var getquery = connection.query('SET "@last_insert_id_in_bbOrder" = "LAST_INSERT_ID()"');
+        	  var query1 = connection.query('INSERT INTO "bbPay" ("creditCardID","bankAccountID","paidAmount","paidDate","orderID) ' +
                 		'VALUES (' + idc + ', '+idb+', null, '+output+', @last_insert_id_in_bbOrder)');
-        	  var query2 = client.query('Select "orderID", "paidDate" from "bbPay" natural join "bbOrder" where "userID"= '+id, function(err, result){
+        	  var query2 = connection.query('Select "orderID", "paidDate" from "bbPay" natural join "bbOrder" where "userID"= '+id, function(err, result){
         			if (err) throw err;
 
         			/*
