@@ -1557,32 +1557,73 @@ app.post('/DB-Project/accounts', function(req, res) {
 	
 	pg.connect(conString, function(err, client, done) {
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
-  	var query = client.query('INSERT INTO "bbUser" (`userID`,`userName`,`userNickname`,`userEmail`,`password`,' +
-  		'`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, "' + req.body.userName + '", "'+ req.body.userNickname + 
-  		'", "' + req.body.userEmail + '", "' + req.body.password + '",NULL,NULL,NULL,NULL,NULL)');
-  	var getquery = client.query('SET @last_insert_id_in_bbUser = LAST_INSERT_ID()');	
   	
-
-  	var query1 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
-  	  		'`zipcode`) VALUES (NULL, "' + req.body.addressLine + '", "'+ req.body.city + 
-  	  		'", "' + req.body.state + '", "' + req.body.country + '", "' + req.body.zipcode + '")');
-  	var getquery1 = client.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
- 
-  	var query2 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
-  	  		'`zipcode`) VALUES (NULL, "' + req.body.caddressLine + '", "'+ req.body.ccity + 
-  	  		'", "' + req.body.cstate + '", "' + req.body.ccountry + '", "' + req.body.czipcode + '")');
-  	var getquery2 = client.query('SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()');
+  	client.query('INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
+  	  		'zipcode) VALUES (' + "'" + req.body.caddressLine + "'" + ', '+ "'" + req.body.ccity + "'" + 
+  	  		', ' + "'" + req.body.cstate + "'" + ', ' + "'" + req.body.ccountry + "'" + ', '+ req.body.czipcode + ");");
+  	  		
+  	  	client.query('SELECT LASTVAL() as value0;');  	
+  	var billAddressID = res.value0;
   	
-	var query3 = client.query('INSERT INTO "bbCreditCard" (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`,' +
-  	  		'`addressID`) VALUES (NULL, "' + req.body.creditCardOwner + '", "'+ req.body.creditCardNumber + 
-  	  		'", "' + req.body.securityCode + '", "' + req.body.expDate + '", @last_insert_id_in_bbAddress1)');
-  	var getquery3 = client.query('SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()');
-  	var query35 = client.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName")'+
-  			'VALUES (' + req.body.accountNumber + ', '+ req.body.accountType + 
-  	  		', ' + req.body.accountOwner + ', ' + req.body.bankName + ')');
+  	client.query('INSERT INTO "bbCreditCard" ("creditCardOwner", "creditCardNumber", "securityCode", "expDate",' +
+  	  		'"addressID") VALUES (' + "'" + req.body.creditCardOwner + "'" + ', '+ "'" + req.body.creditCardNumber + "'" + 
+  	  		', ' + "'" + req.body.securityCode + "' , '"+ req.body.expDate+ "' , "+  1 +  ');');
+  	  		client.query('SELECT LASTVAL() as value1;'); 
+  	var creditCardID = res.value1;
   	
-  	var query4 = client.query('UPDATE "bbUser" SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser');
+  	client.query('INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
+  	  		'zipcode) VALUES (' + "'" + req.body.caddressLine + "'" + ', '+ "'" + req.body.ccity + "'" + 
+  	  		', ' + "'" + req.body.cstate + "'" + ', ' + "'" + req.body.ccountry + "'" + ', ' + "'" + req.body.czipcode + "'" +  ');');
+  	  		client.query('SELECT LASTVAL() as value2;'); 
+  	var shippingAddressID = res.value2;
   	
+  	client.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName") '+'VALUES (' + "'" +  req.body.accountNumber + "'" +  ', '+ "'" + 
+  		 req.body.accountType + "'" + ', ' + "'" +  req.body.accountOwner + "'" +  ', ' + "'" +  req.body.bankName + "'" +   ');');
+  		 client.query('SELECT LASTVAL() as value3;'); 
+  	var bankAccountID = res.value3;
+  	
+  	var query = client.query('INSERT INTO "bbUser" ("userName","userNickname","userEmail","password",' +
+  		'birthdate,gender,"creditCardID","bankAccountID","addressID") VALUES ('+ "'" +req.body.userName + "' , '" + req.body.userNickname + "' , '"+ 
+  		req.body.userEmail + "' , '" + req.body.password + "' ,NULL,NULL , '" + creditCardID + "' , '"+ bankAccountID + "' , '" + shippingAddressID + "'" + ');');
+  	client.query('SELECT LASTVAL() as value4;'); 
+  	
+  		
+  		
+  		/*
+							   'with rows2 as (INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
+						  'zipcode) VALUES (' + "'" + req.body.caddressLine + "'" + ', '+ "'" + req.body.ccity + "'" + 
+						  ', ' + "'" + req.body.cstate + "'" + ', ' + "'" + req.body.ccountry + "'" + ', ' + "'" + req.body.czipcode + "'" + ') RETURNING "addressID") '+
+					  'with rows3 as (INSERT INTO "bbCreditCard" ("creditCardOwner", "creditCardNumber", "securityCode", "expDate",' +
+						  '"addressID") VALUES (' + "'" + req.body.creditCardOwner + "'" + ', '+ "'" + req.body.creditCardNumber + "'" + 
+						  ', ' + "'" + req.body.securityCode + "'" + ', ' + "'" + req.body.expDate+ ', ' +  1 + ') RETURNING "addressID", "creditCardID") '+
+					  'with rows4 as (INSERT INTO "bbAddress" ("addressLine", city, state, country,' +
+						  'zipcode) VALUES (' + "'" + req.body.caddressLine + "'" + ', '+ "'" + req.body.ccity + "'" + 
+						  ', ' + "'" + req.body.cstate + "'" + ', ' + "'" + req.body.ccountry + "'" + ', ' + "'" + req.body.czipcode + "'" + ') RETURNING "addressID") '+
+					'UPDATE "bbUser" SET  "addressID" = SELECT "addressID" FROM rows4, "creditCardID" = SELECT "addressID" FROM rows3 WHERE "userID" = SELECT "userID" FROM rows ' +
+					'UPDATE "bbCreditCard" SET "addressID" = SELECT "addressID" FROM rows2 WHERE "creditCardID" = SELECT "creditCardID" FROM rows2' +
+					'INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName") '+'VALUES (' + "'" +  req.body.accountNumber + "'" +  ', '+ "'" + 
+					 req.body.accountType + "'" + ', ' + "'" +  req.body.accountOwner + "'" +  ', ' + "'" +  req.body.bankName + "'" +  ')');
+						   */
+		  
+  	/*
+	  var query1 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
+					  '`zipcode`) VALUES (NULL, "' + req.body.addressLine + '", "'+ req.body.city + 
+					  '", "' + req.body.state + '", "' + req.body.country + '", "' + req.body.zipcode + '")');
+			var getquery1 = client.query("SET @last_insert_id_in_bbAddress = LAST_INSERT_ID()");
+					var query2 = client.query('INSERT INTO "bbAddress" (`addressID`,`addressLine`,`city`,`state`,`country`,' +
+					  '`zipcode`) VALUES (NULL, "' + req.body.caddressLine + '", "'+ req.body.ccity + 
+					  '", "' + req.body.cstate + '", "' + req.body.ccountry + '", "' + req.body.czipcode + '")');
+			var getquery2 = client.query('SET @last_insert_id_in_bbAddress1 = LAST_INSERT_ID()');
+					   var query3 = client.query('INSERT INTO "bbCreditCard" (`creditCardID`,`creditCardOwner`,`creditCardNumber`,`securityCode`,`expDate`,' +
+					  '`addressID`) VALUES (NULL, "' + req.body.creditCardOwner + '", "'+ req.body.creditCardNumber + 
+					  '", "' + req.body.securityCode + '", "' + req.body.expDate + '", @last_insert_id_in_bbAddress1)');
+			var getquery3 = client.query('SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()');
+			var query35 = client.query('INSERT INTO "bbBankAccount" ("accountNumber","accountType","accountOwner","bankName")'+
+					'VALUES (' + req.body.accountNumber + ', '+ req.body.accountType + 
+					  ', ' + req.body.accountOwner + ', ' + req.body.bankName + ')');
+						 var query4 = client.query('UPDATE "bbUser" SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser');
+			*/
+	  
   	console.log("New Account: ");
   	console.log("New Mailing Address: ");
   	console.log("New Biling Address: " );
@@ -1724,7 +1765,7 @@ app.get('/DB-Project/creditcards/:ids', function(req, res) {
 		console.log("GET creditcard: " + ids);
 		pg.connect(conString, function(err, client, done) {
 
-var query = client.query('SELECT * FROM "bbCreditCard" as c ' +
+var query = client.query('SELECT * from "bbCreditCard" as c ' +
 		'inner join "bbAddress" as a on a."addressID" = c."addressID" ' +
 		'inner join "bbBankAccount" as b on u."bankAccountID" = b."bankAccountID" ' +
 		'inner join "bbUser" as u on u."creditCardID" = c."creditCardID" ' +
