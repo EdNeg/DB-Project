@@ -92,12 +92,14 @@ var pg = require('pg').native
 connection = new pg.connection(connectionString);
 connection.connect();*/
 
+/*
 // Let heroku app know where to start
 app.get('/', function(req, res) {
   //res.send('Hello Worldy!');
   res.sendfile(__dirname + '/index.html');
   
-});
+});*/
+
 
 
 // REST Operations
