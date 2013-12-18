@@ -136,9 +136,9 @@ app.get('/DB-Project/products', function(req, res) {
 //PRODUCTS ORDERED BY NAME
 app.get('/DB-Project/productsName', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY NAME");
-	pg.connect(conString, function(err, connection, done) {	
-	connection.query('Select * from "bbProduct" as p ' + 
-	'inner join "bbBidProduct" as b on b."productID" = p."productID" order by p."productName"' , function(err, result) {
+	//pg.connect(conString, function(err, connection, done) {	
+	connection.query('Select * from bbProduct as p ' + 
+	'inner join bbBidProduct as b on b.productID = p.productID order by p.productName' , function(err, result) {
   if (err) throw err;
 	/*
 	for (i = 0; i<rows.length; i++){
@@ -147,8 +147,8 @@ app.get('/DB-Project/productsName', function(req, res) {
 	
   var response = {"productsName" : result.rows};
   res.json(response);
-  done();
-});
+  //done();
+//});
 });
 });
 
