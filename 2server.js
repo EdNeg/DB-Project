@@ -1,7 +1,6 @@
 // Express is the web framework 
 var express = require('express');
-//var mysql = require('mysql');
-var pg = require('pg').native;
+var mysql = require('mysql');
 var logfmt = require("logfmt");
 var http = require('http');
 
@@ -561,25 +560,6 @@ app.post('/DB-Project/categories', function(req, res) {
 //--------------------------------------Books SubCategories---------------------------------------------------------------//
 	
 	
-var subCat = require("./appjs/subCat.js");
-var SubCat = subCat.SubCat;
-
-
-var subCatList = new Array(
-	new SubCat("Children"),
-	new SubCat("Fiction"),
-	new SubCat("Technology"),
-	new SubCat("Business")
-
-
-);
-
-
- var subCatNextId = 0;
- 
-for (var i=0; i < subCatList.length;++i){
-	subCatList[i].id = subCatNextId++;
-}
 
 
 
@@ -727,25 +707,7 @@ app.post('/DB-Project/Books', function(req, res) {
 //--------------------------------------Electronics---------------------------------------------------------------//
 	
 	
-var electCat = require("./appjs/subCat.js");
-var ElectCat = electCat.ElectCat;
 
-
-var electCatList = new Array(
-	new SubCat("TV"),
-	new SubCat("Audio"),
-	new SubCat("Phones"),
-	new SubCat("Cameras"),
-	new SubCat("Video")
-	
-);
-
-
- var electCatNextId = 0;
- 
-for (var i=0; i < electCatList.length;++i){
-	electCatList[i].id = electCatNextId++;
-}
 
 
 
@@ -894,24 +856,7 @@ app.post('/DB-Project/Electronics', function(req, res) {
 
 //--------------------------------------Computers---------------------------------------------------------------//
 	
-	
-var compCat = require("./appjs/subCat.js");
-var CompCat = compCat.CompCat;
 
-
-var compCatList = new Array(
-	new SubCat("Laptops"),
-	new SubCat("Desktops"),
-	new SubCat("Tablets"),
-	new SubCat("Printers")
-);
-
-
- var compCatNextId = 0;
- 
-for (var i=0; i < compCatList.length;++i){
-	compCatList[i].id = compCatNextId++;
-}
 
 
 
@@ -1057,24 +1002,6 @@ app.post('/DB-Project/Computers', function(req, res) {
 
 //--------------------------------------Clothings---------------------------------------------------------------//
 	
-	
-var clothCat = require("./appjs/subCat.js");
-var ClothCat = clothCat.ClothCat;
-
-
-var clothCatList = new Array(
-	new SubCat("Children"),
-	new SubCat("Men"),
-	new SubCat("Women")
-
-);
-
-
- var clothCatNextId = 0;
- 
-for (var i=0; i < clothCatList.length;++i){
-	clothCatList[i].id = clothCatNextId++;
-}
 
 
 
@@ -1222,25 +1149,6 @@ app.post('/DB-Project/Clothing', function(req, res) {
 //--------------------------------------Shoes---------------------------------------------------------------//
 	
 	
-var shoeCat = require("./appjs/subCat.js");
-var ShoeCat = shoeCat.ShoeCat;
-
-
-var shoeCatList = new Array(
-	new SubCat("Children"),
-	new SubCat("Women"),
-	new SubCat("Men")
-	
-	
-);
-
-
- var shoeCatNextId = 0;
- 
-for (var i=0; i < shoeCatList.length;++i){
-	shoeCatList[i].id = shoeCatNextId++;
-}
-
 
 
 
@@ -1385,27 +1293,6 @@ app.post('/DB-Project/Shoes', function(req, res) {
 
 //--------------------------------------Sports---------------------------------------------------------------//
 	
-	
-var sportCat = require("./appjs/subCat.js");
-var SportCat = sportCat.SportCat;
-
-
-var sportCatList = new Array(
-	new SubCat("Bicycles"),
-	new SubCat("Fishing"),
-	new SubCat("Baseball"),
-	new SubCat("Golf"),
-	new SubCat("Basketball")
-	
-	
-);
-
-
- var sportCatNextId = 0;
- 
-for (var i=0; i < sportCatList.length;++i){
-	sportCatList[i].id = sportCatNextId++;
-}
 
 
 
@@ -1552,9 +1439,6 @@ app.post('/DB-Project/Sports', function(req, res) {
 
 
 //-----------------------Regular User------------------------------------------------------
-
-var account = require("./appjs/account.js");
-var Account = account.Account;
 
 // Gets the user Information
 app.get('/DB-Project/accounts/:ids', function(req, res) {
@@ -2574,7 +2458,7 @@ app.get('/DB-Project/orders/:id', function(req, res) {
                 console.log("GET order: " + id);
                 pg.connect(conString, function(err, connection, done) {
 
-var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, ' + 
+var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, " + 
 		"r.brand, r.model, r.dimensions FROM bbOrder as o inner join bbPay as p on" + 
 		"o.orderID = p.orderID inner join bbUser as u on o.userID = u.userID inner join bbContain" +
 		"as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join " + 
@@ -2651,11 +2535,11 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
 	var idb = req.params.idb;
         console.log("POST Place Order " + id);
 
-        	  var query = connection.query("INSERT INTO bbOrder (userID) ' +
+        	  var query = connection.query("INSERT INTO bbOrder (userID) " +
               		"VALUES (' + id + ')");
         	  var getquery = connection.query("SET @last_insert_id_in_bbOrder = LAST_INSERT_ID()");
         	  var query1 = connection.query("INSERT INTO bbPay (creditCardID,bankAccountID,paidAmount,paidDate,orderID) " +
-                		"VALUES ('" + idc + "', '"+idb+"', null, '"+output+"', @last_insert_id_in_bbOrder)');
+                		"VALUES ('" + idc + "', '"+ idb +"', null, '"+output+"', @last_insert_id_in_bbOrder)");
         	  var query2 = connection.query("Select orderID, paidDate from bbPay natural join bbOrder where userID= "+id, function(err, rows, result ){
 
         			if (err) throw err;
@@ -2675,5 +2559,6 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
         		  		res.json(response);
         		  	}
         		 });
+});
 
 });
