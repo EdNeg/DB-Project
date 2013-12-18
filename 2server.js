@@ -2535,13 +2535,12 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
 	var idc = req.params.idc;
 	var idb = req.params.idb;
         console.log("POST Place Order " + id);
-       pg.connect(conString, function(err, client, done) {
-        	  var query = client.query('INSERT INTO "bbOrder" ("userID") ' +
+        	  var query = connection.query('INSERT INTO bbOrder (userID) ' +
               		'VALUES (' + id + ')');
-        	  var getquery = client.query('SET "@last_insert_id_in_bbOrder" = "LAST_INSERT_ID()"');
-        	  var query1 = client.query('INSERT INTO "bbPay" ("creditCardID","bankAccountID","paidAmount","paidDate","orderID) ' +
+        	  var getquery = connection.query('SET @last_insert_id_in_bbOrder = LAST_INSERT_ID()');
+        	  var query1 = connection.query('INSERT INTO bbPay (creditCardID,bankAccountID,paidAmount,paidDate,orderID) ' +
                 		'VALUES (' + idc + ', '+idb+', null, '+output+', @last_insert_id_in_bbOrder)');
-        	  var query2 = client.query('Select "orderID", "paidDate" from "bbPay" natural join "bbOrder" where "userID"= '+id, function(err, result){
+        	  var query2 = connection.query('Select orderID, paidDate from bbPay natural join bbOrder where userID= '+id, function(err, result){
         			if (err) throw err;
 
         			/*
@@ -2560,6 +2559,4 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
         		  	}
         		 });
 
-
-});
 });
