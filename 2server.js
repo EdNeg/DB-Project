@@ -139,7 +139,7 @@ app.get('/DB-Project/productsName', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY NAME");
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by p.productName;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by p.productName;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -159,7 +159,7 @@ app.get('/DB-Project/productsBrand', function(req, res) {
 
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by p.brand;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by p.brand;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -179,7 +179,7 @@ app.get('/DB-Project/productsPrice', function(req, res) {
 
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by b.bidStartingPrice;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by b.bidStartingPrice;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -232,15 +232,16 @@ var query = connection.query("Select * from bbProduct as p natural join bbBidPro
 });
 
 	
-
+var search;
 
 // REST Operation - HTTP GET to read a product based on its nAME
 app.get('/DB-Project/productSearch/:id', function(req, res) {
 	var id = req.params.id;
+	search = req.params.id;
 		console.log("GET product by name: " + id);
 
 
-var query = connection.query("SELECT * FROM boricuabaydb.bbProduct  natural join bbBidProduct where productName like '%" + id + "%';", function(err, rows, result){
+var query = connection.query("SELECT * FROM boricuabaydb.bbProduct natural join bbBidProduct where productName like '%" + id + "%';", function(err, rows, result){
 		if (err) throw err;
 
 	
