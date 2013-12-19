@@ -15,7 +15,7 @@ $(document).on('pagebeforeshow', "#clothing-view", function( event, ui ) {
 				clothCat = clothCatList[i];
 				list.append("<li><a onclick=GetClothCat(" + clothCat.subCategoryID + ")>" + "<center>" +
 
-					"<img src= " +  "'" +  clothCat.subCategoryDesc +  "'" + "/>"+
+					"<img src= " +  clothCat.subCategoryDesc +  "/>"+
 
 					"<h1>" + clothCat.subCategoryName +  "</h1>" + "</center>" +
 					
