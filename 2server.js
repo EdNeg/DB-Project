@@ -1943,7 +1943,7 @@ app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 
 //pg.connect(conString, function(err, connection, done) {
-	connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct", function(err, rows, result ) {
+	connection.query("SELECT * FROM bbAddToCart natural join bbProduct natural join bbBidProduct", function(err, rows, result ) {
 
 
   	if (err) throw err;
@@ -1965,7 +1965,7 @@ app.get('/DB-Project/carts/:id', function(req, res) {
                 console.log("GET carts: " + id);
 
 //pg.connect(conString, function(err, connection, done) {
-                var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct WHERE userID = " + id, function(err, rows, result ){
+                var query = connection.query("SELECT * FROM bbAddToCart natural join bbProduct natural join bbBidProduct WHERE userID = " + id, function(err, rows, result ){
 
 
                 if (err) throw err;
