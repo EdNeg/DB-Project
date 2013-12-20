@@ -11,6 +11,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
                         var list = $("#accounts-list");
                         var list2 = $("#address1-list");
                         list.empty();
+                        list2.empty();
                         list.append("<li>" +
                                 "<h2>" + "Name: " + currentAccount.userName + "</h2>" +
                                 "<h2>" + "Username: " + currentAccount.userNickname  + "</h2>" +
@@ -23,7 +24,8 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
                                 "<h2>" + "State: " + currentAccount.state + "</h2>" +
                                 "<h2>" + "Country: " + currentAccount.country + "</h2>" +
                                 "<h2>" + "Zipcode: " + currentAccount.zipcode + "</h2>"  + "</li>");
-                        list2.listview("refresh");                
+                        list2.listview("refresh");     
+          
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
@@ -69,6 +71,7 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
                         var list = $("#creditcards-list");
                         var list2 = $("#address-list");
                         list.empty();
+                        list2.empty();
                         list.append("<li>" +
                                 "<h2>" + "CreditCard Number: " + currentCreditcard.creditCardNumber + "</h2>" +
                                 "<h2>" + "Owner Name: " + currentCreditcard.creditCardOwner + "</h2>" +
@@ -106,9 +109,9 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = sellList[i];
-					list.append("<li><a onclick=sold(" + products.productID + ")>"  + 
+					list.append("<li><a onclick=GetProductR(" + products.productID + ")>"  + 
 
-					"<img src= " + "'" + products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " + products.productPhoto + "/>" +			// imgSrc ---- productPhoto
 
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
@@ -147,9 +150,9 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = cartList[i];
-					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+					list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
 
-					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+					"<img src= "  + products.productPhoto  +"/>" +			// imgSrc ---- productPhoto
 
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
@@ -192,9 +195,9 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 			var products;
 			//alert(cartList[i]);
 				products = cartList[0];
-					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+					list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
 
-					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   products.productPhoto +"/>" +			// imgSrc ---- productPhoto
 
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
@@ -222,56 +225,46 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 	}
 });
 
-//Problem
-//$(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
-//	$.ajax({
-//		url : "http://localhost:3412/DB-Project/bids/" + loginID.userID,
-//        method: 'get',
-//        contentType: "application/json",
-//        dataType:"json",
-//		success : function(data, textStatus, jqXHR){
-//			var bidList = data.bid;		// ADD var bidProductList = data.bidProduct;
-//			var len = bidList.length;
-//			var list = $("#bidUser-list");///////////////////////////////////////////////////
-//			var list1 = $("#bidUserd-list");
-//			list.empty();
-//			var products;
-//  			for (var i=0; i < len; ++i){
-//  				products = bidList[i];
-// 					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
-// 
-// 				if(output > products.endDate){
-//	if(output > products.endDate){
-// 					list1.append("<li><font color = 'red'> You won the Bid for : </font>" + products.productName + "</li>");	
-// 				}
-// 					list.append("<li>" + 
-// 					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
-// 					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
-// 
-//  					"<p><i><b>" + products.productName +  "</b></i></p>" +
-//  					"<p>_</p>" +
-//  					"<p> Brand: " + products.brand  + "</p>" +
-//					"<p> Model: " + products.model + "</p>" + 
-//					"<p> Dimensions: " + products.dimensions + "</p>" +
-//					"<p> Description: " + products.productDesc + "</p>" +
-//					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(products.productPrice) + "</p>" +		
-//					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-//					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-//					"</a></li>");
-//				
-//				
-//			}
-//			
-//			list.listview("refresh");
-//							
-//		},
-//		error: function(data, textStatus, jqXHR){
-//			console.log("textStatus: " + textStatus);
-//			alert("You have no bids this far");
-//		}
-//	});
-//});
 
+$(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/wbids/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			var bidList = data.bid;		// ADD var bidProductList = data.bidProduct;
+			var len = bidList.length;
+			var list = $("#bidUser-list");///////////////////////////////////////////////////
+			list.empty();
+			var products;
+			for (var i=0; i < len; ++i){
+				products = bidList[i];
+				list.append("<li><a onclick=GetProductR(" + products.productID + ")>" +  
+					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<p><i><b>" + products.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + products.brand  + "</p>" +
+					"<p> Model: " + products.model + "</p>" + 
+					"<p> Dimensions: " + products.dimensions + "</p>" +
+					"<p> Description: " + products.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(products.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(products.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+				
+				
+			}
+			
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("You have no bids this far");
+		}
+	});
+});
 //No quiere precionar el SoldUSer
 $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 	$.ajax({
@@ -287,9 +280,9 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = orderList[i];
-					list.append("<li><a onclick=GetProduct(" + products.productID + ")>" + 
+					list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
 
-					"<img src= " +  "'" + products.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+					"<img src= " +  products.productPhoto  +"/>" +			// imgSrc ---- productPhoto
 
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" + 
@@ -308,7 +301,7 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("You have no bids this far");
+			alert("You have not sold any items");
 		}
 	});
 });
@@ -328,8 +321,8 @@ $(document).on('pagebeforeshow', "#BidforProduct", function( event, ui ) {
 			var products;
 			for (var i=0; i < len; ++i){
 				products = productBidList[i];
-					list.append("<li>" + 
-					"<img src= " +  "'"+ products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+				list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
+					"<img src= " +  products.productPhoto + "/>" +			// imgSrc ---- productPhoto
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + products.brand  + "</p>" +
@@ -369,24 +362,24 @@ $(document).on('pagebeforeshow', "#adminProfile", function( event, ui ) {
 });
 
 $(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
-        $("#upd-userName").val(currentAccount.userName);
-        $("#upd-userNickname").val(currentAccount.userNickname);
-        $("#upd-password").val(currentAccount.password);
-        $("#upd-userEmail").val(currentAccount.userEmail); 
-        $("#upd-addressLine").val(currentAddress.addressLine); 
-        $("#upd-city").val(currentAddress.city);
-        $("#upd-state").val(currentAddress.state);
-        $("#upd-country").val(currentAddress.country);
-        $("#upd-zipcode").val(currentAddress.zipcode);
-        $("#upd-creditCardNumber").val(currentCreditCard.creditCardNumber);
-        $("#upd-creditCardOwner").val(currentCreditCard.creditCardOwner);
-        $("#upd-securityCode").val(currentCreditCard.securityCode);
-        $("#upd-expDate").val(currentCreditCard.expDate);
-        $("#upd-caddressLine").val(currentCreditCard.addressLine);
-        $("#upd-ccity").val(currentCreditCard.city);
-        $("#upd-cstate").val(currentCreditCard.state);
-        $("#upd-ccountry").val(currentCreditCard.country);
-        $("#upd-czipcode").val(currentCreditCard.zipcode);
+        $("#upd-userName").val(loginID.userName);
+        $("#upd-userNickname").val(loginID.userNickname);
+        $("#upd-password").val(loginID.password);
+        $("#upd-userEmail").val(loginID.userEmail); 
+        $("#upd-addressLine").val(loginID.addressLine); 
+        $("#upd-city").val(loginID.city);
+        $("#upd-state").val(loginID.state);
+        $("#upd-country").val(loginID.country);
+        $("#upd-zipcode").val(loginID.zipcode);
+        $("#upd-creditCardNumber").val(loginID.creditCardNumber);
+        $("#upd-creditCardOwner").val(loginID.creditCardOwner);
+        $("#upd-securityCode").val(loginID.securityCode);
+        $("#upd-expDate").val(loginID.expDate);
+        $("#upd-caddressLine").val(loginID.addressLine);
+        $("#upd-ccity").val(loginID.city);
+        $("#upd-cstate").val(loginID.state);
+        $("#upd-ccountry").val(loginID.country);
+        $("#upd-czipcode").val(loginID.zipcode);
 
 });
 
@@ -684,75 +677,38 @@ function AddToCart(){
 
 
 function UpdateAccount(){
-	alert("You have edited your account!");
-	$.mobile.navigate("#Account");
-        //$.mobile.loading("show");
-        //var form = $("#account-view-form");
-        //var formData = form.serializeArray();
-        //console.log("form Data: " + formData);
-        //var updAccount = ConverToJSON(formData);
-        //updAccount.id = currentAccount.id;
-        //console.log("Updated Account: " + JSON.stringify(updAccount));
-        //var updAccountJSON = JSON.stringify(updAccount);
-        //$.ajax({
-         //       url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-           //     method: 'put',
-             //   data : updAccountJSON,
-               // contentType: "application/json",
-                //dataType:"json",
-                //success : function(data, textStatus, jqXHR){
-                  //      currentAccount = data.account;
-                    //    $.mobile.loading("hide");
-                      //  $.mobile.navigate("#accounts");
-                //},
-                //error: function(data, textStatus, jqXHR){
-                  //      console.log("textStatus: " + textStatus);
-                    //    $.mobile.loading("hide");
-                      //  if (data.status == 404){
-                        //        alert("Data could not be updated!");
-                       // }
-                       // else {
-                         //       alert("Internal Error.");               
-                        //}
-                //}
-        //});
+        $.mobile.loading("show");
+        var form = $("#account-view-form");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/accountsUpdate/" +  loginID.userID + "/" + loginID.creditCardID + "/" + loginID.addressID,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#signin");
+                        alert("You have successfully edited your Account");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                alert("Data could not be updated!");
+                        }
+                        else {
+                                alert("Internal Error.");               
+                        }
+                }
+        });
 }
 
 
-function UpdateAccount(){
-	alert("You have edited your account!");
-	$.mobile.navigate("#Account");
-        //$.mobile.loading("show");
-        //var form = $("#account-view-form");
-        //var formData = form.serializeArray();
-        //console.log("form Data: " + formData);
-        //var updAccount = ConverToJSON(formData);
-        //updAccount.id = currentAccount.id;
-        //console.log("Updated Account: " + JSON.stringify(updAccount));
-        //var updAccountJSON = JSON.stringify(updAccount);
-        //$.ajax({
-         //       url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-           //     method: 'put',
-             //   data : updAccountJSON,
-               // contentType: "application/json",
-                //dataType:"json",
-                //success : function(data, textStatus, jqXHR){
-                  //      currentAccount = data.account;
-                    //    $.mobile.loading("hide");
-                      //  $.mobile.navigate("#accounts");
-                //},
-                //error: function(data, textStatus, jqXHR){
-                  //      console.log("textStatus: " + textStatus);
-                    //    $.mobile.loading("hide");
-                      //  if (data.status == 404){
-                        //        alert("Data could not be updated!");
-                       // }
-                       // else {
-                         //       alert("Internal Error.");               
-                        //}
-                //}
-        //});
-}
 
 function DeleteAccount(){
         $.mobile.loading("show");

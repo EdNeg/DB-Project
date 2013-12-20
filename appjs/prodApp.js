@@ -1588,6 +1588,47 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	
 });
 
+$(document).on('pagebeforeshow', "#productRegular-view", function( event, ui ) {
+	// currentProduct has been set at this point
+
+	
+	//document.getElementById("currPid").innerHTML = currentProduct.id;
+	//var brandName = currentProduct.brand + " " + currentProduct.name;
+	var productName = currentProduct.productName;
+	var startPrice = "Bid Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
+	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
+	var modelNo = "Model: " + currentProduct.model;
+	var dims = "Dimensions: " + currentProduct.dimensions;
+	var pid = "Product id: " + currentProduct.productID;
+	var brand = "Brand: " + currentProduct.brand;
+	var user = "Seller: " + currentProduct.userNickname;
+
+	var startTime = "Starting Date: " + currentProduct.startDate;
+	var endTime = "Ending Date: " + currentProduct.endDate;
+
+	//document.getElementById("currBrand-Name").innerHTML = brandName;
+	document.getElementById("rcurrName").innerHTML = productName;
+	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
+	document.getElementById("rcurrImgSrc").src = currentProduct.productPhoto; 
+	document.getElementById("rcurrBidPrice").innerHTML = startPrice;
+	document.getElementById("rcurrInstPrice").innerHTML = instPrice;
+	document.getElementById("rcurrDescription").innerHTML = currentProduct.productDesc;
+	document.getElementById("rcurrModel").innerHTML = modelNo;
+	document.getElementById("rcurrDimensions").innerHTML = dims;
+	document.getElementById("rcurrId").innerHTML = pid;
+	document.getElementById("rcurrBrand").innerHTML = brand;
+	document.getElementById("rcurrSeller").innerHTML = user;
+
+	document.getElementById("rcurrStartDate").innerHTML = startTime;
+	document.getElementById("rcurrEndDate").innerHTML = endTime;
+
+
+	
+
+	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
+	
+	
+});
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
 
@@ -1678,6 +1719,38 @@ function GetProduct(id){
 		}
 	});
 }
+
+function GetProductR(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			//alert("herher");
+			currentProduct = data.product;
+			bidProductID = id;
+			bidstartingPrice = currentProduct.bidStartingPrice;
+			startdate = currentProduct.startDate;
+			enddate = currentProduct.endDate;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#productRegular-view");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("Producto not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+	});
+}
+
 
 
 

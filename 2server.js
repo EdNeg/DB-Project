@@ -1511,44 +1511,47 @@ var query = connection.query("SELECT * FROM bbUser WHERE userNickname = '" + id 
  });
   });
 // REST Operation - HTTP PUT to updated a car based on its id
-app.put('/DB-Project/accounts/:id', function(req, res) {
+app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
 	var id = req.params.id;
-		console.log("PUT account: " + id);
+	var idc = req.params.idc;
+	var ida = req.params.ida;
+	console.log("PUT User");
 
-	if ((id < 0) || (id >= accountNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("Account not found.");
-	}
-	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('mailingaddress')
-		  	|| !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
-		    	res.statusCode = 400;
-		    	return res.send('Error: Missing fields for account.');
-		  	}
-	else {
-		var target = -1;
-		for (var i=0; i < accountList.length; ++i){
-			if (accountList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Account not found.");			
-		}	
-		else {
-			var theAccount= accountList[target];
-			theAccount.name = req.body.name;
-			theAccount.username = req.body.username;
-			theAccount.password = req.body.password;
-			theAccount.mailingaddress = req.body.mailingaddress;
-			theAccount.billingaddress = req.body.billingaddress;
-			theAccount.creditcard = req.body.creditcard;
-			var response = {"account" : theAccount};
-  			res.json(response);		
-  		}
-	}
+  	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
+  	|| !req.body.hasOwnProperty('userEmail') || !req.body.hasOwnProperty('addressLine') || !req.body.hasOwnProperty('city')
+	|| !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')
+	|| !req.body.hasOwnProperty('creditCardNumber') || !req.body.hasOwnProperty('creditCardOwner') || !req.body.hasOwnProperty('securityCode')
+	|| !req.body.hasOwnProperty('expDate') || !req.body.hasOwnProperty('caddressLine') || !req.body.hasOwnProperty('ccity')
+	|| !req.body.hasOwnProperty('cstate') || !req.body.hasOwnProperty('ccountry') || !req.body.hasOwnProperty('czipcode')){
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for account.');
+  	}
+	
+	
+
+  	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	var query = connection.query("UPDATE `bbUser` SET `userName` = '" + req.body.userName + "', `userNickname` =  '"+ req.body.userNickname + "'," +
+  			"`userEmail` = '" + req.body.userEmail + "',`password` = '" + req.body.password + "' where userID= '"+id+"'");	
+  	
+ 
+  	var query1 = connection.query("UPDATE `bbAddress` SET `addressLine` = '" + req.body.addressLine + "',`city` = '"+ req.body.city + 
+  	  		"',`state` =  '" + req.body.state + "',`country` = '" + req.body.country + "'," +
+  	  		"`zipcode`= '" + req.body.zipcode + "' where addressID = '"+ida+"'");
+ 
+  	var query2 = connection.query("UPDATE `bbAddress` natural join `bbCreditCard` SET `addressLine` = '" + req.body.caddressLine + "'," +
+  			"`city` = '"+ req.body.ccity + "',`state` = '" + req.body.cstate + "',`country` = '" + req.body.ccountry + "'," +
+  	  		"`zipcode` = '" + req.body.czipcode + "' where creditCardID = '" + idc + "'");
+  	
+  	
+	var query3 = connection.query("UPDATE `bbCreditCard` SET `creditCardOwner` = '" + req.body.creditCardOwner + "',`creditCardNumber` = '"+ req.body.creditCardNumber + "'," +
+			"`securityCode` = '" + req.body.securityCode + "',`expDate` = '" + req.body.expDate + "' where creditCardID = '" + idc +"'");
+  
+  	
+  	console.log("Update Account: ");
+  	console.log("Update Mailing Address: ");
+  	console.log("Update Biling Address: " );
+  	console.log("Update CreditCard:" );
+  	res.json(true);
 });
 
 
@@ -1942,7 +1945,7 @@ app.get('/DB-Project/carts', function(req, res) {
 	console.log("GET CARTS");
 
 //pg.connect(conString, function(err, connection, done) {
-	connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct", function(err, rows, result ) {
+	connection.query("SELECT * FROM bbAddToCart natural join bbProduct natural join bbBidProduct", function(err, rows, result ) {
 
 
   	if (err) throw err;
@@ -2247,7 +2250,8 @@ app.get('/DB-Project/bids', function(req, res) {
 });
 
 // REST Operation - HTTP GET to read a car based on its id
-app.get('/DB-Project/bids/:id', function(req, res) {
+app.get('/DB-Project/wbids/:id', function(req, res) {
+	console.log(req.params.id);
         var id = req.params.id;
                 console.log("GET bids: " + id);
 //pg.connect(conString, function(err, connection, done) {
@@ -2262,7 +2266,7 @@ var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natu
         
         
         
-        var len =result.rows.length;
+        var len =rows.length;
         if (len == 0){
                 res.statusCode = 404;
                 res.send("Bid not found.");
@@ -2284,11 +2288,11 @@ app.get('/DB-Project/abids/:ids', function(req, res) {
             //pg.connect(conString, function(err, connection, done) {
 
             	var query = connection.query("SELECT u.userNickname, b.bidDate, b.bidAmount, r.productPhoto, r.productDesc, r.productName, " +
-            			"r.brand, r.model, r.dimensions FROM bbBidFor as b inner join bbUser as u on b.userID = u.userID " +
-            			"inner join bbProduct as r on b.productID = r.productID inner join " +
-            			"bbSell as s on r.productID = s.productID WHERE s.userID= '"+ ids + "'", function(err, rows, result){
+            			"r.brand, r.model, r.dimensions, r.productID FROM bbBidFor as b inner join bbUser as u on b.userID = u.userID " +
+            			" inner join bbProduct as r on b.productID = r.productID inner join " +
+            			" bbSell as s on r.productID = s.productID WHERE s.userID= "+ ids, function(err, rows, result){
             if (err) throw err;
-    
+    console.log("hello");
     /*
     for (i = 0; i<rows.length; i++){
                       console.log('The solution is: ', rows[i]);
@@ -2373,17 +2377,21 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         console.log(ed);
         console.log(output);
       // pg.connect(conString, function(err, connection, done) {
+     
+        console.log("Herew");
           if(!req.body.hasOwnProperty('bidAmount')) {
-        	  console.log("Problem?");
             res.statusCode = 400;
             return res.send('Error: Missing fields for address.');
           }
           
+          console.log("Hereo");
           if(count == 0){
           	
         	  var query2 = connection.query("Select * from bbBidFor Where userID = '" + id + "' AND productID = '"+ idp +"'"); 
+        	  if(query2 == true){
         	  count = 1;
         	  return res.send('You have already placed a bid!');
+        	  }
           }
           
           console.log("Here");
@@ -2447,25 +2455,27 @@ app.get('/DB-Project/orders', function(req, res) {
 	for (i = 0; i<rows.length; i++){
 		console.log('The result is: ', rows[i]);
 	}
-  var response = {"bids" : result.rows};
+  var response = {"bids" : rows};
   res.json(response);
   //done();
 });
 //});
 });
 
+var orders;
 // REST Operation - HTTP GET to read a car based on its id
 app.get('/DB-Project/orders/:id', function(req, res) {
         var id = req.params.id;
+        orders = req.params.id;
                 console.log("GET order: " + id);
-                pg.connect(conString, function(err, connection, done) {
+                //pg.connect(conString, function(err, connection, done) {
 
 var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto, r.productDesc, r.productName, r.productPrice, " + 
-		"r.brand, r.model, r.dimensions FROM bbOrder as o inner join bbPay as p on" + 
-		"o.orderID = p.orderID inner join bbUser as u on o.userID = u.userID inner join bbContain" +
-		"as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join " + 
+		"r.brand, r.model, r.dimensions, r.productID FROM bbOrder as o inner join bbPay as p on" + 
+		" o.orderID = p.orderID inner join bbUser as u on o.userID = u.userID inner join bbContain" +
+		" as c on o.orderID = c.orderID inner join bbProduct as r on c.productID = r.productID inner join " + 
 		"bbBidProduct as bp on r.productID = bp.productID inner join" + 
-		"bbSell as s on r.productID = s.productID WHERE s.userID = " + id, function(err, rows, result ){
+		" bbSell as s on r.productID = s.productID WHERE s.userID = " + id, function(err, rows, result ){
                 if (err) throw err;
         /*
         for (i = 0; i<rows.length; i++){
@@ -2474,7 +2484,7 @@ var query = connection.query("SELECT u.userNickname, p.paidDate, r.productPhoto,
         
         
         
-        var len =result.rows.length;
+        var len =rows.length;
         if (len == 0){
                 res.statusCode = 404;
                 res.send("Order not found.");
@@ -2563,4 +2573,4 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
         		 });
 });
 
-});
+

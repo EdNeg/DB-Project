@@ -209,7 +209,7 @@
 <div data-role="page" id="product-view">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 		
 	</header>
 		
@@ -241,12 +241,51 @@
 	</div>	
  				 
 		<div class="ui-grid-a">
-            <div class="ui-block-a"><a href="placeBid"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+            <div class="ui-block-a"><a href="#placeBid"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
          	<div class="ui-block-b"><a onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
     	</div>
 	
 			
 </div><!-- ---------------------------------------------------------------------Page Product Details --------------------------------------------------------------------------->
+
+
+<div data-role="page" id="productRegular-view">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Product Detail</h1>
+		<a data-role="button"  data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		
+	</header>
+		
+	<div data-role="content">
+		
+			<center>
+				<img id = "rcurrImgSrc" style="width: 80%;"></center>
+			
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id = "rcurrName"></li>
+				<li id="rcurrBidPrice"></li>
+				<li id="rcurrInstPrice"></li>
+				<li data-role="list-divider">Description</li>
+				<li id="rcurrDescription"></li>
+				<li id="rcurrBrand"></li>
+				<li id="rcurrModel"></li>
+				<li id="rcurrDimensions"></li>
+				<li id="rcurrId"></li>
+				<li id="rcurrStartDate"></li>
+				<li id="rcurrEndDate"></li>
+
+				
+							
+			</ul>
+			
+			<ul data-role = "listview" data-inset ="true">
+				<li id="rcurrSeller"></li>
+			</ul> 		
+	</div>	
+ 				 
+	
+			
+</div><!-- ---------------------------------------------------------------------User Product Details --------------------------------------------------------------------------->
 
 <div data-role="page" id="productSortName">
 	<header data-role="header" data-theme='d'>
@@ -1225,8 +1264,7 @@
                         <h1>BoricuaBay</h1>
                 </header>
                         <div data-role="content">
-                        		<ul id="bidUserd-list" data-role="listview" data-inset="true">
-                                	</ul>
+                        		
                                 <ul id="bidUser-list" data-role="listview" data-inset="true">
                                 	</ul>
                         </div>
@@ -1407,7 +1445,7 @@
 
 		<li data-theme="c"><a href="#sellProduct" data-transition="slide">Products</a></li>
 
-		<li data-theme="c"><a href="#soldProduct"
+		<li data-theme="c"><a href="#productSold"
 			data-transition="slide"> Sold Product </a></li>
 
 	</ul>
@@ -1743,8 +1781,8 @@
  					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
  					<li data-role="list-divider" role="heading">User Info</li>   
   					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
-  					<li><label for="upd-userNickname"> Username: <input id="upd-userNickname" name="userNickname" type="text"/></label></li>
-				    <li><label for="upd-password"> Password: <input id="upd-password" name="password" type="password"/></label></li>
+  					<li><label for="upd-UserNickname"> Username: <input id="upd-UserNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="upd-Password"> Password: <input id="upd-Password" name="password" type="password"/></label></li>
   					<li><label for="upd-userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
   					<li data-role="list-divider" role="heading">Mailing Address</li>
   					<li><label for="upd-addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
@@ -1799,21 +1837,6 @@
                         
 </div><!----------------------------------------------------	C A R T	 HOME	----------------------------------------------------------------------------->
 
-<div id="bidUser" data-role="page">
-        <header data-role="header" data-theme="d">
-                        <a data-role="button" href="#regular" data-icon="arrow-l"
-                                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
-                        <h1>BoricuaBay</h1>
-                </header>
-                        <div data-role="content">
-                                <ul id="bidUser-list" data-role="listview" data-inset="true">
-                                	</ul>
-                        </div>
-                       
-                        
-</div><!----------------------------------------------------		B I D S		----------------------------------------------------------------------------->
-
-
 
 
 <div id="BidforProduct" data-role="page">
@@ -1839,12 +1862,14 @@
 			<h1>BoricuaBay</h1>
 		</header>
 		 <div data-role="content">
+		 	 
                                 <ul id="soldUser-list" data-role="listview" data-inset="true">
                                 	</ul>
+                                </div>
 </div><!----------------------------------------------------		Sold History		----------------------------------------------------------------------------->
 
 
-<div data-role="page" id="soldProduct">
+<div id="productSold" data-role="page">
 		<header data-role="header" data-theme="d">
 			<a data-role="button" href="#regular" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left" data-theme"b">User Name</a>
