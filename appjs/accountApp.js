@@ -441,6 +441,7 @@ function ConverToJSON(formData){
 
 var loginID = 0;
 function LogIn(){
+	
 	document.getElementById("cartHome").id = 'cartUser';
 	 $.mobile.loading("show");
      $.ajax({
@@ -556,7 +557,7 @@ function SaveProductUser(){
 	console.log("New Product: " + JSON.stringify(newProduct));
 	var newProductJSON = JSON.stringify(newProduct);
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/products/" + loginID.userID,
+		url : "http://localhost:3412/DB-Project/products/" + loginID.userID + "/" + selection,
 		method: 'post',
 		data : newProductJSON,
 		contentType: "application/json",

@@ -369,9 +369,11 @@ app.del('/DB-Project/products/:id', function(req, res) {
 	}
 });
 
+
 // REST Operation - HTTP POST to add a new a product
-app.post('/DB-Project/products/:id', function(req, res) {
+app.post('/DB-Project/products/:id/:selection', function(req, res) {
 	var id = req.params.id;
+	var selection = req.params.selection;
 	console.log("POST");
 
   	if(!req.body.hasOwnProperty('productName') || !req.body.hasOwnProperty('brand')
@@ -380,10 +382,10 @@ app.post('/DB-Project/products/:id', function(req, res) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for product.');
   	}
-
+	
 	var query = connection.query("INSERT INTO `bbProduct` (`productID`,`productName`,`productDesc`,`productPhoto`,`productPrice`," +
 	  		"`model`,`brand`,`dimensions`,`tagID`) VALUES (NULL, '" + req.body.productName + "', '"+ req.body.productDesc + 
-	  		"', '" + req.body.productPhoto + "', '" + req.body.productPrice + "','" + req.body.model + "','" + req.body.brand + "','" + req.body.dimensions + "',1)");
+	  		"', '" + req.body.productPhoto + "', '" + req.body.productPrice + "','" + req.body.model + "','" + req.body.brand + "','" + req.body.dimensions + "'," + selection + ")");
 	var getquery = connection.query("SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()");	
 	var query1 = connection.query("INSERT INTO `bbBidProduct` (`productID`,`bidStartingPrice`,`startDate`,`endDate`) " +
 			"VALUES (@last_insert_id_in_bbProduct, '" + req.body.bidStartingPrice + "', '"+ req.body.startDate + 
@@ -564,9 +566,6 @@ app.post('/DB-Project/categories', function(req, res) {
 
 //--------------------------------------Books SubCategories---------------------------------------------------------------//
 	
-	
-
-
 
 
 // REST Operations

@@ -1505,7 +1505,7 @@
 					
 					<div id="f1" style="display:none">
 					   <form name="form1">
-					       <select onchange="showForm()">
+					       <select id="BooksSub" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
 					           <option value="1">Children</option>
 					           <option value="2">Fiction</option>
@@ -1517,25 +1517,25 @@
 					
 					<div id="f2" style="display:none">
 					   <form name="form2">
-					       <select onchange="showForm()">
+					       <select id="ElectronicsSub" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
-					           <option value="1">TV</option>
-					           <option value="2">Audio</option>
-					           <option value="3">Phones</option>
-					           <option value="4">Cameras</option>
-					           <option value="5">Video</option>
+					           <option value="5">TV</option>
+					           <option value="6">Audio</option>
+					           <option value="7">Phones</option>
+					           <option value="8">Cameras</option>
+					           <option value="9">Video</option>
 					       </select>
 					   </form>
 					</div>
 					
 					<div id="f3" style="display:none">
 					   <form name="form3">
-					       <select onchange="showForm()">
+					       <select id="ComputersSub" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
-					           <option value="1">Laptops</option>
-					           <option value="2">Desktops</option>
-					           <option value="3">Tablets</option>
-					           <option value="4">Printers</option>
+					           <option value="10">Laptops</option>
+					           <option value="11">Desktops</option>
+					           <option value="12">Tablets</option>
+					           <option value="13">Printers</option>
 					         
 					       </select>
 					   </form>
@@ -1545,9 +1545,9 @@
 					   <form name="form4">
 					       <select id="opts1" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
-					           <option value="1">Children</option>
-					           <option value="2">Men</option>
-					           <option value="3">Women</option>
+					           <option value="14">Children</option>
+					           <option value="15">Men</option>
+					           <option value="19">Women</option>
 					           
 					       </select>
 					   </form>
@@ -1555,11 +1555,11 @@
 					
 					<div id="f5" style="display:none">
 					   <form name="form5">
-					       <select onchange="showForm()">
+					       <select id="MenTag"onchange="showForm()">
 					           <option value="0">Select Tag</option>
-					           <option value="1">Shirts</option>
-					           <option value="2">Pants</option>
-					           <option value="3">Socks</option>
+					           <option value="16">Shirts</option>
+					           <option value="17">Pants</option>
+					           <option value="18">Socks</option>
 					           
 					       </select>
 					   </form>
@@ -1567,11 +1567,11 @@
 					
 					<div id="f6" style="display:none">
 					   <form name="form6">
-					       <select onchange="showForm()">
+					       <select id="WomenTag" onchange="showForm()">
 					           <option value="0">Select Tag</option>
-					           <option value="1">Shirts</option>
-					           <option value="2">Pants</option>
-					           <option value="3">Dresses</option>
+					           <option value="20">Shirts</option>
+					           <option value="21">Pants</option>
+					           <option value="22">Dresses</option>
 					           
 					       </select>
 					   </form>
@@ -1579,13 +1579,11 @@
 					
 					<div id="f7" style="display:none">
 					   <form name="form7">
-					       <select id="opts2" onchange="showForm()">
+					       <select id="ShoesSub" onchange="showForm()">
 					           <option value="0">Select Sub-Category</option>
-					           <option value="1">Bicycles</option>
-					           <option value="2">Fishing</option>
-					           <option value="3">Baseball</option>
-					           <option value="4">Golf</option>
-					           <option value="5">Basketball</option>
+					           <option value="23">Children</option>
+					           <option value="24">Women</option>
+					           <option value="25">Men</option>					        
 					           
 					       </select>
 					   </form>
@@ -1593,12 +1591,26 @@
 					
 					<div id="f8" style="display:none">
 					   <form name="form8">
-					       <select onchange="showForm()">
+					       <select id="opts2" onchange="showForm()">
+					           <option value="0">Select Sub-Category</option>
+					           <option value="26">Bicycles</option>
+					           <option value="31">Fishing</option>
+					           <option value="32">Baseball</option>
+					           <option value="33">Golf</option>
+					           <option value="34">Basketball</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f9" style="display:none">
+					   <form name="form9">
+					       <select id="BicycleTag" onchange="showForm()">
 					           <option value="0">Select Tag</option>
-					           <option value="1">Frames</option>
-					           <option value="2">Wheels</option>
-					           <option value="3">Helmets</option>
-					           <option value="4">Parts</option>
+					           <option value="27">Frames</option>
+					           <option value="28">Wheels</option>
+					           <option value="29">Helmets</option>
+					           <option value="30">Parts</option>
 					           
 					       </select>
 					   </form>
@@ -1607,11 +1619,22 @@
 					   
 					   
 					   <script type="text/javascript">
+					   var selection;
 					   function showForm() {
 					       var selopt = document.getElementById("opts").value;
 					        var selopt1 = document.getElementById("opts1").value;
 					        var selopt2 = document.getElementById("opts2").value;
-					        
+					        if (selopt == 0) {
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
+					       }
 					       if (selopt == 1) {
 					           document.getElementById("f1").style.display = "block";
 					           document.getElementById("f2").style.display = "none";
@@ -1621,7 +1644,8 @@
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
-					           
+					           document.getElementById("f9").style.display = "none";
+					           selection = document.getElementById("BooksSub").value;
 					       }
 					       if (selopt == 2) {
 					           document.getElementById("f2").style.display = "block";
@@ -1632,18 +1656,11 @@
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
+					       	   selection = document.getElementById("ElectronicsSub").value;
+
 					       }
-					       if (selopt == 0) {
-					           document.getElementById("f2").style.display = "none";
-					           document.getElementById("f1").style.display = "none";
-					           document.getElementById("f3").style.display = "none";
-					           document.getElementById("f4").style.display = "none";
-					           document.getElementById("f5").style.display = "none";
-					           document.getElementById("f6").style.display = "none";
-					           document.getElementById("f7").style.display = "none";
-					           document.getElementById("f8").style.display = "none";
-					       }
-					       if (selopt == 3) {
+					      if (selopt == 3) {
 					           document.getElementById("f3").style.display = "block";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f7").style.display = "none";
@@ -1652,7 +1669,8 @@
 					           document.getElementById("f5").style.display = "none";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
-					           
+					           document.getElementById("f9").style.display = "none";
+					           selection = document.getElementById("ComputersSub").value;
 					           
 					       }if (selopt == 4) {
 					           document.getElementById("f4").style.display = "block";
@@ -1662,62 +1680,71 @@
 					           document.getElementById("f8").style.display = "none";
 					           document.getElementById("f5").style.display = "none";
 					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
 					           
 					       }
 					       if (selopt == 5) {
-					           document.getElementById("f4").style.display = "block";
-					           document.getElementById("f2").style.display = "none";
-					           document.getElementById("f3").style.display = "none";
-					           document.getElementById("f7").style.display = "none";
-					           document.getElementById("f6").style.display = "none";
-					           document.getElementById("f5").style.display = "none";
-					           document.getElementById("f8").style.display = "none";
-					           document.getElementById("f1").style.display = "none";
-					           
-					           
-					       }if (selopt == 6) {
 					           document.getElementById("f7").style.display = "block";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
+					           selection = document.getElementById("ShoesSub").value;
+
 					           
+					       }if (selopt == 6) {
+					           document.getElementById("f8").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
-					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           
 					       }
 					       //////SubCats
-					       if (selopt1 == 2) {
+					       if (selopt1 == 15) {
 					           document.getElementById("f5").style.display = "block";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "block";
-					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           selection = document.getElementById("MenTag").value;
 					       }
-					       if (selopt1 == 3) {
+					       if (selopt1 == 19) {
 					           document.getElementById("f6").style.display = "block";
 					           document.getElementById("f5").style.display = "none";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "block";
-					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           selection = document.getElementById("WomenTag").value;
 					       }
-					       if (selopt2 == 1) {
-					           document.getElementById("f8").style.display = "block";
+					       if (selopt2 == 26) {
+					           document.getElementById("f9").style.display = "block";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "none";
 					           document.getElementById("f5").style.display = "none";
-					           document.getElementById("f7").style.display = "block";
+					           document.getElementById("f8").style.display = "block";
 					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           selection = document.getElementById("BicycleTag").value;
 					       }
 					       
 					   }
