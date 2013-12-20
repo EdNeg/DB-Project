@@ -11,6 +11,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
                         var list = $("#accounts-list");
                         var list2 = $("#address1-list");
                         list.empty();
+                        list2.empty();
                         list.append("<li>" +
                                 "<h2>" + "Name: " + currentAccount.userName + "</h2>" +
                                 "<h2>" + "Username: " + currentAccount.userNickname  + "</h2>" +
@@ -69,6 +70,7 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
                         var list = $("#creditcards-list");
                         var list2 = $("#address-list");
                         list.empty();
+                        list2.empty();
                         list.append("<li>" +
                                 "<h2>" + "CreditCard Number: " + currentCreditcard.creditCardNumber + "</h2>" +
                                 "<h2>" + "Owner Name: " + currentCreditcard.creditCardOwner + "</h2>" +
@@ -378,18 +380,21 @@ $(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
         $("#upd-state").val(currentAddress.state);
         $("#upd-country").val(currentAddress.country);
         $("#upd-zipcode").val(currentAddress.zipcode);
-        $("#upd-creditCardNumber").val(currentCreditCard.creditCardNumber);
-        $("#upd-creditCardOwner").val(currentCreditCard.creditCardOwner);
-        $("#upd-securityCode").val(currentCreditCard.securityCode);
-        $("#upd-expDate").val(currentCreditCard.expDate);
-        $("#upd-caddressLine").val(currentCreditCard.addressLine);
-        $("#upd-ccity").val(currentCreditCard.city);
-        $("#upd-cstate").val(currentCreditCard.state);
-        $("#upd-ccountry").val(currentCreditCard.country);
-        $("#upd-czipcode").val(currentCreditCard.zipcode);
+        $("#upd-creditCardNumber").val(currentCreditcard.creditCardNumber);
+        $("#upd-creditCardOwner").val(currentCreditcard.creditCardOwner);
+        $("#upd-securityCode").val(currentCreditcard.securityCode);
+        $("#upd-expDate").val(currentCreditcard.expDate);
+        $("#upd-caddressLine").val(currentCreditcard.addressLine);
+        $("#upd-ccity").val(currentCreditcard.city);
+        $("#upd-cstate").val(currentCreditcard.state);
+        $("#upd-ccountry").val(currentCreditcard.country);
+        $("#upd-czipcode").val(currentCreditcard.zipcode);
 
 });
 
+var currentAccount = {};
+
+/*
 $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	// currentProduct has been set at this point
 
@@ -418,7 +423,8 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	
 	
 
-});
+});*/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -480,53 +486,31 @@ function VerifyUserCart(){
 
 function VerifyAdmin(){
         $.mobile.loading("show");
-        var form = $("#verify-form");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var updAccount = ConverToJSON(formData);
-        console.log("Updated Account: " + JSON.stringify(updAccount));
-        var updAccountJSON = JSON.stringify(updAccount);
         $.ajax({
-                url : "http://localhost:3412/DB-Project/accountas/",
-                method: 'get',
-                contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                        var verifyList = data.accountas;
-                        var len = verifyList.length;
-                        var verify;
-                        var notFound=0;
-                        for (var i=0; i < len; ++i){
-                                verify = verifyList[i];
-                                if(verify.adminUserName == updAccount.userNickname && verify.adminPassword == updAccount.password){
-                                        currentAccount = verify;
-                                        //currentUserID = currentAccount.userID;
-                                        $.mobile.loading("hide");
-                                        $.mobile.navigate("#adminProfile");
-                                        notFound=1;
-                                        break;
-                                }
-                                 
-                                
-                        }
-                        if(notFound != 1){                       
-                       alert("Username and Password Invalid");
-                               $.mobile.navigate("#home");
-                            }  
-                        
-                        
-                },
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        $.mobile.loading("hide");
-                        if (data.status == 404){
-                                alert("Data could not be updated!");
-                        }
-                        else {
-                                alert("Internal Error.");               
-                        }
-                }
-        });
+             
+    	 	url : "http://localhost:3412/DB-Project/accountAdmin/" + $('#upd-userNickname').val() +"/"+ $('#upd-password').val(),
+             method: 'get',
+             contentType: "application/json",
+             dataType:"json",
+             success : function(data, textStatus, jqXHR){
+             	currentAccount = data.accountAdmin;
+                     $.mobile.loading("hide");
+                     $.mobile.navigate("#adminProfile");   
+                            
+                     
+             },
+             error: function(data, textStatus, jqXHR){
+                     console.log("textStatus: " + textStatus);
+                     $.mobile.loading("hide");
+                     if (data.status == 404){
+                             alert("Invalid username and password!");
+                             $.mobile.navigate("#home");  
+                     }
+                     else {
+                             alert("Internal Error.");               
+                     }
+             }
+     });
         
 }
 
@@ -683,8 +667,8 @@ function AddToCart(){
 }
 
 
-function UpdateAccount(){
-	alert("You have edited your account!");
+function UpdateAccountUser(){
+	//alert("You have edited your account!");
 	$.mobile.navigate("#Account");
         //$.mobile.loading("show");
         //var form = $("#account-view-form");
@@ -719,39 +703,39 @@ function UpdateAccount(){
 }
 
 
-function UpdateAccount(){
-	alert("You have edited your account!");
-	$.mobile.navigate("#Account");
-        //$.mobile.loading("show");
-        //var form = $("#account-view-form");
-        //var formData = form.serializeArray();
-        //console.log("form Data: " + formData);
-        //var updAccount = ConverToJSON(formData);
-        //updAccount.id = currentAccount.id;
-        //console.log("Updated Account: " + JSON.stringify(updAccount));
-        //var updAccountJSON = JSON.stringify(updAccount);
-        //$.ajax({
-         //       url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-           //     method: 'put',
-             //   data : updAccountJSON,
-               // contentType: "application/json",
-                //dataType:"json",
-                //success : function(data, textStatus, jqXHR){
-                  //      currentAccount = data.account;
-                    //    $.mobile.loading("hide");
-                      //  $.mobile.navigate("#accounts");
-                //},
-                //error: function(data, textStatus, jqXHR){
-                  //      console.log("textStatus: " + textStatus);
-                    //    $.mobile.loading("hide");
-                      //  if (data.status == 404){
-                        //        alert("Data could not be updated!");
-                       // }
-                       // else {
-                         //       alert("Internal Error.");               
-                        //}
-                //}
-        //});
+function UpdateAccountAdmin(){
+	//alert("You have edited your account!");
+	$.mobile.navigate("#adminProfile");
+        $.mobile.loading("show");
+        var form = $("#account-view-form2");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        updAccount.id = currentAccount.id;
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        $.ajax({
+               url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
+               method: 'put',
+               data : updAccountJSON,
+               contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                       currentAccount = data.account;
+                       $.mobile.loading("hide");
+                       $.mobile.navigate("#adminProfile");
+                },
+                error: function(data, textStatus, jqXHR){
+                       console.log("textStatus: " + textStatus);
+                       $.mobile.loading("hide");
+                       if (data.status == 404){
+                               alert("Data could not be updated!");
+                       }
+                       else {
+                               alert("Internal Error.");               
+                        }
+                }
+        });
 }
 
 function DeleteAccount(){
@@ -840,20 +824,18 @@ function GetSellbyUser(id){
 
 $(document).on('pagebeforeshow', "#viewUsers", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accounts",
+		url : "http://localhost:3412/DB-Project/users/" + $('#searchUser').val(),
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var userList = data.accounts;		
-			
+			var userList = data.accountByName;		
 			var len = userList.length;
 			var list = $("#users-list");
 			list.empty();
 			var user;
-			
 			for (var i=0; i < len; ++i){
 				user = userList[i];
 				
-				list.append("<li><a>" + 
+				list.append("<li><a onclick=GetUser(" + user.userID + ")>" + 
 					"<p><i><b> Name: </b></i>" + user.userName +  "</p>" +
 					"<p>_</p>" +
 					"<p><i><b> Nickname: </b></i>" + user.userNickname + "</p>" +
@@ -865,18 +847,51 @@ $(document).on('pagebeforeshow', "#viewUsers", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data notefound!");
+			alert("User not found!");
+			$.mobile.navigate("#searchUserPage");
+			
 		}
 	});
 });
 
+$(document).on('pagebeforeshow', "#viewUsers2", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/users/" + $('#searchUser2').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.accountByName;		
+			var len = userList.length;
+			var list = $("#users-list2");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append('<li><a href="#account-view-admin">' + 
+					"<p><i><b> Name: </b></i>" + user.userName +  "</p>" +
+					"<p>_</p>" +
+					"<p><i><b> Nickname: </b></i>" + user.userNickname + "</p>" +
+					"<p class=\"ui-li-aside\"><i><b> Email: </b></i>" + user.userEmail + "</p>" +		
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("User not found!");
+			$.mobile.navigate("#searchUserPage2");
+			
+		}
+	});
+});
 
 $(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/accountas",
+		url : "http://localhost:3412/DB-Project/accountAdmin",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var adminList = data.accountas;		
+			var adminList = data.accountAdmin;		
 			
 			var len = adminList.length;
 			var list = $("#admins-list");
@@ -903,3 +918,110 @@ $(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
 	});
 });
 
+var currentUser = {};
+
+function GetUser(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			//alert("herher");
+			 currentUser = data.account;
+			 currentCreditcard = data.creditcard;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#AccountByAdmin");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("User not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#AccountByAdmin", function( event, ui ) {
+	// currentUser has been set at this point
+
+	var userAccName = "Account of " + currentUser.userName;
+	document.getElementById("currAccName").innerHTML = userAccName;
+});
+
+$(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
+        console.log("Jose");
+        $.ajax({
+        	url : "http://localhost:3412/DB-Project/accounts/" + currentUser.userID,
+            method: 'get',
+            contentType: "application/json",
+            dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                	    currentUser = data.account;
+                        var list = $("#userInfo");
+                        var list2 = $("#shippingAddress");
+                   
+                        list.empty();
+                        list2.empty();
+  
+                        list.append("<li>" +
+                                "<h2>" + "Name: " + currentUser.userName + "</h2>" +
+                                "<h2>" + "Username: " + currentUser.userNickname  + "</h2>" +
+                                "<h2>" + "Password: " +  currentUser.password + "</h2>" +
+                                "<h2>" + "Email: " + currentUser.userEmail + "</h2>"  + "</li>");
+                 
+                        list2.append("<li>" +
+                                "<h2>" + "Address Line: " + currentUser.addressLine + "</h2>" +
+                                "<h2>" + "City: " + currentUser.city + "</h2>" +
+                                "<h2>" + "State: " + currentUser.state + "</h2>" +
+                                "<h2>" + "Country: " + currentUser.country + "</h2>" +
+                                "<h2>" + "Zipcode: " + currentUser.zipcode + "</h2>"  + "</li>");
+                        list2.listview("refresh");
+        },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        alert("Account not found!");
+                }
+        });
+});
+
+$(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
+        console.log("Jose");
+        $.ajax({
+        	url : "http://localhost:3412/DB-Project/creditcards/" + currentUser.u,
+            method: 'get',
+            contentType: "application/json",
+            dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                	 currentCreditcard = data.creditcard;
+                        var list = $("#creditcards-list");
+                        var list2 = $("#address-list");
+                        list.empty();
+                        list2.empty();
+                        list.append("<li>" +
+                                "<h2>" + "CreditCard Number: " + currentCreditcard.creditCardNumber + "</h2>" +
+                                "<h2>" + "Owner Name: " + currentCreditcard.creditCardOwner + "</h2>" +
+                                "<h2>" + "Security Code: " + currentCreditcard.securityCode + "</h2>" +
+                                "<h2>" + "Expiration Date: " + currentCreditcard.expDate + "</h2>" + "</li>");
+                        
+                        list2.append("<li>" +
+                                "<h2>" + "Address Line: " + currentCreditcard.addressLine + "</h2>" +
+                                "<h2>" + "City: " + currentCreditcard.city + "</h2>" +
+                                "<h2>" + "State: " + currentCreditcard.state + "</h2>" +
+                                "<h2>" + "Country: " + currentCreditcard.country + "</h2>" +
+                                "<h2>" + "Zipcode: " + currentCreditcard.zipcode + "</h2>"  + "</li>");
+                        list2.listview("refresh");                     
+        },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        alert("CreditCard not found!");
+                }
+        });
+});

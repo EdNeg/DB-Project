@@ -245,9 +245,11 @@ var query = connection.query("SELECT * FROM boricuabaydb.bbProduct natural join 
 		if (err) throw err;
 
 	
+	/*
 	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}
+				console.log('The solution is: ', rows[i]);
+			}*/
+	
 	
 	var len = rows.length;
 	if (len == 0){
@@ -1443,7 +1445,33 @@ app.post('/DB-Project/Sports', function(req, res) {
 
 //-----------------------Regular User------------------------------------------------------
 
-// Gets the user Information
+// Gets the user Information by userName
+app.get('/DB-Project/users/:idu', function(req, res) {
+	var idu = req.params.idu;
+	console.log("GET account with names containing: " + idu);
+
+
+var query = connection.query("SELECT * FROM bbUser WHERE userName like '%" + idu + "%';", function(err, rows, result){	
+
+	if (err) throw err;
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"accountByName" : rows};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
+
+
+
+// Gets the user Information by userID
 app.get('/DB-Project/accounts/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET account: " + ids);
@@ -1615,29 +1643,35 @@ app.post('/DB-Project/accounts', function(req, res) {
 // c) PUT - Update an individual object, or collection  (Database update operation)
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
-// REST Operation - HTTP GET to read all products
-app.get('/DB-Project/accountas', function(req, res) {
-	console.log("GET ACCOUNTAS");
 
-	
-	connection.query('SELECT * FROM bbAdmin', function(err, rows, result) {
+//Verifies Login For Admin
+app.get('/DB-Project/accountAdmin/:id/:idp', function(req, res) {
+	var id = req.params.id;
+	var idp = req.params.idp;
+	console.log("GET ADMIN account: " + id);
 
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"accountas" : rows};
-  res.json(response);
-});
-});
+var query = connection.query("SELECT * FROM bbAdmin WHERE adminUserName = '" + id  + "'" + " AND " +
+		"adminPassword = '" + idp + "'", function(err, rows, result){
 
+		if (err) throw err;
+
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"accountAdmin" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
 
 // REST Operation - HTTP GET to read a product based on its id
-app.get('/DB-Project/accountas/:id', function(req, res) {
+app.get('/DB-Project/accountAdmin/:id', function(req, res) {
 	var id = req.params.id;
-		console.log("GET accounta: " + id);
+		console.log("GET admin: " + id);
 
 
 var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, function(err, rows, result){
@@ -1656,7 +1690,7 @@ var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, funct
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"accounta" : rows[0]};
+  		var response = {"accountAdmin2" : rows[0]};
 		//connection.end();
   		res.json(response);
   	}
