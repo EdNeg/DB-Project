@@ -1769,9 +1769,11 @@ var query = connection.query("SELECT * from bbCreditCard as c " +
 		"inner join bbUser as u on u.creditCardID = c.creditCardID " +
 		"where u.userID = '" + ids  + "'", function(err, rows, result){
 
+	/*
 	for (i = 0; i<rows.length; i++){
-        console.log('The solution is: ', rows[i]);
-}	
+			console.log('The solution is: ', rows[i]);
+	}	*/
+	
 	if (err) throw err;
 
 	

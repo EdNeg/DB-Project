@@ -995,14 +995,14 @@ $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
 $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
         console.log("Jose");
         $.ajax({
-        	url : "http://localhost:3412/DB-Project/creditcards/" + currentUser.u,
+        	url : "http://localhost:3412/DB-Project/creditcards/" + currentUser.userID,
             method: 'get',
             contentType: "application/json",
             dataType:"json",
                 success : function(data, textStatus, jqXHR){
                 	 currentCreditcard = data.creditcard;
-                        var list = $("#creditcards-list");
-                        var list2 = $("#address-list");
+                        var list = $("#creditCardInfo");
+                        var list2 = $("#billingAddress");
                         list.empty();
                         list2.empty();
                         list.append("<li>" +
