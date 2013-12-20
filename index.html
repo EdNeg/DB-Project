@@ -112,7 +112,7 @@
 		<fieldset data-role="controlgroup">
 		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
  					<li data-role="list-divider" role="heading">User Info</li>   
-  					<li><label for="userName"> Name: <input id="userName" name="userName" type="text"/></label></li>
+  					<li><label for="userName"> Name: <input id="userName" name="userName" type="text" value/></label></li>
   					<li><label for="userNickname"> Username: <input id="userNickname" name="userNickname" type="text"/></label></li>
 				    <li><label for="password"> Password: <input id="password" name="password" type="password"/></label></li>
   					<li><label for="userEmail"> Email: <input id="userEmail" name="userEmail" type="text"/></label></li>
@@ -161,13 +161,11 @@
 	</ul>
 	
 	<div class="ui-grid-a">
-		<div class="ui-block-a"><a href="#viewUsers" data-role="button" data-icon="search" data-iconpos="top">View All Users</a></div>
+		<div class="ui-block-a"><a href="#searchUserPage" data-role="button" data-icon="search" data-iconpos="top">Search / Edit Users</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
-		<div class="ui-block-a"><a href="../DB-Project/EditAccount.html" data-role="button" data-icon="edit" data-iconpos="top">Edit User</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
-		<div class="ui-block-a"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View All Admins</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="edit" data-iconpos="top">Edit Admin</a></div>
+		<div class="ui-block-a"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
+		<div class="ui-block-b"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
+		<div class="ui-block-a"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
 		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
@@ -182,6 +180,34 @@
 		</nav>
 	</footer>
 </div><!-- ------------------------------------------------------------------Page Admin Profile ----------------------------------------------------------------------------->
+
+<div data-role="page" id="searchUserPage">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-form2" data-role="content">
+		  
+				<input type="search" name="searchUser" id="searchUser"/ >
+				<a  href="#viewUsers" data-theme='b' data-role="button">Search Users</a>
+			
+			</form>
+</div><!-- ------------------------------------------------------------------Page Search User ----------------------------------------------------------------------------->
+
+<div data-role="page" id="viewUsers" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Users Registered</h1>
+			<a data-role="button" href="#searchUserPage" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="users-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- ---------------------------------------Page View Users------------------------------------------------------------------------>
+
 
 
 
@@ -290,7 +316,7 @@
 <div data-role="page" id="productSortName">
 	<header data-role="header" data-theme='d'>
 		<h1>Search Results</h1>
-		<a data-role="button" href="#books-view" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<a data-role="button" href="#home" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
 		<nav data-role="navbar">
 			<ul>
 				<li><a href="#productSortName">Sort By Name</a></li>
@@ -315,7 +341,7 @@
 <div data-role="page" id="productSortBrand">
 	<header data-role="header" data-theme='d'>
 		<h1>Search Results</h1>
-		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<a data-role="button" href="#home"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
 		<nav data-role="navbar">
 			<ul>
 				<li><a href="#productSortName">Sort By Name</a></li>
@@ -339,7 +365,7 @@
 <div data-role="page" id="productSortPrice">
 	<header data-role="header" data-theme='d'>
 		<h1>Search Results</h1>
-		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+		<a data-role="button" href="#home"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
 		<nav data-role="navbar">
 			<ul>
 				<li><a href="#productSortName">Sort By Name</a></li>
@@ -757,9 +783,9 @@
 	
 	<div data-role="content"><!-- try listview-->
 		 <ul data-role="listview" data-inset="true">
-		 	<li data-icon="false" data-theme="b"><a href="#menShirts" ><center> <img src= "/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#menPants" ><center> <img src= "/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#menSocks" ><center> <img src= "/css/icons/Socks.png"/><h1>Socks</h1></center></a></li>	
+		 	<li data-icon="false" data-theme="b"><a href="#menShirts" ><center> <img src= "../DB-Project/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#menPants" ><center> <img src= "../DB-Project/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#menSocks" ><center> <img src= "../DB-Project/css/icons/Socks.png"/><h1>Socks</h1></center></a></li>	
 		 
 		 
 		 </ul>
@@ -1056,10 +1082,10 @@
 	
 	<div data-role="content"><!-- try listview-->
 		 <ul data-role="listview" data-inset="true">
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesFrames" ><center> <img src= "/css/icons/frame.png"/><h1>Frames</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesWheels" ><center> <img src= "/css/icons/wheel.png"/><h1>Wheels</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesHelmets" ><center> <img src= "/css/icons/helmet.png"/><h1>Helmets</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesParts" ><center> <img src= "/css/icons/parts.png"/><h1>Parts</h1></center></a></li>		
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesFrames" ><center> <img src= "../DB-Project/css/icons/frame.png"/><h1>Frames</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesWheels" ><center> <img src= "../DB-Project/css/icons/wheel.png"/><h1>Wheels</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesHelmets" ><center> <img src= "../DB-Project/css/icons/helmet.png"/><h1>Helmets</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#bicyclesParts" ><center> <img src= "../DB-Project/css/icons/parts.png"/><h1>Parts</h1></center></a></li>		
 		 
 		 
 		 </ul>
@@ -1237,8 +1263,25 @@
 				    Edit Account</a></li>
 		</ul>
 
-</div><!----------------------------------------------------		Account		----------------------------------------------------------------------------->
+</div><!----------------------------------------------------		User Account 		----------------------------------------------------------------------------->
 
+
+<div id="AccountByAdmin" data-role="page">
+		<header data-role="header" data-theme="d">
+			<a data-role="button" href="#viewUsers" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Profile</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li data-role="list-divider" role="heading" id="currAccName"></li>
+			<li data-theme="c"><a href="#accounts2" data-transition="slide">
+					View User Information</a></li>
+			<li data-theme="c"><a href="#account-view-admin" data-transition="slide">
+				    Edit Account</a></li>
+		</ul>
+
+</div><!----------------------------------------------------		User Account Seen By Admin		----------------------------------------------------------------------------->
 
 <div id="cartUser" data-role="page">
         <header data-role="header" data-theme="d">
@@ -1357,31 +1400,7 @@
 	
 </div><!-- Page Reports -------------------------------------------------------------------------------------->
 
-<div id="sell-product" data-role="page">
-			<div data-role="header" data-theme="b" data-position="fixed">
-				<a data-role="button" data-rel="back">Cancel</a>
-				<h1>New Product</h1>
-				<a data-role="button" data-rel="back" onclick="SaveProduct()">Sell</a>
-			</div>
-			<center>
-				<h2>Enter product information</h2>
-			</center>
-			<form id="product-form">
- 				<fieldset data-role="controlgroup">
- 					<ul>
-  					<li><label for="imgSrc"> <img src = "/css/img/ipad-normal.jpg"  width="250" height="250"/> </label></li>
- 					<li><label for="id"> Product id: <input id="id" name="id" type="number"/></label></li>
-  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
-  					<li><label for="model"> Model: <input id="model" name="model" type="text"/></label></li>
-  					<li><label for="brand"> Brand: <input id="brand" name="brand" type="text"/></label></li>
-  					<li><label for="dimensions"> Dimensions: <input id="dimensions" name="dimensions" type="text"/></label></li>
-  					<li><label for="bidPrice"> Bid Price $: <input id="bidPrice" name="bidPrice" type="number"/></label></li>
-  					<li><label for="instPrice"> Instant Price $: <input id="instPrice" name="instPrice" type="number"/></label></li>
-  			  		<li><label for="description"> Description: <input id="description" name="description" type="text"/></label></li>
-  			  	</ul>
-			 </fieldset>
-			</form>
-</div><!-- Page Sell Product ---------------------------------------------------------------------------------->
+
 
 
 <div id="add-category" data-role="page">
@@ -1402,18 +1421,7 @@
 
 
 
-<div data-role="page" id="viewUsers" >
-		<header data-role="header" data-theme="d" data-position="fixed">
-			<h1>Users Registered</h1>
-			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-		</header>
-<div data-role="content">
-		<ul id="users-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
-			
-		</ul>
-</div>
-	
-</div><!-- ---------------------------------------Page View Users------------------------------------------------------------------------>
+
 
 <div data-role="page" id="viewAdmins" >
 		<header data-role="header" data-theme="d" data-position="fixed">
@@ -1535,7 +1543,7 @@
 					
 					<div id="f1" style="display:none">
 					   <form name="form1">
-					       <select onchange="showForm()">
+					       <select id="BooksSub" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
 					           <option value="1">Children</option>
 					           <option value="2">Fiction</option>
@@ -1547,25 +1555,25 @@
 					
 					<div id="f2" style="display:none">
 					   <form name="form2">
-					       <select onchange="showForm()">
+					       <select id="ElectronicsSub" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
-					           <option value="1">TV</option>
-					           <option value="2">Audio</option>
-					           <option value="3">Phones</option>
-					           <option value="4">Cameras</option>
-					           <option value="5">Video</option>
+					           <option value="5">TV</option>
+					           <option value="6">Audio</option>
+					           <option value="7">Phones</option>
+					           <option value="8">Cameras</option>
+					           <option value="9">Video</option>
 					       </select>
 					   </form>
 					</div>
 					
 					<div id="f3" style="display:none">
 					   <form name="form3">
-					       <select onchange="showForm()">
+					       <select id="ComputersSub" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
-					           <option value="1">Laptops</option>
-					           <option value="2">Desktops</option>
-					           <option value="3">Tablets</option>
-					           <option value="4">Printers</option>
+					           <option value="10">Laptops</option>
+					           <option value="11">Desktops</option>
+					           <option value="12">Tablets</option>
+					           <option value="13">Printers</option>
 					         
 					       </select>
 					   </form>
@@ -1575,9 +1583,9 @@
 					   <form name="form4">
 					       <select id="opts1" onchange="showForm()">
 					           <option value="0">Select Sub-category</option>
-					           <option value="1">Children</option>
-					           <option value="2">Men</option>
-					           <option value="3">Women</option>
+					           <option value="14">Children</option>
+					           <option value="15">Men</option>
+					           <option value="19">Women</option>
 					           
 					       </select>
 					   </form>
@@ -1585,11 +1593,11 @@
 					
 					<div id="f5" style="display:none">
 					   <form name="form5">
-					       <select onchange="showForm()">
+					       <select id="MenTag"onchange="showForm()">
 					           <option value="0">Select Tag</option>
-					           <option value="1">Shirts</option>
-					           <option value="2">Pants</option>
-					           <option value="3">Socks</option>
+					           <option value="16">Shirts</option>
+					           <option value="17">Pants</option>
+					           <option value="18">Socks</option>
 					           
 					       </select>
 					   </form>
@@ -1597,11 +1605,11 @@
 					
 					<div id="f6" style="display:none">
 					   <form name="form6">
-					       <select onchange="showForm()">
+					       <select id="WomenTag" onchange="showForm()">
 					           <option value="0">Select Tag</option>
-					           <option value="1">Shirts</option>
-					           <option value="2">Pants</option>
-					           <option value="3">Dresses</option>
+					           <option value="20">Shirts</option>
+					           <option value="21">Pants</option>
+					           <option value="22">Dresses</option>
 					           
 					       </select>
 					   </form>
@@ -1609,13 +1617,11 @@
 					
 					<div id="f7" style="display:none">
 					   <form name="form7">
-					       <select id="opts2" onchange="showForm()">
+					       <select id="ShoesSub" onchange="showForm()">
 					           <option value="0">Select Sub-Category</option>
-					           <option value="1">Bicycles</option>
-					           <option value="2">Fishing</option>
-					           <option value="3">Baseball</option>
-					           <option value="4">Golf</option>
-					           <option value="5">Basketball</option>
+					           <option value="23">Children</option>
+					           <option value="24">Women</option>
+					           <option value="25">Men</option>					        
 					           
 					       </select>
 					   </form>
@@ -1623,12 +1629,26 @@
 					
 					<div id="f8" style="display:none">
 					   <form name="form8">
-					       <select onchange="showForm()">
+					       <select id="opts2" onchange="showForm()">
+					           <option value="0">Select Sub-Category</option>
+					           <option value="26">Bicycles</option>
+					           <option value="31">Fishing</option>
+					           <option value="32">Baseball</option>
+					           <option value="33">Golf</option>
+					           <option value="34">Basketball</option>
+					           
+					       </select>
+					   </form>
+					</div>
+					
+					<div id="f9" style="display:none">
+					   <form name="form9">
+					       <select id="BicycleTag" onchange="showForm()">
 					           <option value="0">Select Tag</option>
-					           <option value="1">Frames</option>
-					           <option value="2">Wheels</option>
-					           <option value="3">Helmets</option>
-					           <option value="4">Parts</option>
+					           <option value="27">Frames</option>
+					           <option value="28">Wheels</option>
+					           <option value="29">Helmets</option>
+					           <option value="30">Parts</option>
 					           
 					       </select>
 					   </form>
@@ -1637,11 +1657,22 @@
 					   
 					   
 					   <script type="text/javascript">
+					   var selection;
 					   function showForm() {
 					       var selopt = document.getElementById("opts").value;
 					        var selopt1 = document.getElementById("opts1").value;
 					        var selopt2 = document.getElementById("opts2").value;
-					        
+					        if (selopt == 0) {
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
+					       }
 					       if (selopt == 1) {
 					           document.getElementById("f1").style.display = "block";
 					           document.getElementById("f2").style.display = "none";
@@ -1651,7 +1682,8 @@
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
-					           
+					           document.getElementById("f9").style.display = "none";
+					           selection = document.getElementById("BooksSub").value;
 					       }
 					       if (selopt == 2) {
 					           document.getElementById("f2").style.display = "block";
@@ -1662,18 +1694,11 @@
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
+					       	   selection = document.getElementById("ElectronicsSub").value;
+
 					       }
-					       if (selopt == 0) {
-					           document.getElementById("f2").style.display = "none";
-					           document.getElementById("f1").style.display = "none";
-					           document.getElementById("f3").style.display = "none";
-					           document.getElementById("f4").style.display = "none";
-					           document.getElementById("f5").style.display = "none";
-					           document.getElementById("f6").style.display = "none";
-					           document.getElementById("f7").style.display = "none";
-					           document.getElementById("f8").style.display = "none";
-					       }
-					       if (selopt == 3) {
+					      if (selopt == 3) {
 					           document.getElementById("f3").style.display = "block";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f7").style.display = "none";
@@ -1682,7 +1707,8 @@
 					           document.getElementById("f5").style.display = "none";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
-					           
+					           document.getElementById("f9").style.display = "none";
+					           selection = document.getElementById("ComputersSub").value;
 					           
 					       }if (selopt == 4) {
 					           document.getElementById("f4").style.display = "block";
@@ -1692,62 +1718,71 @@
 					           document.getElementById("f8").style.display = "none";
 					           document.getElementById("f5").style.display = "none";
 					           document.getElementById("f6").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
 					           
 					       }
 					       if (selopt == 5) {
-					           document.getElementById("f4").style.display = "block";
-					           document.getElementById("f2").style.display = "none";
-					           document.getElementById("f3").style.display = "none";
-					           document.getElementById("f7").style.display = "none";
-					           document.getElementById("f6").style.display = "none";
-					           document.getElementById("f5").style.display = "none";
-					           document.getElementById("f8").style.display = "none";
-					           document.getElementById("f1").style.display = "none";
-					           
-					           
-					       }if (selopt == 6) {
 					           document.getElementById("f7").style.display = "block";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
+					           selection = document.getElementById("ShoesSub").value;
+
 					           
+					       }if (selopt == 6) {
+					           document.getElementById("f8").style.display = "block";
+					           document.getElementById("f2").style.display = "none";
+					           document.getElementById("f3").style.display = "none";
+					           document.getElementById("f4").style.display = "none";
+					           document.getElementById("f5").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
-					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           
 					       }
 					       //////SubCats
-					       if (selopt1 == 2) {
+					       if (selopt1 == 15) {
 					           document.getElementById("f5").style.display = "block";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "block";
-					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           selection = document.getElementById("MenTag").value;
 					       }
-					       if (selopt1 == 3) {
+					       if (selopt1 == 19) {
 					           document.getElementById("f6").style.display = "block";
 					           document.getElementById("f5").style.display = "none";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "block";
-					           document.getElementById("f7").style.display = "none";
 					           document.getElementById("f8").style.display = "none";
+					           document.getElementById("f9").style.display = "none";
 					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           selection = document.getElementById("WomenTag").value;
 					       }
-					       if (selopt2 == 1) {
-					           document.getElementById("f8").style.display = "block";
+					       if (selopt2 == 26) {
+					           document.getElementById("f9").style.display = "block";
 					           document.getElementById("f6").style.display = "none";
 					           document.getElementById("f2").style.display = "none";
 					           document.getElementById("f3").style.display = "none";
 					           document.getElementById("f4").style.display = "none";
 					           document.getElementById("f5").style.display = "none";
-					           document.getElementById("f7").style.display = "block";
+					           document.getElementById("f8").style.display = "block";
 					           document.getElementById("f1").style.display = "none";
+					           document.getElementById("f7").style.display = "none";
+					           selection = document.getElementById("BicycleTag").value;
 					       }
 					       
 					   }
@@ -1774,7 +1809,7 @@
 			<a data-role="button" href="#Account" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
 			<h1>BoricuaBay</h1>
-			<a data-role="button" data-rel="back" onclick="UpdateAccount()" data-theme="b">Save</a>
+			<a data-role="button" data-rel="back" onclick="UpdateAccountUser()" data-theme="b">Save</a>
 		</header>
 			<form id="account-view-form">
  				<fieldset data-role="controlgroup">
@@ -1804,7 +1839,8 @@
   			  	</ul>
 			 </fieldset>
 			</form>
-</div><!----------------------------------------------------Edit Account----------------------------------------------------------------------------->	
+</div><!----------------------------------------------------Edit Account ----------------------------------------------------------------------------->	
+
 
 <div id="productUser" data-role="page">
         <header data-role="header" data-theme="d">
@@ -1866,6 +1902,7 @@
                                 <ul id="soldUser-list" data-role="listview" data-inset="true">
                                 	</ul>
                                 </div>
+
 </div><!----------------------------------------------------		Sold History		----------------------------------------------------------------------------->
 
 
@@ -1886,7 +1923,41 @@
 
 
 
-
+<div id="accounts2" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+	        <a data-role="button" href="#AccountByAdmin" data-icon="arrow-l"
+	                data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
+	        <h1>BoricuaBay</h1>
+	</header>
+    
+    <div data-role="content">
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+        <li data-role="list-divider" role="heading">User Info</li>      
+                <li id="userInfo" data-inset="true">
+                </ul>
+        </div>
+        <div data-role="content">
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                <li data-role="list-divider" role="heading">Mailing Address</li>        
+                <li id="shippingAddress" data-inset="true">
+                </ul>
+        </div> 
+    
+     
+     <div data-role="content">
+             <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                 <li data-role="list-divider" role="heading">Credit Card Info</li>      
+                 <li id="creditCardInfo" data-inset="true">
+             </ul>
+          </div> 
+         <div data-role="content">
+             <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                 <li data-role="list-divider" role="heading">Billing Address</li>        
+                 <li id="billingAddress" data-inset="true">
+             </ul>
+         </div>
+     
+</div><!----------------------------------------------------User View Account By Admin----------------------------------------------------------------------------->
 
 
 

@@ -1541,7 +1541,9 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
+			$.mobile.navigate("#home");
 			alert("Item doesn't exist!");
+			
 		}
 	});
 });

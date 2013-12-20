@@ -139,7 +139,7 @@ app.get('/DB-Project/productsName', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY NAME");
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by p.productName;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by p.productName;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -159,7 +159,7 @@ app.get('/DB-Project/productsBrand', function(req, res) {
 
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by p.brand;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by p.brand;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -179,7 +179,7 @@ app.get('/DB-Project/productsPrice', function(req, res) {
 
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID order by b.bidStartingPrice;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by b.bidStartingPrice;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -232,21 +232,24 @@ var query = connection.query("Select * from bbProduct as p natural join bbBidPro
 });
 
 	
-
+var search;
 
 // REST Operation - HTTP GET to read a product based on its nAME
 app.get('/DB-Project/productSearch/:id', function(req, res) {
 	var id = req.params.id;
+	search = req.params.id;
 		console.log("GET product by name: " + id);
 
 
-var query = connection.query("SELECT * FROM boricuabaydb.bbProduct  natural join bbBidProduct where productName like '%" + id + "%';", function(err, rows, result){
+var query = connection.query("SELECT * FROM boricuabaydb.bbProduct natural join bbBidProduct where productName like '%" + id + "%';", function(err, rows, result){
 		if (err) throw err;
 
 	
+	/*
 	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}
+				console.log('The solution is: ', rows[i]);
+			}*/
+	
 	
 	var len = rows.length;
 	if (len == 0){
@@ -366,9 +369,11 @@ app.del('/DB-Project/products/:id', function(req, res) {
 	}
 });
 
+
 // REST Operation - HTTP POST to add a new a product
-app.post('/DB-Project/products/:id', function(req, res) {
+app.post('/DB-Project/products/:id/:selection', function(req, res) {
 	var id = req.params.id;
+	var selection = req.params.selection;
 	console.log("POST");
 
   	if(!req.body.hasOwnProperty('productName') || !req.body.hasOwnProperty('brand')
@@ -377,10 +382,10 @@ app.post('/DB-Project/products/:id', function(req, res) {
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for product.');
   	}
-
+	
 	var query = connection.query("INSERT INTO `bbProduct` (`productID`,`productName`,`productDesc`,`productPhoto`,`productPrice`," +
 	  		"`model`,`brand`,`dimensions`,`tagID`) VALUES (NULL, '" + req.body.productName + "', '"+ req.body.productDesc + 
-	  		"', '" + req.body.productPhoto + "', '" + req.body.productPrice + "','" + req.body.model + "','" + req.body.brand + "','" + req.body.dimensions + "',1)");
+	  		"', '" + req.body.productPhoto + "', '" + req.body.productPrice + "','" + req.body.model + "','" + req.body.brand + "','" + req.body.dimensions + "'," + selection + ")");
 	var getquery = connection.query("SET @last_insert_id_in_bbProduct = LAST_INSERT_ID()");	
 	var query1 = connection.query("INSERT INTO `bbBidProduct` (`productID`,`bidStartingPrice`,`startDate`,`endDate`) " +
 			"VALUES (@last_insert_id_in_bbProduct, '" + req.body.bidStartingPrice + "', '"+ req.body.startDate + 
@@ -561,9 +566,6 @@ app.post('/DB-Project/categories', function(req, res) {
 
 //--------------------------------------Books SubCategories---------------------------------------------------------------//
 	
-	
-
-
 
 
 // REST Operations
@@ -1442,7 +1444,33 @@ app.post('/DB-Project/Sports', function(req, res) {
 
 //-----------------------Regular User------------------------------------------------------
 
-// Gets the user Information
+// Gets the user Information by userName
+app.get('/DB-Project/users/:idu', function(req, res) {
+	var idu = req.params.idu;
+	console.log("GET account with names containing: " + idu);
+
+
+var query = connection.query("SELECT * FROM bbUser WHERE userName like '%" + idu + "%';", function(err, rows, result){	
+
+	if (err) throw err;
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"accountByName" : rows};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
+
+
+
+// Gets the user Information by userID
 app.get('/DB-Project/accounts/:ids', function(req, res) {
 	var ids = req.params.ids;
 		console.log("GET account: " + ids);
@@ -1617,29 +1645,35 @@ app.post('/DB-Project/accounts', function(req, res) {
 // c) PUT - Update an individual object, or collection  (Database update operation)
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
-// REST Operation - HTTP GET to read all products
-app.get('/DB-Project/accountas', function(req, res) {
-	console.log("GET ACCOUNTAS");
 
-	
-	connection.query('SELECT * FROM bbAdmin', function(err, rows, result) {
+//Verifies Login For Admin
+app.get('/DB-Project/accountAdmin/:id/:idp', function(req, res) {
+	var id = req.params.id;
+	var idp = req.params.idp;
+	console.log("GET ADMIN account: " + id);
 
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"accountas" : rows};
-  res.json(response);
-});
-});
+var query = connection.query("SELECT * FROM bbAdmin WHERE adminUserName = '" + id  + "'" + " AND " +
+		"adminPassword = '" + idp + "'", function(err, rows, result){
 
+		if (err) throw err;
+
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"accountAdmin" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
 
 // REST Operation - HTTP GET to read a product based on its id
-app.get('/DB-Project/accountas/:id', function(req, res) {
+app.get('/DB-Project/accountAdmin/:id', function(req, res) {
 	var id = req.params.id;
-		console.log("GET accounta: " + id);
+		console.log("GET admin: " + id);
 
 
 var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, function(err, rows, result){
@@ -1658,7 +1692,7 @@ var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, funct
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"accounta" : rows[0]};
+  		var response = {"accountAdmin2" : rows[0]};
 		//connection.end();
   		res.json(response);
   	}
@@ -1737,9 +1771,11 @@ var query = connection.query("SELECT * from bbCreditCard as c " +
 		"inner join bbUser as u on u.creditCardID = c.creditCardID " +
 		"where u.userID = '" + ids  + "'", function(err, rows, result){
 
+	/*
 	for (i = 0; i<rows.length; i++){
-        console.log('The solution is: ', rows[i]);
-}	
+			console.log('The solution is: ', rows[i]);
+	}	*/
+	
 	if (err) throw err;
 
 	
@@ -1967,7 +2003,7 @@ app.get('/DB-Project/carts/:id', function(req, res) {
                 console.log("GET carts: " + id);
 
 //pg.connect(conString, function(err, connection, done) {
-                var query = connection.query("SELECT * FROM bbAddtoCart natural join bbProduct natural join bbBidProduct WHERE userID = " + id, function(err, rows, result ){
+                var query = connection.query("SELECT * FROM bbAddToCart natural join bbProduct natural join bbBidProduct WHERE userID = " + id, function(err, rows, result ){
 
 
                 if (err) throw err;
