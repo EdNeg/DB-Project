@@ -361,11 +361,11 @@ $(document).on('pagebeforeshow', "#adminProfile", function( event, ui ) {
         document.getElementById("currAdmin").innerHTML = adminName; 
 });
 
-$(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
+$(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 
-        $("#upd-userName").val(loginID.userName);
-        $("#upd-userNickname").val(loginID.userNickname);
-        $("#upd-password").val(loginID.password);
+        $("#upd-userName").val(loginID.userName);        
+        $("#upd-UserNickname").val(loginID.userNickname);
+        $("#upd-Password").val(loginID.password);
         $("#upd-userEmail").val(loginID.userEmail); 
         $("#upd-addressLine").val(loginID.addressLine); 
         $("#upd-city").val(loginID.city);
@@ -375,7 +375,9 @@ $(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
         $("#upd-creditCardNumber").val(loginID.creditCardNumber);
         $("#upd-creditCardOwner").val(loginID.creditCardOwner);
         $("#upd-securityCode").val(loginID.securityCode);
-        $("#upd-expDate").val(loginID.expDate);
+        var myDate = loginID.expDate;
+		var newDate=myDate.substring(0, 10); ;
+        $("#upd-expDate").val(newDate);
         $("#upd-caddressLine").val(loginID.addressLine);
         $("#upd-ccity").val(loginID.city);
         $("#upd-cstate").val(loginID.state);
@@ -444,7 +446,7 @@ function LogIn(){
              contentType: "application/json",
              dataType:"json",
              success : function(data, textStatus, jqXHR){
-                     loginID = data.account;
+                     loginID = data.accountLogin;
                                      $.mobile.loading("hide");
                                      $.mobile.navigate("#regular");          
                      
@@ -678,7 +680,7 @@ function UpdateAccount(){
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
                         $.mobile.loading("hide");
-                        $.mobile.navigate("#signin");
+                        $.mobile.navigate("#regular");
                         alert("You have successfully edited your Account");
                 },
                 error: function(data, textStatus, jqXHR){
@@ -887,7 +889,7 @@ $(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
 		url : "http://localhost:3412/DB-Project/accountAdmin",
 		contentType: "application/json",
 		success : function(data, textStatus, jqXHR){
-			var adminList = data.accountAdmin;		
+			var adminList = data.accountAdminAll;		
 			
 			var len = adminList.length;
 			var list = $("#admins-list");
@@ -909,7 +911,7 @@ $(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			alert("Data notu found!");
 		}
 	});
 });

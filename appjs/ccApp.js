@@ -26,13 +26,15 @@ $(document).on('pagebeforeshow', "#creditCards", function( event, ui ) {
 
 
 
+/*
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 	// currentCar has been set at this point
 	$("#upd-creditCardNumber").val(currentCreditcard.creditCardNumber);
 	$("#upd-creditCardOwner").val(currentCreditcard.creditCardOwner);
 	$("#upd-securityCode").val(currentCreditcard.securityCode);
 	$("#upd-expDate").val(currentCreditcard.expDate);		
-});
+});*/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////

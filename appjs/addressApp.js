@@ -35,6 +35,7 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
 
 
 
+/*
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
         // currentCar has been set at this point
         $("#upd-addressLine1").val(currentAddress.addressLine1);
@@ -43,7 +44,8 @@ $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
         $("#upd-state").val(currentAddress.state);
         $("#upd-country").val(currentAddress.country);
         $("#upd-zipcode").val(currentAddress.zipcode);        
-});
+});*/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
