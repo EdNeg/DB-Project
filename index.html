@@ -1960,6 +1960,42 @@
 </div><!----------------------------------------------------User View Account By Admin----------------------------------------------------------------------------->
 
 
+<div id="account-view-admin" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#AccountByAdmin" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" href="#AccountByAdmin" onclick="UpdateAccountByAdmin()" data-theme="b">Save</a>
+		</header>
+			<form id="account-view-form-admin">
+ 				<fieldset data-role="controlgroup">
+ 					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="adm-userName"> Name: <input id="adm-userName" name="userName" type="text" value="" /></label></li>
+  					<li><label for="adm-UserNickname"> Username: <input id="adm-UserNickname" name="userNickname" type="text" value="" /></label></li>
+				    <li><label for="adm-Password"> Password: <input id="adm-Password" name="password" type="password" value=""/></label></li>
+  					<li><label for="adm-userEmail"> Email: <input id="adm-userEmail" name="userEmail" type="text" value=""/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="adm-addressLine"> Address Line: <input id="adm-addressLine" name="addressLine" type="text" value=""/></label></li>
+  					<li><label for="adm-city"> City: <input id="adm-city" name="city" type="text" value="" /></label></li>
+				    <li><label for="adm-state"> State: <input id="adm-state" name="state" type="text" value=""/></label></li>
+  					<li><label for="adm-country"> Country: <input id="adm-country" name="country" type="text" value=""/></label></li>
+  					<li><label for="adm-zipcode"> Zipcode: <input id="adm-zipcode" name="zipcode" type="text" value=""/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="adm-creditCardNumber"> CreditCard Number: <input id="adm-creditCardNumber" name="creditCardNumber" type="text" value=""/></label></li>
+  					<li><label for="adm-creditCardOwner"> CreditCard Owner: <input id="adm-creditCardOwner" name="creditCardOwner" type="text" value=""/></label></li>
+				    <li><label for="adm-securityCode"> Security Code: <input id="adm-securityCode" name="securityCode" type="text" value=""/></label></li>
+  					<li><label for="adm-expDate"> Expiration Date: <input id="adm-expDate" name="expDate" type="text" value=""/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="adm-caddressLine"> Address Line: <input id="adm-caddressLine" name="caddressLine" type="text" value=""/></label></li>
+  					<li><label for="adm-ccity"> City: <input id="adm-ccity" name="ccity" type="text" value=""/></label></li>
+				    <li><label for="adm-cstate"> State: <input id="adm-cstate" name="cstate" type="text" value=""/></label></li>
+  					<li><label for="adm-ccountry"> Country: <input id="adm-ccountry" name="ccountry" type="text" value=""/></label></li>
+  					<li><label for="adm-czipcode"> Zipcode: <input id="adm-czipcode" name="czipcode" type="text" value=""/></label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Account By Admin----------------------------------------------------------------------------->	
 
 
 

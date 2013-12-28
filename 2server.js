@@ -1476,7 +1476,10 @@ app.get('/DB-Project/accounts/:ids', function(req, res) {
 		console.log("GET account: " + ids);
 
 
-var query = connection.query("SELECT * FROM bbUser NATURAL JOIN bbAddress WHERE userID = '" + ids  + "'", function(err, rows, result){	
+var query = connection.query("SELECT * FROM bbUser as u inner join bbaddress " +  
+		"as a inner join bbcreditcard as c WHERE u.userID = '" + ids  + "'" + 
+		" AND u.creditCardID = c.creditCardID " +
+		"AND u.addressID = a.addressID;", function(err, rows, result){	
 
 	if (err) throw err;
 	

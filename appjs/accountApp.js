@@ -383,8 +383,6 @@ $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
         $("#upd-cstate").val(loginID.state);
         $("#upd-ccountry").val(loginID.country);
         $("#upd-czipcode").val(loginID.zipcode);
-
-
 });
 
 var currentAccount = {};
@@ -697,7 +695,37 @@ function UpdateAccount(){
 }
 
 
-
+function UpdateUserAccountByAdmin(){
+        $.mobile.loading("show");
+        var form = $("#account-view-form-admin");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/accountsUpdate/" +  currentUser.userID + "/" + currentUser.creditCardID + "/" + currentUser.addressID,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#regular");
+                        alert("You have successfully edited your Account");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                alert("Data could not be updated!");
+                        }
+                        else {
+                                alert("Internal Error.");               
+                        }
+                }
+        });
+}
 
 
 function UpdateAccountAdmin(){
@@ -952,6 +980,30 @@ $(document).on('pagebeforeshow', "#AccountByAdmin", function( event, ui ) {
 
 	var userAccName = "Account of " + currentUser.userName;
 	document.getElementById("currAccName").innerHTML = userAccName;
+});
+
+$(document).on('pagebeforeshow', "#account-view-admin", function( event, ui ) {
+
+        $("#adm-userName").val(currentUser.userName);        
+        $("#adm-UserNickname").val(currentUser.userNickname);
+        $("#adm-Password").val(currentUser.password);
+        $("#adm-userEmail").val(currentUser.userEmail); 
+        $("#adm-addressLine").val(currentUser.addressLine); 
+        $("#adm-city").val(currentUser.city);
+        $("#adm-state").val(currentUser.state);
+        $("#adm-country").val(currentUser.country);
+        $("#adm-zipcode").val(currentUser.zipcode);
+        $("#adm-creditCardNumber").val(currentUser.creditCardNumber);
+        $("#adm-creditCardOwner").val(currentUser.creditCardOwner);
+        $("#adm-securityCode").val(currentUser.securityCode);
+        var myDate = currentUser.expDate;
+		var newDate=myDate.substring(0, 10); ;
+        $("#adm-expDate").val(newDate);
+        $("#adm-caddressLine").val(currentUser.addressLine);
+        $("#adm-ccity").val(currentUser.city);
+        $("#adm-cstate").val(currentUser.state);
+        $("#adm-ccountry").val(currentUser.country);
+        $("#adm-czipcode").val(currentUser.zipcode);
 });
 
 $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
