@@ -162,8 +162,8 @@
 	
 	<div class="ui-grid-a">
 		<div class="ui-block-a"><a href="#searchUserPage" data-role="button" data-icon="search" data-iconpos="top">Search / Edit Users</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
+		<div class="ui-block-b"><a href="#newUserByAdmin" data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
+		<div class="ui-block-a"><a href="#searchUserPageToDelete" data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
 		<div class="ui-block-b"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
 		<div class="ui-block-a"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
@@ -1965,7 +1965,7 @@
 			<a data-role="button" href="#AccountByAdmin" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
 			<h1>BoricuaBay</h1>
-			<a data-role="button" href="#AccountByAdmin" onclick="UpdateAccountByAdmin()" data-theme="b">Save</a>
+			<a data-role="button" href="#AccountByAdmin" onclick="UpdateUserAccountByAdmin()" data-theme="b">Save</a>
 		</header>
 			<form id="account-view-form-admin">
  				<fieldset data-role="controlgroup">
@@ -1997,7 +1997,100 @@
 			</form>
 </div><!----------------------------------------------------Edit Account By Admin----------------------------------------------------------------------------->	
 
+<div data-role="page" id="newUserByAdmin">
+	<header data-role="header" data-theme="d">
+		<h1>Add New User</h1>
+		<a href="#AccountByAdmin" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+	<form id="account-form-admin">
+		<fieldset data-role="controlgroup">
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="new-userName"> Name: <input id="new-userName" name="userName" type="text" value/></label></li>
+  					<li><label for="new-userNickname"> Username: <input id="new-userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="new-password"> Password: <input id="new-password" name="password" type="password"/></label></li>
+  					<li><label for="new-userEmail"> Email: <input id="new-userEmail" name="userEmail" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="new-addressLine"> Address Line: <input id="new-addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="new-city"> City: <input id="new-city" name="city" type="text"/></label></li>
+				    <li><label for="new-state"> State: <input id="new-state" name="state" type="text"/></label></li>
+  					<li><label for="new-country"> Country: <input id="new-country" name="country" type="text"/></label></li>
+  					<li><label for="new-zipcode"> Zipcode: <input id="new-zipcode" name="zipcode" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="new-creditCardNumber"> CreditCard Number: <input id="new-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="new-creditCardOwner"> CreditCard Owner: <input id="new-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="new-securityCode"> Security Code: <input id="new-securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="new-expDate"> Expiration Date: <input id="new-expDate" name="expDate" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Bank Account Info</li>
+  					<li><label for="new-accountNumber"> Account Number: <input id="new-accountNumber" name="accountNumber" type="text"/></label></li>
+  					<li><label for="new-accountType"> Account Type: <input id="new-accountType" name="accountType" type="text"/></label></li>
+				    <li><label for="new-accountOwner"> Account Owner: <input id="new-accountOwner" name="accountOwner" type="text"/></label></li>
+  					<li><label for="new-bankName"> Bank Name: <input id="new-bankName" name="bankName" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="new-caddressLine"> Address Line: <input id="new-caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="new-ccity"> City: <input id="new-ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="new-cstate"> State: <input id="new-cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="new-ccountry"> Country: <input id="new-ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="new-czipcode"> Zipcode: <input id="new-czipcode" name="czipcode" type="text"/></label></li>
+  			  	</ul>
+  			  	</fieldset>
+			</form>
 
+<center>
+    <input type="submit" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccountByAdmin()">
+</center>
+
+</div><!-- ---------------------------------------------------------Page Add New User By Admin -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="searchUserPageToDelete">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-form3" data-role="content">
+		  
+				<input type="search" name="searchUser" id="searchUserToDelete"/ >
+				<a  href="#viewUsersToDelete" data-theme='b' data-role="button">Search Users</a>
+			
+			</form>
+</div><!-- ------------------------------------------------------------------Page Search User To Delete----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="viewUsersToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Users Registered</h1>
+			<a data-role="button" href="#searchUserPageToDelete" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="users-list-delete" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- ---------------------------------------Page Search Results Users To Delete------------------------------------------------------------------------>
+
+<div data-role="page" id="UserToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete User</h1>
+			<a data-role="button" href="#viewUsersToDelete" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="userDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#adminProfile" data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteUser()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#viewUsersToDelete" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Users To Delete------------------------------------------------------------------------>
 
 </body>
 

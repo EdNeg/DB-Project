@@ -711,7 +711,7 @@ function UpdateUserAccountByAdmin(){
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
                         $.mobile.loading("hide");
-                        $.mobile.navigate("#regular");
+                        $.mobile.navigate("#AccountByAdmin");
                         alert("You have successfully edited your Account");
                 },
                 error: function(data, textStatus, jqXHR){
@@ -1075,3 +1075,126 @@ $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
                 }
         });
 });
+
+function SaveAccountByAdmin(){
+	$.mobile.loading("show");
+	var form = $("#account-form-admin");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newAccount = ConverToJSON(formData);
+
+	console.log("New Account form: " + JSON.stringify(newAccount));
+
+	var newAccountJSON = JSON.stringify(newAccount);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts",
+		method: 'post',
+		data : newAccountJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			alert("You have succesfully added a user!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("Data could not be added!");
+		}
+	});
+
+
+}
+
+$(document).on('pagebeforeshow', "#viewUsersToDelete", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/users/" + $('#searchUserToDelete').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.accountByName;		
+			var len = userList.length;
+			var list = $("#users-list-delete");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append("<li><a onclick=GetUserToDelete(" + user.userID + ")>" + 
+					"<p><i><b> Name: </b></i>" + user.userName +  "</p>" +
+					"<p>_</p>" +
+					"<p><i><b> Nickname: </b></i>" + user.userNickname + "</p>" +
+					"<p class=\"ui-li-aside\"><i><b> Email: </b></i>" + user.userEmail + "</p>" +		
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("User not found!");
+			$.mobile.navigate("#searchUserPageToDelete");
+			
+		}
+	});
+});
+
+var delUserID;
+function GetUserToDelete(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			//alert("herher");
+			 currentUser = data.account;
+			 currentCreditcard = data.creditcard;
+			 delUserID=id;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#UserToDelete");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("User not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#UserToDelete", function( event, ui ) {
+// currentUser has been set at this point
+var temp = "Are you sure you want to delete account of: " + currentUser.userName + "?";
+document.getElementById("userDel").innerHTML = temp;
+});
+
+
+function DeleteUser(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountsDel/" + delUserID,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			alert("You have succesfully removed a user!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			alert("User could not be removed!");
+		}
+	});
+
+
+}

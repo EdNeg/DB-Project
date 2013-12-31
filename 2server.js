@@ -1590,7 +1590,7 @@ app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
 
 //REST Operation - HTTP POST to add a new a user
 app.post('/DB-Project/accounts', function(req, res) {
-	console.log(req.body.userEmail);
+	//console.log(req.body.userEmail);
 	console.log("POST User");
 
   	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
@@ -1627,14 +1627,37 @@ app.post('/DB-Project/accounts', function(req, res) {
   	  		"', '" + req.body.securityCode + "', '" + req.body.expDate + "', @last_insert_id_in_bbAddress1)");
   	var getquery3 = connection.query("SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()");
   	
-  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser");
+  	var query3 = connection.query("INSERT INTO `bbBankAccount` (`bankAccountID`,`accountNumber`,`accountType`,`accountOwner`,`bankName`)" +
+  	  		" VALUES (NULL, '" + req.body.accountNumber + "', '"+ req.body.accountType + 
+  	  		"', '" + req.body.accountOwner + "', '" + req.body.bankName + "')");
+  	var getquery4 = connection.query("SET @last_insert_id_in_bbBankAccount = LAST_INSERT_ID()");
   	
-  	console.log("New Account: ");
-  	console.log("New Mailing Address: ");
-  	console.log("New Biling Address: " );
-  	console.log("New CreditCard:" );
+  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard, `bankAccountID`=@last_insert_id_in_bbBankAccount WHERE `userID`=@last_insert_id_in_bbUser");
+  	
+  	console.log("New Account: " + req.body.userNickname);
   	res.json(true);
 });
+
+// REST Operation - HTTP DELETE to delete a user based on its id
+app.del('/DB-Project/accountsDel/:ids', function(req, res) {
+	var ids = req.params.ids;
+		console.log("DELETE User with id: " + ids);
+
+	
+	var query = connection.query("DELETE from bbUser " +   
+					"where userID = '" +ids+"';", function(err, rows, result){
+
+		if (err) throw err;
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	
+});
+});
+
 
 //-----------------------Administrator------------------------------------------------------
 
