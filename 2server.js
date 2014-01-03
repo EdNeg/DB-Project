@@ -1607,8 +1607,8 @@ app.post('/DB-Project/accounts', function(req, res) {
 
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
   	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
-  		"`birthdate`,`gender`,`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
-  		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL,NULL,NULL)");
+  		"`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
+  		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL)");
   	var getquery = connection.query("SET @last_insert_id_in_bbUser = LAST_INSERT_ID()");	
   	
  
@@ -1654,7 +1654,7 @@ app.del('/DB-Project/accountsDel/:ids', function(req, res) {
 		res.statusCode = 404;
 		res.send("Account not found.");
 	}
-	
+	res.json(true);
 });
 });
 
@@ -1699,6 +1699,32 @@ var query = connection.query("SELECT * FROM bbAdmin", function(err, rows, result
   	}
  });
   });
+  
+  // Gets the admin Information by adminUserName
+app.get('/DB-Project/accountAdminName/:ida', function(req, res) {
+	var ida = req.params.ida;
+	console.log("GET admin account with names containing: " + ida);
+
+
+var query = connection.query("SELECT * FROM bbAdmin WHERE adminUserName like '%" + ida + "%';", function(err, rows, result){	
+
+	if (err) throw err;
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"adminAccountByName" : rows};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
+  
+  
 //Verifies Login For Admin
 app.get('/DB-Project/accountAdmin/:id/:idp', function(req, res) {
 	var id = req.params.id;
@@ -1723,13 +1749,13 @@ var query = connection.query("SELECT * FROM bbAdmin WHERE adminUserName = '" + i
  });
   });
 
-// REST Operation - HTTP GET to read a product based on its id
-app.get('/DB-Project/accountAdmin/:id', function(req, res) {
+// REST Operation - HTTP GET to read an admin based on its id
+app.get('/DB-Project/accountAdminID/:id', function(req, res) {
 	var id = req.params.id;
 		console.log("GET admin: " + id);
 
 
-var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, function(err, rows, result){
+var query = connection.query("SELECT * FROM bbAdmin WHERE adminID = " + id, function(err, rows, result){
 
 		if (err) throw err;
 	/*
@@ -1753,61 +1779,57 @@ var query = connection.query("SELECT * FROM bbAdmin WHERE userID = " + id, funct
   });
 
 // REST Operation - HTTP PUT to updated a car based on its id
-app.put('/DB-Project/accountas/:id', function(req, res) {
+app.put('/DB-Project/adminUpdate/:id', function(req, res) {
 	var id = req.params.id;
-		console.log("PUT accounta: " + id);
+	console.log("PUT Admin ID: " + id);
 
-	if ((id < 0) || (id >= accountaNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("Account not found.");
-	}
-	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('mailingaddress')
-		  	|| !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
-		    	res.statusCode = 400;
-		    	return res.send('Error: Missing fields for account.');
-		  	}
-	else {
-		var target = -1;
-		for (var i=0; i < accountaList.length; ++i){
-			if (accountaList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Account not found.");			
-		}	
-		else {
-			var theAccount= accountList[target];
-			theAccount.name = req.body.name;
-			theAccount.username = req.body.username;
-			theAccount.password = req.body.password;
-			theAccount.mailingaddress = req.body.mailingaddress;
-			theAccount.billingaddress = req.body.billingaddress;
-			theAccount.creditcard = req.body.creditcard;
-			var response = {"accounta" : theAccount};
-  			res.json(response);		
-  		}
-	}
-});
-
-//REST Operation - HTTP POST to add a new a car
-app.post('/DB-Project/accountas', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('username') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('mailingaddress') || !req.body.hasOwnProperty('billingaddress') || !req.body.hasOwnProperty('creditcard')) {
+  	if(!req.body.hasOwnProperty('adminUserName') || !req.body.hasOwnProperty('adminPassword')){
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for account.');
   	}
-
-  	var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
-  	console.log("New Account: " + JSON.stringify(newAccount));
-  	newAccount.id = accountNextId++;
-  	accountList.push(newAccount);
+	
+  	
+  	 var query = connection.query("UPDATE `bbAdmin` SET `adminUserName` = '" + req.body.adminUserName + "', " +
+  			 "`adminPassword` = '" + req.body.adminPassword + "' where adminID= '"+id+"'");	
+  	  	
+  	console.log("Update Account of: " + req.body.adminUserName);
   	res.json(true);
+});
+
+//REST Operation - HTTP POST to add a new a user
+app.post('/DB-Project/newAdmin', function(req, res) {
+	console.log("POST Admin");
+
+  	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('password')){
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for account.');
+  	}	
+
+	var query = connection.query("INSERT INTO `bbAdmin` (`adminID`,`adminUserName`,`adminPassword`)" +
+	" VALUES (NULL, '" + req.body.userName + "', '" + req.body.password + "')");	
+  	
+  	console.log("New Admin Account: " + req.body.userName);
+  	res.json(true);
+});
+
+// REST Operation - HTTP DELETE to delete an admin based on its id
+app.del('/DB-Project/adminDel/:ids', function(req, res) {
+	var ids = req.params.ids;
+		console.log("DELETE Administrator with id: " + ids);
+
+	
+	var query = connection.query("DELETE from bbAdmin " +   
+					"where adminID = '" +ids+"';", function(err, rows, result){
+
+		if (err) throw err;
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	res.json(true);
+});
 });
 
 //--------------------------------------Credit Card--------------------------------------------------------------------//

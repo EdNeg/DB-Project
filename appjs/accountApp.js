@@ -387,38 +387,6 @@ $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 
 var currentAccount = {};
 
-/*
-$(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
-	// currentProduct has been set at this point
-
-	
-	//document.getElementById("currPid").innerHTML = currentProduct.id;
-	//var brandName = currentProduct.brand + " " + currentProduct.name;
-	var productName = currentProduct.productName;
-	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
-	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
-	var modelNo = "Model: " + currentProduct.model;
-	var dims = "Dimensions: " + currentProduct.dimensions;
-	var pid = "Product id: " + currentProduct.productID;
-	var brand = "Brand: " + currentProduct.brand;
-	//document.getElementById("currBrand-Name").innerHTML = brandName;
-	document.getElementById("currName").innerHTML = productName;
-	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
-	document.getElementById("currImgSrc").src = currentProduct.productPhoto; 
-	document.getElementById("currBidPrice").innerHTML = startPrice;
-	document.getElementById("currInstPrice").innerHTML = instPrice;
-	document.getElementById("currDescription").innerHTML = currentProduct.productDesc;
-	document.getElementById("currModel").innerHTML = modelNo;
-	document.getElementById("currDimensions").innerHTML = dims;
-	document.getElementById("currId").innerHTML = pid;
-	document.getElementById("currBrand").innerHTML = brand;
-	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
-	
-	
-
-});*/
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
 
@@ -454,7 +422,7 @@ function LogIn(){
                      $.mobile.loading("hide");
                      if (data.status == 404){
                              alert("Invalid username and password!");
-                             $.mobile.navigate("#home");  
+                             $.mobile.navigate("#signin");  
                      }
                      else {
                              alert("Internal Error.");               
@@ -498,7 +466,7 @@ function VerifyAdmin(){
                      $.mobile.loading("hide");
                      if (data.status == 404){
                              alert("Invalid username and password!");
-                             $.mobile.navigate("#home");  
+                             $.mobile.navigate("#signin");  
                      }
                      else {
                              alert("Internal Error.");               
@@ -727,43 +695,6 @@ function UpdateUserAccountByAdmin(){
         });
 }
 
-
-function UpdateAccountAdmin(){
-	//alert("You have edited your account!");
-	$.mobile.navigate("#adminProfile");
-        $.mobile.loading("show");
-        var form = $("#account-view-form2");
-        var formData = form.serializeArray();
-        console.log("form Data: " + formData);
-        var updAccount = ConverToJSON(formData);
-        updAccount.id = currentAccount.id;
-        console.log("Updated Account: " + JSON.stringify(updAccount));
-        var updAccountJSON = JSON.stringify(updAccount);
-        $.ajax({
-               url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-               method: 'put',
-               data : updAccountJSON,
-               contentType: "application/json",
-                dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                       currentAccount = data.account;
-                       $.mobile.loading("hide");
-                       $.mobile.navigate("#adminProfile");
-                },
-                error: function(data, textStatus, jqXHR){
-                       console.log("textStatus: " + textStatus);
-                       $.mobile.loading("hide");
-                       if (data.status == 404){
-                               alert("Data could not be updated!");
-                       }
-                       else {
-                               alert("Internal Error.");               
-                        }
-                }
-        });
-}
-
-
 function DeleteAccount(){
         $.mobile.loading("show");
         var id = currentAccount.id;
@@ -908,38 +839,6 @@ $(document).on('pagebeforeshow', "#viewUsers2", function( event, ui ) {
 			alert("User not found!");
 			$.mobile.navigate("#searchUserPage2");
 			
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/accountAdmin",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var adminList = data.accountAdminAll;		
-			
-			var len = adminList.length;
-			var list = $("#admins-list");
-			list.empty();
-			var admin;
-			
-			for (var i=0; i < len; ++i){
-				admin = adminList[i];
-				
-				list.append("<li><a>" + 
-					"<p><i><b> Name: </b></i>" + admin.adminUserName +  "</p>" +
-					"<p>_</p>" +
-					"<p><i><b> Id: </b></i>" + admin.adminID + "</p>" +
-					"<p class=\"ui-li-aside\"><i><b> Password: </b></i>" + admin.adminPassword + "</p>" +		
-					"</a></li>");
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data notu found!");
 		}
 	});
 });
@@ -1192,9 +1091,237 @@ function DeleteUser(){
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("User could not be removed!");
+			//alert("User could not be removed!");
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminName/" + $('#searchAdmin').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.adminAccountByName;		
+			var len = userList.length;
+			var list = $("#admins-list");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append("<li><a onclick=GetAdmin(" + user.adminID + ")>" + 
+				"<p><i><b> Admin Nickname: </b></i>" + user.adminUserName +  "</p>" +
+				"<p>_</p>" +
+				"<p><i><b> Admin ID: </b></i>" + user.adminID + "</p>" +
+				"<p class=\"ui-li-aside\"><i><b> Password: </b></i>" + user.adminPassword + "</p>" +		
+				"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("User not found!");
+			$.mobile.navigate("#searchUserPage");
+			
+		}
+	});
+});
+
+
+var currentAdmin = {};
+
+function GetAdmin(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminID/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			 currentAdmin = data.accountAdmin2;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#editAdmin");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("User not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#editAdmin", function( event, ui ) {
+	// currentAdmin has been set at this point
+
+	var adminAccName = "Edit account of " + currentAdmin.adminUserName;
+	document.getElementById("currAdminName").innerHTML = adminAccName;
+	// document.getElementById("adminUserName").innerHTML = currentAdmin.adminUserName;
+	// document.getElementById("adminPassword").innerHTML = currentAdmin.adminPassword;
+	$("#adminUserName").val(currentAdmin.adminUserName);        
+    $("#adminPassword").val(currentAdmin.adminPassword);
+
+});
+
+function UpdateAdminAccount(){
+        $.mobile.loading("show");
+        var form = $("#updateAdminAccount");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/adminUpdate/" +  currentAdmin.adminID,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#adminProfile");
+                        alert("You have successfully updated an admin account!");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                alert("Data could not be updated!");
+                        }
+                        else if (data.status == 400){
+                                alert("Error: Missing fields for account.");
+                        }
+                        else {
+                                alert(data.status);
+                                alert("Internal Error.");               
+                        }
+                }
+        });
+}
+
+function SaveNewAdmin(){
+	$.mobile.loading("show");
+	var form = $("#newAdminForm");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newAccount = ConverToJSON(formData);
+
+	console.log("New Account form: " + JSON.stringify(newAccount));
+
+	var newAccountJSON = JSON.stringify(newAccount);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/newAdmin",
+		method: 'post',
+		data : newAccountJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			alert("You have succesfully added an admin!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 400){
+                 alert("Error: Missing fields for account.");
+            }
+			else{
+			alert("Data could not be added!");
+			}
 		}
 	});
 
 
+}
+
+$(document).on('pagebeforeshow', "#viewAdminsToDelete", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminName/" + $('#searchAdminToDelete').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.adminAccountByName;		
+			var len = userList.length;
+			var list = $("#admins-list-delete");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append("<li><a onclick=GetAdminToDelete(" + user.adminID + ")>" + 
+					"<p><i><b> Name: </b></i>" + user.adminUserName +  "</p>" +
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			alert("User not found!");
+			$.mobile.navigate("#searchUserPageToDelete");
+			
+		}
+	});
+});
+
+var delAdminID;
+function GetAdminToDelete(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminID/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			 currentAdmin = data.accountAdmin2;
+			 delAdminID=id;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#AdminToDelete");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				alert("User not found.");
+			}
+			else {
+				alter("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#AdminToDelete", function( event, ui ) {
+// currentAdmin has been set at this point
+var temp = "Are you sure you want to delete account of: " + currentAdmin.adminUserName + "?";
+document.getElementById("adminDel").innerHTML = temp;
+});
+
+function DeleteAdmin(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/adminDel/" + delAdminID,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			alert("You have succesfully removed an admin!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			//alert("User could not be removed!");
+		}
+	});
 }

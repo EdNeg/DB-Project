@@ -164,9 +164,9 @@
 		<div class="ui-block-a"><a href="#searchUserPage" data-role="button" data-icon="search" data-iconpos="top">Search / Edit Users</a></div>
 		<div class="ui-block-b"><a href="#newUserByAdmin" data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
 		<div class="ui-block-a"><a href="#searchUserPageToDelete" data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
-		<div class="ui-block-b"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
+		<div class="ui-block-b"><a href="#searchAdminPage" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
+		<div class="ui-block-a"><a href="#newAdmin" data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
+		<div class="ui-block-b"><a href="#searchAdminToDeletePage" data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
 		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
 		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
 	</div>
@@ -235,7 +235,7 @@
 <div data-role="page" id="product-view">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
-		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a data-role="button" href="#products" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 		
 	</header>
 		
@@ -1426,7 +1426,7 @@
 <div data-role="page" id="viewAdmins" >
 		<header data-role="header" data-theme="d" data-position="fixed">
 			<h1>Administrators Registered</h1>
-			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+			<a data-role="button" href="#searchAdminPage" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 		</header>
 <div data-role="content">
 		<ul id="admins-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
@@ -2000,14 +2000,14 @@
 <div data-role="page" id="newUserByAdmin">
 	<header data-role="header" data-theme="d">
 		<h1>Add New User</h1>
-		<a href="#AccountByAdmin" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
 	
 	<form id="account-form-admin">
 		<fieldset data-role="controlgroup">
 		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
  					<li data-role="list-divider" role="heading">User Info</li>   
-  					<li><label for="new-userName"> Name: <input id="new-userName" name="userName" type="text" value/></label></li>
+  					<li><label for="new-userName"> Name: <input id="new-userName" name="userName" type="text"/></label></li>
   					<li><label for="new-userNickname"> Username: <input id="new-userNickname" name="userNickname" type="text"/></label></li>
 				    <li><label for="new-password"> Password: <input id="new-password" name="password" type="password"/></label></li>
   					<li><label for="new-userEmail"> Email: <input id="new-userEmail" name="userEmail" type="text"/></label></li>
@@ -2091,6 +2091,121 @@
 
 	
 </div><!-- ---------------------------------------Page View Users To Delete------------------------------------------------------------------------>
+
+<div data-role="page" id="searchAdminPage">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-formAdmin" data-role="content">
+		  
+				<input type="search" name="searchAdmin" id="searchAdmin"/ >
+				<a  href="#viewAdmins" data-theme='b' data-role="button">Search Administrators</a>
+			
+			</form>
+</div><!-- ------------------------------------------------------------------Page Search Admins ----------------------------------------------------------------------------->
+
+
+
+
+<div id="editAdmin" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#viewAdmins" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" href="#adminProfile" onclick="UpdateAdminAccount()" data-theme="b">Save</a>
+		</header>
+			<form id="updateAdminAccount">
+ 				<fieldset data-role="controlgroup">
+ 					<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading" id="currAdminName"></li>   
+  					<li><label for="adminUserName"> Admin User Name: <input id="adminUserName" name="adminUserName" type="text" value="" /></label></li>
+				    <li><label for="adminPassword"> Password: <input id="adminPassword" name="adminPassword" type="password" value=""/></label></li>
+  				</ul>
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Account By Admin----------------------------------------------------------------------------->	
+
+<div data-role="page" id="newAdmin">
+	<header data-role="header" data-theme="d">
+		<h1>Add New Administrator</h1>
+		<a href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+	<form id="newAdminForm">
+		<fieldset data-role="controlgroup">
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">Admin Info</li>   
+  					<li><label for="new-adminName"> Name: <input id="new-adminName" name="userName" type="text"/></label></li>
+				    <li><label for="new-adminPassword"> Password: <input id="new-adminPassword" name="password" type="password"/></label></li>
+  		 </ul>
+  		</fieldset>
+	</form>
+
+<center>
+    <input type="submit" value="Submit" data-inline="true" data-theme="b" onclick="SaveNewAdmin()">
+</center>
+
+</div><!-- ---------------------------------------------------------Page Add New Admin -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="searchAdminToDeletePage">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-form4" data-role="content">
+		  
+				<input type="search" name="searchAdmin" id="searchAdminToDelete"/ >
+				<a  href="#viewAdminsToDelete" data-theme='b' data-role="button">Search Admins</a>
+			
+			</form>
+</div><!-- ------------------------------------------------------------------Page Search Admin To Delete----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="viewAdminsToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Administrators Registered</h1>
+			<a data-role="button" href="#searchAdminToDeletePage" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="admins-list-delete" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- ---------------------------------------Page Search Results Admins To Delete------------------------------------------------------------------------>
+
+
+<div data-role="page" id="AdminToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Admin</h1>
+			<a data-role="button" href="#viewAdminsToDelete" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="adminDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#adminProfile" data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteAdmin()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#viewAdminsToDelete" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Admins To Delete------------------------------------------------------------------------>
+
+
+
+
+
+
+
+
 
 </body>
 

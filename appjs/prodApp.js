@@ -1405,7 +1405,7 @@ $(document).on('pagebeforeshow', "#productSortName", function( event, ui ) {
 
 					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p><i><b><font color='red'>" + product.productName +  "</font></b></i></p>" +
 					"<p>_</p>" +
 					"<p> Brand: " + product.brand  + "</p>" +
 					"<p> Model: " + product.model + "</p>" + 
@@ -1446,7 +1446,7 @@ $(document).on('pagebeforeshow', "#productSortBrand", function( event, ui ) {
 
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
+					"<p><font color='red'><b> Brand: " + product.brand  + "</b></font></p>" +
 					"<p> Model: " + product.model + "</p>" + 
 					"<p> Dimensions: " + product.dimensions + "</p>" +
 					"<p> Description: " + product.productDesc + "</p>" +
@@ -1481,7 +1481,7 @@ $(document).on('pagebeforeshow', "#productSortPrice", function( event, ui ) {
 				
 					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
 
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			
 
 					"<p><i><b>" + product.productName +  "</b></i></p>" +
 					"<p>_</p>" +
@@ -1489,9 +1489,11 @@ $(document).on('pagebeforeshow', "#productSortPrice", function( event, ui ) {
 					"<p> Model: " + product.model + "</p>" + 
 					"<p> Dimensions: " + product.dimensions + "</p>" +
 					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\"> Instant Price: " + 
+					accounting.formatMoney(product.productPrice) + "</p>" +		
 					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"<p class=\"ui-li-aside\"><font color='red'><b> Bid Price: " + 
+					accounting.formatMoney(product.bidStartingPrice) + "</b></font></p>" +		
 					"</a></li>");
 				
 			}
