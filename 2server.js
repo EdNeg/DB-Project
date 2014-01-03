@@ -1476,7 +1476,10 @@ app.get('/DB-Project/accounts/:ids', function(req, res) {
 		console.log("GET account: " + ids);
 
 
-var query = connection.query("SELECT * FROM bbUser NATURAL JOIN bbAddress WHERE userID = '" + ids  + "'", function(err, rows, result){	
+var query = connection.query("SELECT * FROM bbUser as u inner join bbaddress " +  
+		"as a inner join bbcreditcard as c WHERE u.userID = '" + ids  + "'" + 
+		" AND u.creditCardID = c.creditCardID " +
+		"AND u.addressID = a.addressID;", function(err, rows, result){	
 
 	if (err) throw err;
 	
@@ -1519,8 +1522,10 @@ app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
 		console.log("GET account: " + id);
 
 
-var query = connection.query("SELECT * FROM bbUser WHERE userNickname = '" + id  + "'" + " AND " +
-		"password = '" + idp + "'", function(err, rows, result){
+var query = connection.query("SELECT * FROM bbUser as u inner join bbaddress " +  
+		"as a inner join bbcreditcard as c WHERE u.userNickname = '" + id  + "'" + " AND " +
+		"u.password = '" + idp  + "'" + " AND u.creditCardID = c.creditCardID " +
+		"AND u.addressID = a.addressID;", function(err, rows, result){
 
 		if (err) throw err;
 
@@ -1532,7 +1537,7 @@ var query = connection.query("SELECT * FROM bbUser WHERE userNickname = '" + id 
 		res.send("Account not found.");
 	}
 	else {	
-  		var response = {"account" : rows[0]};
+  		var response = {"accountLogin" : rows[0]};
 		//connection.end();
   		res.json(response);
   	}
@@ -1543,7 +1548,7 @@ app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
 	var id = req.params.id;
 	var idc = req.params.idc;
 	var ida = req.params.ida;
-	console.log("PUT User");
+	console.log("PUT User ID: " + id);
 
   	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
   	|| !req.body.hasOwnProperty('userEmail') || !req.body.hasOwnProperty('addressLine') || !req.body.hasOwnProperty('city')
@@ -1575,10 +1580,9 @@ app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
 			"`securityCode` = '" + req.body.securityCode + "',`expDate` = '" + req.body.expDate + "' where creditCardID = '" + idc +"'");
   
   	
-  	console.log("Update Account: ");
-  	console.log("Update Mailing Address: ");
-  	console.log("Update Biling Address: " );
-  	console.log("Update CreditCard:" );
+  	console.log("Update Account of: " + req.body.userNickname);
+  	console.log("Update Mailing Address with ID: " + ida);
+  	console.log("Update Billing Address with ID: " + idc );
   	res.json(true);
 });
 
@@ -1586,7 +1590,7 @@ app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
 
 //REST Operation - HTTP POST to add a new a user
 app.post('/DB-Project/accounts', function(req, res) {
-	console.log(req.body.userEmail);
+	//console.log(req.body.userEmail);
 	console.log("POST User");
 
   	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
@@ -1623,14 +1627,37 @@ app.post('/DB-Project/accounts', function(req, res) {
   	  		"', '" + req.body.securityCode + "', '" + req.body.expDate + "', @last_insert_id_in_bbAddress1)");
   	var getquery3 = connection.query("SET @last_insert_id_in_bbCreditCard = LAST_INSERT_ID()");
   	
-  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard WHERE `userID`=@last_insert_id_in_bbUser");
+  	var query3 = connection.query("INSERT INTO `bbBankAccount` (`bankAccountID`,`accountNumber`,`accountType`,`accountOwner`,`bankName`)" +
+  	  		" VALUES (NULL, '" + req.body.accountNumber + "', '"+ req.body.accountType + 
+  	  		"', '" + req.body.accountOwner + "', '" + req.body.bankName + "')");
+  	var getquery4 = connection.query("SET @last_insert_id_in_bbBankAccount = LAST_INSERT_ID()");
   	
-  	console.log("New Account: ");
-  	console.log("New Mailing Address: ");
-  	console.log("New Biling Address: " );
-  	console.log("New CreditCard:" );
+  	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard, `bankAccountID`=@last_insert_id_in_bbBankAccount WHERE `userID`=@last_insert_id_in_bbUser");
+  	
+  	console.log("New Account: " + req.body.userNickname);
   	res.json(true);
 });
+
+// REST Operation - HTTP DELETE to delete a user based on its id
+app.del('/DB-Project/accountsDel/:ids', function(req, res) {
+	var ids = req.params.ids;
+		console.log("DELETE User with id: " + ids);
+
+	
+	var query = connection.query("DELETE from bbUser " +   
+					"where userID = '" +ids+"';", function(err, rows, result){
+
+		if (err) throw err;
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	
+});
+});
+
 
 //-----------------------Administrator------------------------------------------------------
 
@@ -1645,7 +1672,33 @@ app.post('/DB-Project/accounts', function(req, res) {
 // c) PUT - Update an individual object, or collection  (Database update operation)
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
+// See all admins
+// REST Operation - HTTP GET to read a product based on its id
+app.get('/DB-Project/accountAdmin', function(req, res) {
+	
+		console.log("GET all admin");
 
+
+var query = connection.query("SELECT * FROM bbAdmin", function(err, rows, result){
+
+		if (err) throw err;
+	/*
+	for (i = 0; i<rows.length; i++){
+			console.log('The solution is: ', rows[i]);
+		}*/
+			
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else {	
+  		var response = {"accountAdminAll" : rows};
+		//connection.end();
+  		res.json(response);
+  	}
+ });
+  });
 //Verifies Login For Admin
 app.get('/DB-Project/accountAdmin/:id/:idp', function(req, res) {
 	var id = req.params.id;
