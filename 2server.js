@@ -267,9 +267,9 @@ var query = connection.query("SELECT * FROM boricuabaydb.bbProduct natural join 
 
 
 // REST Operation - HTTP GET to read products by tagID
-app.get('/DB-Project/productsTag/:id', function(req, res) {
+app.get('/DB-Project/productsByTag/:id', function(req, res) {
 	var id = req.params.id;
-		console.log("GET product with tagID: " + id);
+		console.log("GET products with tagID: " + id);
 
 
 var query = connection.query("Select * from bbProduct natural join bbBidProduct natural join bbTag where tagID = " + id, function(err, rows, result){
@@ -283,10 +283,10 @@ var query = connection.query("Select * from bbProduct natural join bbBidProduct 
 	var len = rows.length;
 	if (len == 0){
 		res.statusCode = 404;
-		res.send("Product noty found.");
+		res.send("Product not found.");
 	}
 	else {	
-  		var response = {"tag" : rows};
+  		var response = {"productsTag" : rows};
 		//connection.end();
   		res.json(response);
   	}
@@ -441,10 +441,6 @@ app.get('/DB-Project/categories', function(req, res) {
 	connection.query('SELECT * FROM bbCategory;', function(err, rows, result) {
 
   if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
 	
   var response = {"categories" : rows};
   res.json(response);
@@ -461,12 +457,6 @@ app.get('/DB-Project/categories/:id', function(req, res) {
 	connection.query("SELECT * FROM bbCategory WHERE categoryID = " + id, function(err, rows, result){
 
 		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
-	
 	
 	var len = rows.length;
 	if (len == 0){
@@ -481,93 +471,117 @@ app.get('/DB-Project/categories/:id', function(req, res) {
  });	
 });
 
-// REST Operation - HTTP PUT to updated a category based on its id
-app.put('/DB-Project/categories/:id', function(req, res) {
+// REST Operation - HTTP PUT to update a category on its id
+app.put('/DB-Project/categoryUpdate/:id/:id2', function(req, res) {
 	var id = req.params.id;
-		console.log("PUT category: " + id);
+	var radio =req.params.id2;
+	console.log("PUT Category ID: " + id);
 
-	if ((id < 0) || (id >= categoryNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("Category not found.");
-	}
-	else if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('iconSrc')){			//<-----------------------------------------------------------------------!!!!!!!!
+  	if(req.body.name.length == 0){
     	res.statusCode = 400;
-    	return res.send('Error: Missing fields for category.');
+    	return res.send('Error: Missing fields for account.');
   	}
-	else {
-		var target = -1;
-		for (var i=0; i < categoryList.length; ++i){
-			if (categoryList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("Category not found.");			
-		}	
-		else {
-			var theCategory= categoryList[target];
-			theCategory.name = req.body.name;
-			theCategory.iconSrc = req.body.iconSrc;
-			//theCategory.subCats = req.body.subCats;
-			var response = {"category" : theCategory};
-  			res.json(response);		
-  		}
-  		
-	}
+	console.log(radio);
+  	
+  	 var query = connection.query("UPDATE `bbCategory` SET `categoryName` = '" + req.body.name + "', " +
+  			 "`categoryDesc` = '../DB-Project/css/icons/" + radio + "' where categoryID= '"+id+"'");	
+  
+  	res.json(true);
 });
 
 // REST Operation - HTTP DELETE to delete a category based on its id
-app.del('/DB-Project/categories/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE category: " + id);
+app.del('/DB-Project/categoryDel/:ids', function(req, res) {
+	var ids = req.params.ids;
+		console.log("DELETE Category with id: " + ids);
 
-	if ((id < 0) || (id >= categoryNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("Category not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < categoryList.length; ++i){
-			if (categoryList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
+	connection.query("SELECT * FROM bbsubcategory WHERE categoryID = " + ids, 
+		function(err, rows, result){
+			if (err) throw err;
+			var len = rows.length;
+			
+		if (len == 0){
 			res.statusCode = 404;
-			res.send("Category not found.");			
-		}	
-		else {
-			categoryList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
+			res.send("Account not found.");
+		}
+		
+		for (i = 0; i<len; i++){
+			connection.query("SELECT * FROM bbtag WHERE subCategoryID = " + rows[i].subCategoryID +	";", 
+			getCallBackFn(i));
+		}
+		console.log("out of main for");
+
+		
+		function getCallBackFn(index){
+			return function(err2, rows2, results2){
+				console.log("SubCatID = " +rows[index].subCategoryID);
+				
+				console.log("AAAAAAAAAA");
+	
+				if (err2) throw err;
+				
+				var len2 = rows2.length;
+				console.log("Initial subcat length: " +len2);
+				var tempRow = rows2[0].subCategoryID;
+				for (j = 0; j<len2; j++){
+					console.log("TagID = " +rows2[j].tagID);
+					connection.query("DELETE from bbTag where tagID = '" 
+					+rows2[j].tagID+"';", getCallBackFn2(j));
+					res.json(true);
+				}
+				console.log("SubCatID4 = " +tempRow);
+				connection.query("DELETE from bbSubCategory where subCategoryID = '" 
+						+tempRow+"';", function(err6, rows6, result6){
+							if (err6) throw err;
+							res.json(true);
+				});
+				var len3 = rows2.length;
+			
+				if(index == len-1){
+					connection.query("DELETE from bbCategory where categoryID = '" +ids+"';", function(err, rows, result){
+	
+						if (err) throw err;
+						console.log("CatID2 = " +ids);
+						var len = rows.length;
+						if (len == 0){
+							res.statusCode = 404;
+							res.send("Category not found.");
+						}
+						res.json(true);
+					});
+				}
+				
+			};
+		}
+		
+		function getCallBackFn2(index2){
+			return function(err5, rows5, results5){
+				if (err5) throw err;
+				console.log("Deleted Tag");
+				res.json(true);
+			};
+		}
+	});
+
 });
 
 // REST Operation - HTTP POST to add a new a category
-app.post('/DB-Project/categories', function(req, res) {
+app.post('/DB-Project/newCategory/:id', function(req, res) {
 	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('iconSrc')) {			//<--------------------------------------------------------------------!!!!!!
+	var radio = req.params.id;
+  	if(req.body.name.length == 0) {			//<--------------------------------------------------------------------!!!!!!
     	res.statusCode = 400;
     	return res.send('Error: Missing fields for category.');
   	}
+  	
+  	connection.query("INSERT INTO bbcategory (categoryID, categoryName, categoryDesc) " +
+  	"VALUES (NULL, '" + req.body.name + "', '../DB-Project/css/icons/" + radio + "');" , function(err, rows, result){
 
-  	var newCategory = new Category(req.body.name, req.body.imgSrc);
-  	console.log("New Category: " + JSON.stringify(newCategory));
-  	newCategory.id = categoryNextId++;
-  	categoryList.push(newCategory);
+		if (err) throw err;
   	res.json(true);
 });
+});
 
-//--------------------------------------Books SubCategories---------------------------------------------------------------//
-	
-
-
+// ---------------------------------------------SUBCATEGORIES--------------------------------------------
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -578,39 +592,41 @@ app.post('/DB-Project/categories', function(req, res) {
 // c) PUT - Update an individual object, or collection  (Database update operation)
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
-// REST Operation - HTTP GET to read all Books
-app.get('/DB-Project/Books', function(req, res) {
-	console.log("GET ALL BOOKS SUBCATEGORIES");
-
-	connection.query("Select * from bbSubCategory where categoryID = "+1+";", function(err, rows, result) {
-
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"books" : rows};
-  res.json(response);
-});
-});
-
-
-// REST Operation - HTTP GET to read a subCat based on its id
-app.get('/DB-Project/Books/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET subCat: " + id);
-
-
-	var query = connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+// ADD NEW SUBCATEGORY
+app.post('/DB-Project/newSubCategory/:id/:id2', function(req, res) {
+	console.log("POST SUB-CATEGORY");
+	var radio = req.params.id;
+	var id = req.params.id2;
+  	if(req.body.name.length == 0) {			//<--------------------------------------------------------------------!!!!!!
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for category.');
+  	}
+  	
+  	connection.query("INSERT INTO bbsubcategory (subCategoryID, subCategoryName, subCategoryDesc, categoryID) " +
+  	"VALUES (NULL, '" + req.body.name + "', '../DB-Project/css/icons/" + radio + "', '" + id + "');" , function(err, rows, result){
 
 		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
+  		res.json(true);
+	});
+
+	connection.query("SET @last_insert_id_in_bbsubsategory = LAST_INSERT_ID()");
+		
+	connection.query("INSERT INTO bbtag (tagID, tagName, subCategoryID, tagIcon) " +
+	  	"VALUES (NULL, NULL, @last_insert_id_in_bbsubsategory, NULL);" , function(err, rows, result){
 	
-	
+			if (err) throw err;
+	  		res.json(true);
+	});
+});
+
+//GET SUBCATEGORIES BASED ON ID FROM PARENT CATEGORY
+app.get('/DB-Project/subCategoriesParent/:id', function(req, res) {
+	var got = req.params.id;
+	console.log("GET SubCategory with Parent Category ID: " + got);
+  	  	
+  	connection.query("SELECT * FROM bbsubcategory WHERE categoryID = " + got, function(err, rows, result){
+
+		if (err) throw err;
 	
 	var len = rows.length;
 	if (len == 0){
@@ -618,104 +634,37 @@ app.get('/DB-Project/Books/:id', function(req, res) {
 		res.send("Category not found.");
 	}
 	else {	
-  		var response = {"book" : rows[0]};
+  		var response = {"subCategories" : rows};
 		//connection.end();
   		res.json(response);
   	}
  });	
 });
 
-// REST Operation - HTTP PUT to updated a subCat based on its id
-app.put('/DB-Project/Books/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT subCat: " + id);
+//GET SUBCATEGORY BASED ON ID
+app.get('/DB-Project/subCategory/:id', function(req, res) {
+	var got = req.params.id;
+	console.log("GET SubCategory with ID: " + got);
+  	  	
+  	connection.query("SELECT * FROM bbsubcategory WHERE subCategoryID = " + got, function(err, rows, result){
 
-	if ((id < 0) || (id >= subCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("SubCat not found.");
-	}
-	else if(!req.body.hasOwnProperty('name')){			//<-----------------------------------------------------------------------!!!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for subCat.');
-  	}
-	else {
-		var target = -1;
-		for (var i=0; i < subCatList.length; ++i){
-			if (subCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("SubCat not found.");			
-		}	
-		else {
-			var theSubCat= subCatList[target];
-			theSubCat.name = req.body.name;
-			theSubCat.Books = req.body.Books;
-			var response = {"subCat" : theSubCat};
-  			res.json(response);		
-  		}
-	}
-});
-
-// REST Operation - HTTP DELETE to delete a subCat based on its id
-app.del('/DB-Project/Books/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE subCat: " + id);
-
-	if ((id < 0) || (id >= subCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("SubCat not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < subCatList.length; ++i){
-			if (subCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("SubCat not found.");			
-		}	
-		else {
-			subCatList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
-});
-
-// REST Operation - HTTP POST to add a new a subCat
-app.post('/DB-Project/Books', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name')) {			//<--------------------------------------------------------------------!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for subCat.');
-  	}
-
-  	var newSubCat = new SubCat(req.body.name);
-  	console.log("New SubCat: " + JSON.stringify(newSubCat));
-  	newSubCat.id = subCatNextId++;
-  	subCatList.push(newSubCat);
-  	res.json(true);
-});
-
-
-
-//--------------------------------------Electronics---------------------------------------------------------------//
+		if (err) throw err;
 	
-	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Category not found.");
+	}
+	else {	
+  		var response = {"subCategory" : rows[0]};
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
 
 
-
-
-
+// ---------------------------------------------TAGS-----------------------------------------------------
 // REST Operations
 // Idea: Data is created, read, updated, or deleted through a URL that 
 // identifies the resource to be created, read, updated, or deleted.
@@ -726,720 +675,79 @@ app.post('/DB-Project/Books', function(req, res) {
 // c) PUT - Update an individual object, or collection  (Database update operation)
 // d) DELETE - Remove an individual object, or collection (Database delete operation)
 
-// REST Operation - HTTP GET to read all Electronics
-app.get('/DB-Project/Electronics', function(req, res) {
-	console.log("GET ALL ELECTRONICS SUBCATEGORIES");
 
-	connection.query("Select * from bbSubCategory where categoryID = "+2+";", function(err, rows, result) {
-
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"electronics" : rows};
-  res.json(response);
-});
-});
-
-
-// REST Operation - HTTP GET to read a subCat based on its id
-app.get('/DB-Project/Electronics/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET subCat: " + id);
-
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+//GET TAGS BASED ON ID FROM PARENT CATEGORY
+app.get('/DB-Project/tagsParent/:id', function(req, res) {
+	var got = req.params.id;
+	console.log("GET Tag with Parent Sub-Category ID: " + got);
+  	  	
+  	connection.query("SELECT * FROM bbtag WHERE subCategoryID = " + got + " and tagName is not null;", function(err, rows, result){
 
 		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
-	
 	
 	var len = rows.length;
 	if (len == 0){
-		res.statusCode = 404;
-		res.send("Category not found.");
+		connection.query("SELECT * FROM bbtag WHERE subCategoryID = " + got + ";", function(err2, rows2, result2){
+			if (err2) throw err;
+			var len2 = rows2.length;
+			if (len2 == 0){
+				res.statusCode = 404;
+				res.send("Tags not found.");
+			}
+			else {	
+		  		var response = {"tags" : rows2};
+				//connection.end();
+		  		res.json(response);
+  			}
+  		});
 	}
 	else {	
-  		var response = {"electronic" : rows[0]};
+  		var response = {"tags" : rows};
 		//connection.end();
   		res.json(response);
   	}
  });	
 });
 
-
-// REST Operation - HTTP PUT to updated a electCat based on its id
-app.put('/DB-Project/Electronics/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT electCat: " + id);
-
-	if ((id < 0) || (id >= electCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("ElectCat not found.");
-	}
-	else if(!req.body.hasOwnProperty('name')){			//<-----------------------------------------------------------------------!!!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for electCat.');
-  	}
-	else {
-		var target = -1;
-		for (var i=0; i < electCatList.length; ++i){
-			if (electCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("electCat not found.");			
-		}	
-		else {
-			var theElectCat= electCatList[target];
-			theElectCat.name = req.body.name;
-			theElectCat.iconSrc = req.body.iconSrc;
-			//theElectCat.electCats = req.body.electCats;
-			var response = {"electCat" : theElectCat};
-  			res.json(response);		
-  		}
-	}
-});
-
-// REST Operation - HTTP DELETE to delete a electCat based on its id
-app.del('/DB-Project/Electronics/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE electCat: " + id);
-
-	if ((id < 0) || (id >= electCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("electCat not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < electCatList.length; ++i){
-			if (electCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("electCat not found.");			
-		}	
-		else {
-			electCatList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
-});
-
-// REST Operation - HTTP POST to add a new a electCat
-app.post('/DB-Project/Electronics', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name')) {			//<--------------------------------------------------------------------!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for electCat.');
-  	}
-
-  	var newElectCat = new ElectCat(req.body.name);
-  	console.log("New ElectCat: " + JSON.stringify(newElectCat));
-  	newElectCat.id = electCatNextId++;
-  	electCatList.push(newElectCat);
-  	res.json(true);
-});
-
-
-
-//--------------------------------------Computers---------------------------------------------------------------//
-	
-
-
-
-
-
-// REST Operations
-// Idea: Data is created, read, updated, or deleted through a URL that 
-// identifies the resource to be created, read, updated, or deleted.
-// The URL and any other input data is sent over standard HTTP requests.
-// Mapping of HTTP with REST 
-// a) POST - Created a new object. (Database create operation)
-// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
-// c) PUT - Update an individual object, or collection  (Database update operation)
-// d) DELETE - Remove an individual object, or collection (Database delete operation)
-
-// REST Operation - HTTP GET to read all Computers
-app.get('/DB-Project/Computers', function(req, res) {
-	console.log("GET ALL COMPUTER SUBCATEGORIES");
-
-	connection.query("Select * from bbSubCategory where categoryID = "+3+";", function(err, rows, result) {
-
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"computers" : rows};
-  res.json(response);
-});
-});
-
-
-// REST Operation - HTTP GET to read a compCat based on its id
-app.get('/DB-Project/Computers/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET compCat: " + id);
-
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+//GET TAG BASED ON ID
+app.get('/DB-Project/tag/:id', function(req, res) {
+	var got = req.params.id;
+	console.log("GET Tag with ID: " + got);
+  	  	
+  	connection.query("SELECT * FROM bbtag WHERE tagID = " + got, function(err, rows, result){
 
 		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
-	
 	
 	var len = rows.length;
 	if (len == 0){
 		res.statusCode = 404;
-		res.send("Category not found.");
+		res.send("Tag not found.");
 	}
 	else {	
-  		var response = {"computer" : rows[0]};
+  		var response = {"tag" : rows[0]};
 		//connection.end();
   		res.json(response);
   	}
  });	
 });
 
-// REST Operation - HTTP PUT to updated a compCat based on its id
-app.put('/DB-Project/Computers/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT compCat: " + id);
-
-	if ((id < 0) || (id >= compCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("CompCat not found.");
-	}
-	else if(!req.body.hasOwnProperty('name')){			//<-----------------------------------------------------------------------!!!!!!!!
+// ADD NEW SUBCATEGORY
+app.post('/DB-Project/newTag/:id/:id2', function(req, res) {
+	console.log("POST TAG");
+	var radio = req.params.id;
+	var id = req.params.id2;
+  	if(req.body.name.length == 0) {			//<--------------------------------------------------------------------!!!!!!
     	res.statusCode = 400;
-    	return res.send('Error: Missing fields for compCat.');
+    	return res.send('Error: Missing fields for tag.');
   	}
-	else {
-		var target = -1;
-		for (var i=0; i < compCatList.length; ++i){
-			if (compCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("compCat not found.");			
-		}	
-		else {
-			var theCompCat= compCatList[target];
-			theCompCat.name = req.body.name;
-			theCompCat.iconSrc = req.body.iconSrc;
-			//theCompCat.compCats = req.body.compCats;
-			var response = {"compCat" : theCompCat};
-  			res.json(response);		
-  		}
-	}
-});
-
-// REST Operation - HTTP DELETE to delete a compCat based on its id
-app.del('/DB-Project/Computers/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE compCat: " + id);
-
-	if ((id < 0) || (id >= compCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("compCat not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < compCatList.length; ++i){
-			if (compCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("compCat not found.");			
-		}	
-		else {
-			compCatList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
-});
-
-// REST Operation - HTTP POST to add a new a compCat
-app.post('/DB-Project/Computers', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name')) {			//<--------------------------------------------------------------------!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for compCat.');
-  	}
-
-  	var newCompCat = new CompCat(req.body.name);
-  	console.log("New CompCat: " + JSON.stringify(newCompCat));
-  	newCompCat.id = compCatNextId++;
-  	compCatList.push(newCompCat);
-  	res.json(true);
-});
-
-//--------------------------------------Clothings---------------------------------------------------------------//
-	
-
-
-
-
-// REST Operations
-// Idea: Data is created, read, updated, or deleted through a URL that 
-// identifies the resource to be created, read, updated, or deleted.
-// The URL and any other input data is sent over standard HTTP requests.
-// Mapping of HTTP with REST 
-// a) POST - Created a new object. (Database create operation)
-// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
-// c) PUT - Update an individual object, or collection  (Database update operation)
-// d) DELETE - Remove an individual object, or collection (Database delete operation)
-
-// REST Operation - HTTP GET to read all Clothings
-app.get('/DB-Project/Clothing', function(req, res) {
-	console.log("GET ALL CLOTHING SUBCATEGORIES");
-
-	connection.query("Select * from bbSubCategory where categoryID = "+4+";", function(err, rows, result) {
-
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"clothing" : rows};
-  res.json(response);
-});
-});
-
-
-// REST Operation - HTTP GET to read a clothCat based on its id
-app.get('/DB-Project/Clothing/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET clothCat: " + id);
-
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
+  	
+  	connection.query("INSERT INTO bbtag (tagID, tagName, subCategoryID, tagIcon) " +
+  	"VALUES (NULL, '" + req.body.name + "', '" + id + "', '../DB-Project/css/icons/" + radio + "');" , function(err, rows, result){
 
 		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
-	
-	
-	var len = rows.length;
-	if (len == 0){
-		res.statusCode = 404;
-		res.send("Category not found.");
-	}
-	else {	
-  		var response = {"clothing" : rows[0]};
-		//connection.end();
-  		res.json(response);
-  	}
- });	
-});
-
-// REST Operation - HTTP PUT to updated a clothCat based on its id
-app.put('/DB-Project/Clothing/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT clothCat: " + id);
-
-	if ((id < 0) || (id >= clothCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("clothCat not found.");
-	}
-	else if(!req.body.hasOwnProperty('name')){			//<-----------------------------------------------------------------------!!!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for clothCat.');
-  	}
-	else {
-		var target = -1;
-		for (var i=0; i < clothCatList.length; ++i){
-			if (clothCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("clothCat not found.");			
-		}	
-		else {
-			var theClothCat= clothCatList[target];
-			theClothCat.name = req.body.name;
-			theClothCat.iconSrc = req.body.iconSrc;		// may cause problems
-			//theCompCat.compCats = req.body.compCats;
-			var response = {"clothCat" : theClothCat};
-  			res.json(response);		
-  		}
-	}
-});
-
-// REST Operation - HTTP DELETE to delete a clothCat based on its id
-app.del('/DB-Project/Clothing/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE clothCat: " + id);
-
-	if ((id < 0) || (id >= clothCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("clothCat not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < clothCatList.length; ++i){
-			if (clothCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("clothCat not found.");			
-		}	
-		else {
-			clothCatList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
-});
-
-// REST Operation - HTTP POST to add a new a clothCat
-app.post('/DB-Project/Clothing', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name')) {			//<--------------------------------------------------------------------!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for clothCat.');
-  	}
-
-  	var newClothCat = new ClothCat(req.body.name);
-  	console.log("New clothCat: " + JSON.stringify(newClothCat));
-  	newClothCat.id = clothCatNextId++;
-  	clothCatList.push(newClothCat);
   	res.json(true);
 });
-
-
-//--------------------------------------Shoes---------------------------------------------------------------//
-	
-	
-
-
-
-// REST Operations
-// Idea: Data is created, read, updated, or deleted through a URL that 
-// identifies the resource to be created, read, updated, or deleted.
-// The URL and any other input data is sent over standard HTTP requests.
-// Mapping of HTTP with REST 
-// a) POST - Created a new object. (Database create operation)
-// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
-// c) PUT - Update an individual object, or collection  (Database update operation)
-// d) DELETE - Remove an individual object, or collection (Database delete operation)
-
-// REST Operation - HTTP GET to read all Shoes
-app.get('/DB-Project/Shoes', function(req, res) {
-	console.log("GET ALL SHOES SUBCATEGORIES");
-
-	connection.query("Select * from bbSubCategory where categoryID = "+5+";", function(err, rows, result) {
-
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"shoes" : rows};
-  res.json(response);
 });
-});
-
-
-// REST Operation - HTTP GET to read a shoeCat based on its id
-app.get('/DB-Project/Shoes/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET shoeCat: " + id);
-
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
-
-		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
-	
-	
-	var len = rows.length;
-	if (len == 0){
-		res.statusCode = 404;
-		res.send("Category not found.");
-	}
-	else {	
-  		var response = {"shoe" : rows[0]};
-		//connection.end();
-  		res.json(response);
-  	}
- });	
-});
-
-// REST Operation - HTTP PUT to updated a shoeCat based on its id
-app.put('/DB-Project/Shoes/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT shoeCat: " + id);
-
-	if ((id < 0) || (id >= shoeCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("ShoeCat not found.");
-	}
-	else if(!req.body.hasOwnProperty('name')){			//<-----------------------------------------------------------------------!!!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for shoeCat.');
-  	}
-	else {
-		var target = -1;
-		for (var i=0; i < shoeCatList.length; ++i){
-			if (shoeCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("shoeCat not found.");			
-		}	
-		else {
-			var theShoeCat= shoeCatList[target];
-			theShoeCat.name = req.body.name;
-			theShoeCat.iconSrc = req.body.iconSrc;
-			//theShoeCat.shoeCats = req.body.shoeCats;
-			var response = {"shoeCat" : theShoeCat};
-  			res.json(response);		
-  		}
-	}
-});
-
-// REST Operation - HTTP DELETE to delete a shoeCat based on its id
-app.del('/DB-Project/Shoes/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE shoeCat: " + id);
-
-	if ((id < 0) || (id >= shoeCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("shoeCat not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < shoeCatList.length; ++i){
-			if (shoeCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("shoeCat not found.");			
-		}	
-		else {
-			shoeCatList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
-});
-
-// REST Operation - HTTP POST to add a new a shoeCat
-app.post('/DB-Project/Shoes', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name')) {			//<--------------------------------------------------------------------!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for shoeCat.');
-  	}
-
-  	var newShoeCat = new ShoeCat(req.body.name);
-  	console.log("New ShoeCat: " + JSON.stringify(newShoeCat));
-  	newShoeCat.id = shoeCatNextId++;
-  	shoeCatList.push(newShoeCat);
-  	res.json(true);
-});
-
-//--------------------------------------Sports---------------------------------------------------------------//
-	
-
-
-
-
-// REST Operations
-// Idea: Data is created, read, updated, or deleted through a URL that 
-// identifies the resource to be created, read, updated, or deleted.
-// The URL and any other input data is sent over standard HTTP requests.
-// Mapping of HTTP with REST 
-// a) POST - Created a new object. (Database create operation)
-// b) GET - Read an individual object, collection of object, or simple values (Database read Operation)
-// c) PUT - Update an individual object, or collection  (Database update operation)
-// d) DELETE - Remove an individual object, or collection (Database delete operation)
-
-// REST Operation - HTTP GET to read all Sports
-app.get('/DB-Project/Sports', function(req, res) {
-	console.log("GET ALL SPORTS SUBCATEGORIES");
-
-	connection.query("Select * from bbSubCategory where categoryID = "+6+";", function(err, rows, result) {
-
-  if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The result is: ', rows[i]);
-		}*/
-	
-  var response = {"sports" : rows};
-  res.json(response);
-});
-});
-
-
-// REST Operation - HTTP GET to read a sportCat based on its id
-app.get('/DB-Project/Sports/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("GET sportCat: " + id);
-
-
-	connection.query("SELECT * FROM bbSubCategory WHERE subCategoryID = " + id, function(err, rows, result){
-
-		if (err) throw err;
-	/*
-	for (i = 0; i<rows.length; i++){
-			console.log('The solution is: ', rows[i]);
-		}*/
-	
-	
-	
-	var len = rows.length;
-	if (len == 0){
-		res.statusCode = 404;
-		res.send("Category not found.");
-	}
-	else {	
-  		var response = {"sport" : rows[0]};
-		//connection.end();
-  		res.json(response);
-  	}
- });	
-});
-
-// REST Operation - HTTP PUT to updated a sportCat based on its id
-app.put('/DB-Project/Sports/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("PUT sportCat: " + id);
-
-	if ((id < 0) || (id >= sportCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("SportCat not found.");
-	}
-	else if(!req.body.hasOwnProperty('name')){			//<-----------------------------------------------------------------------!!!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for sportCat.');
-  	}
-	else {
-		var target = -1;
-		for (var i=0; i < sportCatList.length; ++i){
-			if (sportCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("sportCat not found.");			
-		}	
-		else {
-			var theSportCat= sportCatList[target];
-			theSportCat.name = req.body.name;
-			theSportCat.iconSrc = req.body.iconSrc;
-			//theSportCat.sportCats = req.body.sportCats;
-			var response = {"sportCat" : theSportCat};
-  			res.json(response);		
-  		}
-	}
-});
-
-// REST Operation - HTTP DELETE to delete a sportCat based on its id
-app.del('/DB-Project/Sports/:id', function(req, res) {
-	var id = req.params.id;
-		console.log("DELETE sportCat: " + id);
-
-	if ((id < 0) || (id >= sportCatNextId)){
-		// not found
-		res.statusCode = 404;
-		res.send("sportCat not found.");
-	}
-	else {
-		var target = -1;
-		for (var i=0; i < sportCatList.length; ++i){
-			if (sportCatList[i].id == id){
-				target = i;
-				break;	
-			}
-		}
-		if (target == -1){
-			res.statusCode = 404;
-			res.send("sportCat not found.");			
-		}	
-		else {
-			sportCatList.splice(target, 1);
-  			res.json(true);
-  		}		
-	}
-});
-
-// REST Operation - HTTP POST to add a new a sportCat
-app.post('/DB-Project/Sports', function(req, res) {
-	console.log("POST");
-
-  	if(!req.body.hasOwnProperty('name')) {			//<--------------------------------------------------------------------!!!!!!
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for sportCat.');
-  	}
-
-  	var newSportCat = new SportCat(req.body.name);
-  	console.log("New SportCat: " + JSON.stringify(newSportCat));
-  	newSportCat.id = sportCatNextId++;
-  	sportCatList.push(newSportCat);
-  	res.json(true);
-});
-
 
 
 //-----------------------Regular User------------------------------------------------------

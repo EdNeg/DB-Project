@@ -11,12 +11,6 @@
 		
 		<script src="appjs/prodApp.js"></script>
 		<script src="appjs/catApp.js"></script>
-		<script src="appjs/booksApp.js"></script>
-		<script src="appjs/ComputersApp.js"></script>
-		<script src="appjs/clothingApp.js"></script>
-		<script src="appjs/electronicsApp.js"></script>
-		<script src="appjs/shoesApp.js"></script>
-		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/accountApp.js"></script>
 		
 	
@@ -167,9 +161,9 @@
 		<div class="ui-block-b"><a href="#searchAdminPage" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
 		<div class="ui-block-a"><a href="#newAdmin" data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
 		<div class="ui-block-b"><a href="#searchAdminToDeletePage" data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
-		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
+		
 	</div>
+	<a href="#modifyCategory" data-role="button" data-iconpos="top" data-icon="edit">Modify Categories</a>
 
 
 <footer data-role="footer" data-position="fixed" data-theme="b">
@@ -232,6 +226,26 @@
 </div><!-- Page Search Products ------------------------------------------------------------------------>
 
 
+<div data-role="page" id="productsInCategory" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Products Available</h1>
+			<a href="#subCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+			<nav data-role="navbar">
+			<ul>
+				<li><a href="#productSortName">Sort By Name</a></li>
+				<li><a href="#productSortBrand">Sort By Brand</a></li>
+				<li><a href="#productSortPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+		</header>
+<div data-role="content">
+		<ul id="products-list-category" data-role="listview" data-filter="true"  data-inset="true">
+			
+		</ul>
+</div>
+	
+</div><!-- Page Products In Category------------------------------------------------------------------------>
+
 <div data-role="page" id="product-view">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
@@ -242,7 +256,7 @@
 	<div data-role="content">
 		
 			<center>
-				<img id = "currImgSrc" style="width: 80%;"></center>
+				<img id = "currImgSrc" style="width: 40%;"></center>
 			
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider" id = "currName"></li>
@@ -272,7 +286,49 @@
     	</div>
 	
 			
-</div><!-- ---------------------------------------------------------------------Page Product Details --------------------------------------------------------------------------->
+</div><!-- ------------------------------------------Page Product Details --------------------------------------------------------------------------->
+
+<div data-role="page" id="product-view-category">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Product Details</h1>
+		<a data-role="button" href="#productsInCategory" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		
+	</header>
+		
+	<div data-role="content">
+		
+			<center>
+				<img id = "currImgSrc2" style="width: 40%;"></center>
+			
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id = "currName2"></li>
+				<li id="currBidPrice2"></li>
+				<li id="currInstPrice2"></li>
+				<li data-role="list-divider">Description</li>
+				<li id="currDescription2"></li>
+				<li id="currBrand2"></li>
+				<li id="currModel2"></li>
+				<li id="currDimensions2"></li>
+				<li id="currId2"></li>
+				<li id="currStartDate2"></li>
+				<li id="currEndDate2"></li>
+
+				
+							
+			</ul>
+			
+			<ul data-role = "listview" data-inset ="true">
+				<li id="currSeller2"></li>
+			</ul> 		
+	</div>	
+ 				 
+		<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#placeBid"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+         	<div class="ui-block-b"><a onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
+    	</div>
+	
+			
+</div><!-- -----------------------------------------------Page Product Details in Category--------------------------------------------------------------------------->
 
 
 <div data-role="page" id="productRegular-view">
@@ -311,7 +367,7 @@
  				 
 	
 			
-</div><!-- ---------------------------------------------------------------------User Product Details --------------------------------------------------------------------------->
+</div><!-- ----------------------------------------User Product Details --------------------------------------------------------------------------->
 
 <div data-role="page" id="productSortName">
 	<header data-role="header" data-theme='d'>
@@ -404,847 +460,29 @@
 </div><!--------------------------------------------------------------------- Page Categories ----------------------------------------------------------------------------------->	
 
 
-
-
-<!----------------------*******************************************************************************************************-->
-<!----------------------********************************CATEGORIES START****************************************************-->
-<!----------------------*******************************************************************************************************-->
-<div data-role="page" id="books-view">
+<div data-role="page" id="subCategories">
 	<header data-role="header" data-theme="d">
-		<h1>Books</h1>
-		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<h1>SubCategories</h1>
+		<a href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
+	<div data-role = "content">
+	<ul id="subCategories-list" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
 	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Books" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- --------------------------------------------------------------------Page Books ----------------------------------------------------------------------------->
+	</ul></div>
+ 
+</div><!--------------------------------------- Page SubCategories----------------------------------------------------------------------------------->	
 
-
-<div data-role="page" id="electronics-view">
+<div data-role="page" id="tags">
 	<header data-role="header" data-theme="d">
-		<h1>Electronics</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<h1>Tags</h1>
+		<a href="#subCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
+	<div data-role = "content">
+	<ul id="tags-list" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
 	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Electronics" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- ---------------------------------------------------------------------Page Electronics ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="computers-view">
-	<header data-role="header" data-theme="d">
-		<h1>Computers</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Computers" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Computers ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="clothing-view">
-	<header data-role="header" data-theme="d">
-		<h1>Clothing</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Clothing" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Clothing ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="shoes-view">
-	<header data-role="header" data-theme="d">
-		<h1>Shoes</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Shoes" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Shoes ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="sports-view">
-	<header data-role="header" data-theme="d">
-		<h1>Sports</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Sports" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Sports ----------------------------------------------------------------------------->
-
-
-
-<!----------------------*******************************************************************************************************-->
-<!----------------------********************************SUBCATEGORIES START****************************************************-->
-<!----------------------*******************************************************************************************************-->
-
-
-<!----------------------********************************BOOKS****************************************************-->
-
-<div data-role="page" id="childrenB">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<!--
-		<select id="mySel" class="ui-btn-right">
-					<option value="" style="display:none">Sort by: </option>
-					<option value="SortName" href="#categories">Sort by Name</option>
-					<option value="SortBrand">Sort by Brand</option>
-					<option value="SortPrice">Sort by Price</option>
-				</select>-->
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="childrenBName">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" href="#books-view" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCNList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN SORTED BY NAME---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="childrenBBrand">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN SORTED BY PRICE---------------------------------------------------------------------------------->
-
-<div data-role="page" id="childrenBPrice">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN SORTED BY BRAND---------------------------------------------------------------------------------->
-	 
-<div data-role="page" id="fiction">
-	<header data-role="header" data-theme='d'>
-		<h1>Fiction</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BFList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Fiction</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE FICTION ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="technology">
-	<header data-role="header" data-theme='d'>
-		<h1>Technology</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BTList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Technology</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE TECHNOLOGY ---------------------------------------------------------------------------------->
-
-
-
-<div data-role="page" id="business">
-	<header data-role="header" data-theme='d'>
-		<h1>Business</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BUSINESS ---------------------------------------------------------------------------------->
-
-
-
-<!----------------------********************************COMPUTERS***************************************************-->
-
-
-<div data-role="page" id="laptops">
-	<header data-role="header" data-theme='d'>
-		<h1>Laptops</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CLList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE LAPTOPS ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="desktops">
-	<header data-role="header" data-theme='d'>
-		<h1>Desktops</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CDList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE DESKTOPS ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="tablets">
-	<header data-role="header" data-theme='d'>
-		<h1>Tablets</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CTList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE TABLETS ---------------------------------------------------------------------------------->
-
-<div data-role="page" id="printers">
-	<header data-role="header" data-theme='d'>
-		<h1>Printers</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE PRINTERS ---------------------------------------------------------------------------------->
-
-
-<!----------------------********************************CLOTHING****************************************************-->
-
-
-<div data-role="page" id="childrenC">
-	<header data-role="header" data-theme='d'>
-		<h1>Children's Clothing</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CCList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE CHILDRENC ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="menC">
-	<header data-role="header" data-theme='d'>
-		<h1>Men</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content"><!-- try listview-->
-		 <ul data-role="listview" data-inset="true">
-		 	<li data-icon="false" data-theme="b"><a href="#menShirts" ><center> <img src= "../DB-Project/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#menPants" ><center> <img src= "../DB-Project/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#menSocks" ><center> <img src= "../DB-Project/css/icons/Socks.png"/><h1>Socks</h1></center></a></li>	
-		 
-		 
-		 </ul>
-		
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-	</div>
-  	
-			
-</div><!-- 	PAGE MENC ---------------------------------------------------------------------------------->
-
-
-
-<div data-role="page" id="menShirts">
-	<header data-role="header" data-theme='d'>
-		<h1>Men Shirts</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CMSList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE MEN SHIRTS ---------------------------------------------------------------------------------->
-
-<div data-role="page" id="menPants">
-	<header data-role="header" data-theme='d'>
-		<h1>Men Pants</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CMPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE MEN PANTS---------------------------------------------------------------------------------->
-
-<div data-role="page" id="menSocks">
-	<header data-role="header" data-theme='d'>
-		<h1>Men Socks</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CMSkList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE MEN SOCKS ---------------------------------------------------------------------------------->
-
-
-
-<div data-role="page" id="womenC">
-	<header data-role="header" data-theme='d'>
-		<h1>Women</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		 <ul data-role="listview" data-inset="true">
-		 	<li data-icon="false" data-theme="b"><a href="#womenShirts" ><center> <img src= "/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#womenPants" ><center> <img src= "/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#womenDresses" ><center> <img src= "/css/icons/Dress.png"/><h1>Dresses</h1></center></a></li>	
-		 		 
-		 </ul>
-							
-	</div>
-</div><!-- 	PAGE WOMENC ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="womenShirts">
-	<header data-role="header" data-theme='d'>
-		<h1>Women Shirts</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CWSList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE WOMEN SHIRTS ---------------------------------------------------------------------------------->
-
-<div data-role="page" id="womenPants">
-	<header data-role="header" data-theme='d'>
-		<h1>Women Pants</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CWPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE WOMEN PANTS---------------------------------------------------------------------------------->
-
-<div data-role="page" id="womenDresses">
-	<header data-role="header" data-theme='d'>
-		<h1>Women Dresses</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CWDList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE WOMEN DRESSES ---------------------------------------------------------------------------------->
-
-
-<!----------------------**********************************ELECTRONICS***************************************************-->
-
-
-<div data-role="page" id="tv">
-	<header data-role="header" data-theme='d'>
-		<h1>TV</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="ETList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE TV ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="audio">
-	<header data-role="header" data-theme='d'>
-		<h1>Audio</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="EAList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE AUDIO ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="phones">
-	<header data-role="header" data-theme='d'>
-		<h1>Phones</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="EPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE PHONES ---------------------------------------------------------------------------------->
-
-<div data-role="page" id="cameras">
-	<header data-role="header" data-theme='d'>
-		<h1>Cameras</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="ECList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE CAMERAS ---------------------------------------------------------------------------------->
-
-<div data-role="page" id="video">
-	<header data-role="header" data-theme='d'>
-		<h1>Video</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="EVList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE VIDEO ---------------------------------------------------------------------------------->
-
-
-<!----------------------**********************************SHOES***************************************************-->
-
-
-<div data-role="page" id="childrenS">
-	<header data-role="header" data-theme='d'>
-		<h1>Children Shoes</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SCList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE CHILDREN SHOES---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="womenS">
-	<header data-role="header" data-theme='d'>
-		<h1>Women Shoes</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SWList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE WOMEN SHOES---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="menS">
-	<header data-role="header" data-theme='d'>
-		<h1>Men Shoes</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SMList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE MEN SHOES---------------------------------------------------------------------------------->
-
-
-
-<!----------------------********************************SPORTS****************************************************-->
-
-<div data-role="page" id="bicycles">
-	<header data-role="header" data-theme='d'>
-		<h1>Bicycles</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content"><!-- try listview-->
-		 <ul data-role="listview" data-inset="true">
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesFrames" ><center> <img src= "../DB-Project/css/icons/frame.png"/><h1>Frames</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesWheels" ><center> <img src= "../DB-Project/css/icons/wheel.png"/><h1>Wheels</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesHelmets" ><center> <img src= "../DB-Project/css/icons/helmet.png"/><h1>Helmets</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#bicyclesParts" ><center> <img src= "../DB-Project/css/icons/parts.png"/><h1>Parts</h1></center></a></li>		
-		 
-		 
-		 </ul>
-		
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-	</div>
-  	
-			
-</div><!-- 	PAGE BICYCLES ---------------------------------------------------------------------------------->
-
-
-
-<div data-role="page" id="bicyclesFrames">
-	<header data-role="header" data-theme='d'>
-		<h1>Frames</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SBFList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BICYCLE FRAMES---------------------------------------------------------------------------------->
-
-<div data-role="page" id="bicyclesWheels">
-	<header data-role="header" data-theme='d'>
-		<h1>Wheels</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SBWList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BICYCLE WHEELS---------------------------------------------------------------------------------->
-
-<div data-role="page" id="bicyclesHelmets">
-	<header data-role="header" data-theme='d'>
-		<h1>Helmets</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SBHList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BICYCLE HELMETS ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="bicyclesParts">
-	<header data-role="header" data-theme='d'>
-		<h1>Parts</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SBPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BICYCLE PARTS ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="fishing">
-	<header data-role="header" data-theme='d'>
-		<h1>Fishing</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SFList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE FISHING ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="baseball">
-	<header data-role="header" data-theme='d'>
-		<h1>Baseball</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SBsBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BASEBALL ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="golf">
-	<header data-role="header" data-theme='d'>
-		<h1>Golf</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SGList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE GOLF---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="basketball">
-	<header data-role="header" data-theme='d'>
-		<h1>Basketball</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="SBkBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BASKETBALL ---------------------------------------------------------------------------------->
-
-
-<!----------------------*******************************************************************************************************-->
-<!----------------------********************************SUBCATEGORIES END****************************************************-->
-<!----------------------*******************************************************************************************************-->
+	</ul></div>
+ 
+</div><!--------------------------------------- Page Tags----------------------------------------------------------------------------------->	
 
 <div id="Account" data-role="page">
 		<header data-role="header" data-theme="d">
@@ -1399,28 +637,6 @@
 	
 	
 </div><!-- Page Reports -------------------------------------------------------------------------------------->
-
-
-
-
-<div id="add-category" data-role="page">
-			<div data-role="header" data-theme="d" data-position="fixed">
-				<a data-role="button" data-rel="back" data-theme="b">Cancel</a>
-				<h1>Add Category</h1>
-				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
-			</div>
-			<form id="category-form">
- 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
- 					<li data-role="list-divider" role="heading">Enter Category Information</li>  
-  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label>
-  					<label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
-  			  	</ul>
-			
-			</form>
-</div><!-- -------------------------------------------Page Add Category ---------------------------------------------------------------------------------->
-
-
-
 
 
 <div data-role="page" id="viewAdmins" >
@@ -2162,7 +1378,7 @@
 				<a  href="#viewAdminsToDelete" data-theme='b' data-role="button">Search Admins</a>
 			
 			</form>
-</div><!-- ------------------------------------------------------------------Page Search Admin To Delete----------------------------------------------------------------------------->
+</div><!-- ---------------------------------------------Page Search Admin To Delete----------------------------------------------------------------------------->
 
 
 <div data-role="page" id="viewAdminsToDelete" >
@@ -2198,6 +1414,416 @@
 
 	
 </div><!-- ---------------------------------------Page View Admins To Delete------------------------------------------------------------------------>
+
+
+<div id="modifyCategory" data-role="page">
+	<div data-role="header" data-theme="d" data-position="fixed">
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+		<h1>BoricuaBay</h1>
+	</div>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading">Modify Categories</li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminCategories" data-role="button" data-icon="search" 
+			data-iconpos="top">View Categories</a></div>
+		<div class="ui-block-b"><a href="#add-category" data-role="button" data-icon="plus" 
+			data-iconpos="top">Create Category</a></div>
+	</div>
+</div><!-- -------------------------------------------Page Modify Category ---------------------------------------------------------------------------------->
+
+
+<div id="add-category" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" href="#modifyCategory" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+				<h1>BoricuaBay</h1>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
+			</div>
+			<form id="category-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading">Enter New Category Information</li>  
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio" id="arrow" value="arrow.png" checked/>
+  						<label for="arrow">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio" id="paw" value="paw.png" />
+  						<label for="paw">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio" id="bow" value="bow.png" />
+  						<label for="bow">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio" id="bug" value="bug.png" />
+  						<label for="bug">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio" id="clock" value="clock.png" />
+  						<label for="clock">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio" id="controller" value="controller.png" />
+  						<label for="controller">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio" id="doghouse" value="doghouse.png" />
+  						<label for="doghouse">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio" id="dumbell" value="dumbell.png" />
+  						<label for="dumbell">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					<input type="radio" name="myRadio" id="guitar" value="guitar.png" />
+  						<label for="guitar">
+  							<img src="../DB-Project/css/icons/guitar.png" 
+  								alt="guitar" /></label>
+  					<input type="radio" name="myRadio" id="mug" value="mug.png" />
+  						<label for="mug">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio" id="toolbox" value="toolbox.png" />
+  						<label for="toolbox">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  				</ul>
+			
+			</form>
+</div><!-- -------------------------------------------Page Add Category ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="adminCategories">
+	<header data-role="header" data-theme="d">
+		<h1>Categories</h1>
+		<a href="#modifyCategory" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	<div data-role = "content">
+	<ul id="categories-list-admin" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 
+
+	
+	
+</div><!--------------------------------------------------------------------- Page Categories by Admin----------------------------------------------------------------------------------->	
+
+
+<div data-role="page" id="adminSelectedCat">
+	<header data-role="header" data-theme="d">
+		<h1>BoricuaBay</h1>
+		<a href="#adminCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" 
+		data-theme="b">Back</a>		
+	</header>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id = "currCatAdmin"></li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminSubCategories" data-role="button" data-icon="search" 
+			data-iconpos="top">View Subcategories</a></div>
+		<div class="ui-block-b"><a href="#add-subCategory" data-role="button" data-icon="plus" 
+			data-iconpos="top">Create Subcategory</a></div>
+		<div class="ui-block-a"><a href="#editCategory" data-role="button" data-icon="edit" 
+			data-iconpos="top">Edit Category</a></div>
+		<div class="ui-block-b"><a href="#deleteCategory" data-role="button" data-icon="delete" 
+			data-iconpos="top">Delete Category</a></div>
+	</div>
+ 
+
+	
+	
+</div><!-------------------------------------------- Page Current Category Admin----------------------------------------------------------------------------------->	
+
+
+<div id="add-subCategory" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" href="#adminSelectedCat" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+				<h1>BoricuaBay</h1>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveSubCategory()">Save</a>
+			</div>
+			<form id="subCategory-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currCatAdmin2"></li>  
+  					<li><label for="name2"> Name: <input id="name2" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio2" id="arrow2" value="arrow.png" checked/>
+  						<label for="arrow2">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio2" id="paw2" value="paw.png" />
+  						<label for="paw2">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio2" id="bow2" value="bow.png" />
+  						<label for="bow2">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio2" id="bug2" value="bug.png" />
+  						<label for="bug2">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio2" id="clock2" value="clock.png" />
+  						<label for="clock2">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio2" id="controller2" value="controller.png" />
+  						<label for="controller2">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio2" id="doghouse2" value="doghouse.png" />
+  						<label for="doghouse2">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio2" id="dumbell2" value="dumbell.png" />
+  						<label for="dumbell2">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					<input type="radio" name="myRadio2" id="guitar2" value="guitar.png" />
+  						<label for="guitar2">
+  							<img src="../DB-Project/css/icons/guitar.png" 
+  								alt="guitar" /></label>
+  					<input type="radio" name="myRadio2" id="mug2" value="mug.png" />
+  						<label for="mug2">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio2" id="toolbox2" value="toolbox.png" />
+  						<label for="toolbox2">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  				</ul>
+			
+			</form>
+</div><!-- -------------------------------------------Page Add SubCategory ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="adminSubCategories">
+	<header data-role="header" data-theme="d">
+		<h1>SubCategories</h1>
+		<a href="#adminSelectedCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	<div data-role = "content">
+	<ul id="subCategories-list-admin" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 
+
+	
+	
+</div><!--------------------------------------------------------------------- Page SubCategories by Admin----------------------------------------------------------------------------------->	
+
+<div data-role="page" id="adminSelectedSubCat">
+	<header data-role="header" data-theme="d">
+		<h1>BoricuaBay</h1>
+		<a href="#adminSubCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" 
+		data-theme="b">Back</a>		
+	</header>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="currSubCatAdmin"></li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminViewTags" data-role="button" data-icon="search" 
+			data-iconpos="top">View Tags</a></div>
+		<div class="ui-block-b"><a href="#add-Tag" data-role="button" data-icon="plus" 
+			data-iconpos="top">Create Tag</a></div>
+		<div class="ui-block-a"><a href="#adminEditSubCat" data-role="button" data-icon="edit" 
+			data-iconpos="top">Edit Sub-Category</a></div>
+		<div class="ui-block-b"><a href="#adminDeleteSubCat" data-role="button" data-icon="delete" 
+			data-iconpos="top">Delete Sub-Category</a></div>
+	</div>
+ 
+
+	
+	
+</div><!--------------------------------------------------------------------- Page Current Sub-Category Admin----------------------------------------------------------------------------------->	
+
+<div data-role="page" id="adminViewTags">
+	<header data-role="header" data-theme="d">
+		<h1>Tags</h1>
+		<a href="#adminSelectedSubCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	<div data-role = "content">
+	<ul id="tags-list-admin" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 	
+</div><!--------------------------------------------------------------------- Page Tags by Admin----------------------------------------------------------------------------------->	
+
+<div data-role="page" id="adminSelectedTag">
+	<header data-role="header" data-theme="d">
+		<h1>BoricuaBay</h1>
+		<a href="#adminViewTags" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" 
+		data-theme="b">Back</a>		
+	</header>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="currTagAdmin"></li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminEditTag" data-role="button" data-icon="edit" 
+			data-iconpos="top">Edit Tag</a></div>
+		<div class="ui-block-b"><a href="#adminDeleteTag" data-role="button" data-icon="delete" 
+			data-iconpos="top">Delete Tag</a></div>
+	</div>
+ 	
+</div><!--------------------------------------------------------------------- Page Current Tag Admin----------------------------------------------------------------------------------->
+
+<div id="add-Tag" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" href="#adminSelectedSubCat" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+				<h1>BoricuaBay</h1>
+				<a data-role="button" data-theme="b" onclick="SaveTag()">Save</a>
+			</div>
+			<form id="tag-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currSubCatAdmin2"></li>  
+  					<li><label for="name3"> Name: <input id="name3" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio3" id="arrow3" value="arrow.png" checked/>
+  						<label for="arrow3">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio3" id="paw3" value="paw.png" />
+  						<label for="paw3">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio3" id="bow3" value="bow.png" />
+  						<label for="bow3">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio3" id="bug3" value="bug.png" />
+  						<label for="bug3">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio3" id="clock3" value="clock.png" />
+  						<label for="clock3">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio3" id="controller3" value="controller.png" />
+  						<label for="controller3">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio3" id="doghouse3" value="doghouse.png" />
+  						<label for="doghouse3">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio3" id="dumbell3" value="dumbell.png" />
+  						<label for="dumbell3">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					<input type="radio" name="myRadio3" id="guitar3" value="guitar.png" />
+  						<label for="guitar3">
+  							<img src="../DB-Project/css/icons/guitar.png" 
+  								alt="guitar" /></label>
+  					<input type="radio" name="myRadio3" id="mug3" value="mug.png" />
+  						<label for="mug3">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio3" id="toolbox3" value="toolbox.png" />
+  						<label for="toolbox3">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  				</ul>
+			
+			</form>
+</div><!-- -------------------------------------------Page Add Tag ---------------------------------------------------------------------------------->
+
+<div id="editCategory" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#adminSelectedCat" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" onclick="UpdateCategory()" data-theme="b">Save</a>
+		</header>
+			<form id="updateCategory">
+ 				<fieldset data-role="controlgroup"> 					
+				    <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currCategory"></li>  
+  					<li><label for="name4"> Name: <input id="name4" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio4" id="arrow4" value="arrow.png" checked/>
+  						<label for="arrow4">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio4" id="paw4" value="paw.png" />
+  						<label for="paw4">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio4" id="bow4" value="bow.png" />
+  						<label for="bow4">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio4" id="bug4" value="bug.png" />
+  						<label for="bug4">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio4" id="clock4" value="clock.png" />
+  						<label for="clock4">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio4" id="controller4" value="controller.png" />
+  						<label for="controller4">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio4" id="doghouse4" value="doghouse.png" />
+  						<label for="doghouse4">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio4" id="dumbell4" value="dumbell.png" />
+  						<label for="dumbell4">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					<input type="radio" name="myRadio4" id="guitar4" value="guitar.png" />
+  						<label for="guitar4">
+  							<img src="../DB-Project/css/icons/guitar.png" 
+  								alt="guitar" /></label>
+  					<input type="radio" name="myRadio4" id="mug4" value="mug.png" />
+  						<label for="mug4">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio4" id="toolbox4" value="toolbox.png" />
+  						<label for="toolbox4">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  					</ul>
+  				
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Category----------------------------------------------------------------------------->	
+
+<div data-role="page" id="deleteCategory" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Category</h1>
+			<a data-role="button" href="#adminSelectedCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="categoryDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteCategory()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#adminSelectedCat" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Admins To Delete------------------------------------------------------------------------>
+
 
 
 

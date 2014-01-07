@@ -1,1391 +1,5 @@
 
 
-//----------------------*******************************************************************************************************-->
-//----------------------********************************SUBCATEGORIES START****************************************************-->
-//----------------------*******************************************************************************************************-->
-
-
-//////////////////////////////////////***************BOOKS******************///////////////////////////////////////////////////////////////////////
-
-$(document).on('pagebeforeshow', "#childrenB", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 1,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#BCList");
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-///////////////////////////////////////////START SORTING///////////////////////////////////////////
-$(document).on('pagebeforeshow', "#childrenBName", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsName",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.productsName;
-			var len = productList.length;
-			var list = $("#BCNList");
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#childrenBBrand", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsBrand",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.productsBrand;
-			var len = productList.length;
-			var list = $("#BCBList");
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#childrenBPrice", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsPrice",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.productsPrice;
-			var len = productList.length;
-			var list = $("#BCPList");
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-/////////////////////////END SORTING//////////////////////////////////////////////////
-
-$(document).on('pagebeforeshow', "#fiction", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 2,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#BFList");
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#technology", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 3,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#BTList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#business", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 4,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#BBList");///////////////////////////////////////////REMEMBER TO CHANGE !!!!!
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-///////////////////////************************ELECTRONICS**************************//////////////////////////////////////////////
-
-
-
-$(document).on('pagebeforeshow', "#tv", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 5,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#ETList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-$(document).on('pagebeforeshow', "#audio", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 6,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#EAList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#phones", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 7,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#EPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#cameras", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 8,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#ECList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#video", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 9,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#EVList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-///////////////////////************************COMPUTERS**************************//////////////////////////////////////////////
-
-
-
-$(document).on('pagebeforeshow', "#laptops", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 10,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CLList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-$(document).on('pagebeforeshow', "#desktops", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 11,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CDList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#tablets", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 12,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CTList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#printers", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 13,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-///////////////////////************************CLOTHING**************************//////////////////////////////////////////////
-
-$(document).on('pagebeforeshow', "#childrenC", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 14,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CCList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#menShirts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 16,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CMSList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#menPants", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 17,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CMPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#menSocks", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 18,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CMSkList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-$(document).on('pagebeforeshow', "#womenShirts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 20,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CWSList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#womenPants", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 21,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CWPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#womenDresses", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 22,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#CWDList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-
-///////////////////////************************SHOES**************************//////////////////////////////////////////////
-
-
-
-$(document).on('pagebeforeshow', "#childrenS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 23,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SCList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-$(document).on('pagebeforeshow', "#womenS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 24,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SWList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#menS", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 25,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SMList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-
-///////////////////////************************SPORTS**************************//////////////////////////////////////////////
-
-
-
-$(document).on('pagebeforeshow', "#bicycleFrames", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 27,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SBFList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#bicyclesWheels", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 28,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SBWList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#bicyclesHelmets", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 29,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SBHList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-$(document).on('pagebeforeshow', "#bicyclesParts", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 30,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SBPList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#fishing", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 31,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SFList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#baseball", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 32,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SBsBList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#golf", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 33,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SGList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#basketball", function( event, ui ) {//////////////REMEMBER TO CHANGE 
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/productsTag/" + 34,
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var productList = data.tag;
-			var len = productList.length;
-			var list = $("#SBkBList");///////////////////////////////////////////////////
-			list.empty();
-			var product;
-			for (var i=0; i < len; ++i){
-				product = productList[i];
-				
-					list.append("<li><a onclick=GetProduct(" + product.productID + ")>" + 
-
-					"<img src= " +   "'" + product.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
-
-					"<p><i><b>" + product.productName +  "</b></i></p>" +
-					"<p>_</p>" +
-					"<p> Brand: " + product.brand  + "</p>" +
-					"<p> Model: " + product.model + "</p>" + 
-					"<p> Dimensions: " + product.dimensions + "</p>" +
-					"<p> Description: " + product.productDesc + "</p>" +
-					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
-					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
-					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
-					"</a></li>");
-				
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
-		}
-	});
-});
-
-
-//----------------------*******************************************************************************************************-->
-//----------------------********************************SUBCATEGORIES END****************************************************-->
-//----------------------*******************************************************************************************************-->
 
 ///////////////////////////////////////////START SORTING///////////////////////////////////////////
 $(document).on('pagebeforeshow', "#productSortName", function( event, ui ) {
@@ -1422,7 +36,7 @@ $(document).on('pagebeforeshow', "#productSortName", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			Popup("Data not found!");
 		}
 	});
 });
@@ -1461,7 +75,7 @@ $(document).on('pagebeforeshow', "#productSortBrand", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			Popup("Data not found!");
 		}
 	});
 });
@@ -1502,7 +116,7 @@ $(document).on('pagebeforeshow', "#productSortPrice", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			Popup("Data not found!");
 		}
 	});
 });
@@ -1544,7 +158,7 @@ $(document).on('pagebeforeshow', "#products", function( event, ui ) {
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.navigate("#home");
-			alert("Item doesn't exist!");
+			Popup("Item doesn't exist!");
 			
 		}
 	});
@@ -1565,9 +179,13 @@ $(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
 	var brand = "Brand: " + currentProduct.brand;
 	var user = "Seller: " + currentProduct.userNickname;
 
-	var startTime = "Starting Date: " + currentProduct.startDate;
-	var endTime = "Ending Date: " + currentProduct.endDate;
-
+	var myDate = currentProduct.startDate;
+	var newDate=myDate.substring(0, 10); 
+	var myDate2 = currentProduct.endDate;
+	var newDate2=myDate2.substring(0, 10);
+	var startTime = "Starting Date: " + newDate;
+	var endTime = "Ending Date: " + newDate2;
+	
 	//document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("currName").innerHTML = productName;
 	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
@@ -1607,8 +225,13 @@ $(document).on('pagebeforeshow', "#productRegular-view", function( event, ui ) {
 	var brand = "Brand: " + currentProduct.brand;
 	var user = "Seller: " + currentProduct.userNickname;
 
-	var startTime = "Starting Date: " + currentProduct.startDate;
-	var endTime = "Ending Date: " + currentProduct.endDate;
+	var myDate = currentProduct.startDate;
+	var newDate=myDate.substring(0, 10); 
+	var myDate2 = currentProduct.endDate;
+	var newDate2=myDate2.substring(0, 10);
+	var startTime = "Starting Date: " + newDate;
+	var endTime = "Ending Date: " + newDate2;
+	
 
 	//document.getElementById("currBrand-Name").innerHTML = brandName;
 	document.getElementById("rcurrName").innerHTML = productName;
@@ -1660,6 +283,138 @@ function convert(dbModel){
 	return cliModel;
 }
 
+var currentTag;
+function GetProductsByTag(id){
+	$.mobile.loading("show");
+		$.ajax({
+		url : "http://localhost:3412/DB-Project/productsByTag/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			currentTag = id;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#productsInCategory");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				Popup("No products found.");
+				$.mobile.navigate("#subCategories");
+			}
+			else {
+				Popup("Internal Server Error.");
+			}
+		}
+		});
+}
+
+$(document).on('pagebeforeshow', "#productsInCategory", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/productsByTag/" + currentTag,
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var productList = data.productsTag;
+			var len = productList.length;
+			var list = $("#products-list-category");
+			list.empty();
+			var product;
+			for (var i=0; i < len; ++i){
+				product = productList[i];
+				
+				list.append("<li><a onclick=GetProductInCategory(" + product.productID + ")>" + 
+
+					"<img src= " +  "'" + product.productPhoto + "'" +"/>" +			// imgSrc ---- productPhoto
+
+					"<p><i><b>" + product.productName +  "</b></i></p>" +
+					"<p>_</p>" +
+					"<p> Brand: " + product.brand  + "</p>" +
+					"<p> Model: " + product.model + "</p>" + 
+					"<p> Dimensions: " + product.dimensions + "</p>" +
+					"<p> Description: " + product.productDesc + "</p>" +
+					"<p class=\"ui-li-aside\"> Instant Price: " + accounting.formatMoney(product.productPrice) + "</p>" +		
+					"<p class=\"ui-li-aside\">" + "_" + "</p>" +
+					"<p class=\"ui-li-aside\"> Bid Price: " + accounting.formatMoney(product.bidStartingPrice) + "</p>" +		//CHECK BID PRODUCT TABLE
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.navigate("#home");
+			Popup("Item doesn't exist!");
+			
+		}
+	});
+});
+
+function GetProductInCategory(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/products/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+		
+			currentProduct = data.product;
+			bidProductID = id;
+			bidstartingPrice = currentProduct.bidStartingPrice;
+			startdate = currentProduct.startDate;
+			enddate = currentProduct.endDate;
+			$.mobile.loading("hide");
+			$.mobile.navigate("#product-view-category");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				Popup("Producto not found.");
+			}
+			else {
+				Popup("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#product-view-category", function( event, ui ) {
+	// currentProduct has been set at this point
+	var productName = currentProduct.productName;
+	var startPrice = "Bid Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		
+	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
+	var modelNo = "Model: " + currentProduct.model;
+	var dims = "Dimensions: " + currentProduct.dimensions;
+	var pid = "Product id: " + currentProduct.productID;
+	var brand = "Brand: " + currentProduct.brand;
+	var user = "Seller: " + currentProduct.userNickname;
+
+	var myDate = currentProduct.startDate;
+	var newDate=myDate.substring(0, 10); 
+	var myDate2 = currentProduct.endDate;
+	var newDate2=myDate2.substring(0, 10);
+	var startTime = "Starting Date: " + newDate;
+	var endTime = "Ending Date: " + newDate2;
+
+	document.getElementById("currName2").innerHTML = productName;
+	document.getElementById("currImgSrc2").src = currentProduct.productPhoto; 
+	document.getElementById("currBidPrice2").innerHTML = startPrice;
+	document.getElementById("currInstPrice2").innerHTML = instPrice;
+	document.getElementById("currDescription2").innerHTML = currentProduct.productDesc;
+	document.getElementById("currModel2").innerHTML = modelNo;
+	document.getElementById("currDimensions2").innerHTML = dims;
+	document.getElementById("currId2").innerHTML = pid;
+	document.getElementById("currBrand2").innerHTML = brand;
+	document.getElementById("currSeller2").innerHTML = user;
+	document.getElementById("currStartDate2").innerHTML = startTime;
+	document.getElementById("currEndDate2").innerHTML = endTime;
+	
+});
+
+
 function SaveProduct(){
 	$.mobile.loading("show");
 	var form = $("#product-form");
@@ -1676,12 +431,12 @@ function SaveProduct(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			$.mobile.navigate("#products");
+			$.mobile.navigate("#productsInCategory");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Data could not be added!");
+			Popup("Data could not be added!");
 		}
 	});
 
@@ -1701,7 +456,7 @@ function GetProduct(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			//alert("herher");
+			//Popup("herher");
 			currentProduct = data.product;
 			bidProductID = id;
 			bidstartingPrice = currentProduct.bidStartingPrice;
@@ -1715,10 +470,10 @@ function GetProduct(id){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Producto not found.");
+				Popup("Producto not found.");
 			}
 			else {
-				alter("Internal Server Error.");
+				Popup("Internal Server Error.");
 			}
 		}
 	});
@@ -1732,7 +487,7 @@ function GetProductR(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			//alert("herher");
+			//Popup("herher");
 			currentProduct = data.product;
 			bidProductID = id;
 			bidstartingPrice = currentProduct.bidStartingPrice;
@@ -1746,10 +501,10 @@ function GetProductR(id){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Producto not found.");
+				Popup("Producto not found.");
 			}
 			else {
-				alter("Internal Server Error.");
+				Popup("Internal Server Error.");
 			}
 		}
 	});
@@ -1781,10 +536,10 @@ function UpdateProduct(){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Data could not be updated!");
+				Popup("Data could not be updated!");
 			}
 			else {
-				alert("Internal Error.");		
+				Popup("Internal Error.");		
 			}
 		}
 	});
@@ -1806,10 +561,10 @@ function DeleteProduct(){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("product not found.");
+				Popup("product not found.");
 			}
 			else {
-				alter("Internal Server Error.");
+				Popup("Internal Server Error.");
 			}
 		}
 	});
