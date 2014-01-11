@@ -508,27 +508,27 @@ app.del('/DB-Project/categoryDel/:ids', function(req, res) {
 			connection.query("SELECT * FROM bbtag WHERE subCategoryID = " + rows[i].subCategoryID +	";", 
 			getCallBackFn(i));
 		}
-		console.log("out of main for");
+		//console.log("out of main for");
 
 		
 		function getCallBackFn(index){
 			return function(err2, rows2, results2){
-				console.log("SubCatID = " +rows[index].subCategoryID);
+				//console.log("SubCatID = " +rows[index].subCategoryID);
 				
-				console.log("AAAAAAAAAA");
+				//console.log("AAAAAAAAAA");
 	
 				if (err2) throw err;
 				
 				var len2 = rows2.length;
-				console.log("Initial subcat length: " +len2);
+				//console.log("Initial subcat length: " +len2);
 				var tempRow = rows2[0].subCategoryID;
 				for (j = 0; j<len2; j++){
-					console.log("TagID = " +rows2[j].tagID);
+					//console.log("TagID = " +rows2[j].tagID);
 					connection.query("DELETE from bbTag where tagID = '" 
 					+rows2[j].tagID+"';", getCallBackFn2(j));
 					res.json(true);
 				}
-				console.log("SubCatID4 = " +tempRow);
+				//console.log("SubCatID4 = " +tempRow);
 				connection.query("DELETE from bbSubCategory where subCategoryID = '" 
 						+tempRow+"';", function(err6, rows6, result6){
 							if (err6) throw err;
@@ -540,7 +540,7 @@ app.del('/DB-Project/categoryDel/:ids', function(req, res) {
 					connection.query("DELETE from bbCategory where categoryID = '" +ids+"';", function(err, rows, result){
 	
 						if (err) throw err;
-						console.log("CatID2 = " +ids);
+						//console.log("CatID2 = " +ids);
 						var len = rows.length;
 						if (len == 0){
 							res.statusCode = 404;
@@ -556,7 +556,7 @@ app.del('/DB-Project/categoryDel/:ids', function(req, res) {
 		function getCallBackFn2(index2){
 			return function(err5, rows5, results5){
 				if (err5) throw err;
-				console.log("Deleted Tag");
+				//console.log("Deleted Tag");
 				res.json(true);
 			};
 		}
@@ -663,6 +663,53 @@ app.get('/DB-Project/subCategory/:id', function(req, res) {
  });	
 });
 
+// REST Operation - HTTP PUT to update a subcategory on its id
+app.put('/DB-Project/subCategoryUpdate/:id/:id2', function(req, res) {
+	var id = req.params.id;
+	var radio =req.params.id2;
+	console.log("PUT Subcategory ID: " + id);
+
+  	if(req.body.name.length == 0){
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for account.');
+  	}
+	console.log(radio);
+  	
+  	 var query = connection.query("UPDATE `bbSubCategory` SET `subCategoryName` = '" + req.body.name + "', " +
+  			 "`subCategoryDesc` = '../DB-Project/css/icons/" + radio + "' where subCategoryID= '"+id+"'");	
+  
+  	res.json(true);
+});
+
+app.del('/DB-Project/subCategoryDel/:ids', function(req, res) {
+	var ids = req.params.ids;
+		console.log("DELETE Sub-Category with id: " + ids);
+
+			connection.query("SELECT * FROM bbtag WHERE subCategoryID = " + ids + ";", 
+			function(err2, rows2, results2){
+					
+				if (err2) throw err;
+				
+				var len2 = rows2.length;
+				//console.log("Initial subcat length: " +len2);
+				
+				for (j = 0; j<len2; j++){
+					//console.log("TagID = " +rows2[j].tagID);
+					connection.query("DELETE from bbTag where tagID = '" 
+					+rows2[j].tagID+"';", function(err5, rows5, results5){
+						if (err5) throw err5;
+						//console.log("Deleted Tag");
+						res.json(true);
+				});
+				}
+				//console.log("SubCatID4 = " +ids);
+				connection.query("DELETE from bbSubCategory where subCategoryID = '" 
+						+ids+"';", function(err6, rows6, result6){
+							if (err6) throw err;
+							res.json(true);
+				});
+			});
+});
 
 // ---------------------------------------------TAGS-----------------------------------------------------
 // REST Operations
@@ -749,6 +796,35 @@ app.post('/DB-Project/newTag/:id/:id2', function(req, res) {
 });
 });
 
+// REST Operation - HTTP PUT to update a subcategory on its id
+app.put('/DB-Project/tagUpdate/:id/:id2', function(req, res) {
+	var id = req.params.id;
+	var radio =req.params.id2;
+	console.log("PUT Tag ID: " + id);
+
+  	if(req.body.name.length == 0){
+    	res.statusCode = 400;
+    	return res.send('Error: Missing fields for account.');
+  	}
+	console.log(radio);
+  	
+  	 var query = connection.query("UPDATE `bbTag` SET `tagName` = '" + req.body.name + "', " +
+  			 "`tagIcon` = '../DB-Project/css/icons/" + radio + "' where tagID= '"+id+"'");	
+  
+  	res.json(true);
+});
+
+app.del('/DB-Project/tagDel/:ids', function(req, res) {
+	var ids = req.params.ids;
+	console.log("DELETE Tag with id: " + ids);
+	connection.query("DELETE from bbTag where tagID = '" 
+			+ids+"';", function(err5, rows5, results5){
+				if (err5) throw err5;
+				//console.log("Deleted Tag");
+				res.json(true);
+	});
+});
+				
 
 //-----------------------Regular User------------------------------------------------------
 

@@ -735,3 +735,213 @@ function DeleteCategory(){
 		}
 	});
 }
+
+function UpdateSubCategory(){
+        $.mobile.loading("show");
+        var form = $("#updateSubCategory");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        var radioValue;
+  	if (document.getElementById('arrow5').checked) {
+  		radioValue = document.getElementById('arrow').value;
+	}
+	else if (document.getElementById('paw5').checked) {
+  		radioValue = document.getElementById('paw').value;
+	}
+	else if (document.getElementById('bow5').checked) {
+  		radioValue = document.getElementById('bow').value;
+	}
+	else if (document.getElementById('bug5').checked) {
+  		radioValue = document.getElementById('bug').value;
+	}
+	else if (document.getElementById('clock5').checked) {
+  		radioValue = document.getElementById('clock').value;
+	}
+	else if (document.getElementById('controller5').checked) {
+  		radioValue = document.getElementById('controller').value;
+	}
+	else if (document.getElementById('doghouse5').checked) {
+  		radioValue = document.getElementById('doghouse').value;
+	}
+	else if (document.getElementById('dumbell5').checked) {
+  		radioValue = document.getElementById('dumbell').value;
+	}
+	else if (document.getElementById('mug5').checked) {
+  		radioValue = document.getElementById('mug').value;
+	}
+	else if (document.getElementById('toolbox5').checked) {
+  		radioValue = document.getElementById('toolbox').value;
+	}
+        
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/subCategoryUpdate/" +  currentSubCatAdmin.subCategoryID + "/" + radioValue,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#adminSubCategories");
+                        Popup("You have successfully updated a sub-category!");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                Popup("Data could not be updated!");
+                        }
+                        else if (data.status == 400){
+                                Popup("Error: Missing fields for account.");
+                        }
+                        else {
+                                Popup(data.status);
+                                Popup("Internal Error.");               
+                        }
+                }
+        });
+}
+
+$(document).on('pagebeforeshow', "#deleteSubCategory", function( event, ui ) {
+// currentCatAdmin has been set at this point
+var temp = "Are you sure you want to delete the sub-category: " + currentSubCatAdmin.subCategoryName + "?";
+document.getElementById("subCategoryDel").innerHTML = temp;
+});
+
+function DeleteSubCategory(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/subCategoryDel/" + currentSubCatAdmin.subCategoryID,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			Popup("You have succesfully removed a sub-category!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("Sub-Category could not be removed!");
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#editSubCategory", function( event, ui ) {
+	// currentCatAdmin has been set at this point
+
+	var categoryName = "Edit Sub-Category: " + currentSubCatAdmin.subCategoryName;
+	document.getElementById("currSubCategory").innerHTML = categoryName;
+	// document.getElementById("adminUserName").innerHTML = currentAdmin.adminUserName;
+	// document.getElementById("adminPassword").innerHTML = currentAdmin.adminPassword;
+	$("#name5").val(currentSubCatAdmin.subCategoryName);        
+
+});
+
+function UpdateTag(){
+        $.mobile.loading("show");
+        var form = $("#updateTag");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        var radioValue;
+  	if (document.getElementById('arrow6').checked) {
+  		radioValue = document.getElementById('arrow').value;
+	}
+	else if (document.getElementById('paw6').checked) {
+  		radioValue = document.getElementById('paw').value;
+	}
+	else if (document.getElementById('bow6').checked) {
+  		radioValue = document.getElementById('bow').value;
+	}
+	else if (document.getElementById('bug6').checked) {
+  		radioValue = document.getElementById('bug').value;
+	}
+	else if (document.getElementById('clock6').checked) {
+  		radioValue = document.getElementById('clock').value;
+	}
+	else if (document.getElementById('controller6').checked) {
+  		radioValue = document.getElementById('controller').value;
+	}
+	else if (document.getElementById('doghouse6').checked) {
+  		radioValue = document.getElementById('doghouse').value;
+	}
+	else if (document.getElementById('dumbell6').checked) {
+  		radioValue = document.getElementById('dumbell').value;
+	}
+	else if (document.getElementById('mug6').checked) {
+  		radioValue = document.getElementById('mug').value;
+	}
+	else if (document.getElementById('toolbox6').checked) {
+  		radioValue = document.getElementById('toolbox').value;
+	}
+        
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/tagUpdate/" +  currentTagAdmin.tagID + "/" + radioValue,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#adminViewTags");
+                        Popup("You have successfully updated a tag!");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                Popup("Data could not be updated!");
+                        }
+                        else if (data.status == 400){
+                                Popup("Error: Missing fields for account.");
+                        }
+                        else {
+                                Popup(data.status);
+                                Popup("Internal Error.");               
+                        }
+                }
+        });
+}
+
+$(document).on('pagebeforeshow', "#deleteTag", function( event, ui ) {
+// currentCatAdmin has been set at this point
+var temp = "Are you sure you want to delete the tag: " + currentTagAdmin.tagName + "?";
+document.getElementById("tagDel").innerHTML = temp;
+});
+
+function DeleteTag(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/tagDel/" + currentTagAdmin.tagID,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			Popup("You have succesfully removed a tag!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("Tag could not be removed!");
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#editTag", function( event, ui ) {
+	// currentCatAdmin has been set at this point
+
+	var categoryName = "Edit Tag: " + currentTagAdmin.tagName;
+	document.getElementById("currTag").innerHTML = categoryName;
+	// document.getElementById("adminUserName").innerHTML = currentAdmin.adminUserName;
+	// document.getElementById("adminPassword").innerHTML = currentAdmin.adminPassword;
+	$("#name6").val(currentTagAdmin.tagName);        
+
+});

@@ -71,7 +71,7 @@
     	</ul>
 	</div><!-- /navbar -->
 	</header>
-	
+	<br>
 	<form id="verify-form">
 		<ul data-role="listview" data-divider-theme="b" data-inset="true">
         	<li><label for="upd-userNickname">Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
@@ -149,7 +149,7 @@
 		<h1>Admin Profile</h1>
 		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
 	</header>
-	
+	<br>
 	<ul data-role="listview" data-inset="true">
 		<li data-role="list-divider" id = "currAdmin"></li>
 	</ul>
@@ -1480,10 +1480,7 @@
   						<label for="dumbell">
   							<img src="../DB-Project/css/icons/dumbell.png" 
   								alt="dumbell" /></label>
-  					<input type="radio" name="myRadio" id="guitar" value="guitar.png" />
-  						<label for="guitar">
-  							<img src="../DB-Project/css/icons/guitar.png" 
-  								alt="guitar" /></label>
+  					
   					<input type="radio" name="myRadio" id="mug" value="mug.png" />
   						<label for="mug">
   							<img src="../DB-Project/css/icons/mug.png" 
@@ -1586,10 +1583,7 @@
   						<label for="dumbell2">
   							<img src="../DB-Project/css/icons/dumbell.png" 
   								alt="dumbell" /></label>
-  					<input type="radio" name="myRadio2" id="guitar2" value="guitar.png" />
-  						<label for="guitar2">
-  							<img src="../DB-Project/css/icons/guitar.png" 
-  								alt="guitar" /></label>
+  					
   					<input type="radio" name="myRadio2" id="mug2" value="mug.png" />
   						<label for="mug2">
   							<img src="../DB-Project/css/icons/mug.png" 
@@ -1634,9 +1628,9 @@
 			data-iconpos="top">View Tags</a></div>
 		<div class="ui-block-b"><a href="#add-Tag" data-role="button" data-icon="plus" 
 			data-iconpos="top">Create Tag</a></div>
-		<div class="ui-block-a"><a href="#adminEditSubCat" data-role="button" data-icon="edit" 
+		<div class="ui-block-a"><a href="#editSubCategory" data-role="button" data-icon="edit" 
 			data-iconpos="top">Edit Sub-Category</a></div>
-		<div class="ui-block-b"><a href="#adminDeleteSubCat" data-role="button" data-icon="delete" 
+		<div class="ui-block-b"><a href="#deleteSubCategory" data-role="button" data-icon="delete" 
 			data-iconpos="top">Delete Sub-Category</a></div>
 	</div>
  
@@ -1669,9 +1663,9 @@
 	</ul>
 	<br>
 	<div class="ui-grid-a">
-		<div class="ui-block-a"><a href="#adminEditTag" data-role="button" data-icon="edit" 
+		<div class="ui-block-a"><a href="#editTag" data-role="button" data-icon="edit" 
 			data-iconpos="top">Edit Tag</a></div>
-		<div class="ui-block-b"><a href="#adminDeleteTag" data-role="button" data-icon="delete" 
+		<div class="ui-block-b"><a href="#deleteTag" data-role="button" data-icon="delete" 
 			data-iconpos="top">Delete Tag</a></div>
 	</div>
  	
@@ -1722,10 +1716,7 @@
   						<label for="dumbell3">
   							<img src="../DB-Project/css/icons/dumbell.png" 
   								alt="dumbell" /></label>
-  					<input type="radio" name="myRadio3" id="guitar3" value="guitar.png" />
-  						<label for="guitar3">
-  							<img src="../DB-Project/css/icons/guitar.png" 
-  								alt="guitar" /></label>
+  					
   					<input type="radio" name="myRadio3" id="mug3" value="mug.png" />
   						<label for="mug3">
   							<img src="../DB-Project/css/icons/mug.png" 
@@ -1786,10 +1777,7 @@
   						<label for="dumbell4">
   							<img src="../DB-Project/css/icons/dumbell.png" 
   								alt="dumbell" /></label>
-  					<input type="radio" name="myRadio4" id="guitar4" value="guitar.png" />
-  						<label for="guitar4">
-  							<img src="../DB-Project/css/icons/guitar.png" 
-  								alt="guitar" /></label>
+  					
   					<input type="radio" name="myRadio4" id="mug4" value="mug.png" />
   						<label for="mug4">
   							<img src="../DB-Project/css/icons/mug.png" 
@@ -1822,13 +1810,171 @@
 </div>
 
 	
-</div><!-- ---------------------------------------Page View Admins To Delete------------------------------------------------------------------------>
+</div><!-- ---------------------------------------Page View Category To Delete------------------------------------------------------------------------>
 
+<div id="editSubCategory" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#adminSelectedSubCat" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" onclick="UpdateSubCategory()" data-theme="b">Save</a>
+		</header>
+			<form id="updateSubCategory">
+ 				<fieldset data-role="controlgroup"> 					
+				    <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currSubCategory"></li>  
+  					<li><label for="name5"> Name: <input id="name5" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio5" id="arrow5" value="arrow.png" checked/>
+  						<label for="arrow5">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio5" id="paw5" value="paw.png" />
+  						<label for="paw5">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio5" id="bow5" value="bow.png" />
+  						<label for="bow5">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio5" id="bug5" value="bug.png" />
+  						<label for="bug5">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio5" id="clock5" value="clock.png" />
+  						<label for="clock5">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio5" id="controller5" value="controller.png" />
+  						<label for="controller5">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio5" id="doghouse5" value="doghouse.png" />
+  						<label for="doghouse5">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio5" id="dumbell5" value="dumbell.png" />
+  						<label for="dumbell5">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio5" id="mug5" value="mug.png" />
+  						<label for="mug5">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio5" id="toolbox5" value="toolbox.png" />
+  						<label for="toolbox5">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  					</ul>
+  				
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit SubCategory----------------------------------------------------------------------------->	
 
+<div data-role="page" id="deleteSubCategory" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Sub-Category</h1>
+			<a data-role="button" href="#adminSelectedSubCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="subCategoryDel"></li>
+</ul>
 
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteSubCategory()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#adminSelectedSubCat" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
 
+	
+</div><!-- ---------------------------------------Page View Sub-Category To Delete------------------------------------------------------------------------>
 
+<div id="editTag" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#adminSelectedTag" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" onclick="UpdateTag()" data-theme="b">Save</a>
+		</header>
+			<form id="updateTag">
+ 				<fieldset data-role="controlgroup"> 					
+				    <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currTag"></li>  
+  					<li><label for="name6"> Name: <input id="name6" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio6" id="arrow6" value="arrow.png" checked/>
+  						<label for="arrow6">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio6" id="paw6" value="paw.png" />
+  						<label for="paw6">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio6" id="bow6" value="bow.png" />
+  						<label for="bow6">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio6" id="bug6" value="bug.png" />
+  						<label for="bug6">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio6" id="clock6" value="clock.png" />
+  						<label for="clock6">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio6" id="controller6" value="controller.png" />
+  						<label for="controller6">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio6" id="doghouse6" value="doghouse.png" />
+  						<label for="doghouse6">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio6" id="dumbell6" value="dumbell.png" />
+  						<label for="dumbell6">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio6" id="mug6" value="mug.png" />
+  						<label for="mug6">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio6" id="toolbox6" value="toolbox.png" />
+  						<label for="toolbox6">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  					</ul>
+  				
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Tag----------------------------------------------------------------------------->	
 
+<div data-role="page" id="deleteTag" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Tag</h1>
+			<a data-role="button" href="#adminSelectedTag" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="tagDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteTag()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#adminSelectedTag" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Tag To Delete------------------------------------------------------------------------>
 
 
 
