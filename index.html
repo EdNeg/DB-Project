@@ -18,6 +18,7 @@
 		<script src="appjs/shoesApp.js"></script>
 		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/accountApp.js"></script>
+		<script src="appjs/reports.js"></script>
 		
 	
 		<meta charset="utf-8">
@@ -43,7 +44,7 @@
            
 		<form id="search-form" data-role="content">
 		  
-				<input type="search" name="search" id="search"/ >
+				<input type="search" name="search" id="search"/>
 				<a  href="#products" data-theme='b' data-role="button">Search</a>
 			
 			</form>
@@ -1369,35 +1370,94 @@
 <header data-role="header">
 	<h1>Reports</h1>
 	<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
-	<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+	<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
     <h4>Total Sales</h4>
     <ul data-role="listview" data-inset="true">
-        <li>Day</li>
-        <li>Week</li>
-        <li>Month</li>
+        <li>
+        	<!--Day 
+        	<select name="salesByDay" id="saleDayOption"> 
+			</select>-->
+			<a href="#daySales">Days</a>  
+        	</li>
+        <li>
+        	
+        	<!--<select name="salesByWeek" id="saleWeekOption"> 
+			</select>-->
+			<a href="#weekSales" >Weeks</a>
+			</li>
+        <li>
+        	
+        	<!--<select name="salesByMonth" id="saleMonthOption"> 
+			</select>-->
+			<a href="#monthSales">Months</a>
+			</li>
+        <li>
+        	<!--Year
+        	<select name="salesByYear" id="saleYearOption"> 
+			</select>-->
+			<a href="#yearSales">Years</a>
+        	</li>
     </ul>
     </div>
-    <div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+    <div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
     <h4>Total Sales by Product</h4>
     <ul data-role="listview" data-inset="true">
-        <li>Day</li>
-        <li>Week</li>
-        <li>Month</li>
+        <li>Day 
+        	<select name="salesProductByDay" id="saleDayProductOption"> 
+			</select>
+			<a href="#daySalesProduct"> </a>
+        	</li>
+        <li>
+        	Week
+        	<select name="salesProductByWeek" id="saleWeekProductOption"> 
+			</select>
+			<a href="#weekSalesProduct"> </a>
+			</li>
+        <li>
+        	Month
+        	<select name="salesProductByMonth" id="saleMonthProductOption"> 
+			</select>
+			<a href="#monthSalesProduct"> </a>
+			</li>
+        <li>
+        	Year
+        	<select name="salesProductByYear" id="saleYearProductOption"> 
+			</select>
+			<a href="#yearSalesProduct"> </a>
+        	</li>
     </ul>
     
 </div>
-<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-r">
+<div data-role="collapsible" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
     <h4>Total Revenue by Product</h4>
     <ul data-role="listview" data-inset="true">
-        <li>Day</li>
-        <li>Week</li>
-        <li>Month</li>
+        <li>Day
+        	<select name="revenueProductByDay" id="revenueDayProductOption"> 
+			</select>
+			<a href="#dayRevenuesProduct"> </a>
+        	</li>
+        <li>
+        	Week
+        	<select name="revenueProductByWeek" id="revenueWeekProductOption"> 
+			</select>
+			<a href="#weekRevenuesProduct"> </a>
+			</li>
+        <li>
+        	Month
+        	<select name="revenueProductByMonth" id="revenueMonthProductOption"> 
+			</select>
+			<a href="#monthRevenuesProduct"> </a>
+			</li>
+        <li>
+        	Year
+        	<select name="revenueProductByYear" id="revenueYearProductOption"> 
+			</select>
+			<a href="#yearRevenuesProduct"> </a>
+        	</li>
     </ul>
     
 </div>
-
-	
-	
+ 
 </div><!-- Page Reports -------------------------------------------------------------------------------------->
 
 
@@ -1958,10 +2018,286 @@
          </div>
      
 </div><!----------------------------------------------------User View Account By Admin----------------------------------------------------------------------------->
+ 
+
+<div data-role="page" id= "weekSalesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="weeklyProductSalesTitle">Total sales by week</li> 
+				<li >
+					 <div class="ui-grid-a" id="weeklyProductSales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product week Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "daySalesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="daylyProductSalesTitle">Total sales by day</li> 
+				<li >
+					 <div class="ui-grid-a" id="daylyProductSales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product day Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "monthSalesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="monthlyProductSalesTitle">Total sales by month</li> 
+				<li >
+					 <div class="ui-grid-a" id="monthlyProductSales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product month Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "yearSalesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="yearlyProductSalesTitle">Total sales by year</li> 
+				<li >
+					 <div class="ui-grid-a" id="yearlyProductSales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product year Reports -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id= "weekRevenuesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Revenues Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="weeklyProductRevenuesTitle">Total Revenues by week</li> 
+				<li >
+					 <div class="ui-grid-a" id="weeklyProductRevenues">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product week Revenues Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "dayRevenuesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Revenues Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="daylyProductRevenuesTitle">Total Revenues by day</li> 
+				<li >
+					 <div class="ui-grid-a" id="daylyProductRevenues">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product day Revenues Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "monthRevenuesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Revenues Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="monthlyProductRevenuesTitle">Total Revenues by month</li> 
+				<li >
+					 <div class="ui-grid-a" id="monthlyProductRevenues">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product month Revenues Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "yearRevenuesProduct">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Revenues Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="yearlyProductRevenuesTitle">Total Revenues by year</li> 
+				<li >
+					 <div class="ui-grid-a" id="yearlyProductRevenues">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page product year Revenues Reports -------------------------------------------------------------------------------------->
 
 
 
+<div data-role="page" id= "weekSales">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="weeklySalesTitle">Total sales by week</li> 
+				<li >
+					 <div class="ui-grid-a" id="weeklySales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page week Reports -------------------------------------------------------------------------------------->
 
+<div data-role="page" id= "daySales">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="daylySalesTitle">Total sales by day</li> 
+				<li >
+					 <div class="ui-grid-a" id="daylySales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page day Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "monthSales">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="monthlySalesTitle">Total sales by month</li> 
+				<li >
+					 <div class="ui-grid-a" id="monthlySales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page month Reports -------------------------------------------------------------------------------------->
+
+<div data-role="page" id= "yearSales">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Sales Report</h1>
+		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade">Back</a>
+	</header> 
+	<div data-role="content">
+  
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id="yearlySalesTitle">Total sales by year</li> 
+				<li >
+					 <div class="ui-grid-a" id="yearlySales">
+						<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Product</span></div>
+						<div class="ui-block-b" style="background-color: lightgray; border: 2px solid black; height: 25px; font-weight: bold; text-align: center; padding: 2px;"><span>Sales</span></div> 
+						<div class="ui-block-a" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div>
+						<div class="ui-block-b" style="background-color: white; border: 1px solid black; height: 22px; text-align: center; font-weight: normal;"><span>Some Text</span></div> 
+					</div> 
+				</li> 
+			</ul> 		
+	</div>	 
+ 
+ 
+</div><!-- Page year Reports -------------------------------------------------------------------------------------->
 
 </body>
 

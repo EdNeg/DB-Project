@@ -2609,4 +2609,511 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
         		 });
 });
 
+//------------------------------------------------------Reports---------------------------------------------------------
+// REST Operation - HTTP GET to read sales days
+app.get('/DB-Project/salesDays/', function(req, res) {
+	//var id = req.params.id;
+	//search = req.params.id;
+		console.log("GET days" );
+
+
+var query = connection.query("SELECT paidDate, DAY(paidDate) as day, MONTH(paidDate) as month, YEAR(paidDate) as year FROM boricuabaydb.bbpay Group by paidDate;", function(err, rows, result){
+		if (err) throw err;
+
+	
+	/*
+	for (i = 0; i<rows.length; i++){
+				console.log('The solution is: ', rows[i]);
+			}*/
+	
+	
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay dias" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"salesDays" : rows};
+  		console.log("hay dias"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales weeks
+app.get('/DB-Project/salesWeeks/', function(req, res) { 
+		console.log("GET weeks" );
+ 
+var query = connection.query("SELECT paidDate, DAY(paidDate) as sDay, MONTH(paidDate) as sMonth, YEAR(paidDate) as sYear,"+
+					"date_add(paidDate, INTERVAL 7 DAY) as end, DAY(date_add(paidDate, INTERVAL 7 DAY) ) as eDay,"+
+					" MONTH(date_add(paidDate, INTERVAL 7 DAY)) as eMonth, YEAR(date_add(paidDate, INTERVAL 7 DAY)) as eYear "+
+					" FROM boricuabaydb.bbpay Group by paidDate;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay semanas" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"salesWeeks" : rows};
+  		console.log("hay semanas"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales months
+app.get('/DB-Project/salesMonths/', function(req, res) { 
+		console.log("GET months" );
+ 
+var query = connection.query("SELECT MONTH(paidDate) as month, YEAR(paidDate) as year FROM boricuabaydb.bbpay Group by MONTH(paidDate), YEAR(paidDate);", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay meses" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"salesMonths" : rows};
+  		console.log("hay meses"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales years
+app.get('/DB-Project/salesYears/', function(req, res) { 
+		console.log("GET years" );
+ 
+var query = connection.query("SELECT YEAR(paidDate) as year FROM boricuabaydb.bbpay Group by YEAR(paidDate);", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay years" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"salesYears" : rows};
+  		console.log("hay years"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales WEEKs
+app.get('/DB-Project/saleWeekProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		console.log("GET product weekly sales "+ id );
+ 
+var query = connection.query("SELECT ProductName as name,  bidStartingPrice as start, MAX(bidAmount) as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where paidDate between DATE('"+id+"') and date_add(DATE('"+id+"'), INTERVAL 8 DAY) "+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales DAYs
+app.get('/DB-Project/saleDayProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		console.log("GET product dayly sales "+ id );
+ 
+var query = connection.query("SELECT ProductName as name,  bidStartingPrice as start, MAX(bidAmount) as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where paidDate = DATE('"+id+"')"+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales months
+app.get('/DB-Project/saleMonthProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		var monthYear = id.split(' ');
+		console.log("GET product monthly sales "+ id );
+		console.log(" month  "+ monthYear[0] );
+		console.log(" year  "+ monthYear[1] );
+ 
+var query = connection.query("SELECT ProductName as name,  bidStartingPrice as start, MAX(bidAmount) as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where Month(paidDate) = '"+monthYear[0]+"' and YEAR(paidDate) = '"+monthYear[1]+"' "+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales years
+app.get('/DB-Project/saleYearProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		console.log("GET product yearly sales "+ id );
+ 
+var query = connection.query("SELECT ProductName as name,  bidStartingPrice as start, MAX(bidAmount) as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where YEAR(paidDate) =  '"+id+"' "+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read revenues WEEKs
+app.get('/DB-Project/revenueWeekProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		console.log("GET product weekly revenues "+ id );
+ 
+var query = connection.query("SELECT ProductName as name,  (MAX(bidAmount) - bidStartingPrice) as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where paidDate between DATE('"+id+"') and date_add(DATE('"+id+"'), INTERVAL 8 DAY) "+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay revenue" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay revenue"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read revenues DAYs
+app.get('/DB-Project/revenueDayProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		console.log("GET product dayly revenues "+ id );
+ 
+var query = connection.query("SELECT ProductName as name,  (MAX(bidAmount) - bidStartingPrice)  as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where paidDate = DATE('"+id+"')"+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay revenues" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay revenue"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read revenues months
+app.get('/DB-Project/revenueMonthProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		var monthYear = id.split(' ');
+		console.log("GET product monthly revenues "+ id );
+		console.log(" month  "+ monthYear[0] );
+		console.log(" year  "+ monthYear[1] );
+ 
+var query = connection.query("SELECT ProductName as name,  (MAX(bidAmount) - bidStartingPrice)  as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where Month(paidDate) = '"+monthYear[0]+"' and YEAR(paidDate) = '"+monthYear[1]+"' "+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay revenues" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay revenue"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read revenues years
+app.get('/DB-Project/revenueYearProduct/:id', function(req, res) { 
+		var id = req.params.id;
+		console.log("GET product yearly revenues "+ id );
+ 
+var query = connection.query("SELECT ProductName as name,  (MAX(bidAmount) - bidStartingPrice)  as amount "+
+			"FROM boricuabaydb.bbProduct as p "+
+			"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+			"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+			"where p.productID in ( "+
+									"Select productID "+
+									"FROM boricuabaydb.bbContain as c "+
+									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
+									"where YEAR(paidDate) =  '"+id+"' "+
+									") "+
+			"Group by ProductName;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay revenue" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay revenue"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+
+// REST Operation - HTTP GET to read sales by WEEKs
+app.get('/DB-Project/saleWeek/', function(req, res) { 
+		//var id = req.params.id;
+		console.log("GET weekly sales " );
+ 
+var query = connection.query( "Select WEEK(paidDate) as name,  SUM(am) as amount "+
+			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
+				"FROM boricuabaydb.bbProduct as p "+
+				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+				"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+				"inner join boricuabaydb.bbContain as c on c.productID = p.productID "+ 
+				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
+				"Group by paidDate, productName ) as prod "+ 
+			"group by week(paidDate);", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Week not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales by DAYs
+app.get('/DB-Project/saleDay/', function(req, res) { 
+		//var id = req.params.id;
+		console.log("GET dayly sales " );
+ 
+var query = connection.query("Select paidDate as name,  SUM(am) as amount "+
+			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
+				"FROM boricuabaydb.bbProduct as p "+
+				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+				"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+				"inner join boricuabaydb.bbContain as c on c.productID = p.productID "+ 
+				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
+				"Group by paidDate, productName ) as prod "+ 
+			"group by paidDate ;", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Days not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales by months
+app.get('/DB-Project/saleMonth/', function(req, res) {  
+		console.log("GET monthly sales " ); 
+		
+var query = connection.query("Select MONTH(paidDate) as name,  SUM(am) as amount "+
+			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
+				"FROM boricuabaydb.bbProduct as p "+
+				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+				"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+				"inner join boricuabaydb.bbContain as c on c.productID = p.productID "+ 
+				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
+				"Group by paidDate, productName ) as prod "+ 
+			"group by MONTH(paidDate);", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Month not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
+// REST Operation - HTTP GET to read sales by years
+app.get('/DB-Project/saleYear/', function(req, res) {  
+		console.log("GET yearly sales " );
+ 
+var query = connection.query("Select YEAR(paidDate) as name,  SUM(am) as amount "+
+			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
+				"FROM boricuabaydb.bbProduct as p "+
+				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
+				"inner join boricuabaydb.bbBidFor as bf on bf.productID = bp.productID "+ 
+				"inner join boricuabaydb.bbContain as c on c.productID = p.productID "+ 
+				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
+				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
+				"Group by paidDate, productName ) as prod " + 
+			"group by YEAR(paidDate);", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){
+		console.log("No hay sales" ); 
+		res.statusCode = 404;
+		res.send("Year not found.");
+	}
+	else {	
+  		var response = {"products" : rows};
+  		console.log("hay sales"); 
+		//connection.end();
+  		res.json(response);
+  	}
+ });	
+});
+
 
