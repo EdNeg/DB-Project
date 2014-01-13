@@ -31,7 +31,7 @@ $(document).on('pagebeforeshow', "#myCart", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			Popup("Data not found!");
 		}
 	});
 });
@@ -43,7 +43,7 @@ $(document).on('pagebeforeshow', "#MyCart", function( event, ui ) {
                 contentType: "application/json",
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
-                	alert("seses");
+                	Popup("seses");
                 	var cartList = data.carts;
         			var len = cartList.length;
                         var list = $("#carts-list");
@@ -62,13 +62,13 @@ $(document).on('pagebeforeshow', "#MyCart", function( event, ui ) {
             			list.listview("refresh");	
             		},
                 	else{
-                		alert("You are not signed in");
+                		Popup("You are not signed in");
                 		$.mobile.navigate("#home");
                 	}
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Data not found!");
+                        Popup("Data not found!");
                 }
         });
 });
@@ -105,7 +105,7 @@ function GetCartInfo(id){
                 contentType: "application/json",
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
-                	alert("APUUPUU");
+                	Popup("APUUPUU");
                         currentCart = convert(data.cart);
                         GetProductInfo(currentCart.productID);
                         GetProductSeller(currentCart.productID);
@@ -116,10 +116,10 @@ function GetCartInfo(id){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Cart not found.");
+                                Popup("Cart not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });
@@ -144,10 +144,10 @@ function GetProductSeller(id){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Seller not found.");
+                                Popup("Seller not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });

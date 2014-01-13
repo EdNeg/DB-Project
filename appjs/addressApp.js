@@ -28,13 +28,14 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Data not found!");
+                        Popup("Data not found!");
                 }
         });
 });
 
 
 
+/*
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
         // currentCar has been set at this point
         $("#upd-addressLine1").val(currentAddress.addressLine1);
@@ -43,7 +44,8 @@ $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
         $("#upd-state").val(currentAddress.state);
         $("#upd-country").val(currentAddress.country);
         $("#upd-zipcode").val(currentAddress.zipcode);        
-});
+});*/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -81,10 +83,10 @@ function VerifyAddress(){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Data could not be updated!");
+                                Popup("Data could not be updated!");
                         }
                         else {
-                                alert("Internal Error.");                
+                                Popup("Internal Error.");                
                         }
                 }
         });
@@ -113,7 +115,7 @@ function SaveAddress(){
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
-                        alert("Data could not be added!");
+                        Popup("Data could not be added!");
                 }
         });
 
@@ -138,10 +140,10 @@ function GetAddress(id){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Address not found.");
+                                Popup("Address not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });
@@ -172,10 +174,10 @@ function UpdateAddress(){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Data could not be updated!");
+                                Popup("Data could not be updated!");
                         }
                         else {
-                                alert("Internal Error Address.");                
+                                Popup("Internal Error Address.");                
                         }
                 }
         });
@@ -197,10 +199,10 @@ function DeleteAddresss(){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Account not found.");
+                                Popup("Account not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });

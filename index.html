@@ -11,12 +11,6 @@
 		
 		<script src="appjs/prodApp.js"></script>
 		<script src="appjs/catApp.js"></script>
-		<script src="appjs/booksApp.js"></script>
-		<script src="appjs/ComputersApp.js"></script>
-		<script src="appjs/clothingApp.js"></script>
-		<script src="appjs/electronicsApp.js"></script>
-		<script src="appjs/shoesApp.js"></script>
-		<script src="appjs/sportsApp.js"></script>
 		<script src="appjs/accountApp.js"></script>
 		<script src="appjs/reports.js"></script>
 		
@@ -37,7 +31,8 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
-			<a data-role="button"  href="#cartHome" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+			<a data-role="button"  onclick="findProduct()" href="#cartHome" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+			<a data-role="button"  data-iconpos="left" data-icon="star" data-theme="b" class="ui-btn-left" onclick="VerifyProfile()">Profile</a>
 
 
 		</header>
@@ -78,7 +73,7 @@
     	</ul>
 	</div><!-- /navbar -->
 	</header>
-	
+	<br>
 	<form id="verify-form">
 		<ul data-role="listview" data-divider-theme="b" data-inset="true">
         	<li><label for="upd-userNickname">Username: <input id="upd-userNickname" name="userNickname" type="text"/></label>
@@ -123,6 +118,33 @@
 				    <li><label for="state"> State: <input id="state" name="state" type="text"/></label></li>
   					<li><label for="country"> Country: <input id="country" name="country" type="text"/></label></li>
   					<li><label for="zipcode"> Zipcode: <input id="zipcode" name="zipcode" type="text"/></label></li>
+  			  	</ul>
+  			  	</fieldset>
+			</form>
+
+<center>
+    <a href="#registercont" type="button" data-transition="slidefade" data-theme="b">Next</a>
+</center>
+
+</div><!-- ---------------------------------------------------------Page Register -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="registercont">
+	<header data-role="header" data-theme="d">
+		<h1>Register</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		
+		<div data-role="navbar">
+    	<ul>
+       		<li><a href="#signin" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></li>
+        	<li><a href="#register" class="ui-btn-active" data-iconpos="bottom" data-icon="edit" data-theme="d" data-transition="slidefade">Register</a></li>
+    	</ul>
+	</div><!-- /navbar -->
+	</header>
+	
+	<form id="account-form2">
+		<fieldset data-role="controlgroup">
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
   					<li data-role="list-divider" role="heading">CreditCard Info</li>
   					<li><label for="creditCardNumber"> CreditCard Number: <input id="creditCardNumber" name="creditCardNumber" type="text"/></label></li>
   					<li><label for="creditCardOwner"> CreditCard Owner: <input id="creditCardOwner" name="creditCardOwner" type="text"/></label></li>
@@ -144,10 +166,10 @@
 			</form>
 
 <center>
-    <input type="submit" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
+    <input type="submit" value="Submit" data-theme="b"  onclick="SaveAccount()">
 </center>
 
-</div><!-- ---------------------------------------------------------Page Register -------------------------------------------------------------------------------------->
+</div><!-- ---------------------------------------------------------Page Register Continue-------------------------------------------------------------------------------------->
 	
 
 
@@ -156,21 +178,21 @@
 		<h1>Admin Profile</h1>
 		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
 	</header>
-	
+	<br>
 	<ul data-role="listview" data-inset="true">
 		<li data-role="list-divider" id = "currAdmin"></li>
 	</ul>
 	
 	<div class="ui-grid-a">
 		<div class="ui-block-a"><a href="#searchUserPage" data-role="button" data-icon="search" data-iconpos="top">Search / Edit Users</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
-		<div class="ui-block-b"><a href="#viewAdmins" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
-		<div class="ui-block-a"><a data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
-		<div class="ui-block-a"><a href="#add-category" data-role="button" data-icon="plus" data-iconpos="top">Add Category</a></div>
-		<div class="ui-block-b"><a data-role="button" data-icon="delete" data-iconpos="top">Remove Category</a></div>
+		<div class="ui-block-b"><a href="#newUserByAdmin" data-role="button" data-icon="plus" data-iconpos="top">Create User</a></div>
+		<div class="ui-block-a"><a href="#searchUserPageToDelete" data-role="button" data-icon="delete" data-iconpos="top">Remove User</a></div>
+		<div class="ui-block-b"><a href="#searchAdminPage" data-role="button" data-icon="search" data-iconpos="top">View / Edit Admins</a></div>
+		<div class="ui-block-a"><a href="#newAdmin" data-role="button" data-icon="plus" data-iconpos="top">Create Admin</a></div>
+		<div class="ui-block-b"><a href="#searchAdminToDeletePage" data-role="button" data-icon="delete" data-iconpos="top">Remove Admin</a></div>
+		
 	</div>
+	<a href="#modifyCategory" data-role="button" data-iconpos="top" data-icon="edit">Modify Categories</a>
 
 
 <footer data-role="footer" data-position="fixed" data-theme="b">
@@ -233,17 +255,37 @@
 </div><!-- Page Search Products ------------------------------------------------------------------------>
 
 
+<div data-role="page" id="productsInCategory" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Products Available</h1>
+			<a href="#subCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+			<nav data-role="navbar">
+			<ul>
+				<li><a href="#productSortName">Sort By Name</a></li>
+				<li><a href="#productSortBrand">Sort By Brand</a></li>
+				<li><a href="#productSortPrice">Sort By Price</a></li>
+			</ul>
+		</nav>
+		</header>
+<div data-role="content">
+		<ul id="products-list-category" data-role="listview" data-filter="true"  data-inset="true">
+			
+		</ul>
+</div>
+	
+</div><!-- Page Products In Category------------------------------------------------------------------------>
+
 <div data-role="page" id="product-view">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Product Detail</h1>
-		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<a data-role="button" href="#products" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 		
 	</header>
 		
 	<div data-role="content">
 		
 			<center>
-				<img id = "currImgSrc" style="width: 80%;"></center>
+				<img id = "currImgSrc" style="width: 40%;"></center>
 			
 			<ul data-role="listview" data-inset="true">
 				<li data-role="list-divider" id = "currName"></li>
@@ -273,7 +315,49 @@
     	</div>
 	
 			
-</div><!-- ---------------------------------------------------------------------Page Product Details --------------------------------------------------------------------------->
+</div><!-- ------------------------------------------Page Product Details --------------------------------------------------------------------------->
+
+<div data-role="page" id="product-view-category">
+	<header data-role="header" data-theme="d" data-position="fixed">
+		<h1>Product Details</h1>
+		<a data-role="button" href="#productsInCategory" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		
+	</header>
+		
+	<div data-role="content">
+		
+			<center>
+				<img id = "currImgSrc2" style="width: 40%;"></center>
+			
+			<ul data-role="listview" data-inset="true">
+				<li data-role="list-divider" id = "currName2"></li>
+				<li id="currBidPrice2"></li>
+				<li id="currInstPrice2"></li>
+				<li data-role="list-divider">Description</li>
+				<li id="currDescription2"></li>
+				<li id="currBrand2"></li>
+				<li id="currModel2"></li>
+				<li id="currDimensions2"></li>
+				<li id="currId2"></li>
+				<li id="currStartDate2"></li>
+				<li id="currEndDate2"></li>
+
+				
+							
+			</ul>
+			
+			<ul data-role = "listview" data-inset ="true">
+				<li id="currSeller2"></li>
+			</ul> 		
+	</div>	
+ 				 
+		<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#placeBid"  data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b" data-transition="slidefade">PlaceBid</a></div>
+         	<div class="ui-block-b"><a onclick="AddToCart()" data-role="button" data-iconpos="bottom" data-icon="check" data-theme="b"data-transition="slidefade">Add to Cart</a></div>
+    	</div>
+	
+			
+</div><!-- -----------------------------------------------Page Product Details in Category--------------------------------------------------------------------------->
 
 
 <div data-role="page" id="productRegular-view">
@@ -312,7 +396,7 @@
  				 
 	
 			
-</div><!-- ---------------------------------------------------------------------User Product Details --------------------------------------------------------------------------->
+</div><!-- ----------------------------------------User Product Details --------------------------------------------------------------------------->
 
 <div data-role="page" id="productSortName">
 	<header data-role="header" data-theme='d'>
@@ -405,367 +489,14 @@
 </div><!--------------------------------------------------------------------- Page Categories ----------------------------------------------------------------------------------->	
 
 
-
-
-<!----------------------*******************************************************************************************************-->
-<!----------------------********************************CATEGORIES START****************************************************-->
-<!----------------------*******************************************************************************************************-->
-<div data-role="page" id="books-view">
+<div data-role="page" id="subCategories">
 	<header data-role="header" data-theme="d">
-		<h1>Books</h1>
-		<a data-role="button" href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		<h1>SubCategories</h1>
+		<a href="#categories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
+	<div data-role = "content">
+	<ul id="subCategories-list" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
 	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Books" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- --------------------------------------------------------------------Page Books ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="electronics-view">
-	<header data-role="header" data-theme="d">
-		<h1>Electronics</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Electronics" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- ---------------------------------------------------------------------Page Electronics ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="computers-view">
-	<header data-role="header" data-theme="d">
-		<h1>Computers</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Computers" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Computers ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="clothing-view">
-	<header data-role="header" data-theme="d">
-		<h1>Clothing</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Clothing" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Clothing ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="shoes-view">
-	<header data-role="header" data-theme="d">
-		<h1>Shoes</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Shoes" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Shoes ----------------------------------------------------------------------------->
-
-
-<div data-role="page" id="sports-view">
-	<header data-role="header" data-theme="d">
-		<h1>Sports</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
-	</header>
-	
-		<div data-role="content"><!-- try listview-->
-		 <ul id="Sports" data-role="listview" data-inset="true" data-icon='false' data-theme='b'>
-		 	 
-		 </ul>
- 	</div>
-	
-	
-	
-</div><!-- Page Sports ----------------------------------------------------------------------------->
-
-
-
-<!----------------------*******************************************************************************************************-->
-<!----------------------********************************SUBCATEGORIES START****************************************************-->
-<!----------------------*******************************************************************************************************-->
-
-
-<!----------------------********************************BOOKS****************************************************-->
-
-<div data-role="page" id="childrenB">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<!--
-		<select id="mySel" class="ui-btn-right">
-					<option value="" style="display:none">Sort by: </option>
-					<option value="SortName" href="#categories">Sort by Name</option>
-					<option value="SortBrand">Sort by Brand</option>
-					<option value="SortPrice">Sort by Price</option>
-				</select>-->
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="childrenBName">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" href="#books-view" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCNList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN SORTED BY NAME---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="childrenBBrand">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN SORTED BY PRICE---------------------------------------------------------------------------------->
-
-<div data-role="page" id="childrenBPrice">
-	<header data-role="header" data-theme='d'>
-		<h1>Children</h1>
-		<a data-role="button" href="#books-view"  data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-		<nav data-role="navbar">
-			<ul>
-				<li><a href="#childrenBName">Sort By Name</a></li>
-				<li><a href="#childrenBBrand">Sort By Brand</a></li>
-				<li><a href="#childrenBPrice">Sort By Price</a></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BCPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Children</li>  		-->			
-				
-		</ul>
-	</div>
-	     	
-			
-</div><!-- PAGE CHILDREN SORTED BY BRAND---------------------------------------------------------------------------------->
-	 
-<div data-role="page" id="fiction">
-	<header data-role="header" data-theme='d'>
-		<h1>Fiction</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BFList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Fiction</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE FICTION ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="technology">
-	<header data-role="header" data-theme='d'>
-		<h1>Technology</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BTList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Technology</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE TECHNOLOGY ---------------------------------------------------------------------------------->
-
-
-
-<div data-role="page" id="business">
-	<header data-role="header" data-theme='d'>
-		<h1>Business</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="BBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BUSINESS ---------------------------------------------------------------------------------->
-
-
-
-<!----------------------********************************COMPUTERS***************************************************-->
-
-
-<div data-role="page" id="laptops">
-	<header data-role="header" data-theme='d'>
-		<h1>Laptops</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CLList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE LAPTOPS ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="desktops">
-	<header data-role="header" data-theme='d'>
-		<h1>Desktops</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CDList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE DESKTOPS ---------------------------------------------------------------------------------->
-
-
-<div data-role="page" id="tablets">
-	<header data-role="header" data-theme='d'>
-		<h1>Tablets</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CTList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE TABLETS ---------------------------------------------------------------------------------->
-
-<div data-role="page" id="printers">
-	<header data-role="header" data-theme='d'>
-		<h1>Printers</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CPList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE PRINTERS ---------------------------------------------------------------------------------->
-
-
-<!----------------------********************************CLOTHING****************************************************-->
-
-
-<div data-role="page" id="childrenC">
-	<header data-role="header" data-theme='d'>
-		<h1>Children's Clothing</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
-	</header>
-	
-	<div data-role="content">
-		<ul id="CCList" data-role="listview" data-filter="true"  data-inset="true">
 		
 			<!--<li data-role="list-divider">Business</li>  		-->			
 				
@@ -862,9 +593,9 @@
 	
 	<div data-role="content">
 		 <ul data-role="listview" data-inset="true">
-		 	<li data-icon="false" data-theme="b"><a href="#womenShirts" ><center> <img src= "/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#womenPants" ><center> <img src= "/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
-		 	<li data-icon="false" data-theme="b"><a href="#womenDresses" ><center> <img src= "/css/icons/Dress.png"/><h1>Dresses</h1></center></a></li>	
+		 	<li data-icon="false" data-theme="b"><a href="#womenShirts" ><center> <img src= "../DB-Project/css/icons/T-shirt.png"/><h1>Shirts</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#womenPants" ><center> <img src= "../DB-Project/css/icons/Trousers.png"/><h1>Pants</h1></center></a></li>
+		 	<li data-icon="false" data-theme="b"><a href="#womenDresses" ><center> <img src= "../DB-Project/css/icons/Dress.png"/><h1>Dresses</h1></center></a></li>	
 		 		 
 		 </ul>
 							
@@ -1224,28 +955,23 @@
 			
 </div><!-- 	PAGE GOLF---------------------------------------------------------------------------------->
 
+=======
+	</ul></div>
+ 
+</div><!--------------------------------------- Page SubCategories----------------------------------------------------------------------------------->	
+>>>>>>> d0fd144d0675925b7f6e7daa27cd3d3a9997ae62
 
-<div data-role="page" id="basketball">
-	<header data-role="header" data-theme='d'>
-		<h1>Basketball</h1>
-		<a data-role="button" data-rel="back" data-icon="arrow-l" data-theme= "b" data-iconpos="left" data-transition="slidefade">Back</a>
+<div data-role="page" id="tags">
+	<header data-role="header" data-theme="d">
+		<h1>Tags</h1>
+		<a href="#subCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 	</header>
+	<div data-role = "content">
+	<ul id="tags-list" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
 	
-	<div data-role="content">
-		<ul id="SBkBList" data-role="listview" data-filter="true"  data-inset="true">
-		
-			<!--<li data-role="list-divider">Business</li>  		-->			
-				
-		</ul>
-	</div>
-  	
-			
-</div><!-- 	PAGE BASKETBALL ---------------------------------------------------------------------------------->
-
-
-<!----------------------*******************************************************************************************************-->
-<!----------------------********************************SUBCATEGORIES END****************************************************-->
-<!----------------------*******************************************************************************************************-->
+	</ul></div>
+ 
+</div><!--------------------------------------- Page Tags----------------------------------------------------------------------------------->	
 
 <div id="Account" data-role="page">
 		<header data-role="header" data-theme="d">
@@ -1461,32 +1187,10 @@
 </div><!-- Page Reports -------------------------------------------------------------------------------------->
 
 
-
-
-<div id="add-category" data-role="page">
-			<div data-role="header" data-theme="d" data-position="fixed">
-				<a data-role="button" data-rel="back" data-theme="b">Cancel</a>
-				<h1>Add Category</h1>
-				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
-			</div>
-			<form id="category-form">
- 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
- 					<li data-role="list-divider" role="heading">Enter Category Information</li>  
-  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label>
-  					<label for="iconSrc"> Image Source: <input id="iconSrc" name="iconSrc" type="text"/> </label></li>
-  			  	</ul>
-			
-			</form>
-</div><!-- -------------------------------------------Page Add Category ---------------------------------------------------------------------------------->
-
-
-
-
-
 <div data-role="page" id="viewAdmins" >
 		<header data-role="header" data-theme="d" data-position="fixed">
 			<h1>Administrators Registered</h1>
-			<a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+			<a data-role="button" href="#searchAdminPage" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
 		</header>
 <div data-role="content">
 		<ul id="admins-list" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
@@ -1559,7 +1263,7 @@
 	                <a data-role="button" href="#product-view" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Cancel</a>
 	                <h1>BoricuaBay</h1>
 	        </header>
-	        <form id="placeBid-form">
+	        <form id="placeBid-form" name="placeBid-form" onsubmit="return validateBid()">
 			<fieldset data-role="controlgroup">
 		 	<ul data-role="listview" data-divider-theme="b" data-inset="true">   
 				<li><label for="bidAmount"> Bid Amount: <input id="bidAmount" name="bidAmount" type="number"/></label></li>
@@ -1869,33 +1573,33 @@
 			<a data-role="button" href="#Account" data-icon="arrow-l"
 				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
 			<h1>BoricuaBay</h1>
-			<a data-role="button" data-rel="back" onclick="UpdateAccountUser()" data-theme="b">Save</a>
+			<a data-role="button" data-rel="back" onclick="UpdateAccount()" data-theme="b">Save</a>
 		</header>
 			<form id="account-view-form">
  				<fieldset data-role="controlgroup">
  					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
  					<li data-role="list-divider" role="heading">User Info</li>   
-  					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text"/></label></li>
-  					<li><label for="upd-UserNickname"> Username: <input id="upd-UserNickname" name="userNickname" type="text"/></label></li>
-				    <li><label for="upd-Password"> Password: <input id="upd-Password" name="password" type="password"/></label></li>
-  					<li><label for="upd-userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text"/></label></li>
+  					<li><label for="upd-userName"> Name: <input id="upd-userName" name="userName" type="text" value="" /></label></li>
+  					<li><label for="upd-UserNickname"> Username: <input id="upd-UserNickname" name="userNickname" type="text" value="" /></label></li>
+				    <li><label for="upd-Password"> Password: <input id="upd-Password" name="password" type="password" value=""/></label></li>
+  					<li><label for="upd-userEmail"> Email: <input id="upd-userEmail" name="userEmail" type="text" value=""/></label></li>
   					<li data-role="list-divider" role="heading">Mailing Address</li>
-  					<li><label for="upd-addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text"/></label></li>
-  					<li><label for="upd-city"> City: <input id="upd-city" name="city" type="text"/></label></li>
-				    <li><label for="upd-state"> State: <input id="upd-state" name="state" type="text"/></label></li>
-  					<li><label for="upd-country"> Country: <input id="upd-country" name="country" type="text"/></label></li>
-  					<li><label for="upd-zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text"/></label></li>
+  					<li><label for="upd-addressLine"> Address Line: <input id="upd-addressLine" name="addressLine" type="text" value=""/></label></li>
+  					<li><label for="upd-city"> City: <input id="upd-city" name="city" type="text" value="" /></label></li>
+				    <li><label for="upd-state"> State: <input id="upd-state" name="state" type="text" value=""/></label></li>
+  					<li><label for="upd-country"> Country: <input id="upd-country" name="country" type="text" value=""/></label></li>
+  					<li><label for="upd-zipcode"> Zipcode: <input id="upd-zipcode" name="zipcode" type="text" value=""/></label></li>
   					<li data-role="list-divider" role="heading">CreditCard Info</li>
-  					<li><label for="upd-creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
-  					<li><label for="upd-creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
-				    <li><label for="upd-securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text"/></label></li>
-  					<li><label for="upd-expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text"/></label></li>
+  					<li><label for="upd-creditCardNumber"> CreditCard Number: <input id="upd-creditCardNumber" name="creditCardNumber" type="text" value=""/></label></li>
+  					<li><label for="upd-creditCardOwner"> CreditCard Owner: <input id="upd-creditCardOwner" name="creditCardOwner" type="text" value=""/></label></li>
+				    <li><label for="upd-securityCode"> Security Code: <input id="upd-securityCode" name="securityCode" type="text" value=""/></label></li>
+  					<li><label for="upd-expDate"> Expiration Date: <input id="upd-expDate" name="expDate" type="text" value=""/></label></li>
   					<li data-role="list-divider" role="heading">Billing Address</li>
-  					<li><label for="upd-caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text"/></label></li>
-  					<li><label for="upd-ccity"> City: <input id="upd-ccity" name="ccity" type="text"/></label></li>
-				    <li><label for="upd-cstate"> State: <input id="upd-cstate" name="cstate" type="text"/></label></li>
-  					<li><label for="upd-ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text"/></label></li>
-  					<li><label for="upd-czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text"/></label></li>
+  					<li><label for="upd-caddressLine"> Address Line: <input id="upd-caddressLine" name="caddressLine" type="text" value=""/></label></li>
+  					<li><label for="upd-ccity"> City: <input id="upd-ccity" name="ccity" type="text" value=""/></label></li>
+				    <li><label for="upd-cstate"> State: <input id="upd-cstate" name="cstate" type="text" value=""/></label></li>
+  					<li><label for="upd-ccountry"> Country: <input id="upd-ccountry" name="ccountry" type="text" value=""/></label></li>
+  					<li><label for="upd-czipcode"> Zipcode: <input id="upd-czipcode" name="czipcode" type="text" value=""/></label></li>
   			  	</ul>
 			 </fieldset>
 			</form>
@@ -2230,6 +1934,7 @@
  
 </div><!-- Page week Reports -------------------------------------------------------------------------------------->
 
+<<<<<<< HEAD
 <div data-role="page" id= "daySales">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Sales Report</h1>
@@ -2252,6 +1957,808 @@
  
  
 </div><!-- Page day Reports -------------------------------------------------------------------------------------->
+=======
+<div id="account-view-admin" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#AccountByAdmin" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Account</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" href="#AccountByAdmin" onclick="UpdateUserAccountByAdmin()" data-theme="b">Save</a>
+		</header>
+			<form id="account-view-form-admin">
+ 				<fieldset data-role="controlgroup">
+ 					 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="adm-userName"> Name: <input id="adm-userName" name="userName" type="text" value="" /></label></li>
+  					<li><label for="adm-UserNickname"> Username: <input id="adm-UserNickname" name="userNickname" type="text" value="" /></label></li>
+				    <li><label for="adm-Password"> Password: <input id="adm-Password" name="password" type="password" value=""/></label></li>
+  					<li><label for="adm-userEmail"> Email: <input id="adm-userEmail" name="userEmail" type="text" value=""/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="adm-addressLine"> Address Line: <input id="adm-addressLine" name="addressLine" type="text" value=""/></label></li>
+  					<li><label for="adm-city"> City: <input id="adm-city" name="city" type="text" value="" /></label></li>
+				    <li><label for="adm-state"> State: <input id="adm-state" name="state" type="text" value=""/></label></li>
+  					<li><label for="adm-country"> Country: <input id="adm-country" name="country" type="text" value=""/></label></li>
+  					<li><label for="adm-zipcode"> Zipcode: <input id="adm-zipcode" name="zipcode" type="text" value=""/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="adm-creditCardNumber"> CreditCard Number: <input id="adm-creditCardNumber" name="creditCardNumber" type="text" value=""/></label></li>
+  					<li><label for="adm-creditCardOwner"> CreditCard Owner: <input id="adm-creditCardOwner" name="creditCardOwner" type="text" value=""/></label></li>
+				    <li><label for="adm-securityCode"> Security Code: <input id="adm-securityCode" name="securityCode" type="text" value=""/></label></li>
+  					<li><label for="adm-expDate"> Expiration Date: <input id="adm-expDate" name="expDate" type="text" value=""/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="adm-caddressLine"> Address Line: <input id="adm-caddressLine" name="caddressLine" type="text" value=""/></label></li>
+  					<li><label for="adm-ccity"> City: <input id="adm-ccity" name="ccity" type="text" value=""/></label></li>
+				    <li><label for="adm-cstate"> State: <input id="adm-cstate" name="cstate" type="text" value=""/></label></li>
+  					<li><label for="adm-ccountry"> Country: <input id="adm-ccountry" name="ccountry" type="text" value=""/></label></li>
+  					<li><label for="adm-czipcode"> Zipcode: <input id="adm-czipcode" name="czipcode" type="text" value=""/></label></li>
+  			  	</ul>
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Account By Admin----------------------------------------------------------------------------->	
+
+<div data-role="page" id="newUserByAdmin">
+	<header data-role="header" data-theme="d">
+		<h1>Add New User</h1>
+		<a href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+	<form id="account-form-admin">
+		<fieldset data-role="controlgroup">
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">User Info</li>   
+  					<li><label for="new-userName"> Name: <input id="new-userName" name="userName" type="text"/></label></li>
+  					<li><label for="new-userNickname"> Username: <input id="new-userNickname" name="userNickname" type="text"/></label></li>
+				    <li><label for="new-password"> Password: <input id="new-password" name="password" type="password"/></label></li>
+  					<li><label for="new-userEmail"> Email: <input id="new-userEmail" name="userEmail" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Mailing Address</li>
+  					<li><label for="new-addressLine"> Address Line: <input id="new-addressLine" name="addressLine" type="text"/></label></li>
+  					<li><label for="new-city"> City: <input id="new-city" name="city" type="text"/></label></li>
+				    <li><label for="new-state"> State: <input id="new-state" name="state" type="text"/></label></li>
+  					<li><label for="new-country"> Country: <input id="new-country" name="country" type="text"/></label></li>
+  					<li><label for="new-zipcode"> Zipcode: <input id="new-zipcode" name="zipcode" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">CreditCard Info</li>
+  					<li><label for="new-creditCardNumber"> CreditCard Number: <input id="new-creditCardNumber" name="creditCardNumber" type="text"/></label></li>
+  					<li><label for="new-creditCardOwner"> CreditCard Owner: <input id="new-creditCardOwner" name="creditCardOwner" type="text"/></label></li>
+				    <li><label for="new-securityCode"> Security Code: <input id="new-securityCode" name="securityCode" type="text"/></label></li>
+  					<li><label for="new-expDate"> Expiration Date: <input id="new-expDate" name="expDate" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Bank Account Info</li>
+  					<li><label for="new-accountNumber"> Account Number: <input id="new-accountNumber" name="accountNumber" type="text"/></label></li>
+  					<li><label for="new-accountType"> Account Type: <input id="new-accountType" name="accountType" type="text"/></label></li>
+				    <li><label for="new-accountOwner"> Account Owner: <input id="new-accountOwner" name="accountOwner" type="text"/></label></li>
+  					<li><label for="new-bankName"> Bank Name: <input id="new-bankName" name="bankName" type="text"/></label></li>
+  					<li data-role="list-divider" role="heading">Billing Address</li>
+  					<li><label for="new-caddressLine"> Address Line: <input id="new-caddressLine" name="caddressLine" type="text"/></label></li>
+  					<li><label for="new-ccity"> City: <input id="new-ccity" name="ccity" type="text"/></label></li>
+				    <li><label for="new-cstate"> State: <input id="new-cstate" name="cstate" type="text"/></label></li>
+  					<li><label for="new-ccountry"> Country: <input id="new-ccountry" name="ccountry" type="text"/></label></li>
+  					<li><label for="new-czipcode"> Zipcode: <input id="new-czipcode" name="czipcode" type="text"/></label></li>
+  			  	</ul>
+  			  	</fieldset>
+			</form>
+
+<center>
+    <input type="submit" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccountByAdmin()">
+</center>
+
+</div><!-- ---------------------------------------------------------Page Add New User By Admin -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="searchUserPageToDelete">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-form3" data-role="content">
+		  
+				<input type="search" name="searchUser" id="searchUserToDelete"/ >
+				<a  href="#viewUsersToDelete" data-theme='b' data-role="button">Search Users</a>
+			
+			</form>
+</div><!-- ------------------------------------------------------------------Page Search User To Delete----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="viewUsersToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Users Registered</h1>
+			<a data-role="button" href="#searchUserPageToDelete" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="users-list-delete" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- ---------------------------------------Page Search Results Users To Delete------------------------------------------------------------------------>
+
+<div data-role="page" id="UserToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete User</h1>
+			<a data-role="button" href="#viewUsersToDelete" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="userDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#adminProfile" data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteUser()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#viewUsersToDelete" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Users To Delete------------------------------------------------------------------------>
+
+<div data-role="page" id="searchAdminPage">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-formAdmin" data-role="content">
+		  
+				<input type="search" name="searchAdmin" id="searchAdmin"/ >
+				<a  href="#viewAdmins" data-theme='b' data-role="button">Search Administrators</a>
+			
+			</form>
+</div><!-- ------------------------------------------------------------------Page Search Admins ----------------------------------------------------------------------------->
+
+
+
+
+<div id="editAdmin" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#viewAdmins" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" href="#adminProfile" onclick="UpdateAdminAccount()" data-theme="b">Save</a>
+		</header>
+			<form id="updateAdminAccount">
+ 				<fieldset data-role="controlgroup">
+ 					<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading" id="currAdminName"></li>   
+  					<li><label for="adminUserName"> Admin User Name: <input id="adminUserName" name="adminUserName" type="text" value="" /></label></li>
+				    <li><label for="adminPassword"> Password: <input id="adminPassword" name="adminPassword" type="password" value=""/></label></li>
+  				</ul>
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Account By Admin----------------------------------------------------------------------------->	
+
+<div data-role="page" id="newAdmin">
+	<header data-role="header" data-theme="d">
+		<h1>Add New Administrator</h1>
+		<a href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	
+	<form id="newAdminForm">
+		<fieldset data-role="controlgroup">
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<li data-role="list-divider" role="heading">Admin Info</li>   
+  					<li><label for="new-adminName"> Name: <input id="new-adminName" name="userName" type="text"/></label></li>
+				    <li><label for="new-adminPassword"> Password: <input id="new-adminPassword" name="password" type="password"/></label></li>
+  		 </ul>
+  		</fieldset>
+	</form>
+
+<center>
+    <input type="submit" value="Submit" data-inline="true" data-theme="b" onclick="SaveNewAdmin()">
+</center>
+
+</div><!-- ---------------------------------------------------------Page Add New Admin -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="searchAdminToDeletePage">
+		<header data-role="header" data-theme="d">
+			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+           
+		<form id="search-form4" data-role="content">
+		  
+				<input type="search" name="searchAdmin" id="searchAdminToDelete"/ >
+				<a  href="#viewAdminsToDelete" data-theme='b' data-role="button">Search Admins</a>
+			
+			</form>
+</div><!-- ---------------------------------------------Page Search Admin To Delete----------------------------------------------------------------------------->
+
+
+<div data-role="page" id="viewAdminsToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Administrators Registered</h1>
+			<a data-role="button" href="#searchAdminToDeletePage" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+<div data-role="content">
+		<ul id="admins-list-delete" data-role="listview" data-filter="true"  data-inset="true" data-icon="false">
+			
+		</ul>
+</div>
+	
+</div><!-- ---------------------------------------Page Search Results Admins To Delete------------------------------------------------------------------------>
+
+
+<div data-role="page" id="AdminToDelete" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Admin</h1>
+			<a data-role="button" href="#viewAdminsToDelete" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="adminDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a href="#adminProfile" data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteAdmin()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#viewAdminsToDelete" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Admins To Delete------------------------------------------------------------------------>
+
+
+<div id="modifyCategory" data-role="page">
+	<div data-role="header" data-theme="d" data-position="fixed">
+		<a data-role="button" href="#adminProfile" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+		<h1>BoricuaBay</h1>
+	</div>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading">Modify Categories</li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminCategories" data-role="button" data-icon="search" 
+			data-iconpos="top">View Categories</a></div>
+		<div class="ui-block-b"><a href="#add-category" data-role="button" data-icon="plus" 
+			data-iconpos="top">Create Category</a></div>
+	</div>
+</div><!-- -------------------------------------------Page Modify Category ---------------------------------------------------------------------------------->
+
+
+<div id="add-category" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" href="#modifyCategory" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+				<h1>BoricuaBay</h1>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveCategory()">Save</a>
+			</div>
+			<form id="category-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading">Enter New Category Information</li>  
+  					<li><label for="name"> Name: <input id="name" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio" id="arrow" value="arrow.png" checked/>
+  						<label for="arrow">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio" id="paw" value="paw.png" />
+  						<label for="paw">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio" id="bow" value="bow.png" />
+  						<label for="bow">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio" id="bug" value="bug.png" />
+  						<label for="bug">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio" id="clock" value="clock.png" />
+  						<label for="clock">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio" id="controller" value="controller.png" />
+  						<label for="controller">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio" id="doghouse" value="doghouse.png" />
+  						<label for="doghouse">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio" id="dumbell" value="dumbell.png" />
+  						<label for="dumbell">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio" id="mug" value="mug.png" />
+  						<label for="mug">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio" id="toolbox" value="toolbox.png" />
+  						<label for="toolbox">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  				</ul>
+			
+			</form>
+</div><!-- -------------------------------------------Page Add Category ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="adminCategories">
+	<header data-role="header" data-theme="d">
+		<h1>Categories</h1>
+		<a href="#modifyCategory" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	<div data-role = "content">
+	<ul id="categories-list-admin" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 
+
+	
+	
+</div><!--------------------------------------------------------------------- Page Categories by Admin----------------------------------------------------------------------------------->	
+
+
+<div data-role="page" id="adminSelectedCat">
+	<header data-role="header" data-theme="d">
+		<h1>BoricuaBay</h1>
+		<a href="#adminCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" 
+		data-theme="b">Back</a>		
+	</header>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id = "currCatAdmin"></li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminSubCategories" data-role="button" data-icon="search" 
+			data-iconpos="top">View Subcategories</a></div>
+		<div class="ui-block-b"><a href="#add-subCategory" data-role="button" data-icon="plus" 
+			data-iconpos="top">Create Subcategory</a></div>
+		<div class="ui-block-a"><a href="#editCategory" data-role="button" data-icon="edit" 
+			data-iconpos="top">Edit Category</a></div>
+		<div class="ui-block-b"><a href="#deleteCategory" data-role="button" data-icon="delete" 
+			data-iconpos="top">Delete Category</a></div>
+	</div>
+ 
+
+	
+	
+</div><!-------------------------------------------- Page Current Category Admin----------------------------------------------------------------------------------->	
+
+
+<div id="add-subCategory" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" href="#adminSelectedCat" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+				<h1>BoricuaBay</h1>
+				<a href="#adminProfile" data-role="button" data-theme="b" onclick="SaveSubCategory()">Save</a>
+			</div>
+			<form id="subCategory-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currCatAdmin2"></li>  
+  					<li><label for="name2"> Name: <input id="name2" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio2" id="arrow2" value="arrow.png" checked/>
+  						<label for="arrow2">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio2" id="paw2" value="paw.png" />
+  						<label for="paw2">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio2" id="bow2" value="bow.png" />
+  						<label for="bow2">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio2" id="bug2" value="bug.png" />
+  						<label for="bug2">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio2" id="clock2" value="clock.png" />
+  						<label for="clock2">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio2" id="controller2" value="controller.png" />
+  						<label for="controller2">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio2" id="doghouse2" value="doghouse.png" />
+  						<label for="doghouse2">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio2" id="dumbell2" value="dumbell.png" />
+  						<label for="dumbell2">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio2" id="mug2" value="mug.png" />
+  						<label for="mug2">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio2" id="toolbox2" value="toolbox.png" />
+  						<label for="toolbox2">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  				</ul>
+			
+			</form>
+</div><!-- -------------------------------------------Page Add SubCategory ---------------------------------------------------------------------------------->
+
+<div data-role="page" id="adminSubCategories">
+	<header data-role="header" data-theme="d">
+		<h1>SubCategories</h1>
+		<a href="#adminSelectedCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	<div data-role = "content">
+	<ul id="subCategories-list-admin" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 
+
+	
+	
+</div><!--------------------------------------------------------------------- Page SubCategories by Admin----------------------------------------------------------------------------------->	
+
+<div data-role="page" id="adminSelectedSubCat">
+	<header data-role="header" data-theme="d">
+		<h1>BoricuaBay</h1>
+		<a href="#adminSubCategories" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" 
+		data-theme="b">Back</a>		
+	</header>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="currSubCatAdmin"></li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#adminViewTags" data-role="button" data-icon="search" 
+			data-iconpos="top">View Tags</a></div>
+		<div class="ui-block-b"><a href="#add-Tag" data-role="button" data-icon="plus" 
+			data-iconpos="top">Create Tag</a></div>
+		<div class="ui-block-a"><a href="#editSubCategory" data-role="button" data-icon="edit" 
+			data-iconpos="top">Edit Sub-Category</a></div>
+		<div class="ui-block-b"><a href="#deleteSubCategory" data-role="button" data-icon="delete" 
+			data-iconpos="top">Delete Sub-Category</a></div>
+	</div>
+ 
+
+	
+	
+</div><!--------------------------------------------------------------------- Page Current Sub-Category Admin----------------------------------------------------------------------------------->	
+
+<div data-role="page" id="adminViewTags">
+	<header data-role="header" data-theme="d">
+		<h1>Tags</h1>
+		<a href="#adminSelectedSubCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+	</header>
+	<div data-role = "content">
+	<ul id="tags-list-admin" data-role="listview"  data-inset="true" data-theme = "b" data-icon="false">
+	
+	</ul></div>
+ 	
+</div><!--------------------------------------------------------------------- Page Tags by Admin----------------------------------------------------------------------------------->	
+
+<div data-role="page" id="adminSelectedTag">
+	<header data-role="header" data-theme="d">
+		<h1>BoricuaBay</h1>
+		<a href="#adminViewTags" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" 
+		data-theme="b">Back</a>		
+	</header>
+	<br>
+	<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="currTagAdmin"></li>
+	</ul>
+	<br>
+	<div class="ui-grid-a">
+		<div class="ui-block-a"><a href="#editTag" data-role="button" data-icon="edit" 
+			data-iconpos="top">Edit Tag</a></div>
+		<div class="ui-block-b"><a href="#deleteTag" data-role="button" data-icon="delete" 
+			data-iconpos="top">Delete Tag</a></div>
+	</div>
+ 	
+</div><!--------------------------------------------------------------------- Page Current Tag Admin----------------------------------------------------------------------------------->
+
+<div id="add-Tag" data-role="page">
+			<div data-role="header" data-theme="d" data-position="fixed">
+				<a data-role="button" href="#adminSelectedSubCat" data-icon="arrow-l" data-iconpos="left" data-theme="b">Back</a>
+				<h1>BoricuaBay</h1>
+				<a data-role="button" data-theme="b" onclick="SaveTag()">Save</a>
+			</div>
+			<form id="tag-form">
+ 				<ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currSubCatAdmin2"></li>  
+  					<li><label for="name3"> Name: <input id="name3" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio3" id="arrow3" value="arrow.png" checked/>
+  						<label for="arrow3">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio3" id="paw3" value="paw.png" />
+  						<label for="paw3">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio3" id="bow3" value="bow.png" />
+  						<label for="bow3">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio3" id="bug3" value="bug.png" />
+  						<label for="bug3">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio3" id="clock3" value="clock.png" />
+  						<label for="clock3">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio3" id="controller3" value="controller.png" />
+  						<label for="controller3">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio3" id="doghouse3" value="doghouse.png" />
+  						<label for="doghouse3">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio3" id="dumbell3" value="dumbell.png" />
+  						<label for="dumbell3">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio3" id="mug3" value="mug.png" />
+  						<label for="mug3">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio3" id="toolbox3" value="toolbox.png" />
+  						<label for="toolbox3">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  				</ul>
+			
+			</form>
+</div><!-- -------------------------------------------Page Add Tag ---------------------------------------------------------------------------------->
+
+<div id="editCategory" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#adminSelectedCat" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" onclick="UpdateCategory()" data-theme="b">Save</a>
+		</header>
+			<form id="updateCategory">
+ 				<fieldset data-role="controlgroup"> 					
+				    <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currCategory"></li>  
+  					<li><label for="name4"> Name: <input id="name4" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio4" id="arrow4" value="arrow.png" checked/>
+  						<label for="arrow4">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio4" id="paw4" value="paw.png" />
+  						<label for="paw4">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio4" id="bow4" value="bow.png" />
+  						<label for="bow4">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio4" id="bug4" value="bug.png" />
+  						<label for="bug4">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio4" id="clock4" value="clock.png" />
+  						<label for="clock4">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio4" id="controller4" value="controller.png" />
+  						<label for="controller4">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio4" id="doghouse4" value="doghouse.png" />
+  						<label for="doghouse4">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio4" id="dumbell4" value="dumbell.png" />
+  						<label for="dumbell4">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio4" id="mug4" value="mug.png" />
+  						<label for="mug4">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio4" id="toolbox4" value="toolbox.png" />
+  						<label for="toolbox4">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  					</ul>
+  				
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Category----------------------------------------------------------------------------->	
+
+<div data-role="page" id="deleteCategory" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Category</h1>
+			<a data-role="button" href="#adminSelectedCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="categoryDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteCategory()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#adminSelectedCat" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Category To Delete------------------------------------------------------------------------>
+
+<div id="editSubCategory" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#adminSelectedSubCat" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" onclick="UpdateSubCategory()" data-theme="b">Save</a>
+		</header>
+			<form id="updateSubCategory">
+ 				<fieldset data-role="controlgroup"> 					
+				    <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currSubCategory"></li>  
+  					<li><label for="name5"> Name: <input id="name5" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio5" id="arrow5" value="arrow.png" checked/>
+  						<label for="arrow5">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio5" id="paw5" value="paw.png" />
+  						<label for="paw5">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio5" id="bow5" value="bow.png" />
+  						<label for="bow5">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio5" id="bug5" value="bug.png" />
+  						<label for="bug5">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio5" id="clock5" value="clock.png" />
+  						<label for="clock5">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio5" id="controller5" value="controller.png" />
+  						<label for="controller5">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio5" id="doghouse5" value="doghouse.png" />
+  						<label for="doghouse5">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio5" id="dumbell5" value="dumbell.png" />
+  						<label for="dumbell5">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio5" id="mug5" value="mug.png" />
+  						<label for="mug5">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio5" id="toolbox5" value="toolbox.png" />
+  						<label for="toolbox5">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  					</ul>
+  				
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit SubCategory----------------------------------------------------------------------------->	
+
+<div data-role="page" id="deleteSubCategory" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Sub-Category</h1>
+			<a data-role="button" href="#adminSelectedSubCat" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="subCategoryDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteSubCategory()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#adminSelectedSubCat" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Sub-Category To Delete------------------------------------------------------------------------>
+
+<div id="editTag" data-role="page">
+	<header data-role="header" data-theme="d" data-position="fixed">
+			<a data-role="button" href="#adminSelectedTag" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">Back</a>
+			<h1>BoricuaBay</h1>
+			<a data-role="button" onclick="UpdateTag()" data-theme="b">Save</a>
+		</header>
+			<form id="updateTag">
+ 				<fieldset data-role="controlgroup"> 					
+				    <ul data-role="listview" data-divider-theme="b" data-inset="true">
+ 					<br>
+ 					<li data-role="list-divider" role="heading" id="currTag"></li>  
+  					<li><label for="name6"> Name: <input id="name6" name="name" type="text"/></label></li>
+  					<br>
+  					<li data-role="list-divider" role="heading">Select Icon</li>
+  					<input type="radio" name="myRadio6" id="arrow6" value="arrow.png" checked/>
+  						<label for="arrow6">
+  							<img src="../DB-Project/css/icons/arrow.png" 
+  								alt="Arrow" /></label>
+  					<input type="radio" name="myRadio6" id="paw6" value="paw.png" />
+  						<label for="paw6">
+  							<img src="../DB-Project/css/icons/paw.png" 
+  								alt="Paw" /></label>
+  					<input type="radio" name="myRadio6" id="bow6" value="bow.png" />
+  						<label for="bow6">
+  							<img src="../DB-Project/css/icons/bow.png" 
+  								alt="bow" /></label>
+  					<input type="radio" name="myRadio6" id="bug6" value="bug.png" />
+  						<label for="bug6">
+  							<img src="../DB-Project/css/icons/bug.png" 
+  								alt="bug" /></label>
+  					<input type="radio" name="myRadio6" id="clock6" value="clock.png" />
+  						<label for="clock6">
+  							<img src="../DB-Project/css/icons/clock.png" 
+  								alt="clock" /></label>
+  					<input type="radio" name="myRadio6" id="controller6" value="controller.png" />
+  						<label for="controller6">
+  							<img src="../DB-Project/css/icons/controller.png" 
+  								alt="controller" /></label>
+  					<input type="radio" name="myRadio6" id="doghouse6" value="doghouse.png" />
+  						<label for="doghouse6">
+  							<img src="../DB-Project/css/icons/doghouse.png" 
+  								alt="doghouse" /></label>
+  					<input type="radio" name="myRadio6" id="dumbell6" value="dumbell.png" />
+  						<label for="dumbell6">
+  							<img src="../DB-Project/css/icons/dumbell.png" 
+  								alt="dumbell" /></label>
+  					
+  					<input type="radio" name="myRadio6" id="mug6" value="mug.png" />
+  						<label for="mug6">
+  							<img src="../DB-Project/css/icons/mug.png" 
+  								alt="mug" /></label>
+  					<input type="radio" name="myRadio6" id="toolbox6" value="toolbox.png" />
+  						<label for="toolbox6">
+  							<img src="../DB-Project/css/icons/toolbox.png" 
+  								alt="toolbox" /></label>
+  					</ul>
+  				
+			 </fieldset>
+			</form>
+</div><!----------------------------------------------------Edit Tag----------------------------------------------------------------------------->	
+
+<div data-role="page" id="deleteTag" >
+		<header data-role="header" data-theme="d" data-position="fixed">
+			<h1>Delete Tag</h1>
+			<a data-role="button" href="#adminSelectedTag" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Back</a>
+		</header>
+		
+<ul data-role="listview" data-divider-theme="b" data-inset="true">
+		<li data-role="list-divider" role="heading" id="tagDel"></li>
+</ul>
+
+<div data-role="content">
+    	<div class="ui-grid-a">
+            <div class="ui-block-a"><a data-role="button" data-theme="d" data-transition="slidefade" onclick="DeleteTag()">Yes</a></div>
+         	<div class="ui-block-b"><a href="#adminSelectedTag" data-role="button" data-theme="d"data-transition="slidefade">No</a></div>
+    	</div>
+</div>
+
+	
+</div><!-- ---------------------------------------Page View Tag To Delete------------------------------------------------------------------------>
+
+>>>>>>> c96d2451f3ab010ae25dc4ac310cc4de1bd61323
 
 <div data-role="page" id= "monthSales">
 	<header data-role="header" data-theme="d" data-position="fixed">

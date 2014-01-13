@@ -19,20 +19,22 @@ $(document).on('pagebeforeshow', "#creditCards", function( event, ui ) {
 	},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
+			Popup("Data not found!");
 		}
 	});
 });
 
 
 
+/*
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 	// currentCar has been set at this point
 	$("#upd-creditCardNumber").val(currentCreditcard.creditCardNumber);
 	$("#upd-creditCardOwner").val(currentCreditcard.creditCardOwner);
 	$("#upd-securityCode").val(currentCreditcard.securityCode);
 	$("#upd-expDate").val(currentCreditcard.expDate);		
-});
+});*/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -68,10 +70,10 @@ function VerifyCreditcard(){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Data could not be updated!");
+				Popup("Data could not be updated!");
 			}
 			else {
-				alert("Internal Error.");		
+				Popup("Internal Error.");		
 			}
 		}
 	});
@@ -95,12 +97,12 @@ function SaveCreditcard(){
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
 			$.mobile.navigate("#creditcards");
-			alert("You have created an creditcard!");
+			Popup("You have created an creditcard!");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Data could not be added!");
+			Popup("Data could not be added!");
 		}
 	});
 
@@ -125,10 +127,10 @@ function GetCreditcard(id){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Creditcard not found.");
+				Popup("Creditcard not found.");
 			}
 			else {
-				alter("Internal Server Error.");
+				Popup("Internal Server Error.");
 			}
 		}
 	});
@@ -158,10 +160,10 @@ function UpdateCreditcard(){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Data could not be updated!");
+				Popup("Data could not be updated!");
 			}
 			else {
-				alert("Internal Error.");		
+				Popup("Internal Error.");		
 			}
 		}
 	});
@@ -183,10 +185,10 @@ function DeleteCreditcard(){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("Creditcard not found.");
+				Popup("Creditcard not found.");
 			}
 			else {
-				alter("Internal Server Error.");
+				Popup("Internal Server Error.");
 			}
 		}
 	});

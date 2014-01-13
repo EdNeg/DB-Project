@@ -29,7 +29,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Account not found!");
+                        Popup("Account not found!");
                 }
         });
 });
@@ -52,7 +52,7 @@ $(document).on('pagebeforeshow', "#invoice", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Account not found!");
+                        Popup("Account not found!");
                 }
         });
 });
@@ -88,7 +88,7 @@ $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("CreditCard not found!");
+                        Popup("CreditCard not found!");
                 }
         });
 });
@@ -131,7 +131,7 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("You don't have any items at the moment");
+			Popup("You don't have any items at the moment");
 		}
 	});
 });
@@ -173,28 +173,49 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 
-			alert("You don't have any items in the Cart at the moment");
+			Popup("You don't have any items in the Cart at the moment");
 
 		}
 	});
 });
 
-$(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
+var cartList;
+function findProduct(){
 	var lenu = notuserCart.length;
 	for(var i = 0; i<lenu; i++){
+		$.ajax({
+			url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
+	        method: 'get',
+	        contentType: "application/json",
+	        dataType:"json",
+			success : function(data, textStatus, jqXHR){
+				 cartList[i] = data.cart;
+			},
+			error: function(data, textStatus, jqXHR){
+				console.log("textStatus: " + textStatus);
+
+				alert("You don't have any items in the Cart at the moment");
+
+			}
+		});
+		}
+	}
+
+$(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
-        method: 'get',
+		//url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
+        //method: 'get',
         contentType: "application/json",
         dataType:"json",
-		success : function(data, textStatus, jqXHR){
-			var cartList = data.cart;		// ADD var bidProductList = data.bidProduct;
+		success : function(data, textStatus, jqXHR){		// ADD var bidProductList = data.bidProduct;
 			var len = cartList.length;
 			var list = $("#cartHome-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
+			for(i=0; i<cartList.length; i++){
 			//alert(cartList[i]);
-				products = cartList[0];
+				products = cartList[i];
+
 					list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
 
 					"<img src= " +   products.productPhoto +"/>" +			// imgSrc ---- productPhoto
@@ -211,18 +232,17 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 					"</a></li>");
 				
 			
-			
+			}
 			list.listview("refresh");
 							
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 
-			alert("You don't have any items in the Cart at the moment");
+			Popup("You don't have any items in the Cart at the moment");
 
 		}
 	});
-	}
 });
 
 
@@ -261,7 +281,7 @@ $(document).on('pagebeforeshow', "#bidUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("You have no bids this far");
+			Popup("You have no bids this far");
 		}
 	});
 });
@@ -301,7 +321,7 @@ $(document).on('pagebeforeshow', "#soldUser", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("You have not sold any items");
+			Popup("You have not sold any items");
 		}
 	});
 });
@@ -341,7 +361,7 @@ $(document).on('pagebeforeshow', "#BidforProduct", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("You have no bids this far");
+			Popup("You have no bids this far");
 		}
 	});
 });
@@ -361,11 +381,11 @@ $(document).on('pagebeforeshow', "#adminProfile", function( event, ui ) {
         document.getElementById("currAdmin").innerHTML = adminName; 
 });
 
-$(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
+$(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
 
-        $("#upd-userName").val(loginID.userName);
-        $("#upd-userNickname").val(loginID.userNickname);
-        $("#upd-password").val(loginID.password);
+        $("#upd-userName").val(loginID.userName);        
+        $("#upd-UserNickname").val(loginID.userNickname);
+        $("#upd-Password").val(loginID.password);
         $("#upd-userEmail").val(loginID.userEmail); 
         $("#upd-addressLine").val(loginID.addressLine); 
         $("#upd-city").val(loginID.city);
@@ -375,49 +395,17 @@ $(document).on('pagebeforeshow', "#account-view-form", function( event, ui ) {
         $("#upd-creditCardNumber").val(loginID.creditCardNumber);
         $("#upd-creditCardOwner").val(loginID.creditCardOwner);
         $("#upd-securityCode").val(loginID.securityCode);
-        $("#upd-expDate").val(loginID.expDate);
+        var myDate = loginID.expDate;
+		var newDate=myDate.substring(0, 10); ;
+        $("#upd-expDate").val(newDate);
         $("#upd-caddressLine").val(loginID.addressLine);
         $("#upd-ccity").val(loginID.city);
         $("#upd-cstate").val(loginID.state);
         $("#upd-ccountry").val(loginID.country);
         $("#upd-czipcode").val(loginID.zipcode);
-
-
 });
 
 var currentAccount = {};
-
-/*
-$(document).on('pagebeforeshow', "#product-view", function( event, ui ) {
-	// currentProduct has been set at this point
-
-	
-	//document.getElementById("currPid").innerHTML = currentProduct.id;
-	//var brandName = currentProduct.brand + " " + currentProduct.name;
-	var productName = currentProduct.productName;
-	var startPrice = "Starting Price: " + accounting.formatMoney(currentProduct.bidStartingPrice);		//START PRICE HAS TO BE FROM BID PRODUCT TABLE
-	var instPrice = "Buy it Now: " + accounting.formatMoney(currentProduct.productPrice);
-	var modelNo = "Model: " + currentProduct.model;
-	var dims = "Dimensions: " + currentProduct.dimensions;
-	var pid = "Product id: " + currentProduct.productID;
-	var brand = "Brand: " + currentProduct.brand;
-	//document.getElementById("currBrand-Name").innerHTML = brandName;
-	document.getElementById("currName").innerHTML = productName;
-	//document.getElementById("currImgSrc").src = currentProduct.imgSrc;
-	document.getElementById("currImgSrc").src = currentProduct.productPhoto; 
-	document.getElementById("currBidPrice").innerHTML = startPrice;
-	document.getElementById("currInstPrice").innerHTML = instPrice;
-	document.getElementById("currDescription").innerHTML = currentProduct.productDesc;
-	document.getElementById("currModel").innerHTML = modelNo;
-	document.getElementById("currDimensions").innerHTML = dims;
-	document.getElementById("currId").innerHTML = pid;
-	document.getElementById("currBrand").innerHTML = brand;
-	//document.getElementById("currTagID").innerHTML = currentProduct.tagID;
-	
-	
-
-});*/
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Functions Called Directly from Buttons ///////////////////////
@@ -444,20 +432,22 @@ function LogIn(){
              contentType: "application/json",
              dataType:"json",
              success : function(data, textStatus, jqXHR){
-                     loginID = data.account;
+            	 alert("work?");
+                     loginID = data.accountLogin;
                                      $.mobile.loading("hide");
                                      $.mobile.navigate("#regular");          
                      
              },
              error: function(data, textStatus, jqXHR){
+            	 alert("work1?");
                      console.log("textStatus: " + textStatus);
                      $.mobile.loading("hide");
                      if (data.status == 404){
-                             alert("Invalid username and password!");
-                             $.mobile.navigate("#home");  
+                             Popup("Invalid username and password!");
+                             $.mobile.navigate("#signin");  
                      }
                      else {
-                             alert("Internal Error.");               
+                             Popup("Internal Error.");               
                      }
              }
      });
@@ -470,7 +460,19 @@ function VerifyUserCart(){
         $.mobile.navigate("#cartUser");
 	}
 	else{
+		Popup("Please Log In or Register");
+	}
+
+}
+
+function VerifyProfile(){
+	if(loginID != 0){
+		$.mobile.loading("hide");
+        $.mobile.navigate("#Account");
+	}
+	else{
 		alert("Please Log In or Register");
+		 $.mobile.navigate("#signin");
 	}
 
 }
@@ -497,11 +499,11 @@ function VerifyAdmin(){
                      console.log("textStatus: " + textStatus);
                      $.mobile.loading("hide");
                      if (data.status == 404){
-                             alert("Invalid username and password!");
-                             $.mobile.navigate("#home");  
+                             Popup("Invalid username and password!");
+                             $.mobile.navigate("#signin");  
                      }
                      else {
-                             alert("Internal Error.");               
+                             Popup("Internal Error.");               
                      }
              }
      });
@@ -516,14 +518,21 @@ function SaveAccount(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var newAccount = ConverToJSON(formData);
-
 	console.log("New Account form: " + JSON.stringify(newAccount));
-
 	var newAccountJSON = JSON.stringify(newAccount);
+	
+	var form2 = $("#account-form2");
+	var formData2 = form2.serializeArray();
+	console.log("form Data: " + formData2);
+	var newAccount2 = ConverToJSON(formData2);
+	console.log("New Account form: " + JSON.stringify(newAccount2));
+	var newAccountJSON2 = JSON.stringify(newAccount2);
+
+	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/accounts",
 		method: 'post',
-		data : newAccountJSON,
+		data : newAccountJSON, newAccountJSON2,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
@@ -533,7 +542,7 @@ function SaveAccount(){
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Data could not be added!");
+			Popup("Data could not be added!");
 		}
 	});
 
@@ -562,18 +571,26 @@ function SaveProductUser(){
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Data could not be added!");
+			Popup("Data could not be added!");
 		}
 	});
 
 
 }
 
-
+function validateBid()
+{
+var x=document.forms["placeBid-form"]["bidAmount"].value;
+if (x==null || x=="")
+  {
+  alert("Bid Amount must be filled out");
+  return false;
+  }
+}
 
 function PlaceBid(){
 	if(loginID == 0){
-		alert("You must be logged In!");
+		Popup("You must be logged In!");
 		$.mobile.navigate("#home");
 	}
 	else{
@@ -587,18 +604,28 @@ function PlaceBid(){
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/placebids/" + loginID.userID + "/" + bidProductID + "/" + bidstartingPrice + "/" + startdate + "/" + enddate,
 		method: 'post',
+		dataType: "jsonp",
+        jsonpCallback: "_testbid",
+        cache: false,
+        timeout: 5000,
 		data : newPlaceBidJSON,
 		contentType: "application/json",
-		dataType:"json",
+		//Cambie esto -->dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
-			alert("You have succesfully placed a bid!");
+			if(data!=0 || data != null){
+			$("#placeBid").append(data);
+			$.mobile.navigate("#placeBid");
+			}
+			else{
+			Popup("You have succesfully placed a bid!");
 			$.mobile.navigate("#categories");
+			}
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Bid not found");
+			Popup("Bid not found");
 		}
 	});
 	}
@@ -609,7 +636,7 @@ function PlaceBid(){
 var currentOrder = {};
 function PlaceOrder(){
 	if(loginID == 0){
-		alert("You must be logged In!");
+		Popup("You must be logged In!");
 		$.mobile.navigate("#home");
 	}
 	else{
@@ -626,7 +653,7 @@ function PlaceOrder(){
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Product could not be added");
+			Popup("Product could not be added");
 		}
 	});
 	}
@@ -642,7 +669,7 @@ function PlaceOrder(){
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			alert("Product could not be added");
+			Popup("Product could not be added");
 		}
 	});
 	}
@@ -653,10 +680,10 @@ function PlaceOrder(){
 
 
 var notuserCart = [];
-var i = 0;
+var b = 0;
 function AddToCart(){
 	notuserCart[i++]= bidProductID;
-	alert("You have succesfully added a product!");
+	Popup("You have succesfully added a product!");
 	$.mobile.navigate("#categories");
 }
 
@@ -678,61 +705,54 @@ function UpdateAccount(){
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
                         $.mobile.loading("hide");
-                        $.mobile.navigate("#signin");
-                        alert("You have successfully edited your Account");
+                        $.mobile.navigate("#regular");
+                        Popup("You have successfully edited your Account");
                 },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Data could not be updated!");
+                                Popup("Data could not be updated!");
                         }
                         else {
-                                alert("Internal Error.");               
+                                Popup("Internal Error.");               
                         }
                 }
         });
 }
 
 
-
-
-
-function UpdateAccountAdmin(){
-	//alert("You have edited your account!");
-	$.mobile.navigate("#adminProfile");
+function UpdateUserAccountByAdmin(){
         $.mobile.loading("show");
-        var form = $("#account-view-form2");
+        var form = $("#account-view-form-admin");
         var formData = form.serializeArray();
         console.log("form Data: " + formData);
         var updAccount = ConverToJSON(formData);
-        updAccount.id = currentAccount.id;
         console.log("Updated Account: " + JSON.stringify(updAccount));
         var updAccountJSON = JSON.stringify(updAccount);
         $.ajax({
-               url : "http://localhost:3412/DB-Project/accounts/" + updAccount.id,
-               method: 'put',
-               data : updAccountJSON,
-               contentType: "application/json",
+                url : "http://localhost:3412/DB-Project/accountsUpdate/" +  currentUser.userID + "/" + currentUser.creditCardID + "/" + currentUser.addressID,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
-                       currentAccount = data.account;
-                       $.mobile.loading("hide");
-                       $.mobile.navigate("#adminProfile");
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#AccountByAdmin");
+                        Popup("You have successfully edited your Account");
                 },
                 error: function(data, textStatus, jqXHR){
-                       console.log("textStatus: " + textStatus);
-                       $.mobile.loading("hide");
-                       if (data.status == 404){
-                               alert("Data could not be updated!");
-                       }
-                       else {
-                               alert("Internal Error.");               
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                Popup("Data could not be updated!");
+                        }
+                        else {
+                                Popup("Internal Error.");               
                         }
                 }
         });
 }
-
 
 function DeleteAccount(){
         $.mobile.loading("show");
@@ -750,10 +770,10 @@ function DeleteAccount(){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Account not found.");
+                                Popup("Account not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });
@@ -779,10 +799,10 @@ function GetAddressUser(id){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Creditcard not found.");
+                                Popup("Creditcard not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });
@@ -799,7 +819,7 @@ function GetSellbyUser(id){
                 dataType:"json",
                 success : function(data, textStatus, jqXHR){
                         currentSell = data.sell;
-                        	alert(currentSell.productName);
+                        	Popup(currentSell.productName);
                           $.mobile.loading("hide");
                         $.mobile.navigate("#productUser");
                      
@@ -808,10 +828,10 @@ function GetSellbyUser(id){
                         console.log("textStatus: " + textStatus);
                         $.mobile.loading("hide");
                         if (data.status == 404){
-                                alert("Sell not found.");
+                                Popup("Sell not found.");
                         }
                         else {
-                                alter("Internal Server Error.");
+                                Popup("Internal Server Error.");
                         }
                 }
         });
@@ -843,7 +863,7 @@ $(document).on('pagebeforeshow', "#viewUsers", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("User not found!");
+			Popup("User not found!");
 			$.mobile.navigate("#searchUserPage");
 			
 		}
@@ -875,41 +895,9 @@ $(document).on('pagebeforeshow', "#viewUsers2", function( event, ui ) {
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
-			alert("User not found!");
+			Popup("User not found!");
 			$.mobile.navigate("#searchUserPage2");
 			
-		}
-	});
-});
-
-$(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
-	$.ajax({
-		url : "http://localhost:3412/DB-Project/accountAdmin",
-		contentType: "application/json",
-		success : function(data, textStatus, jqXHR){
-			var adminList = data.accountAdmin;		
-			
-			var len = adminList.length;
-			var list = $("#admins-list");
-			list.empty();
-			var admin;
-			
-			for (var i=0; i < len; ++i){
-				admin = adminList[i];
-				
-				list.append("<li><a>" + 
-					"<p><i><b> Name: </b></i>" + admin.adminUserName +  "</p>" +
-					"<p>_</p>" +
-					"<p><i><b> Id: </b></i>" + admin.adminID + "</p>" +
-					"<p class=\"ui-li-aside\"><i><b> Password: </b></i>" + admin.adminPassword + "</p>" +		
-					"</a></li>");
-			}
-			list.listview("refresh");
-							
-		},
-		error: function(data, textStatus, jqXHR){
-			console.log("textStatus: " + textStatus);
-			alert("Data not found!");
 		}
 	});
 });
@@ -924,7 +912,7 @@ function GetUser(id){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			//alert("herher");
+			//Popup("herher");
 			 currentUser = data.account;
 			 currentCreditcard = data.creditcard;
 			
@@ -936,10 +924,10 @@ function GetUser(id){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
 			if (data.status == 404){
-				alert("User not found.");
+				Popup("User not found.");
 			}
 			else {
-				alter("Internal Server Error.");
+				Popup("Internal Server Error.");
 			}
 		}
 	});
@@ -950,6 +938,30 @@ $(document).on('pagebeforeshow', "#AccountByAdmin", function( event, ui ) {
 
 	var userAccName = "Account of " + currentUser.userName;
 	document.getElementById("currAccName").innerHTML = userAccName;
+});
+
+$(document).on('pagebeforeshow', "#account-view-admin", function( event, ui ) {
+
+        $("#adm-userName").val(currentUser.userName);        
+        $("#adm-UserNickname").val(currentUser.userNickname);
+        $("#adm-Password").val(currentUser.password);
+        $("#adm-userEmail").val(currentUser.userEmail); 
+        $("#adm-addressLine").val(currentUser.addressLine); 
+        $("#adm-city").val(currentUser.city);
+        $("#adm-state").val(currentUser.state);
+        $("#adm-country").val(currentUser.country);
+        $("#adm-zipcode").val(currentUser.zipcode);
+        $("#adm-creditCardNumber").val(currentUser.creditCardNumber);
+        $("#adm-creditCardOwner").val(currentUser.creditCardOwner);
+        $("#adm-securityCode").val(currentUser.securityCode);
+        var myDate = currentUser.expDate;
+		var newDate=myDate.substring(0, 10); 
+        $("#adm-expDate").val(newDate);
+        $("#adm-caddressLine").val(currentUser.addressLine);
+        $("#adm-ccity").val(currentUser.city);
+        $("#adm-cstate").val(currentUser.state);
+        $("#adm-ccountry").val(currentUser.country);
+        $("#adm-czipcode").val(currentUser.zipcode);
 });
 
 $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
@@ -983,7 +995,7 @@ $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("Account not found!");
+                        Popup("Account not found!");
                 }
         });
 });
@@ -1017,7 +1029,358 @@ $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        alert("CreditCard not found!");
+                        Popup("CreditCard not found!");
                 }
         });
 });
+
+function SaveAccountByAdmin(){
+	$.mobile.loading("show");
+	var form = $("#account-form-admin");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newAccount = ConverToJSON(formData);
+
+	console.log("New Account form: " + JSON.stringify(newAccount));
+
+	var newAccountJSON = JSON.stringify(newAccount);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts",
+		method: 'post',
+		data : newAccountJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			Popup("You have succesfully added a user!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("Data could not be added!");
+		}
+	});
+
+
+}
+
+$(document).on('pagebeforeshow', "#viewUsersToDelete", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/users/" + $('#searchUserToDelete').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.accountByName;		
+			var len = userList.length;
+			var list = $("#users-list-delete");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append("<li><a onclick=GetUserToDelete(" + user.userID + ")>" + 
+					"<p><i><b> Name: </b></i>" + user.userName +  "</p>" +
+					"<p>_</p>" +
+					"<p><i><b> Nickname: </b></i>" + user.userNickname + "</p>" +
+					"<p class=\"ui-li-aside\"><i><b> Email: </b></i>" + user.userEmail + "</p>" +		
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			Popup("User not found!");
+			$.mobile.navigate("#searchUserPageToDelete");
+			
+		}
+	});
+});
+
+var delUserID;
+function GetUserToDelete(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			//Popup("herher");
+			 currentUser = data.account;
+			 currentCreditcard = data.creditcard;
+			 delUserID=id;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#UserToDelete");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				Popup("User not found.");
+			}
+			else {
+				Popup("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#UserToDelete", function( event, ui ) {
+// currentUser has been set at this point
+var temp = "Are you sure you want to delete account of: " + currentUser.userName + "?";
+document.getElementById("userDel").innerHTML = temp;
+});
+
+
+function DeleteUser(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountsDel/" + delUserID,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			Popup("You have succesfully removed a user!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("User could not be removed!");
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#viewAdmins", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminName/" + $('#searchAdmin').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.adminAccountByName;		
+			var len = userList.length;
+			var list = $("#admins-list");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append("<li><a onclick=GetAdmin(" + user.adminID + ")>" + 
+				"<p><i><b> Admin Nickname: </b></i>" + user.adminUserName +  "</p>" +
+				"<p>_</p>" +
+				"<p><i><b> Admin ID: </b></i>" + user.adminID + "</p>" +
+				"<p class=\"ui-li-aside\"><i><b> Password: </b></i>" + user.adminPassword + "</p>" +		
+				"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			Popup("User not found!");
+			$.mobile.navigate("#searchUserPage");
+			
+		}
+	});
+});
+
+
+var currentAdmin = {};
+
+function GetAdmin(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminID/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			 currentAdmin = data.accountAdmin2;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#editAdmin");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				Popup("User not found.");
+			}
+			else {
+				Popup("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#editAdmin", function( event, ui ) {
+	// currentAdmin has been set at this point
+
+	var adminAccName = "Edit account of " + currentAdmin.adminUserName;
+	document.getElementById("currAdminName").innerHTML = adminAccName;
+	// document.getElementById("adminUserName").innerHTML = currentAdmin.adminUserName;
+	// document.getElementById("adminPassword").innerHTML = currentAdmin.adminPassword;
+	$("#adminUserName").val(currentAdmin.adminUserName);        
+    $("#adminPassword").val(currentAdmin.adminPassword);
+
+});
+
+function UpdateAdminAccount(){
+        $.mobile.loading("show");
+        var form = $("#updateAdminAccount");
+        var formData = form.serializeArray();
+        console.log("form Data: " + formData);
+        var updAccount = ConverToJSON(formData);
+        console.log("Updated Account: " + JSON.stringify(updAccount));
+        var updAccountJSON = JSON.stringify(updAccount);
+        $.ajax({
+                url : "http://localhost:3412/DB-Project/adminUpdate/" +  currentAdmin.adminID,
+                method: 'put',
+                data : updAccountJSON,
+                contentType: "application/json",
+                dataType:"json",
+                success : function(data, textStatus, jqXHR){
+                        $.mobile.loading("hide");
+                        $.mobile.navigate("#adminProfile");
+                        Popup("You have successfully updated an admin account!");
+                },
+                error: function(data, textStatus, jqXHR){
+                        console.log("textStatus: " + textStatus);
+                        $.mobile.loading("hide");
+                        if (data.status == 404){
+                                Popup("Data could not be updated!");
+                        }
+                        else if (data.status == 400){
+                                Popup("Error: Missing fields for account.");
+                        }
+                        else {
+                                Popup(data.status);
+                                Popup("Internal Error.");               
+                        }
+                }
+        });
+}
+
+function SaveNewAdmin(){
+	$.mobile.loading("show");
+	var form = $("#newAdminForm");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newAccount = ConverToJSON(formData);
+
+	console.log("New Account form: " + JSON.stringify(newAccount));
+
+	var newAccountJSON = JSON.stringify(newAccount);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/newAdmin",
+		method: 'post',
+		data : newAccountJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			Popup("You have succesfully added an admin!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 400){
+                 Popup("Error: Missing fields for account.");
+            }
+			else{
+			Popup("Data could not be added!");
+			}
+		}
+	});
+
+
+}
+
+$(document).on('pagebeforeshow', "#viewAdminsToDelete", function( event, ui ) {
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminName/" + $('#searchAdminToDelete').val(),
+		contentType: "application/json",
+		success : function(data, textStatus, jqXHR){
+			var userList = data.adminAccountByName;		
+			var len = userList.length;
+			var list = $("#admins-list-delete");
+			list.empty();
+			var user;
+			for (var i=0; i < len; ++i){
+				user = userList[i];
+				
+				list.append("<li><a onclick=GetAdminToDelete(" + user.adminID + ")>" + 
+					"<p><i><b> Name: </b></i>" + user.adminUserName +  "</p>" +
+					"</a></li>");
+			}
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			Popup("User not found!");
+			$.mobile.navigate("#searchUserPageToDelete");
+			
+		}
+	});
+});
+
+var delAdminID;
+function GetAdminToDelete(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accountAdminID/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			 currentAdmin = data.accountAdmin2;
+			 delAdminID=id;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#AdminToDelete");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				Popup("User not found.");
+			}
+			else {
+				Popup("Internal Server Error.");
+			}
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#AdminToDelete", function( event, ui ) {
+// currentAdmin has been set at this point
+var temp = "Are you sure you want to delete account of: " + currentAdmin.adminUserName + "?";
+document.getElementById("adminDel").innerHTML = temp;
+});
+
+function DeleteAdmin(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/adminDel/" + delAdminID,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			$.mobile.loading("hide");
+			Popup("You have succesfully removed an admin!");
+			$.mobile.navigate("#adminProfile");
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("User could not be removed!");
+		}
+	});
+}
