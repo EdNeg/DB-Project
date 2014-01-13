@@ -58,6 +58,7 @@ var connection = mysql.createConnection({
 });
 
 
+
 // Postgres Database connection string: pg://<username>:<password>@host:port/dbname 
 
 //var conString = "pg://rgogqzpjvbmvuq:8AfsdO0anC3CJQz0BfD67e7fbS@ec2-54-225-103-9.compute-1.amazonaws.com:5432/d3m3opu022njhi";
@@ -1517,18 +1518,19 @@ app.post('/DB-Project/accounts', function (req, res) {
 
 //Checks Login
 app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
+	console.log("here0?");
 	var id = req.params.id;
 	var idp = req.params.idp;
 		console.log("GET account: " + id);
 
-
+console.log("here?");
 var query = connection.query("SELECT * FROM bbUser as u inner join bbaddress " +  
 		"as a inner join bbcreditcard as c WHERE u.userNickname = '" + id  + "'" + " AND " +
 		"u.password = '" + idp  + "'" + " AND u.creditCardID = c.creditCardID " +
 		"AND u.addressID = a.addressID;", function(err, rows, result){
-
+	console.log("here1?");
 		if (err) throw err;
-
+		console.log("here2?");
 	
 	
 	var len = rows.length;
@@ -2381,7 +2383,7 @@ app.get('/DB-Project/abids/:ids', function(req, res) {
             			" inner join bbProduct as r on b.productID = r.productID inner join " +
             			" bbSell as s on r.productID = s.productID WHERE s.userID= "+ ids, function(err, rows, result){
             if (err) throw err;
-    console.log("hello");
+    
     /*
     for (i = 0; i<rows.length; i++){
                       console.log('The solution is: ', rows[i]);
@@ -2466,22 +2468,19 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         console.log(ed);
         console.log(output);
       // pg.connect(conString, function(err, connection, done) {
-     
-        console.log("Herew");
-          if(!req.body.hasOwnProperty('bidAmount')) {
-            res.statusCode = 400;
-            return res.send('Error: Missing fields for address.');
-          }
           
           console.log("Hereo");
           if(count == 0){
           	
-        	  var query2 = connection.query("Select * from bbBidFor Where userID = '" + id + "' AND productID = '"+ idp +"'"); 
-        	  if(query2 == true){
+        	  var query2 = connection.query("Select * from bbBidFor Where userID = '" + id + "' AND productID = '"+ idp +"'", function(err, rows, result){ 
+        	  var len = rows.length;
+        	  if(len == 0){
         	  count = 1;
-        	  return res.send('You have already placed a bid!');
+        	  res.writeHead(200, {'Content-Type': 'text/plain'});
+        	  res.statusCode = 404;
+        	  res.end('_testbid(\'{"message": "You have already placed a bid!"}\')');
         	  }
-          }
+        	  });
           
           console.log("Here");
           if(output >= sd && output <= ed){
@@ -2493,7 +2492,8 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         	  console.log("Here2");
         	  var query1 = connection.query("UPDATE `bbBidProduct` SET `bidStartingPrice`= '" + req.body.bidAmount + "' WHERE `productID`='"+ idp +"'");
         	  var query = connection.query("INSERT INTO `bbBidFor` (`userID`,`productID`,`bidDate`,`bidAmount`) " +
-              		"VALUES ('" + id + "', '" + idp + "', '"+ output + "', '" + cb + "')");
+              		"VALUES ('" + id + "', '" + idp + "', '"+ output + "', '" + cb + "')",
+                  if (err) throw err;
         	  
         	  res.json(true);
         	  return;
@@ -2501,7 +2501,9 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           
           else{
         	  console.log("Here35");
-        	  return res.send('The bid amount is less than the bid starting price!');
+        	  res.writeHead(200, {'Content-Type': 'text/plain'});
+        	  res.statusCode = 404;
+        	  res.end('_testbid(\'{"message": "The bid amount is less than the bid starting price!"}\')');
           }
           console.log("Her4");
           
@@ -2509,11 +2511,16 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           console.log("Herein");
 		if(output < sd){
 			console.log("Here5");
-			return res.send('The bid date has not started yet');
+			res.writeHead(200, {'Content-Type': 'text/plain'});
+      	  res.statusCode = 404;
+      	  res.end('_testbid(\'{"message": "The bid date has not started yet!"}\')');
 		}
 		if(output > ed){
 			console.log("Here6");
-			return res.send('The bid date has passed');
+			res.writeHead(200, {'Content-Type': 'text/plain'});
+	      	  res.statusCode = 404;
+	      	  res.end('_testbid(\'{"message": "The bid date has passed!"}\')');
+			
 		}
 //done();
 

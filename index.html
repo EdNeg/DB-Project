@@ -36,7 +36,8 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
-			<a data-role="button"  href="#cartHome" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+			<a data-role="button"  onclick="findProduct()" href="#cartHome" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+			<a data-role="button"  data-iconpos="left" data-icon="star" data-theme="b" class="ui-btn-left" onclick="VerifyProfile()">Profile</a>
 
 
 		</header>
@@ -122,6 +123,33 @@
 				    <li><label for="state"> State: <input id="state" name="state" type="text"/></label></li>
   					<li><label for="country"> Country: <input id="country" name="country" type="text"/></label></li>
   					<li><label for="zipcode"> Zipcode: <input id="zipcode" name="zipcode" type="text"/></label></li>
+  			  	</ul>
+  			  	</fieldset>
+			</form>
+
+<center>
+    <a href="#registercont" type="button" data-transition="slidefade" data-theme="b">Next</a>
+</center>
+
+</div><!-- ---------------------------------------------------------Page Register -------------------------------------------------------------------------------------->
+
+
+<div data-role="page" id="registercont">
+	<header data-role="header" data-theme="d">
+		<h1>Register</h1>
+		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		
+		<div data-role="navbar">
+    	<ul>
+       		<li><a href="#signin" data-iconpos="bottom" data-icon="check" data-theme="d" data-transition="slidefade">Sign In</a></li>
+        	<li><a href="#register" class="ui-btn-active" data-iconpos="bottom" data-icon="edit" data-theme="d" data-transition="slidefade">Register</a></li>
+    	</ul>
+	</div><!-- /navbar -->
+	</header>
+	
+	<form id="account-form2">
+		<fieldset data-role="controlgroup">
+		 <ul data-role="listview" data-divider-theme="b" data-inset="true">
   					<li data-role="list-divider" role="heading">CreditCard Info</li>
   					<li><label for="creditCardNumber"> CreditCard Number: <input id="creditCardNumber" name="creditCardNumber" type="text"/></label></li>
   					<li><label for="creditCardOwner"> CreditCard Owner: <input id="creditCardOwner" name="creditCardOwner" type="text"/></label></li>
@@ -143,10 +171,10 @@
 			</form>
 
 <center>
-    <input type="submit" value="Submit" data-inline="true" data-theme="b"  onclick="SaveAccount()">
+    <input type="submit" value="Submit" data-theme="b"  onclick="SaveAccount()">
 </center>
 
-</div><!-- ---------------------------------------------------------Page Register -------------------------------------------------------------------------------------->
+</div><!-- ---------------------------------------------------------Page Register Continue-------------------------------------------------------------------------------------->
 	
 
 
@@ -1499,7 +1527,7 @@
 	                <a data-role="button" href="#product-view" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Cancel</a>
 	                <h1>BoricuaBay</h1>
 	        </header>
-	        <form id="placeBid-form">
+	        <form id="placeBid-form" name="placeBid-form" onsubmit="return validateBid()">
 			<fieldset data-role="controlgroup">
 		 	<ul data-role="listview" data-divider-theme="b" data-inset="true">   
 				<li><label for="bidAmount"> Bid Amount: <input id="bidAmount" name="bidAmount" type="number"/></label></li>

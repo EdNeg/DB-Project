@@ -179,22 +179,42 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 	});
 });
 
-$(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
+var cartList;
+function findProduct(){
 	var lenu = notuserCart.length;
 	for(var i = 0; i<lenu; i++){
+		$.ajax({
+			url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
+	        method: 'get',
+	        contentType: "application/json",
+	        dataType:"json",
+			success : function(data, textStatus, jqXHR){
+				 cartList[i] = data.cart;
+			},
+			error: function(data, textStatus, jqXHR){
+				console.log("textStatus: " + textStatus);
+
+				alert("You don't have any items in the Cart at the moment");
+
+			}
+		});
+		}
+	}
+
+$(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
-        method: 'get',
+		//url : "http://localhost:3412/DB-Project/notuserCarts/" + notuserCart[i],
+        //method: 'get',
         contentType: "application/json",
         dataType:"json",
-		success : function(data, textStatus, jqXHR){
-			var cartList = data.cart;		// ADD var bidProductList = data.bidProduct;
+		success : function(data, textStatus, jqXHR){		// ADD var bidProductList = data.bidProduct;
 			var len = cartList.length;
 			var list = $("#cartHome-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
+			for(i=0; i<cartList.length; i++){
 			//alert(cartList[i]);
-				products = cartList[0];
+				products = cartList[i];
 					list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
 
 					"<img src= " +   products.productPhoto +"/>" +			// imgSrc ---- productPhoto
@@ -211,7 +231,7 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 					"</a></li>");
 				
 			
-			
+			}
 			list.listview("refresh");
 							
 		},
@@ -222,7 +242,6 @@ $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 
 		}
 	});
-	}
 });
 
 
@@ -444,12 +463,14 @@ function LogIn(){
              contentType: "application/json",
              dataType:"json",
              success : function(data, textStatus, jqXHR){
+            	 alert("work?");
                      loginID = data.accountLogin;
                                      $.mobile.loading("hide");
                                      $.mobile.navigate("#regular");          
                      
              },
              error: function(data, textStatus, jqXHR){
+            	 alert("work1?");
                      console.log("textStatus: " + textStatus);
                      $.mobile.loading("hide");
                      if (data.status == 404){
@@ -471,6 +492,18 @@ function VerifyUserCart(){
 	}
 	else{
 		alert("Please Log In or Register");
+	}
+
+}
+
+function VerifyProfile(){
+	if(loginID != 0){
+		$.mobile.loading("hide");
+        $.mobile.navigate("#Account");
+	}
+	else{
+		alert("Please Log In or Register");
+		 $.mobile.navigate("#signin");
 	}
 
 }
@@ -516,14 +549,21 @@ function SaveAccount(){
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var newAccount = ConverToJSON(formData);
-
 	console.log("New Account form: " + JSON.stringify(newAccount));
-
 	var newAccountJSON = JSON.stringify(newAccount);
+	
+	var form2 = $("#account-form2");
+	var formData2 = form2.serializeArray();
+	console.log("form Data: " + formData2);
+	var newAccount2 = ConverToJSON(formData2);
+	console.log("New Account form: " + JSON.stringify(newAccount2));
+	var newAccountJSON2 = JSON.stringify(newAccount2);
+
+	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/accounts",
 		method: 'post',
-		data : newAccountJSON,
+		data : newAccountJSON, newAccountJSON2,
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
@@ -569,7 +609,15 @@ function SaveProductUser(){
 
 }
 
-
+function validateBid()
+{
+var x=document.forms["placeBid-form"]["bidAmount"].value;
+if (x==null || x=="")
+  {
+  alert("Bid Amount must be filled out");
+  return false;
+  }
+}
 
 function PlaceBid(){
 	if(loginID == 0){
@@ -587,13 +635,23 @@ function PlaceBid(){
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/placebids/" + loginID.userID + "/" + bidProductID + "/" + bidstartingPrice + "/" + startdate + "/" + enddate,
 		method: 'post',
+		dataType: "jsonp",
+        jsonpCallback: "_testbid",
+        cache: false,
+        timeout: 5000,
 		data : newPlaceBidJSON,
 		contentType: "application/json",
-		dataType:"json",
+		//Cambie esto -->dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			$.mobile.loading("hide");
+			if(data!=0 || data != null){
+			$("#placeBid").append(data);
+			$.mobile.navigate("#placeBid");
+			}
+			else{
 			alert("You have succesfully placed a bid!");
 			$.mobile.navigate("#categories");
+			}
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -653,9 +711,9 @@ function PlaceOrder(){
 
 
 var notuserCart = [];
-var i = 0;
+var b = 0;
 function AddToCart(){
-	notuserCart[i++]= bidProductID;
+	notuserCart[b++]= bidProductID;
 	alert("You have succesfully added a product!");
 	$.mobile.navigate("#categories");
 }
