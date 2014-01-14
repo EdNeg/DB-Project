@@ -2113,10 +2113,8 @@ var query = connection.query("SELECT paidDate, DAY(paidDate) as day, MONTH(paidD
 app.get('/DB-Project/salesWeeks/', function(req, res) { 
 		console.log("GET weeks" );
  
-var query = connection.query("SELECT paidDate, DAY(paidDate) as sDay, MONTH(paidDate) as sMonth, YEAR(paidDate) as sYear,"+
-					"date_add(paidDate, INTERVAL 7 DAY) as end, DAY(date_add(paidDate, INTERVAL 7 DAY) ) as eDay,"+
-					" MONTH(date_add(paidDate, INTERVAL 7 DAY)) as eMonth, YEAR(date_add(paidDate, INTERVAL 7 DAY)) as eYear "+
-					" FROM boricuabaydb.bbpay Group by paidDate;", function(err, rows, result){
+var query = connection.query("SELECT paidDate, Week(paidDate) as week, YEAR(paidDate) as year  "+ 
+						" FROM boricuabaydb.bbpay Group by Week(paidDate), YEAR(paidDate);", function(err, rows, result){
 		if (err) throw err;
  
 	var len = rows.length;
@@ -2181,7 +2179,10 @@ var query = connection.query("SELECT YEAR(paidDate) as year FROM boricuabaydb.bb
 // REST Operation - HTTP GET to read sales WEEKs
 app.get('/DB-Project/saleWeekProduct/:id', function(req, res) { 
 		var id = req.params.id;
-		console.log("GET product weekly sales "+ id );
+		var weekYear = id.split(' ');
+		console.log("GET product weekly revenues "+ id );
+		console.log(" week  "+ weekYear[0] );
+		console.log(" year  "+ weekYear[1] ); 
  
 var query = connection.query("SELECT ProductName as name,  bidStartingPrice as start, MAX(bidAmount) as amount "+
 			"FROM boricuabaydb.bbProduct as p "+
@@ -2192,7 +2193,7 @@ var query = connection.query("SELECT ProductName as name,  bidStartingPrice as s
 									"FROM boricuabaydb.bbContain as c "+
 									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
 									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
-									"where paidDate between DATE('"+id+"') and date_add(DATE('"+id+"'), INTERVAL 8 DAY) "+
+									"where week(paidDate) ='"+weekYear[0]+"'  and year(paidDate) ='"+weekYear[1]+"' "+
 									") "+
 			"Group by ProductName;", function(err, rows, result){
 		if (err) throw err;
@@ -2320,7 +2321,10 @@ var query = connection.query("SELECT ProductName as name,  bidStartingPrice as s
 // REST Operation - HTTP GET to read revenues WEEKs
 app.get('/DB-Project/revenueWeekProduct/:id', function(req, res) { 
 		var id = req.params.id;
+		var weekYear = id.split(' ');
 		console.log("GET product weekly revenues "+ id );
+		console.log(" week  "+ weekYear[0] );
+		console.log(" year  "+ weekYear[1] ); 
  
 var query = connection.query("SELECT ProductName as name,  (MAX(bidAmount) - bidStartingPrice) as amount "+
 			"FROM boricuabaydb.bbProduct as p "+
@@ -2331,7 +2335,7 @@ var query = connection.query("SELECT ProductName as name,  (MAX(bidAmount) - bid
 									"FROM boricuabaydb.bbContain as c "+
 									"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
 									"inner join boricuabaydb.bbPay as p on p.orderID = o.orderID "+
-									"where paidDate between DATE('"+id+"') and date_add(DATE('"+id+"'), INTERVAL 8 DAY) "+
+									"where week(paidDate) ='"+weekYear[0]+"'  and year(paidDate) ='"+weekYear[1]+"' "+
 									") "+
 			"Group by ProductName;", function(err, rows, result){
 		if (err) throw err;
@@ -2462,7 +2466,7 @@ app.get('/DB-Project/saleWeek/', function(req, res) {
 		//var id = req.params.id;
 		console.log("GET weekly sales " );
  
-var query = connection.query( "Select WEEK(paidDate) as name,  SUM(am) as amount "+
+var query = connection.query( "Select WEEK(paidDate) as name, Year(paidDate) as name2,  SUM(am) as amount "+
 			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
 				"FROM boricuabaydb.bbProduct as p "+
 				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
@@ -2471,7 +2475,7 @@ var query = connection.query( "Select WEEK(paidDate) as name,  SUM(am) as amount
 				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
 				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
 				"Group by paidDate, productName ) as prod "+ 
-			"group by week(paidDate);", function(err, rows, result){
+			"group by week(paidDate), Year(paidDate);", function(err, rows, result){
 		if (err) throw err;
  
 	var len = rows.length;
@@ -2494,7 +2498,7 @@ app.get('/DB-Project/saleDay/', function(req, res) {
 		//var id = req.params.id;
 		console.log("GET dayly sales " );
  
-var query = connection.query("Select paidDate as name,  SUM(am) as amount "+
+var query = connection.query("Select Day(paidDate) as name, Month(paidDate) as name2, year(paidDate) as name3, SUM(am) as amount "+
 			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
 				"FROM boricuabaydb.bbProduct as p "+
 				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
@@ -2503,7 +2507,7 @@ var query = connection.query("Select paidDate as name,  SUM(am) as amount "+
 				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
 				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
 				"Group by paidDate, productName ) as prod "+ 
-			"group by paidDate ;", function(err, rows, result){
+			"group by Day(paidDate), month(paidDate), year(paidDate) ;", function(err, rows, result){
 		if (err) throw err;
  
 	var len = rows.length;
@@ -2525,7 +2529,7 @@ var query = connection.query("Select paidDate as name,  SUM(am) as amount "+
 app.get('/DB-Project/saleMonth/', function(req, res) {  
 		console.log("GET monthly sales " ); 
 		
-var query = connection.query("Select MONTH(paidDate) as name,  SUM(am) as amount "+
+var query = connection.query("Select MONTH(paidDate) as name, Year(paidDate) as name2,   SUM(am) as amount "+
 			"from ( SELECT paidDate, productName, MAX(bidAmount) as am "+
 				"FROM boricuabaydb.bbProduct as p "+
 				"inner join boricuabaydb.bbBidProduct as bp on bp.productID = p.productID "+
@@ -2534,7 +2538,7 @@ var query = connection.query("Select MONTH(paidDate) as name,  SUM(am) as amount
 				"inner join boricuabaydb.bbOrder as o on o.orderID = c.orderID "+
 				"inner join boricuabaydb.bbPay as pa on pa.orderID = o.orderID "+ 
 				"Group by paidDate, productName ) as prod "+ 
-			"group by MONTH(paidDate);", function(err, rows, result){
+			"group by MONTH(paidDate), Year(paidDate);", function(err, rows, result){
 		if (err) throw err;
  
 	var len = rows.length;
