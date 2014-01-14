@@ -400,10 +400,29 @@ app.post('/DB-Project/products/:id/:selection', function(req, res) {
 app.post('/DB-Project/insertProducts/:id/:idp', function(req, res) {
 	var id = parseFloat(req.params.id);
 	var idp = parseFloat(req.params.idp);
+	
         console.log("POST Products in Add");
        //pg.connect(conString, function(err, connection, done) {
         	  var query = connection.query('INSERT INTO bbAddToCart (productID,userID,aQuantity) ' +
-              		'VALUES (' + id + ', ' + idp + ', null)');
+              		'VALUES (' + idp + ', ' + id + ', null)');
+        	  
+        	  res.json(true);
+        	  return;
+
+//done();
+//});
+});
+
+app.post('/DB-Project/insertBidProducts/:id/:idp/:idprice', function(req, res) {
+	var id = parseFloat(req.params.id);
+	var idp = parseFloat(req.params.idp);
+	var idprice = parseFloat(req.params.idprice);
+        console.log("POST Products in Add");
+       //pg.connect(conString, function(err, connection, done) {
+        	  var query = connection.query('INSERT INTO bbAddToCart (productID,userID,aQuantity) ' +
+              		'VALUES (' + idp + ', ' + id + ', null)');
+        	  var query = connection.query("UPDATE `bbProduct` SET `productPrice` = '" + idprice + "', " +
+        	  			 "' where productID= '"+id+"'");
         	  
         	  res.json(true);
         	  return;
@@ -828,6 +847,16 @@ app.del('/DB-Project/tagDel/:ids', function(req, res) {
 				
 
 //-----------------------Regular User------------------------------------------------------
+
+app.put('/DB-Project/changeUser/:id', function(req, res) {
+	var id = req.params.id;
+	console.log("Change User: " + id);
+  	
+  	 var query = connection.query("UPDATE `bbAddToCart` SET `userID` = '" + id + "', " +
+  			 "' where userID= '0'");	
+  
+  	res.json(true);
+});
 
 // Gets the user Information by userName
 app.get('/DB-Project/users/:idu', function(req, res) {
@@ -1458,6 +1487,40 @@ app.get('/DB-Project/carts', function(req, res) {
 //});
 });
 
+app.get('/DB-Project/calculatePay/:id', function(req, res) {
+	var id = req.params.id;
+    console.log("GET CALCULATED PAY OF: " + id);
+
+//pg.connect(conString, function(err, connection, done) {
+    var query = connection.query("SELECT SUM(productPrice) as TotalSum FROM bbAddToCart natural join bbProduct" +
+    		"WHERE userID = " + id, function(err, rows, result ){
+
+
+    if (err) throw err;
+
+/*
+for (i = 0; i<result.rows.length; i++){
+                 console.log('The solution is: ', rows[i]);
+         }*/
+
+
+
+
+var len =rows.length;
+if (len == 0){
+    res.statusCode = 404;
+    res.send("Cart not found.");
+}
+else {        
+      var response = {"calculatePay" : rows};
+    //connection.end();
+      res.json(response);
+}
+//  done();
+});
+//});
+});
+
 // REST Operation - HTTP GET to read a car based on its id
 app.get('/DB-Project/carts/:id', function(req, res) {
         var id = req.params.id;
@@ -1804,6 +1867,28 @@ app.get('/DB-Project/abids/:ids', function(req, res) {
 //});
 });
 
+app.get('/DB-Project/winerbid/:ids', function(req, res) {
+    var ids = req.params.ids;
+            console.log("GET winner bid: " + ids);
+            //pg.connect(conString, function(err, connection, done) {
+
+            	var query = connection.query("SELECT bidAmount, bidStartingPrice, productID, endDate, productPrice FROM bbBidFor natural join bbBidProduct WHERE userID= "+ ids, function(err, rows, result){
+            if (err) throw err;
+    
+    /*
+    for (i = 0; i<rows.length; i++){
+                      console.log('The solution is: ', rows[i]);
+                }*/
+    
+         
+              var response = {"winnerbid" : rows};
+            //connection.end();
+              res.json(response);
+      //done();
+});
+//});
+});
+
 
   
 // REST Operation - HTTP PUT to updated a car based on its id
@@ -2044,18 +2129,19 @@ app.put('/DB-Project/bids/:id', function(req, res) {
 });
 
 //REST Operation - HTTP POST to add a new a car
-app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
+app.get('/DB-Project/placeOrder/:id/:idc/:idb/:idp', function(req, res) {
 	var id = req.params.id;
 	var idc = req.params.idc;
 	var idb = req.params.idb;
+	var idp = req.params.idb;
         console.log("POST Place Order " + id);
 
         	  var query = connection.query("INSERT INTO bbOrder (userID) " +
               		"VALUES (' + id + ')");
         	  var getquery = connection.query("SET @last_insert_id_in_bbOrder = LAST_INSERT_ID()");
         	  var query1 = connection.query("INSERT INTO bbPay (creditCardID,bankAccountID,paidAmount,paidDate,orderID) " +
-                		"VALUES ('" + idc + "', '"+ idb +"', null, '"+output+"', @last_insert_id_in_bbOrder)");
-        	  var query2 = connection.query("Select orderID, paidDate from bbPay natural join bbOrder where userID= "+id, function(err, rows, result ){
+                		"VALUES ('" + idc + "', '"+ idb +"', '"+ idp +"', '"+output+"', @last_insert_id_in_bbOrder)");
+        	  var query2 = connection.query("Select orderID, paidDate, paidAmount from bbPay natural join bbOrder where userID= "+id, function(err, rows, result ){
 
         			if (err) throw err;
 
