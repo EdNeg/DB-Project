@@ -1872,7 +1872,9 @@ app.get('/DB-Project/winerbid/:ids', function(req, res) {
             console.log("GET winner bid: " + ids);
             //pg.connect(conString, function(err, connection, done) {
 
-            	var query = connection.query("SELECT bidAmount, bidStartingPrice, productID, endDate, productPrice FROM bbBidFor natural join bbBidProduct WHERE userID= "+ ids, function(err, rows, result){
+            	var query = connection.query("SELECT bidAmount, bidStartingPrice, bp.productID, endDate, productPrice "+
+            	"FROM boricuabaydb.bbBidFor as bp natural join boricuabaydb.bbBidProduct natural join boricuabaydb.bbProduct "+
+            	"WHERE bidAmount = bidStartingPrice and userID= '"+ ids+"' and endDate < '"+ output+"';", function(err, rows, result){
             if (err) throw err;
     
     /*

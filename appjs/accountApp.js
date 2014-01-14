@@ -234,17 +234,21 @@ $(document).on('pagebeforeshow', "#regular", function( event, ui ) {
             contentType: "application/json",
             dataType:"json",
                 success : function(data, textStatus, jqXHR){
-                	    var winner = data.winnerbid;
-                        if(winner.bidAmount == winner.bidStartingPrice && output > winner.endDate){
-                        	Popup("You have won a bid!");
-                        	Popup("Check your cart!");
-                        	AddBidToCart(loginID.userID, winner.productID,winner.productPrice);
-                        }   
+                	    console.log("wef");
+                	    var winnerList = data.winnerbid;
+                	 	var len = winnerList.length;
+                	 	for (var i=0; i < len; ++i){
+							product = winnerList[i]; 
+	                   		Popup("You have won a bid!");
+	                      	Popup("Check your cart!");
+	                       	AddBidToCart(loginID.userID, product.productID, product.productPrice);
+                        } 
           
-        },
+        		},
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
-                        Popup("Error Found!");
+                        console.log("errores "); 
+                        Popup("Error Found! " );
                 }
         });
 });
