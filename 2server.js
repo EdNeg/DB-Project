@@ -1508,7 +1508,7 @@ var query = connection.query("SELECT * FROM bbProduct natural join bbBidProduct 
     
     
     
-    var len =result.rows.length;
+    var len = rows.length;
     if (len == 0){
             res.statusCode = 404;
             res.send("Cart not found.");
@@ -1880,13 +1880,14 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           	
         	  var query2 = connection.query("Select * from bbBidFor Where userID = '" + id + "' AND productID = '"+ idp +"'", function(err, rows, result){ 
         	  var len = rows.length;
-        	  if(len == 0){
+        	  if(len != 0){
         	  count = 1;
-        	  res.writeHead(200, {'Content-Type': 'text/plain'});
+        	  
         	  res.statusCode = 404;
-        	  res.end('_testbid(\'{"message": "You have already placed a bid!"}\')');
+        	  
         	  }
         	  });
+        	 }
           
           console.log("Here");
           if(output >= sd && output <= ed){
@@ -1898,8 +1899,8 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
         	  console.log("Here2");
         	  var query1 = connection.query("UPDATE `bbBidProduct` SET `bidStartingPrice`= '" + req.body.bidAmount + "' WHERE `productID`='"+ idp +"'");
         	  var query = connection.query("INSERT INTO `bbBidFor` (`userID`,`productID`,`bidDate`,`bidAmount`) " +
-              		"VALUES ('" + id + "', '" + idp + "', '"+ output + "', '" + cb + "')",
-                  if (err) throw err;
+              		"VALUES ('" + id + "', '" + idp + "', '"+ output + "', '" + cb + "')");
+ 
         	  
         	  res.json(true);
         	  return;
@@ -1907,9 +1908,9 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           
           else{
         	  console.log("Here35");
-        	  res.writeHead(200, {'Content-Type': 'text/plain'});
+        	 
         	  res.statusCode = 404;
-        	  res.end('_testbid(\'{"message": "The bid amount is less than the bid starting price!"}\')');
+        	 
           }
           console.log("Her4");
           
@@ -1917,15 +1918,15 @@ app.post('/DB-Project/placebids/:id/:idp/:idb/:sd/:ed', function(req, res) {
           console.log("Herein");
 		if(output < sd){
 			console.log("Here5");
-			res.writeHead(200, {'Content-Type': 'text/plain'});
+			
       	  res.statusCode = 404;
-      	  res.end('_testbid(\'{"message": "The bid date has not started yet!"}\')');
+      	  
 		}
 		if(output > ed){
 			console.log("Here6");
-			res.writeHead(200, {'Content-Type': 'text/plain'});
+			
 	      	  res.statusCode = 404;
-	      	  res.end('_testbid(\'{"message": "The bid date has passed!"}\')');
+	      	  
 			
 		}
 //done();

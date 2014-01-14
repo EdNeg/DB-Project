@@ -31,7 +31,7 @@
 		<header data-role="header" data-theme="d">
 			<i><h1 aria-level="1" role="heading" tabindex="0" class="ui-title">BoricuaBay</h1></i>
 			
-			<a data-role="button"  onclick="findProduct()" href="#cartHome" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
+			<a data-role="button"  onclick="VerifyUserCart()" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right">Cart</a>
 			<a data-role="button"  data-iconpos="left" data-icon="star" data-theme="b" class="ui-btn-left" onclick="VerifyProfile()">Profile</a>
 
 
@@ -955,11 +955,7 @@
 			
 </div><!-- 	PAGE GOLF---------------------------------------------------------------------------------->
 
-=======
-	</ul></div>
- 
-</div><!--------------------------------------- Page SubCategories----------------------------------------------------------------------------------->	
->>>>>>> d0fd144d0675925b7f6e7daa27cd3d3a9997ae62
+
 
 <div data-role="page" id="tags">
 	<header data-role="header" data-theme="d">
@@ -1014,6 +1010,7 @@
         <header data-role="header" data-theme="d">
                         <a data-role="button" data-rel="back" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left" data-theme="b">Home</a>
+                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder()">Order</a>
                          <h1><i>BoricuaBay</i></h1>
 
                 </header>
@@ -1263,7 +1260,7 @@
 	                <a data-role="button" href="#product-view" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-theme="b">Cancel</a>
 	                <h1>BoricuaBay</h1>
 	        </header>
-	        <form id="placeBid-form" name="placeBid-form" onsubmit="return validateBid()">
+	        <form id="placeBid-form">
 			<fieldset data-role="controlgroup">
 		 	<ul data-role="listview" data-divider-theme="b" data-inset="true">   
 				<li><label for="bidAmount"> Bid Amount: <input id="bidAmount" name="bidAmount" type="number"/></label></li>
@@ -1934,7 +1931,7 @@
  
 </div><!-- Page week Reports -------------------------------------------------------------------------------------->
 
-<<<<<<< HEAD
+ 
 <div data-role="page" id= "daySales">
 	<header data-role="header" data-theme="d" data-position="fixed">
 		<h1>Sales Report</h1>
@@ -1957,7 +1954,7 @@
  
  
 </div><!-- Page day Reports -------------------------------------------------------------------------------------->
-=======
+ 
 <div id="account-view-admin" data-role="page">
 	<header data-role="header" data-theme="d" data-position="fixed">
 			<a data-role="button" href="#AccountByAdmin" data-icon="arrow-l"
@@ -2758,7 +2755,7 @@
 	
 </div><!-- ---------------------------------------Page View Tag To Delete------------------------------------------------------------------------>
 
->>>>>>> c96d2451f3ab010ae25dc4ac310cc4de1bd61323
+
 
 <div data-role="page" id= "monthSales">
 	<header data-role="header" data-theme="d" data-position="fixed">
