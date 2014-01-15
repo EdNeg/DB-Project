@@ -418,17 +418,26 @@ app.post('/DB-Project/insertBidProducts/:id/:idp/:idprice', function(req, res) {
 	var idp = parseFloat(req.params.idp);
 	var idprice = parseFloat(req.params.idprice);
         console.log("POST Products in Add");
-       //pg.connect(conString, function(err, connection, done) {
-        	  var query = connection.query('INSERT INTO bbAddToCart (productID,userID,aQuantity) ' +
+        
+        connection.query("SELECT * FROM bbAddToCart WHERE productID = '" + idp + "' and userID = '" + id + "';" , function(err, rows, result){
+	 		if (err) throw err;
+			
+			var len = rows.length;
+			if (len == 0){
+				var query = connection.query('INSERT INTO bbAddToCart (productID,userID,aQuantity) ' +
               		'VALUES (' + idp + ', ' + id + ', null)');
         	  var query = connection.query("UPDATE `bbProduct` SET `productPrice` = '" + idprice + "', " +
-        	  			 "' where productID= '"+id+"'");
+        	  			 " where productID= '"+idp+"'");
         	  
         	  res.json(true);
-        	  return;
-
-//done();
-//});
+			}
+			else {	
+		  		res.json(false);
+		  	}
+		 }); 
+		 
+     	return;
+ 
 });
 
 ////Try this if not change parameters to ""
@@ -1867,28 +1876,27 @@ app.get('/DB-Project/abids/:ids', function(req, res) {
 //});
 });
 
-app.get('/DB-Project/winerbid/:ids', function(req, res) {
-    var ids = req.params.ids;
+app.get('/DB-Project/winnerbid/:id', function(req, res) {
+    var ids = req.params.id;
             console.log("GET winner bid: " + ids);
             //pg.connect(conString, function(err, connection, done) {
 
             	var query = connection.query("SELECT bidAmount, bidStartingPrice, bp.productID, endDate, productPrice "+
-            	"FROM boricuabaydb.bbBidFor as bp natural join boricuabaydb.bbBidProduct natural join boricuabaydb.bbProduct "+
-            	"WHERE bidAmount = bidStartingPrice and userID= '"+ ids+"' and endDate < '"+ output+"';", function(err, rows, result){
-            if (err) throw err;
-    
-    /*
-    for (i = 0; i<rows.length; i++){
-                      console.log('The solution is: ', rows[i]);
-                }*/
-    
-         
-              var response = {"winnerbid" : rows};
-            //connection.end();
-              res.json(response);
-      //done();
+            	" FROM boricuabaydb.bbBidFor as bp natural join boricuabaydb.bbBidProduct natural join boricuabaydb.bbProduct "+
+            	" WHERE bidAmount = bidStartingPrice and userID= '"+ ids+"' and endDate < '"+ output+"';", function(err, rows, result){
+	            if (err) throw err;
+	    
+	    /*
+	    for (i = 0; i<rows.length; i++){
+	                      console.log('The solution is: ', rows[i]);
+	                }*/
+	     
+	              var response = {"winnerbid" : rows};
+	            //connection.end();
+	              res.json(response);
+      	//done();
+		//});
 });
-//});
 });
 
 

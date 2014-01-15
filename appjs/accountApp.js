@@ -233,23 +233,25 @@ $(document).on('pagebeforeshow', "#regular", function( event, ui ) {
             method: 'get',
             contentType: "application/json",
             dataType:"json",
-                success : function(data, textStatus, jqXHR){
-                	    console.log("wef");
-                	    var winnerList = data.winnerbid;
-                	 	var len = winnerList.length;
-                	 	for (var i=0; i < len; ++i){
-							product = winnerList[i]; 
-	                   		Popup("You have won a bid!");
-	                      	Popup("Check your cart!");
-	                       	AddBidToCart(loginID.userID, product.productID, product.productPrice);
-                        } 
-          
-        		},
-                error: function(data, textStatus, jqXHR){
-                        console.log("textStatus: " + textStatus);
-                        console.log("errores "); 
-                        Popup("Error Found! " );
-                }
+         	success : function(data, textStatus, jqXHR){
+            	console.log("wef");
+            	var winnerList = data.winnerbid;
+          		var len = winnerList.length;
+               	for (var i=0; i < len; ++i){
+					product = winnerList[i]; 
+	             	
+	                AddBidToCart(loginID.userID, product.productID, product.productPrice);
+           		}  
+           		if(len > 0){
+           			//Popup("You have won a bid! Check your cart!");
+           		}
+           		
+        	},
+         	error: function(data, textStatus, jqXHR){
+           		console.log("textStatus: " + textStatus);
+            	console.log("errores "); 
+             	Popup("Error Found!");
+        	}
         });
 });
 
@@ -260,6 +262,9 @@ function AddBidToCart(uID,pID,pPrice){
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
+			if(data){
+				Popup("You have won a bid! Check your cart!");
+			}
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
