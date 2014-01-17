@@ -1010,7 +1010,7 @@
         <header data-role="header" data-theme="d">
                         <a data-role="button" data-rel="back" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left" data-theme="b">Home</a>
-                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder()">Order</a>
+                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder(); calculateAmountToPay();">Order</a>
                          <h1><i>BoricuaBay</i></h1>
 
                 </header>
@@ -1622,7 +1622,7 @@
                         <a data-role="button" href="#home" data-icon="arrow-l"
 
                                 data-iconpos="left" class="ui-btn-left" data-theme="d">Home</a>
-                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder()">Order</a>
+                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder(); calculateAmountToPay();">Order</a>
 
                         <h1>BoricuaBay</h1>
                 </header>
@@ -2805,5 +2805,9 @@
 
 </body>
 
+<script>
+	$(document).ready(function(){ clearCart(); });
+	
+</script>
 	
 </html>

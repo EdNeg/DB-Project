@@ -58,7 +58,7 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
          });
  });
 
-var currentCreditcard = {};
+var currentCreditcard ;
 
 $(document).on('pagebeforeshow', "#creditcards", function( event, ui ) {
         console.log("Jose");
@@ -184,14 +184,14 @@ var cartHome;
 
 $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {
 			$.ajax({
-		url : "http://localhost:3412/DB-Project/carts/" + "0",
+		url : "http://localhost:3412/DB-Project/carts/0" ,
         method: 'get',
         contentType: "application/json",
         dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			var cartList = data.cart;		// ADD var bidProductList = data.bidProduct;
 			var len = cartList.length;
-			var list = $("#cartUser-list");///////////////////////////////////////////////////
+			var list = $("#cartHome-list");///////////////////////////////////////////////////
 			list.empty();
 			var products;
 			for (var i=0; i < len; ++i){
@@ -467,7 +467,7 @@ function LogIn(){
                      
              },
              error: function(data, textStatus, jqXHR){
-            	 alert("work1?");
+            	
                      console.log("textStatus: " + textStatus);
                      $.mobile.loading("hide");
                      if (data.status == 404){
@@ -483,17 +483,14 @@ function LogIn(){
 }
 
 function VerifyUserCart(){
-	if(loginID != 0){
-		$.mobile.loading("hide");
-        $.mobile.navigate("#cartUser");
-	}
-	else if(check==1){
+	if(check == 1 && loginID !=0){
 		 $.ajax({
 				 url : "http://localhost:3412/DB-Project/changeUser/" + loginID.userID,
 				 method: 'put',
 				 contentType: "application/json",
 				 dataType:"json",
 				 success : function(data, textStatus, jqXHR){
+				 	check = 0;
 					 $.mobile.navigate("#cartUser");
 				 },
 				 error: function(data, textStatus, jqXHR){
@@ -503,8 +500,14 @@ function VerifyUserCart(){
 				 }
 			 });
 	}
+	else if(loginID != 0){
+		$.mobile.loading("hide");
+		
+        $.mobile.navigate("#cartUser");
+	}
+	
 	else{
-$.mobile.navigate("#cartHome");
+    $.mobile.navigate("#cartHome");
 		
 	}
 
@@ -670,16 +673,16 @@ function PlaceBid(){
 
 }
  var checkOrder = 0;
- var currentOrder = {};
+ var currentOrder ;
  function PlaceOrder(){
 	 if(loginID == 0){
 		 Popup("You must be logged In!");
 		 $.mobile.navigate("#signin");
 	 }
 	 else{
-		 calculateAmountToPay();
+			alert("2"+userPay);
 	 $.ajax({
-		 url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" + currentCreditcard.creditCardID + "/" + currentCreditcard.bankAccountID + "/" + userPay.TotalSum,
+		 url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" +  currentCreditcard.creditCardID + "/" +  currentCreditcard.bankAccountID + "/" + userPay,
 		 method: 'get',
 		 contentType: "application/json",
 		 dataType:"json",
@@ -698,7 +701,7 @@ function PlaceBid(){
  
  }
 
- var userPay;
+var userPay;
  function calculateAmountToPay(){
 	 $.ajax({
 		 url : "http://localhost:3412/DB-Project/calculatePay/" + loginID.userID,
@@ -706,7 +709,9 @@ function PlaceBid(){
 		 contentType: "application/json",
 		 dataType:"json",
 		 success : function(data, textStatus, jqXHR){
-			 userPay = data.calculatePay;
+			 userPay = data.calculatePay[0].TotalSum;
+			 alert("1"+userPay);
+			
 		 },
 		 error: function(data, textStatus, jqXHR){
 			 console.log("textStatus: " + textStatus);
@@ -722,7 +727,7 @@ var check = 0;
 function AddToCart(){
 	if(loginID==0){
 	$.ajax({
-		url : "http://localhost:3412/DB-Project/insertProducts/" + 0 + "/" + bidProductID,
+		url : "http://localhost:3412/DB-Project/insertProducts/0/" + bidProductID,
 		method: 'post',
 		contentType: "application/json",
 		dataType:"json",
@@ -909,6 +914,22 @@ function GetSellbyUser(id){
         });
 }
 
+function clearCart(){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/cartDel/0" ,
+		method: 'delete',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("Cart could not be removed!");
+		}
+	});
+}
 
 // $(document).on('pagebeforeshow', "#viewUsers", function( event, ui ) {
 	// $.ajax({
@@ -974,36 +995,36 @@ function GetSellbyUser(id){
 	// });
 // });
 
-// var currentUser = {};
-// 
-// function GetUser(id){
-	// $.mobile.loading("show");
-	// $.ajax({
-		// url : "http://localhost:3412/DB-Project/accounts/" + id,
-		// method: 'get',
-		// contentType: "application/json",
-		// dataType:"json",
-		// success : function(data, textStatus, jqXHR){
-			// //Popup("herher");
-			 // currentUser = data.account;
-			 // currentCreditcard = data.creditcard;
-// 			
-			// $.mobile.loading("hide");
-			// $.mobile.navigate("#AccountByAdmin");
-// 			
-		// },
-		// error: function(data, textStatus, jqXHR){
-			// console.log("textStatus: " + textStatus);
-			// $.mobile.loading("hide");
-			// if (data.status == 404){
-				// Popup("User not found.");
-			// }
-			// else {
-				// Popup("Internal Server Error.");
-			// }
-		// }
-	// });
-// }
+var currentUser = {};
+
+function GetUser(id){
+	$.mobile.loading("show");
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/accounts/" + id,
+		method: 'get',
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			//Popup("herher");
+			 currentUser = data.account;
+			 currentCreditcard = data.creditcard;
+			
+			$.mobile.loading("hide");
+			$.mobile.navigate("#AccountByAdmin");
+			
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			if (data.status == 404){
+				Popup("User not found.");
+			}
+			else {
+				Popup("Internal Server Error.");
+			}
+		}
+	});
+}
 
 // $(document).on('pagebeforeshow', "#AccountByAdmin", function( event, ui ) {
 	// // currentUser has been set at this point
