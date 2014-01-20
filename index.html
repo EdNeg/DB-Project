@@ -1216,6 +1216,8 @@
 
 		<li data-theme="c"><a href="#productSold"
 			data-transition="slide"> Sold Product </a></li>
+		<li data-theme="c"><a href="#rateOptions"
+			data-transition="slide"> Ratings </a></li>
 
 	</ul>
 </div><!----------------------------------------------------User Main Page----------------------------------------------------------------------------->
@@ -1253,6 +1255,53 @@
             </ul>
     </div> 
 </div><!----------------------------------------------------Invoice----------------------------------------------------------------------------->
+
+<div id="rate" data-role="page">
+	<header data-role="header" data-theme="d">
+	        <a data-role="button" href="#rateOptions" data-icon="arrow-l"
+	                data-iconpos="left" class="ui-btn-left" data-theme="b">Ratings</a>
+	        <h1>BoricuaBay</h1>
+	</header>
+    <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="true">
+    <li data-role="list-divider" role="heading">Rate</li>      
+            <li id="rate-list" data-inset="true">
+            </ul>
+    </div> 
+</div><!----------------------------------------------------Rating----------------------------------------------------------------------------->
+<div id="myrates" data-role="page">
+	<header data-role="header" data-theme="d">
+	        <a data-role="button" href="#rateOptions" data-icon="arrow-l"
+	                data-iconpos="left" class="ui-btn-left" data-theme="b">Ratings</a>
+	        <h1>BoricuaBay</h1>
+	</header>
+    <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="true">
+    <li data-role="list-divider" role="heading">My Ratings</li>      
+            <li id="myrate-list" data-inset="true">
+            	
+            <li id="myrateuser-list" data-inset="true">
+            </ul>
+    </div> 
+</div><!----------------------------------------------------My Rating----------------------------------------------------------------------------->
+
+<div id="rateOptions" data-role="page">
+	<header data-role="header" data-theme="d">
+			<a data-role="button" href="#regular" data-icon="arrow-l"
+				data-iconpos="left" class="ui-btn-left" data-theme="b">User Name</a>
+			<h1>BoricuaBay</h1>
+		</header>
+		<br>
+		<br>
+		<ul data-role="listview" data-divider-theme="b" data-inset="true">
+			<li data-role="list-divider" role="heading">Ratings</li>
+			<li data-theme="c"><a href="#rate" data-transition="slide">
+					Rate Seller </a></li>
+
+			<li data-theme="c"><a href="#myrates" data-transition="slide">
+					See My Rates</a></li>
+		</ul>
+</div><!----------------------------------------------------Rate Options----------------------------------------------------------------------------->
 
 
 <div id="placeBid" data-role="page">

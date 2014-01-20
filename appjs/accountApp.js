@@ -180,6 +180,132 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 	});
 });
 
+var rateList;
+$(document).on('pagebeforeshow', "#rate", function( event, ui ) {
+    console.log("Jose");
+    $.ajax({
+    	url : "http://localhost:3412/DB-Project/rate/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+            success : function(data, textStatus, jqXHR){
+            	rateList = data.ratename;		// ADD var bidProductList = data.bidProduct;
+    			var len = rateList.length;
+    			var list = $("#rate-list");///////////////////////////////////////////////////
+    			list.empty();
+    			var rname;
+    			for (var i=0; i < len; ++i){
+    				rname = rateList[i];
+    					list.append('<li>'  + 
+    					'<p><i><b>' + rname.userNickname +  '</b></i></p>' +
+    					'<ul class="form">'+
+                        '<li class="rating">'+
+    					'<input type="radio" name="rating" value="0" checked /><span class="hide"></span>' +
+    					'<input type="radio" name="rating" value="1" /><span></span>' +
+    					'<input type="radio" name="rating" value="2" /><span></span>' +
+    					'<input type="radio" name="rating" value="3" /><span></span>' +
+    					'<input type="radio" name="rating" value="4" /><span></span>' +
+    					'<input type="radio" name="rating" value="5" /><span></span>'+
+    					'</li>' +
+    					'</ul>' +
+    					'<a type="submit" data-inline="true" data-theme="b"  onclick="GetStars('+rname.userNickname+')">Submit</a>'+
+    					'</li>');
+    				
+    			}
+    			
+    			list.listview("refresh");
+    							
+    		},
+            error: function(data, textStatus, jqXHR){
+                    console.log("textStatus: " + textStatus);
+                    Popup("Rate Error Found!");
+            }
+    });
+});
+
+function GetStars(rID){
+	$.mobile.loading("show");
+	var form = $("#form");
+	var formData = form.serializeArray();
+	console.log("form Data: " + formData);
+	var newStar = ConverToJSON(formData);
+	console.log("New Star: " + JSON.stringify(newStar));
+	var newStarJSON = JSON.stringify(newStar);
+	$.ajax({
+		url : "http://localhost:3412/DB-Project/star/" + loginID.userID + "/" + rID,
+		method: 'post',
+		data : newStarJSON,
+		contentType: "application/json",
+		dataType:"json",
+		success : function(data, textStatus, jqXHR){
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			$.mobile.loading("hide");
+			Popup("You have rated this seller before!");
+		}
+	});
+}
+
+$(document).on('pagebeforeshow', "#myrates", function( event, ui ) {
+	 $.ajax({
+	    	url : "http://localhost:3412/DB-Project/myrate/" + loginID.userID,
+	        method: 'get',
+	        contentType: "application/json",
+	        dataType:"json",
+	            success : function(data, textStatus, jqXHR){
+	            	var myrateList = data.myrate;		// ADD var bidProductList = data.bidProduct;
+	    			var len = myrateList.length;
+	    			var list = $("#myrate-list");///////////////////////////////////////////////////
+	    			list.empty();
+	    			var myrate;
+	    			var tempStr = '';
+	    			tempStr += '<li> <ul class="form"> <li class="rating"> ';
+	    			for (var i=0; i < len; ++i){
+	    				myrate = myrateList[i]; 
+	    				tempStr +='<input type="radio" name="rating" value="'+ myrate.rate +'" disabled/><span>'+ myrate.percentage +'</span> ';   
+	    			}
+	    			tempStr += ' </li> </ul> </li>';
+	    			list.append(tempStr)
+	    			
+	    			list.listview("refresh");
+	    							
+	    		},
+	            error: function(data, textStatus, jqXHR){
+	                    console.log("textStatus: " + textStatus);
+	                    Popup("Rate Error Found!");
+	            }
+	    });
+    $.ajax({
+    	url : "http://localhost:3412/DB-Project/myrateByUser/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+            success : function(data, textStatus, jqXHR){
+            	var myrateList = data.myrateuser;		// ADD var bidProductList = data.bidProduct;
+    			var len = myrateList.length;
+    			var list = $("#myrateuser-list");///////////////////////////////////////////////////
+    			list.empty();
+    			var myrate;
+    			var tempStr = '';
+    			tempStr += '<li> <ul class="form"> <li class="rating"> ';
+    			for (var i=0; i < len; ++i){
+    				myrate = myrateList[i]; 
+    				tempStr +='<input type="radio" name="rating" value="'+ myrate.rate +'" disabled/><span>'+ myrate.raterUserID +'</span> ';   
+    			}
+    			tempStr += ' </li> </ul> </li>';
+    			list.append(tempStr)
+    			
+    			list.listview("refresh");
+    							
+    		},
+            error: function(data, textStatus, jqXHR){
+                    console.log("textStatus: " + textStatus);
+                    Popup("Rate Error Found!");
+            }
+    });
+});
+
 var cartHome;
 
 $(document).on('pagebeforeshow', "#cartHome", function( event, ui ) {

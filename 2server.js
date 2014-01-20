@@ -2669,4 +2669,92 @@ var query = connection.query("Select YEAR(paidDate) as name,  SUM(am) as amount 
  });	
 });
 
+//----------------------------------------Rate---------------------------------------------------------------------------------
+app.get('/DB-Project/myrate/:id', function(req, res) { 
+	var id = req.params.id;
+	console.log("GET myrates "+ id );
 
+var query = connection.query("SELECT rate, (count(rate)/(select count(*) FROM boricuabaydb.bbRate WHERE ratedUserID= '"+id+"'))*100 as percentage"+ 
+							"FROM bbRate"+ 
+							"WHERE ratedUserID= '"+id+"' "+
+							"group by rate;", function(err, rows, result){
+		if (err) throw err;
+
+		var response = {"myrate" : rows};
+		 
+	//connection.end();
+		res.json(response);
+	
+});	
+
+
+});
+
+app.get('/DB-Project/myrateByUser/:id', function(req, res) { 
+	var id = req.params.id;
+	console.log("GET myrates by user"+ id );
+
+var query = connection.query("SELECT rate, raterUserID"+ 
+							"FROM bbRate"+ 
+							"WHERE ratedUserID= '"+id+"'", function(err, rows, result){
+		if (err) throw err;
+
+		var response = {"myrateuser" : rows};
+		 
+	//connection.end();
+		res.json(response);
+	
+});	
+
+
+});
+
+app.get('/DB-Project/rate/:id', function(req, res) { 
+	var id = req.params.id;
+	console.log("GET rate nickname "+ id );
+
+var query = connection.query("SELECT userNickname from bbUser as u inner join bbSell as s " +
+		"on u.userID = s.userID inner join bbAddToCart as c on s.productID = c.productID " +
+		"inner join bbOrder as o on c.userID = o.userID inner join bbPay as p on o.orderID = p.orderID" +
+		"where o.userID = '"+id+"';", function(err, rows, result){
+	if (err) throw err;
+
+		var response = {"ratename" : rows};
+		 
+	//connection.end();
+		res.json(response);
+	
+});	
+
+
+});
+
+app.post('/DB-Project/star/:id/:rid', function(req, res) {
+	var id = req.params.id;
+	var rid = req.params.rid;
+        console.log("Rating Stars");
+        
+        var query1 = connection.query("Select raterUserID, ratedUserID "+
+    			"from bbRate where raterUserID = '"+ id +"'"+" and ratedUserID = '"+ rid +"'", function(err, rows, result){
+    		if (err) throw err;
+     
+    	var len = rows.length;
+    	if (len == 0){
+    		var query = connection.query('INSERT INTO bbRate (raterUserID,ratedUserID,rate) ' +
+              		'VALUES (' + id + ', ' + rid + ',' + req.body.rating + ')');
+        	  
+        	  res.json(true);
+        	  return;
+    		
+    	}
+    	else {	
+    		console.log("User has rated the seller before" ); 
+    		res.statusCode = 404;
+      	}
+     });
+       //pg.connect(conString, function(err, connection, done) {
+        	  
+
+//done();
+//});
+});
