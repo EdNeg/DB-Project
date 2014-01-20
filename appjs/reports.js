@@ -56,26 +56,22 @@ $(document).on('pagebeforeshow', "#reports", function( event, ui ) {
 			var list11 = $("#saleWeekProductOption");
 			var list12 = $("#revenueWeekProductOption"); 
 			var tempStr; 
-			var week;
-			var monthNames = [ "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    							"Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+			var week; 
 			//list10.empty();
 			list11.empty();
 			list12.empty(); 
 			for (var i=0; i < len; ++i){
 				week = weeksList[i];  
 				if(i!=0){	
-					tempStr = '<option value="' + week.paidDate + '">' + monthNames[week.sMonth] + 
-						" "+week.sDay + ", " + week.sYear   +" - " + monthNames[week.eMonth] + 
-						" "+week.eDay + ", " + week.eYear   + '</option> '; 
+					tempStr = '<option value="' + week.week + " " + week.year + '">' + week.week + 
+						" "+week.year + '</option> '; 
 					//list10.append(tempStr);
 					list11.append(tempStr);
 					list12.append(tempStr);  
 				}	
 				else{	
-					tempStr = '<option value="' + week.paidDate + '" selected>' + monthNames[week.sMonth] + 
-						" "+week.sDay + ", " + week.sYear   +" - " + monthNames[week.eMonth] + 
-						" "+week.eDay + ", " + week.eYear   +'</option> '; 
+					tempStr = '<option value="' + week.week + " " + week.year + '" selected>' + week.week + 
+						" "+week.year +'</option> '; 
 					//list10.append(tempStr);
 					list11.append(tempStr);
 					list12.append(tempStr);  
@@ -481,7 +477,7 @@ $(document).on('pagebeforeshow', "#weekSales", function( event, ui ) {
 				product = productList[i]; 
 				list.append('<div class="ui-block-a" style="background-color: white;'+
 				' border: 1px solid black; height: 22px; text-align: center;'+
-				' font-weight: normal;"><span>'+product.name+' </span></div>' );
+				' font-weight: normal;"><span>'+product.name+' '+product.name2+' </span></div>' );
 				list.append('<div class="ui-block-b" style="background-color: white;'+
 				' border: 1px solid black; height: 22px; text-align: center;'+
 				' font-weight: normal;"><span>'+accounting.formatMoney(product.amount)+' </span></div>' );
@@ -505,6 +501,8 @@ $(document).on('pagebeforeshow', "#daySales", function( event, ui ) {
 			var productList = data.products;		
 			var len = productList.length;
 			var product;  
+			var monthNames = [ "", "January", "February", "March", "April", "May", "June",
+    							"July", "August", "September", "October", "November", "December" ]; 
 			var list = $("#daylySales"); 
 			list.empty();
 			list.append('<div class="ui-block-a" style="background-color: lightgray; border: 2px solid black;'+ 
@@ -515,7 +513,7 @@ $(document).on('pagebeforeshow', "#daySales", function( event, ui ) {
 				product = productList[i]; 
 				list.append('<div class="ui-block-a" style="background-color: white;'+
 				' border: 1px solid black; height: 22px; text-align: center;'+
-				' font-weight: normal;"><span>'+product.name+' </span></div>' );
+				' font-weight: normal;"><span>'+monthNames[product.name2]+' '+product.name+', '+product.name3+' </span></div>' );
 				list.append('<div class="ui-block-b" style="background-color: white;'+
 				' border: 1px solid black; height: 22px; text-align: center;'+
 				' font-weight: normal;"><span>'+accounting.formatMoney(product.amount)+' </span></div>' );
@@ -551,7 +549,7 @@ $(document).on('pagebeforeshow', "#monthSales", function( event, ui ) {
 				product = productList[i]; 
 				list.append('<div class="ui-block-a" style="background-color: white;'+
 				' border: 1px solid black; height: 22px; text-align: center;'+
-				' font-weight: normal;"><span>'+monthNames[product.name]+' </span></div>' );
+				' font-weight: normal;"><span>'+monthNames[product.name]+' '+product.name2+' </span></div>' );
 				list.append('<div class="ui-block-b" style="background-color: white;'+
 				' border: 1px solid black; height: 22px; text-align: center;'+
 				' font-weight: normal;"><span>'+accounting.formatMoney(product.amount)+' </span></div>' );

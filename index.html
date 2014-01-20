@@ -1010,7 +1010,7 @@
         <header data-role="header" data-theme="d">
                         <a data-role="button" data-rel="back" href="#regular" data-icon="arrow-l"
                                 data-iconpos="left" class="ui-btn-left" data-theme="b">Home</a>
-                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder()">Order</a>
+                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="Order()">Order</a>
                          <h1><i>BoricuaBay</i></h1>
 
                 </header>
@@ -1207,7 +1207,7 @@
 	<ul data-role="listview" data-divider-theme="b" data-inset="true">
 		<li data-role="list-divider" role="heading" id="regularUser"></li>
 		<li data-theme="c"><a href="#Account" data-transition="slide">Account </a></li>
-		<li data-theme="c"><a href="#cartUser" data-transition="slide"> View
+		<li data-theme="c"><a href="#cartUser" data-transition="slide" onclick="VerifyUserCart()"> View
 				Cart </a></li>
 		<li data-theme="c"><a href="#bidUser" data-transition="slide"> View
 				Bids </a></li>
@@ -1216,8 +1216,13 @@
 
 		<li data-theme="c"><a href="#productSold"
 			data-transition="slide"> Sold Product </a></li>
+
 		<li data-theme="c"><a href="#rateOptions"
 			data-transition="slide"> Ratings </a></li>
+
+		<li data-theme="c"><a href="#invoice"
+			data-transition="slide"> Invoice </a></li>	
+
 
 	</ul>
 </div><!----------------------------------------------------User Main Page----------------------------------------------------------------------------->
@@ -1244,14 +1249,13 @@
 
 <div id="invoice" data-role="page">
 	<header data-role="header" data-theme="d">
-	        <a data-role="button" href="#home" data-icon="arrow-l"
-	                data-iconpos="left" class="ui-btn-left" data-theme="b">Home</a>
+	        <a data-role="button" href="#regular" data-icon="arrow-l"
+	                data-iconpos="left" class="ui-btn-left" data-theme="b">Profile</a>
 	        <h1>BoricuaBay</h1>
 	</header>
     <div data-role="content">
-            <ul data-role="listview" data-divider-theme="b" data-inset="true">
-    <li data-role="list-divider" role="heading">Invoice</li>      
-            <li id="invoice-list" data-inset="true">
+            <ul data-role="listview" data-divider-theme="b" data-inset="true" id="invoice-list">
+    		<li data-role="list-divider" role="heading">Invoice</li>  
             </ul>
     </div> 
 </div><!----------------------------------------------------Invoice----------------------------------------------------------------------------->
@@ -1671,7 +1675,7 @@
                         <a data-role="button" href="#home" data-icon="arrow-l"
 
                                 data-iconpos="left" class="ui-btn-left" data-theme="d">Home</a>
-                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="PlaceOrder()">Order</a>
+                                <a data-role="button" data-iconpos="left" data-icon="grid" data-theme="b" class="ui-btn-right" onclick="Order()">Order</a>
 
                         <h1>BoricuaBay</h1>
                 </header>
@@ -2854,5 +2858,9 @@
 
 </body>
 
+<script>
+	$(document).ready(function(){ clearCart(); });
+	
+</script>
 	
 </html>
