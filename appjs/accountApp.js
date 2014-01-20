@@ -36,26 +36,38 @@ $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
 
 
  $(document).on('pagebeforeshow', "#invoice", function( event, ui ) {
-         console.log("Jose");
-         $.ajax({
-        	 //url : "http://localhost:3412/DB-Project/accounts/" + loginID.userID,
-             //method: 'get',
-             contentType: "application/json",
-             dataType:"json",
-                 success : function(data, textStatus, jqXHR){
-                         var list = $("#invoice-list");
-                         list.empty();
+          $.ajax({
+		url : "http://localhost:3412/DB-Project/invoice/" + loginID.userID,
+        method: 'get',
+        contentType: "application/json",
+        dataType:"json",
+		success : function(data, textStatus, jqXHR){
+			var invoiceList = data.invoice;		// ADD var bidProductList = data.bidProduct;
+			var len = invoiceList.length;
+			var list = $("#invoice-list");///////////////////////////////////////////////////
+			list.empty();
+			var invoice;
+			for (var i=0; i < len; ++i){
+				invoice = invoiceList[i];
                          list.append("<li>" +
-                                 "<h2>" + "Your Order ID: " + currentOrder.orderID + "</h2>" +
-                                 "<h2>" + "Amount Paid: " + accounting.formatMoney(currentOrder.paidAmount) + "</h2>" +
-                                 "<h2>" + "Date Paid: " + currentOrder.paidDate  + "</h2>" +"</li>");
-                         list.listview("refresh");                
-         },
-                 error: function(data, textStatus, jqXHR){
-                         console.log("textStatus: " + textStatus);
-                         Popup("Invoice not found!");
-                 }
-         });
+                                 "<h2>" + "Your Order ID: " + invoice.orderID + "</h2>" +
+                                 "<h2>" + "Amount Paid: " + accounting.formatMoney(invoice.paidAmount) + "</h2>" +
+                                 "<h2>" + "Date Paid: " + invoice.paidDate  + "</h2>" +"</li>");
+                         list.listview("refresh"); 
+				
+			}
+			
+			list.listview("refresh");
+							
+		},
+		error: function(data, textStatus, jqXHR){
+			console.log("textStatus: " + textStatus);
+			Popup("You don't have invoice at the moment");
+		}
+	});
+         
+                                        
+         
  });
 
 var currentCreditcard ;
@@ -672,6 +684,35 @@ function PlaceBid(){
 
 
 }
+
+function Order(){
+	
+	calculateAmountToPay();
+	PlaceOrder();
+	
+}
+
+function AddToContain(){
+	if(loginID != 0){
+	alert(currentOrder.orderID);
+	$.ajax({
+		 url : "http://localhost:3412/DB-Project/addContain/" + currentOrder.orderID + "/" +  loginID.userID,
+		 method: 'post',
+		 contentType: "application/json",
+		 dataType:"json",
+		success : function(data, textStatus, jqXHR){
+                	Popup(":)");       
+          
+        },
+		 error: function(data, textStatus, jqXHR){
+			 console.log("textStatus: " + textStatus);
+			 $.mobile.loading("hide");
+			 Popup("Contain could not be added");
+		 }
+	 });
+	}
+}
+
  var checkOrder = 0;
  var currentOrder ;
  function PlaceOrder(){
@@ -680,15 +721,16 @@ function PlaceBid(){
 		 $.mobile.navigate("#signin");
 	 }
 	 else{
-			alert("2"+userPay);
+			
 	 $.ajax({
-		 url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" +  currentCreditcard.creditCardID + "/" +  currentCreditcard.bankAccountID + "/" + userPay,
+		 url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" +  loginID.creditCardID  + "/" +  loginID.bankAccountID + "/" + userPay,
 		 method: 'get',
 		 contentType: "application/json",
 		 dataType:"json",
 		 success : function(data, textStatus, jqXHR){
-			 checkOrder = 1;
-			 currentOrder = data.order;
+		 	checkOrder = 1;
+			 currentOrder = data.order[0];
+			 AddToContain();
 			 $.mobile.navigate("#invoice");
 		 },
 		 error: function(data, textStatus, jqXHR){
@@ -703,6 +745,7 @@ function PlaceBid(){
 
 var userPay;
  function calculateAmountToPay(){
+ 	 
 	 $.ajax({
 		 url : "http://localhost:3412/DB-Project/calculatePay/" + loginID.userID,
 		 method: 'get',
@@ -719,6 +762,7 @@ var userPay;
 			 Popup("Product could not be added");
 		 }
 	 });
+	
 	 
  }
 
@@ -733,6 +777,7 @@ function AddToCart(){
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
 			check =1;
+			
 			Popup("You have succesfully added a product!");
 	$.mobile.navigate("#categories");
 		},
@@ -1007,7 +1052,7 @@ function GetUser(id){
 		success : function(data, textStatus, jqXHR){
 			//Popup("herher");
 			 currentUser = data.account;
-			 currentCreditcard = data.creditcard;
+			
 			
 			$.mobile.loading("hide");
 			$.mobile.navigate("#AccountByAdmin");
@@ -1093,39 +1138,7 @@ function GetUser(id){
         // });
 // });
 
-// $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
-        // console.log("Jose");
-        // $.ajax({
-        	// url : "http://localhost:3412/DB-Project/creditcards/" + currentUser.userID,
-            // method: 'get',
-            // contentType: "application/json",
-            // dataType:"json",
-                // success : function(data, textStatus, jqXHR){
-                	 // currentCreditcard = data.creditcard;
-                        // var list = $("#creditCardInfo");
-                        // var list2 = $("#billingAddress");
-                        // list.empty();
-                        // list2.empty();
-                        // list.append("<li>" +
-                                // "<h2>" + "CreditCard Number: " + currentCreditcard.creditCardNumber + "</h2>" +
-                                // "<h2>" + "Owner Name: " + currentCreditcard.creditCardOwner + "</h2>" +
-                                // "<h2>" + "Security Code: " + currentCreditcard.securityCode + "</h2>" +
-                                // "<h2>" + "Expiration Date: " + currentCreditcard.expDate + "</h2>" + "</li>");
-//                         
-                        // list2.append("<li>" +
-                                // "<h2>" + "Address Line: " + currentCreditcard.addressLine + "</h2>" +
-                                // "<h2>" + "City: " + currentCreditcard.city + "</h2>" +
-                                // "<h2>" + "State: " + currentCreditcard.state + "</h2>" +
-                                // "<h2>" + "Country: " + currentCreditcard.country + "</h2>" +
-                                // "<h2>" + "Zipcode: " + currentCreditcard.zipcode + "</h2>"  + "</li>");
-                        // list2.listview("refresh");                     
-        // },
-                // error: function(data, textStatus, jqXHR){
-                        // console.log("textStatus: " + textStatus);
-                        // Popup("CreditCard not found!");
-                // }
-        // });
-// });
+
 
 // function SaveAccountByAdmin(){
 	// $.mobile.loading("show");

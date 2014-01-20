@@ -140,7 +140,8 @@ app.get('/DB-Project/productsName', function(req, res) {
 	console.log("GET PRODUCTS ORDERED BY NAME");
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by p.productName;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' "+
+	" and p.productID not in ( select productID from bbContain ) order by p.productName;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -160,7 +161,7 @@ app.get('/DB-Project/productsBrand', function(req, res) {
 
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by p.brand;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' and p.productID not in ( select productID from bbContain ) order by p.brand;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -180,7 +181,7 @@ app.get('/DB-Project/productsPrice', function(req, res) {
 
 	
 	connection.query("Select * from bbProduct as p " + 
-	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%' order by b.bidStartingPrice;", function(err, rows, result) {
+	"inner join bbBidProduct as b on b.productID = p.productID where productName like '%" + search + "%'  and p.productID not in ( select productID from bbContain ) order by b.bidStartingPrice;", function(err, rows, result) {
 
   if (err) throw err;
 	/*
@@ -242,7 +243,7 @@ app.get('/DB-Project/productSearch/:id', function(req, res) {
 		console.log("GET product by name: " + id);
 
 
-var query = connection.query("SELECT * FROM boricuabaydb.bbProduct natural join bbBidProduct where productName like '%" + id + "%';", function(err, rows, result){
+var query = connection.query("SELECT * FROM boricuabaydb.bbProduct natural join bbBidProduct where productName like '%" + id + "%'  and productID not in ( select productID from bbContain ) ;", function(err, rows, result){
 		if (err) throw err;
 
 	
@@ -546,7 +547,7 @@ app.del('/DB-Project/categoryDel/:ids', function(req, res) {
 				
 				//console.log("AAAAAAAAAA");
 	
-				if (err2) throw err;
+				if (err2) throw err2;
 				
 				var len2 = rows2.length;
 				//console.log("Initial subcat length: " +len2);
@@ -560,7 +561,7 @@ app.del('/DB-Project/categoryDel/:ids', function(req, res) {
 				//console.log("SubCatID4 = " +tempRow);
 				connection.query("DELETE from bbSubCategory where subCategoryID = '" 
 						+tempRow+"';", function(err6, rows6, result6){
-							if (err6) throw err;
+							if (err6) throw err6;
 							res.json(true);
 				});
 				var len3 = rows2.length;
@@ -584,7 +585,7 @@ app.del('/DB-Project/categoryDel/:ids', function(req, res) {
 		
 		function getCallBackFn2(index2){
 			return function(err5, rows5, results5){
-				if (err5) throw err;
+				if (err5) throw err5;
 				//console.log("Deleted Tag");
 				res.json(true);
 			};
@@ -717,7 +718,7 @@ app.del('/DB-Project/subCategoryDel/:ids', function(req, res) {
 			connection.query("SELECT * FROM bbtag WHERE subCategoryID = " + ids + ";", 
 			function(err2, rows2, results2){
 					
-				if (err2) throw err;
+				if (err2) throw err2;
 				
 				var len2 = rows2.length;
 				//console.log("Initial subcat length: " +len2);
@@ -734,7 +735,7 @@ app.del('/DB-Project/subCategoryDel/:ids', function(req, res) {
 				//console.log("SubCatID4 = " +ids);
 				connection.query("DELETE from bbSubCategory where subCategoryID = '" 
 						+ids+"';", function(err6, rows6, result6){
-							if (err6) throw err;
+							if (err6) throw err6;
 							res.json(true);
 				});
 			});
@@ -861,11 +862,26 @@ app.put('/DB-Project/changeUser/:id', function(req, res) {
 	var id = req.params.id;
 	console.log("Change User: " + id);
   	
-  	var query = connection.query("DELETE from `bbAddToCart` where `userID` = '" + id + "' and productID in ( select productID from bbAddToCart where userID='0' )"  );
-  	var query2 = connection.query("UPDATE `bbAddToCart` SET `userID` = '" + id + "'  " +
-  			 "  where userID= '0'");	
-  
-  	res.json(true);
+  	connection.query("select productID from bbAddToCart where userID='0'", 
+			function(err2, rows2, results2){
+					
+				if (err2) throw err2;
+				
+				var len2 = rows2.length;
+			 	console.log("Initial length: " +len2);
+				
+				for (j = 0; j<len2; j++){ 
+					console.log("Initial length: " + rows2[j].productID );
+					connection.query("DELETE from bbAddToCart where userID = '" + id + "' and productID= '"+rows2[j].productID+"' ;" , function(err5, rows5, results5){
+						if (err5) throw err5;
+						
+						
+				});
+				} 
+				var query2 = connection.query("UPDATE bbAddToCart SET userID= '" + id + "' where userID= '0';");
+			  	res.json(true);
+			});
+ 
 });
 
 // Gets the user Information by userName
@@ -2164,14 +2180,17 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb/:idp', function(req, res) {
 	var idc = req.params.idc;
 	var idb = req.params.idb;
 	var idp = req.params.idp;
-        console.log("POST Place Order " + id);
+        console.log("GET Place Order " + id);
 
         	  var query = connection.query("INSERT INTO bbOrder (userID) " +
               		"VALUES ('"+ id +"')");
+              		
         	  var getquery = connection.query("SET @last_insert_id_in_bbOrder = LAST_INSERT_ID()");
+        	  
         	  var query1 = connection.query("INSERT INTO bbPay (creditCardID,bankAccountID,paidAmount,paidDate,orderID) " +
-                		"VALUES ('" + idc + "', '"+ idb +"', '"+ idp +"', '"+output+"', @last_insert_id_in_bbOrder)");
-        	  var query2 = connection.query("Select orderID, paidDate, paidAmount from bbPay natural join bbOrder where userID= '"+id+"';", function(err, rows, result ){
+                		"VALUES ('" + idc + "', '"+ idb +"', '"+ idp +"', '"+output+"', @last_insert_id_in_bbOrder)"); 
+                		
+            var query2 = connection.query("Select orderID, paidDate, paidAmount from bbPay natural join bbOrder where userID= '"+id+"' and orderID = @last_insert_id_in_bbOrder ;", function(err, rows, result ){
 
         			if (err) throw err;
 
@@ -2179,7 +2198,7 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb/:idp', function(req, res) {
         			for (i = 0; i<rows.length; i++){
         					console.log('The solution is: ', rows[i]);
         				}*/
-        			var len =result.rows.length;
+        			var len = rows.length;
         			if (len == 0){
         				res.statusCode = 404;
         				res.send("Product noty found.");
@@ -2190,7 +2209,10 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb/:idp', function(req, res) {
         		  		res.json(response);
         		  	}
         		 });
-});
+        		
+        		
+        		 
+        		 });
 
 //------------------------------------------------------Reports---------------------------------------------------------
 // REST Operation - HTTP GET to read sales days
@@ -2703,4 +2725,43 @@ var query = connection.query("Select YEAR(paidDate) as name,  SUM(am) as amount 
  });	
 });
 
+app.post('/DB-Project/addContain/:ido/:id', function(req, res) {
+	var ido = req.params.ido;
+	var id = req.params.id;
+		console.log("ADD to contain: " + ido);
+		console.log("ADD to contain: " + id);
 
+			connection.query("SELECT productID FROM bbAddToCart WHERE userID = " + id + ";", 
+			function(err2, rows2, results2){
+					
+				if (err2) throw err2;
+				
+				var len2 = rows2.length;
+				console.log("Initial length: " +len2);
+				
+				for (j = 0; j<len2; j++){ 
+					console.log("ADD to contain: " + rows2[j].productID);
+					connection.query("Insert into bbContain (orderID , productID) values ('"+ido+"','"+rows2[j].productID+"');" ); 
+				} 
+				
+				 var query4 = connection.query("DELETE from bbAddToCart where userID = '"+id+"'");
+				
+				res.json(true);
+			});
+});
+
+app.get('/DB-Project/invoice/:id', function(req, res) { 
+	var id = req.params.id; 
+		console.log("GET invoice" );
+ 
+var query = connection.query("Select orderID,paidAmount,paidDate from bbPay natural join bbOrder where userID='"+id+"'", function(err, rows, result){
+		if (err) throw err;
+ 
+		
+  		var response = {"invoice" : rows};
+  		
+		//connection.end();
+  		res.json(response);
+  
+ });	
+});
