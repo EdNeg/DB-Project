@@ -8,12 +8,31 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 		<script src="js/accounting.js"></script>
+		<script src="js/jquery.rating.js"></script>
+		<script src="js/rating.jquery.json"></script>
 		
 		<script src="appjs/prodApp.js"></script>
 		<script src="appjs/catApp.js"></script>
 		<script src="appjs/accountApp.js"></script>
 		<script src="appjs/reports.js"></script>
 		
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+		  $(".display-item").rateBar({
+		            defaultStarColor : '#777777',
+		            ratedStarColor : '#FFD700',
+		            onRate : function(rate) {
+		            	if(confirm('Are you sure you want to rate this user with '+rate+'?')){
+		            		 GetStars(rate);
+		            	} 
+		            }
+		    });
+		    clearCart(); 
+		    $.mobile.loading("hide");
+		});
+		
+		</script>
 	
 		<meta charset="utf-8">
 		
@@ -132,7 +151,7 @@
 <div data-role="page" id="registercont">
 	<header data-role="header" data-theme="d">
 		<h1>Register</h1>
-		<a href="#home" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">Home</a>
+		<a href="#register" data-icon="arrow-l" data-iconpos="left" data-transition="slidefade" data-theme="b">User Info</a>
 		
 		<div data-role="navbar">
     	<ul>
@@ -1265,14 +1284,35 @@
 	        <a data-role="button" href="#rateOptions" data-icon="arrow-l"
 	                data-iconpos="left" class="ui-btn-left" data-theme="b">Ratings</a>
 	        <h1>BoricuaBay</h1>
-	</header>
-    <div data-role="content">
-            <ul data-role="listview" data-divider-theme="b" data-inset="true">
-    <li data-role="list-divider" role="heading">Rate</li>      
-            <li id="rate-list" data-inset="true">
+	</header> 
+    <div data-role="content"> 
+            <ul id="rate-list" data-role="listview" data-divider-theme="b" data-inset="true">
+    			<li data-role="list-divider" role="heading">Rate</li>    
             </ul>
     </div> 
 </div><!----------------------------------------------------Rating----------------------------------------------------------------------------->
+<div id="rateUser" data-role="page">
+	<header data-role="header" data-theme="d">
+	        <a data-role="button" href="#rate" data-icon="arrow-l"
+	                data-iconpos="left" class="ui-btn-left" data-theme="b">Rate User</a>
+	        <h1>BoricuaBay</h1>
+	</header>
+    <div data-role="content">
+    	<ul id="rate-list" data-role="listview" data-divider-theme="b" data-inset="true">
+    			<li id="ratingUser" data-role="list-divider" role="heading">Rate: <div id="userRated"> </div></li>    
+    			<li>
+    				<center>
+    					<div class="display-item"> 
+    						
+						</div> 
+					</center>
+		    	
+				</li>
+            </ul>
+    	
+    </div> 
+</div><!----------------------------------------------------Rate User----------------------------------------------------------------------------->
+
 <div id="myrates" data-role="page">
 	<header data-role="header" data-theme="d">
 	        <a data-role="button" href="#rateOptions" data-icon="arrow-l"
@@ -2858,9 +2898,6 @@
 
 </body>
 
-<script>
-	$(document).ready(function(){ clearCart(); });
-	
-</script>
+ 
 	
 </html>

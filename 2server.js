@@ -2731,10 +2731,10 @@ app.get('/DB-Project/myrate/:id', function(req, res) {
 	var id = req.params.id;
 	console.log("GET myrates "+ id );
 
-var query = connection.query("SELECT rate, (count(rate)/(select count(*) FROM boricuabaydb.bbRate WHERE ratedUserID= '"+id+"'))*100 as percentage"+ 
-							"FROM bbRate"+ 
-							"WHERE ratedUserID= '"+id+"' "+
-							"group by rate;", function(err, rows, result){
+var query = connection.query("SELECT rate, (count(rate)/(select count(*) FROM boricuabaydb.bbRate WHERE ratedUserID= '"+id+"'))*100 as percentage "+ 
+							" FROM bbRate "+ 
+							" WHERE ratedUserID= '"+id+"' "+
+							" group by rate;", function(err, rows, result){
 		if (err) throw err;
 
 		var response = {"myrate" : rows};
@@ -2751,9 +2751,10 @@ app.get('/DB-Project/myrateByUser/:id', function(req, res) {
 	var id = req.params.id;
 	console.log("GET myrates by user"+ id );
 
-var query = connection.query("SELECT rate, raterUserID"+ 
-							"FROM bbRate"+ 
-							"WHERE ratedUserID= '"+id+"'", function(err, rows, result){
+var query = connection.query("SELECT rate, raterUserID, userNickname "+ 
+							" FROM bbRate as r"+ 
+							" inner join bbUser as u on r.raterUserID = u.userID"+ 
+							" WHERE ratedUserID= '"+id+"'", function(err, rows, result){
 		if (err) throw err;
 
 		var response = {"myrateuser" : rows};
@@ -2770,10 +2771,14 @@ app.get('/DB-Project/rate/:id', function(req, res) {
 	var id = req.params.id;
 	console.log("GET rate nickname "+ id );
 
-var query = connection.query("SELECT userNickname from bbUser as u inner join bbSell as s " +
-		"on u.userID = s.userID inner join bbAddToCart as c on s.productID = c.productID " +
-		"inner join bbOrder as o on c.userID = o.userID inner join bbPay as p on o.orderID = p.orderID" +
-		"where o.userID = '"+id+"';", function(err, rows, result){
+var query = connection.query("SELECT userNickname  " +
+		" from boricuabaydb.bbUser as u  " +
+		" inner join boricuabaydb.bbSell as s on u.userID = s.userID  " +
+		" inner join boricuabaydb.bbContain as c on s.productID = c.productID  " +
+		" inner join boricuabaydb.bbOrder as o on c.orderID = o.orderID   " +
+		" where o.userID = '"+id+"' and " +
+		" u.userID not in (select ratedUserID from boricuabaydb.bbRate where raterUserID = '"+id+"' )" +
+		" group by userNickname; " , function(err, rows, result){
 	if (err) throw err;
 
 		var response = {"ratename" : rows};
@@ -2786,34 +2791,33 @@ var query = connection.query("SELECT userNickname from bbUser as u inner join bb
 
 });
 
-app.post('/DB-Project/star/:id/:rid', function(req, res) {
+app.post('/DB-Project/star/:id/:rid/:sid', function(req, res) {
 	var id = req.params.id;
 	var rid = req.params.rid;
-        console.log("Rating Stars");
+	var sid = req.params.sid;
+        console.log("Rating Stars:" + rid);
         
-        var query1 = connection.query("Select raterUserID, ratedUserID "+
-    			"from bbRate where raterUserID = '"+ id +"'"+" and ratedUserID = '"+ rid +"'", function(err, rows, result){
-    		if (err) throw err;
-     
-    	var len = rows.length;
-    	if (len == 0){
-    		var query = connection.query('INSERT INTO bbRate (raterUserID,ratedUserID,rate) ' +
-              		'VALUES (' + id + ', ' + rid + ',' + req.body.rating + ')');
+        var query1 = connection.query("Select userID from bbUser where userNickname = '" + rid + "';", function(err, rows, result){
+		if (err) throw err;
+ 
+	var len = rows.length;
+	if (len == 0){ 
+		res.statusCode = 404;
+	}
+	else {	
+  		var response = {"user" : rows};
+  		console.log(rows[0].userID);
+  		var query = connection.query('INSERT INTO bbRate (raterUserID,ratedUserID,rate) ' +
+              		'VALUES (' + id + ', ' + rows[0].userID + ',' + sid + ')');
         	  
         	  res.json(true);
         	  return;
+  	}
+ });	
+ 
     		
-    	}
-    	else {	
-    		console.log("User has rated the seller before" ); 
-    		res.statusCode = 404;
-      	}
-     });
-       //pg.connect(conString, function(err, connection, done) {
-        	  
-
-//done();
-//});
+    
+ });
 
 app.post('/DB-Project/addContain/:ido/:id', function(req, res) {
 	var ido = req.params.ido;

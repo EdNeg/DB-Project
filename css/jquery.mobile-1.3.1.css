@@ -40,7 +40,7 @@
     height:16px;
     line-height:16px;
     padding:1px 22px 1px 0; /* 1px FireFox fix */
-    background:url(stars.png) no-repeat -22px 0;
+    background:url("css/icons/star.png") no-repeat -22px 0;
 }
 
 .rating input[type="radio"]:checked + span {
