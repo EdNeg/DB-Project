@@ -558,27 +558,27 @@ $(document).on('pagebeforeshow', "#adminProfile", function( event, ui ) {
 });
 
 $(document).on('pagebeforeshow', "#account-view", function( event, ui ) {
-
+	
         $("#upd-userName").val(loginID.userName);        
         $("#upd-UserNickname").val(loginID.userNickname);
         $("#upd-Password").val(loginID.password);
         $("#upd-userEmail").val(loginID.userEmail); 
-        $("#upd-addressLine").val(loginID.addressLine); 
-        $("#upd-city").val(loginID.city);
-        $("#upd-state").val(loginID.state);
-        $("#upd-country").val(loginID.country);
-        $("#upd-zipcode").val(loginID.zipcode);
+        $("#upd-addressLine").val(loginID.addressLineu); 
+        $("#upd-city").val(loginID.cityu);
+        $("#upd-state").val(loginID.stateu);
+        $("#upd-country").val(loginID.countryu);
+        $("#upd-zipcode").val(loginID.zipcodeu);
         $("#upd-creditCardNumber").val(loginID.creditCardNumber);
         $("#upd-creditCardOwner").val(loginID.creditCardOwner);
         $("#upd-securityCode").val(loginID.securityCode);
         var myDate = loginID.expDate;
 		var newDate=myDate.substring(0, 10); ;
         $("#upd-expDate").val(newDate);
-        $("#upd-caddressLine").val(loginID.addressLine);
-        $("#upd-ccity").val(loginID.city);
-        $("#upd-cstate").val(loginID.state);
-        $("#upd-ccountry").val(loginID.country);
-        $("#upd-czipcode").val(loginID.zipcode);
+        $("#upd-caddressLine").val(loginID.addressLinec);
+        $("#upd-ccity").val(loginID.cityc);
+        $("#upd-cstate").val(loginID.statec);
+        $("#upd-ccountry").val(loginID.countryc);
+        $("#upd-czipcode").val(loginID.zipcodec);
 });
 
 var currentAccount = {};
@@ -610,6 +610,7 @@ function LogIn(){
              success : function(data, textStatus, jqXHR){
             	 
                      loginID = data.accountLogin;
+                     alert(JSON.stringify(loginID));
                                      $.mobile.loading("hide");
                                      $.mobile.navigate("#regular");          
                      
@@ -709,31 +710,36 @@ function VerifyAdmin(){
 
 		
 function SaveAccount(){
+	alert("show");
 	$.mobile.loading("show");
+	
 	var form = $("#account-form");
 	var formData = form.serializeArray();
 	console.log("form Data: " + formData);
 	var newAccount = ConverToJSON(formData);
 	console.log("New Account form: " + JSON.stringify(newAccount));
-	var newAccountJSON = JSON.stringify(newAccount);
+	var newAccountJSON = JSON.stringify(newAccount); 
 	
+	alert("show2");
 	var form2 = $("#account-form2");
 	var formData2 = form2.serializeArray();
 	console.log("form Data: " + formData2);
 	var newAccount2 = ConverToJSON(formData2);
 	console.log("New Account form: " + JSON.stringify(newAccount2));
-	var newAccountJSON2 = JSON.stringify(newAccount2);
-
+	var newAccountJSON2 = JSON.stringify(newAccount2); 
 	
+	var allData = $.extend({}, newAccount, newAccount2 );//array_merge(newAccountJSON,newAccountJSON2);
+	alert(JSON.stringify(allData));
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/accounts",
-		method: 'post',
-		data : newAccountJSON, newAccountJSON2,
+		method: 'get', 
+		data : JSON.stringify(allData),//&account2=newAccountJSON2, 
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
+			loginID = data.userID[0]; 
 			$.mobile.loading("hide");
-			$.mobile.navigate("#accounts");
+			$.mobile.navigate("#regular");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -948,6 +954,7 @@ function AddToCart(){
 
 
 function UpdateAccount(){
+	
         $.mobile.loading("show");
         var form = $("#account-view-form");
         var formData = form.serializeArray();
@@ -956,7 +963,7 @@ function UpdateAccount(){
         console.log("Updated Account: " + JSON.stringify(updAccount));
         var updAccountJSON = JSON.stringify(updAccount);
         $.ajax({
-                url : "http://localhost:3412/DB-Project/accountsUpdate/" +  loginID.userID + "/" + loginID.creditCardID + "/" + loginID.addressID,
+                url : "http://localhost:3412/DB-Project/accountsUpdate/" +  loginID.userID + "/" + loginID.creditCardID + "/" + loginID.addressIDu + "/" + loginID.bankAccountID,
                 method: 'put',
                 data : updAccountJSON,
                 contentType: "application/json",

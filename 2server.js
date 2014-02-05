@@ -963,10 +963,15 @@ app.get('/DB-Project/accounts/:id/:idp', function(req, res) {
 		console.log("GET account: " + id);
 
 console.log("here?");
-var query = connection.query("SELECT * FROM bbUser as u inner join bbaddress " +  
-		"as a inner join bbcreditcard as c WHERE u.userNickname = '" + id  + "'" + " AND " +
-		"u.password = '" + idp  + "'" + " AND u.creditCardID = c.creditCardID " +
-		"AND u.addressID = a.addressID;", function(err, rows, result){
+var query = connection.query("SELECT userID, userName, userNickname, userEmail, a.addressLine as addressLineu, " + 
+							" a.addressID as addressIDu, a.city as cityu, a.state as stateu, a.country as countryu, a.zipcode as zipcodeu, " + 
+							" creditCardNumber, creditCardOwner, securityCode, expDate, c.addressLine as addressLinec, bankAccountID, " + 
+							" c.addressID as addressIDc, c.city as cityc, c.state as statec, c.country as countryc, c.zipcode as zipcodec, u.creditCardID " +
+							" FROM bbUser as u " +
+							" inner join bbaddress as a on u.addressID = a.addressID " +  
+							" inner join bbcreditcard as cr on cr.creditCardID = u.creditCardID " +
+							" inner join bbaddress as c on c.addressID = cr.addressID " + 
+							" WHERE u.userNickname = '" + id + "' and u.password = '" + idp + "' ; ", function(err, rows, result){
 	console.log("here1?");
 		if (err) throw err;
 		console.log("here2?");
@@ -985,10 +990,11 @@ var query = connection.query("SELECT * FROM bbUser as u inner join bbaddress " +
  });
   });
 // REST Operation - HTTP PUT to updated a car based on its id
-app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
+app.put('/DB-Project/accountsUpdate/:id/:idc/:ida/:idb', function(req, res) {
 	var id = req.params.id;
 	var idc = req.params.idc;
 	var ida = req.params.ida;
+	var idb = req.params.idb;
 	console.log("PUT User ID: " + id);
 
   	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
@@ -1019,11 +1025,15 @@ app.put('/DB-Project/accountsUpdate/:id/:idc/:ida', function(req, res) {
   	
 	var query3 = connection.query("UPDATE `bbCreditCard` SET `creditCardOwner` = '" + req.body.creditCardOwner + "',`creditCardNumber` = '"+ req.body.creditCardNumber + "'," +
 			"`securityCode` = '" + req.body.securityCode + "',`expDate` = '" + req.body.expDate + "' where creditCardID = '" + idc +"'");
+			
+	var query4 = connection.query("UPDATE `bbbankaccount` SET `accountNumber`='" + req.body.accountNumber + "', `accountType`= '"+ req.body.accountType + "'," 
+	         + " `accountOwner`= '" + req.body.accountOwner + "', `bankName`= '" + req.body.bankName + "' WHERE `bankAccountID`='" + idb +"'");		
   
   	
   	console.log("Update Account of: " + req.body.userNickname);
   	console.log("Update Mailing Address with ID: " + ida);
   	console.log("Update Billing Address with ID: " + idc );
+  	console.log("Update Bank Account with ID: " + idb );
   	res.json(true);
 });
 
@@ -1034,15 +1044,15 @@ app.post('/DB-Project/accounts', function(req, res) {
 	//console.log(req.body.userEmail);
 	console.log("POST User");
 
-  	if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
-  	|| !req.body.hasOwnProperty('userEmail') || !req.body.hasOwnProperty('addressLine') || !req.body.hasOwnProperty('city')
-	|| !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')
-	|| !req.body.hasOwnProperty('creditCardNumber') || !req.body.hasOwnProperty('creditCardOwner') || !req.body.hasOwnProperty('securityCode')
-	|| !req.body.hasOwnProperty('expDate') || !req.body.hasOwnProperty('caddressLine') || !req.body.hasOwnProperty('ccity')
-	|| !req.body.hasOwnProperty('cstate') || !req.body.hasOwnProperty('ccountry') || !req.body.hasOwnProperty('czipcode')){
-    	res.statusCode = 400;
-    	return res.send('Error: Missing fields for account.');
-  	}
+  	// if(!req.body.hasOwnProperty('userName') || !req.body.hasOwnProperty('userNickname') || !req.body.hasOwnProperty('password')
+  	// || !req.body.hasOwnProperty('userEmail') || !req.body.hasOwnProperty('addressLine') || !req.body.hasOwnProperty('city')
+	// || !req.body.hasOwnProperty('state') || !req.body.hasOwnProperty('country') || !req.body.hasOwnProperty('zipcode')
+	// || !req.body.hasOwnProperty('creditCardNumber') || !req.body.hasOwnProperty('creditCardOwner') || !req.body.hasOwnProperty('securityCode')
+	// || !req.body.hasOwnProperty('expDate') || !req.body.hasOwnProperty('caddressLine') || !req.body.hasOwnProperty('ccity')
+	// || !req.body.hasOwnProperty('cstate') || !req.body.hasOwnProperty('ccountry') || !req.body.hasOwnProperty('czipcode')){
+    	// res.statusCode = 400;
+    	// return res.send('Error: Missing fields for account.');
+  	// }
 	
 	
 
@@ -1050,6 +1060,21 @@ app.post('/DB-Project/accounts', function(req, res) {
   	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
   		"`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
   		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL)");
+  	var getquery9 = connection.query("Select LAST_INSERT_ID() as userID", function(err, rows, result){
+
+		if (err) throw err;
+	
+	var len = rows.length;
+	if (len == 0){
+		res.statusCode = 404;
+		res.send("Account not found.");
+	}
+	else{// aquimismoes
+		var response = {"userID" : rows};
+	}
+    res.json(response);
+});
+  	
   	var getquery = connection.query("SET @last_insert_id_in_bbUser = LAST_INSERT_ID()");	
   	
  
@@ -1076,6 +1101,7 @@ app.post('/DB-Project/accounts', function(req, res) {
   	var query4 = connection.query("UPDATE `bbUser` SET `addressID`= @last_insert_id_in_bbAddress, `creditCardID`=@last_insert_id_in_bbCreditCard, `bankAccountID`=@last_insert_id_in_bbBankAccount WHERE `userID`=@last_insert_id_in_bbUser");
   	
   	console.log("New Account: " + req.body.userNickname);
+  	
   	res.json(true);
 });
 
