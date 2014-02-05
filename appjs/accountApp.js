@@ -1,4 +1,6 @@
 
+var userPay;
+
 $(document).on('pagebeforeshow', "#accounts", function( event, ui ) {
         console.log("Jose");
         $.ajax({
@@ -124,7 +126,7 @@ $(document).on('pagebeforeshow', "#productUser", function( event, ui ) {
 				products = sellList[i];
 					list.append("<li><a onclick=GetProductR(" + products.productID + ")>"  + 
 
-					"<img src= " + products.productPhoto + "/>" +			// imgSrc ---- productPhoto
+					"<img src= " + "'" + products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
@@ -165,7 +167,7 @@ $(document).on('pagebeforeshow', "#cartUser", function( event, ui ) {
 				products = cartList[i];
 					list.append("<li><a onclick=GetProductR(" + products.productID + ")>" + 
 
-					"<img src= "  + products.productPhoto  +"/>" +			// imgSrc ---- productPhoto
+					"<img src= " + "'" + products.productPhoto + "'" + "/>" +			// imgSrc ---- productPhoto
 
 					"<p><i><b>" + products.productName +  "</b></i></p>" +
 					"<p>_</p>" +
@@ -388,7 +390,7 @@ $(document).on('pagebeforeshow', "#regular", function( event, ui ) {
                	for (var i=0; i < len; ++i){
 					product = winnerList[i]; 
 	             	
-	                AddBidToCart(loginID.userID, product.productID, product.productPrice);
+	                AddBidToCart(loginID.userID, product.productID, product.bidAmount);
            		}  
            		if(len > 0){
            			//Popup("You have won a bid! Check your cart!");
@@ -610,7 +612,7 @@ function LogIn(){
              success : function(data, textStatus, jqXHR){
             	 
                      loginID = data.accountLogin;
-                     alert(JSON.stringify(loginID));
+                     
                                      $.mobile.loading("hide");
                                      $.mobile.navigate("#regular");          
                      
@@ -710,7 +712,7 @@ function VerifyAdmin(){
 
 		
 function SaveAccount(){
-	alert("show");
+	
 	$.mobile.loading("show");
 	
 	var form = $("#account-form");
@@ -720,7 +722,7 @@ function SaveAccount(){
 	console.log("New Account form: " + JSON.stringify(newAccount));
 	var newAccountJSON = JSON.stringify(newAccount); 
 	
-	alert("show2");
+	
 	var form2 = $("#account-form2");
 	var formData2 = form2.serializeArray();
 	console.log("form Data: " + formData2);
@@ -729,17 +731,17 @@ function SaveAccount(){
 	var newAccountJSON2 = JSON.stringify(newAccount2); 
 	
 	var allData = $.extend({}, newAccount, newAccount2 );//array_merge(newAccountJSON,newAccountJSON2);
-	alert(JSON.stringify(allData));
+	
 	$.ajax({
 		url : "http://localhost:3412/DB-Project/accounts",
-		method: 'get', 
+		method: 'post', 
 		data : JSON.stringify(allData),//&account2=newAccountJSON2, 
 		contentType: "application/json",
 		dataType:"json",
 		success : function(data, textStatus, jqXHR){
-			loginID = data.userID[0]; 
+			
 			$.mobile.loading("hide");
-			$.mobile.navigate("#regular");
+			$.mobile.navigate("#signin");
 		},
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
@@ -829,7 +831,8 @@ function PlaceBid(){
 
 function Order(){
 	
-	calculateAmountToPay();
+	userPay = calculateAmountToPay();
+	alert('aqui: ' + userPay);
 	PlaceOrder();
 	
 }
@@ -858,6 +861,7 @@ function AddToContain(){
  var checkOrder = 0;
  var currentOrder ;
  function PlaceOrder(){
+ 	alert(userPay);
 	 if(loginID == 0){
 		 Popup("You must be logged In!");
 		 $.mobile.navigate("#signin");
@@ -874,6 +878,9 @@ function AddToContain(){
 			 currentOrder = data.order[0];
 			 AddToContain();
 			 $.mobile.navigate("#invoice");
+			 var list = $("#cartUser-list"); 
+			 list.empty();
+			 list.listview("refresh");
 		 },
 		 error: function(data, textStatus, jqXHR){
 			 console.log("textStatus: " + textStatus);
@@ -885,7 +892,7 @@ function AddToContain(){
  
  }
 
-var userPay;
+
  function calculateAmountToPay(){
  	 
 	 $.ajax({
@@ -894,8 +901,9 @@ var userPay;
 		 contentType: "application/json",
 		 dataType:"json",
 		 success : function(data, textStatus, jqXHR){
+		 	
 			 userPay = data.calculatePay[0].TotalSum;
-			 alert("1"+userPay);
+			return userPay;
 			
 		 },
 		 error: function(data, textStatus, jqXHR){

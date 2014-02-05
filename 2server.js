@@ -427,8 +427,10 @@ app.post('/DB-Project/insertBidProducts/:id/:idp/:idprice', function(req, res) {
 			if (len == 0){
 				var query = connection.query('INSERT INTO bbAddToCart (productID,userID,aQuantity) ' +
               		'VALUES (' + idp + ', ' + id + ', null)');
-        	  var query = connection.query("UPDATE `bbProduct` SET `productPrice` = '" + idprice + "', " +
-        	  			 " where productID= '"+idp+"'");
+              var query2 = connection.query("Delete from bbBidFor where  productID = '"+idp+"';" );		
+        	  var query3 = connection.query("UPDATE  bbProduct  SET  productPrice  = '" + idprice + "'  " +
+        	  			 " where productID= '"+idp+"';");
+        	  
         	  
         	  res.json(true);
 			}
@@ -1725,7 +1727,7 @@ app.get('/DB-Project/sells/:id', function(req, res) {
 		//pg.connect(conString, function(err, connection, done) {
 
 
-var query = connection.query("SELECT * FROM bbSell natural join bbProduct natural join bbBidProduct WHERE userID = " + id, function(err, rows, result ){
+var query = connection.query("SELECT * FROM bbSell natural join bbProduct natural join bbBidProduct WHERE userID = " + id+" and productID not in (select productID from bbContain); " , function(err, rows, result ){
 
 
 		if (err) throw err;
@@ -1887,7 +1889,7 @@ app.get('/DB-Project/wbids/:id', function(req, res) {
                 console.log("GET bids: " + id);
 //pg.connect(conString, function(err, connection, done) {
 
-var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natural join bbBidProduct WHERE userID = " + id, function(err, rows, result ){
+var query = connection.query("SELECT * FROM bbBidFor natural join bbProduct natural join bbBidProduct WHERE userID = " + id +" and productID not in ( select productID from bbContain ); " , function(err, rows, result ){
 
                 if (err) throw err;
         /*
