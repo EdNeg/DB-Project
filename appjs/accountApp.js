@@ -1280,7 +1280,26 @@ $(document).on('pagebeforeshow', "#accounts2", function( event, ui ) {
                                 "<h2>" + "State: " + currentUser.state + "</h2>" +
                                 "<h2>" + "Country: " + currentUser.country + "</h2>" +
                                 "<h2>" + "Zipcode: " + currentUser.zipcode + "</h2>"  + "</li>");
-                        list2.listview("refresh");
+                        //list2.listview("refresh");
+                        
+                        var list3 = $("#creditCardInfo");
+                        var list4 = $("#billingAddress");
+                        list3.empty();
+                        list4.empty();
+                        list3.append("<li>" +
+                                "<h2>" + "CreditCard Number: " + currentUser.creditCardNumber + "</h2>" +
+                                "<h2>" + "Owner Name: " + currentUser.creditCardOwner + "</h2>" +
+                                "<h2>" + "Security Code: " + currentUser.securityCode + "</h2>" +
+                                "<h2>" + "Expiration Date: " + currentUser.expDate + "</h2>" + "</li>");
+                        
+                        list4.append("<li>" +
+                                "<h2>" + "Address Line: " + currentUser.addressLine + "</h2>" +
+                                "<h2>" + "City: " + currentUser.city + "</h2>" +
+                                "<h2>" + "State: " + currentUser.state + "</h2>" +
+                                "<h2>" + "Country: " + currentUser.country + "</h2>" +
+                                "<h2>" + "Zipcode: " + currentUser.zipcode + "</h2>"  + "</li>");
+                        list4.listview("refresh");
+                        
         },
                 error: function(data, textStatus, jqXHR){
                         console.log("textStatus: " + textStatus);
