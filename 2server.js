@@ -1059,6 +1059,19 @@ app.post('/DB-Project/accounts', function(req, res) {
 	
 
   	//var newAccount = new Account(req.body.name, req.body.username, req.body.password, req.body.mailingaddress, req.body.billingaddress, req.body.creditcard);
+  	var query9 = connection.query("Select userEmail from bbUser where userEmail= '" + req.body.userEmail + "'", function(err, rows, result){
+
+	
+	
+	var len = rows.length;
+	if (len != 0){
+		res.statusCode = 404;
+		res.send("Email found."); 
+	}
+	
+	
+	});
+  	
   	var query = connection.query("INSERT INTO `bbUser` (`userID`,`userName`,`userNickname`,`userEmail`,`password`," +
   		"`creditCardID`,`bankAccountID`,`addressID`) VALUES (NULL, '" + req.body.userName + "', '"+ req.body.userNickname + 
   		"', '" + req.body.userEmail + "', '" + req.body.password + "',NULL,NULL,NULL)");
@@ -1076,6 +1089,7 @@ app.post('/DB-Project/accounts', function(req, res) {
 	}
     res.json(response);
 });
+	
   	
   	var getquery = connection.query("SET @last_insert_id_in_bbUser = LAST_INSERT_ID()");	
   	
@@ -1541,39 +1555,12 @@ app.get('/DB-Project/carts', function(req, res) {
 //});
 });
 
-app.get('/DB-Project/calculatePay/:id', function(req, res) {
-	var id = req.params.id;
-    console.log("GET CALCULATED PAY OF: " + id);
-
-//pg.connect(conString, function(err, connection, done) {
-    var query = connection.query("SELECT SUM(productPrice) as TotalSum FROM bbAddToCart natural join bbProduct " +
-    		"WHERE userID= '"+id+"';", function(err, rows, result ){
-
-
-    if (err) throw err;
-
-/*
-for (i = 0; i<result.rows.length; i++){
-                 console.log('The solution is: ', rows[i]);
-         }*/
 
 
 
 
-var len =rows.length;
-if (len == 0){
-    res.statusCode = 404;
-    res.send("Cart not found.");
-}
-else {        
-      var response = {"calculatePay" : rows};
-    //connection.end();
-      res.json(response);
-}
-//  done();
-});
-//});
-});
+
+
 
 // REST Operation - HTTP GET to read a car based on its id
 app.get('/DB-Project/carts/:id', function(req, res) {
@@ -2203,22 +2190,43 @@ app.put('/DB-Project/bids/:id', function(req, res) {
 });
 
 //REST Operation - HTTP POST to add a new a car
-app.get('/DB-Project/placeOrder/:id/:idc/:idb/:idp', function(req, res) {
+app.get('/DB-Project/placeOrder/:id/:idc/:idb', function(req, res) {
 	var id = req.params.id;
 	var idc = req.params.idc;
 	var idb = req.params.idb;
-	var idp = req.params.idp;
+	
         console.log("GET Place Order " + id);
-
+        var totalSum
         	  var query = connection.query("INSERT INTO bbOrder (userID) " +
               		"VALUES ('"+ id +"')");
               		
         	  var getquery = connection.query("SET @last_insert_id_in_bbOrder = LAST_INSERT_ID()");
-        	  
-        	  var query1 = connection.query("INSERT INTO bbPay (creditCardID,bankAccountID,paidAmount,paidDate,orderID) " +
-                		"VALUES ('" + idc + "', '"+ idb +"', '"+ idp +"', '"+output+"', @last_insert_id_in_bbOrder)"); 
-                		
-            var query2 = connection.query("Select orderID, paidDate, paidAmount from bbPay natural join bbOrder where userID= '"+id+"' and orderID = @last_insert_id_in_bbOrder ;", function(err, rows, result ){
+        	  var query89 = connection.query("SELECT SUM(productPrice) as TotalSum FROM bbAddToCart natural join bbProduct " +
+    		"WHERE userID= '"+id+"';", function(err, rows, result ){
+
+
+    if (err) throw err;
+
+/*
+for (i = 0; i<result.rows.length; i++){
+                 console.log('The solution is: ', rows[i]);
+         }*/
+
+
+
+
+var len =rows.length;
+if (len == 0){
+    res.statusCode = 404;
+    res.send("Cart not found.");
+}
+else {        
+      var response = {"calculatePay" : rows};
+      totalSum = rows[0].TotalSum;
+      console.log("pay " + totalSum);
+       var query1 = connection.query("INSERT INTO bbPay (creditCardID,bankAccountID,paidAmount,paidDate,orderID) " +
+                		"VALUES ('" + idc + "', '"+ idb +"', '"+ totalSum +"', '"+output+"', @last_insert_id_in_bbOrder)"); 
+        var query2 = connection.query("Select orderID, paidDate, paidAmount from bbPay natural join bbOrder where userID= '"+id+"' and orderID = @last_insert_id_in_bbOrder ;", function(err, rows, result ){
 
         			if (err) throw err;
 
@@ -2236,7 +2244,15 @@ app.get('/DB-Project/placeOrder/:id/:idc/:idb/:idp', function(req, res) {
         				//connection.end();
         		  		res.json(response);
         		  	}
-        		 });
+        		 });     
+    //connection.end();
+    
+}
+//  done();
+});
+//});
+        	     		
+           
         		
         		
         		 

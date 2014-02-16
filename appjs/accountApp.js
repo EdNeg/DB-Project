@@ -746,7 +746,7 @@ function SaveAccount(){
 		error: function(data, textStatus, jqXHR){
 			console.log("textStatus: " + textStatus);
 			$.mobile.loading("hide");
-			Popup("Data could not be added!");
+			Popup("Data could not be added or Email is already registerd!");
 		}
 	});
 
@@ -829,17 +829,18 @@ function PlaceBid(){
 
 }
 
+ 	
+
+
 function Order(){
-	
-	userPay = calculateAmountToPay();
-	alert('aqui: ' + userPay);
+
 	PlaceOrder();
 	
 }
 
 function AddToContain(){
 	if(loginID != 0){
-	alert(currentOrder.orderID);
+	
 	$.ajax({
 		 url : "http://localhost:3412/DB-Project/addContain/" + currentOrder.orderID + "/" +  loginID.userID,
 		 method: 'post',
@@ -861,15 +862,16 @@ function AddToContain(){
  var checkOrder = 0;
  var currentOrder ;
  function PlaceOrder(){
- 	alert(userPay);
+ 	
 	 if(loginID == 0){
 		 Popup("You must be logged In!");
 		 $.mobile.navigate("#signin");
 	 }
 	 else{
-			
-	 $.ajax({
-		 url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" +  loginID.creditCardID  + "/" +  loginID.bankAccountID + "/" + userPay,
+			 
+	 
+ 	 $.ajax({
+		 url : "http://localhost:3412/DB-Project/placeOrder/" + loginID.userID + "/" +  loginID.creditCardID  + "/" +  loginID.bankAccountID,
 		 method: 'get',
 		 contentType: "application/json",
 		 dataType:"json",
@@ -893,28 +895,7 @@ function AddToContain(){
  }
 
 
- function calculateAmountToPay(){
- 	 
-	 $.ajax({
-		 url : "http://localhost:3412/DB-Project/calculatePay/" + loginID.userID,
-		 method: 'get',
-		 contentType: "application/json",
-		 dataType:"json",
-		 success : function(data, textStatus, jqXHR){
-		 	
-			 userPay = data.calculatePay[0].TotalSum;
-			return userPay;
-			
-		 },
-		 error: function(data, textStatus, jqXHR){
-			 console.log("textStatus: " + textStatus);
-			 $.mobile.loading("hide");
-			 Popup("Product could not be added");
-		 }
-	 });
-	
-	 
- }
+ 
 
 var notuserCart = [];
 var check = 0;
